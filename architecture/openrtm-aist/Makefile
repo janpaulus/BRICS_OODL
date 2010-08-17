@@ -1,0 +1,38 @@
+# robotpkg Makefile for:	architecture/openrtm-aist
+# Created:			Anthony Mallet on Wed, 23 Jan 2008
+#
+
+RTM_VERSION=		0.4.2
+DISTNAME=		OpenRTM-aist-${RTM_VERSION}-RELEASE
+PKGNAME=		openrtm-aist-${RTM_VERSION}
+CATEGORIES=		architecture
+MASTER_SITES=		http://www.openrtm.org/pub/OpenRTM-aist/cxx/${RTM_VERSION}/
+
+MAINTAINER=		openrobots@laas.fr
+HOMEPAGE=		http://www.is.aist.go.jp/rt/OpenRTM-aist/html-en/FrontPage.html
+COMMENT=		Open Robot Technology Middleware from AIST.
+LICENSE=		gnu-lgpl-v2.1
+
+USE_LANGUAGES+=		c c++
+
+WRKSRC=			${WRKDIR}/${DISTNAME:-RELEASE=}
+
+GNU_CONFIGURE=		yes
+CONFIGURE_ARGS+=	--with-omniorb=${PREFIX.omniORB}
+
+SUBST_CLASSES+=		rtm-python
+SUBST_STAGE.rtm-python=	pre-configure
+SUBST_MESSAGE.rtm-python=Replacing python interpreter.
+SUBST_SED.rtm-python=	'1s@^\\\#![[:space:]]*/usr/bin/env python@\\\#!${PYTHON}@'
+SUBST_FILES.rtm-python=\
+	build/*.py 				\
+	utils/rtc-template/*.py			\
+	utils/rtc-template/rtc-template		\
+	utils/rtm-skelwrapper/*.py		\
+	utils/rtm-skelwrapper/rtm-skelwrapper
+
+include ../../architecture/ace/depend.mk
+include ../../devel/omniORB/depend.mk
+include ../../pkgtools/libtool/depend.mk
+include ../../mk/sysdep/python2.mk
+include ../../mk/robotpkg.mk

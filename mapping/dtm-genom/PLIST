@@ -1,0 +1,34 @@
+@comment Thu Aug 6 14:11:46 CEST 2009
+bin/dtm
+bin/dtmSendInitRqst
+bin/dtmTest
+include/dtm/dtmStruct.h
+include/dtm/server/dtmEndian.h
+include/dtm/server/dtmError.h
+include/dtm/server/dtmMsgLib.h
+include/dtm/server/dtmPosterLib.h
+include/dtm/server/dtmPosterLibStruct.h
+include/dtm/server/dtmPosterReadLibProto.h
+include/dtm/server/dtmPosterShowLib.h
+include/dtm/server/dtmPosterWriteLibProto.h
+include/dtm/server/dtmPosterXMLLib.h
+include/dtm/server/dtmPrint.h
+include/dtm/server/dtmPrintXML.h
+include/dtm/server/dtmScan.h
+include/dtm/server/dtmType.h
+${PLIST.openprs}include/dtm/server/openprs/dtmDecodeOpenprs.h
+${PLIST.openprs}include/dtm/server/openprs/dtmEncodeOpenprs.h
+${PLIST.openprs}include/dtm/server/openprs/dtmRequestsOpenprsProto.h
+lib/libdtmClient.la
+${PLIST.openprs}lib/openprs/libdtmOpenprs.la
+${PLIST.openprs}lib/pkgconfig/dtm-oprs.pc
+lib/pkgconfig/dtm.pc
+${PLIST.tcl}lib/tclserv/libdtmTclServ.la
+share/modules/gen/dtm.gen
+${PLIST.openprs}share/modules/openprs/dtmOpenprs.inc
+${PLIST.openprs}share/modules/openprs/dtmOpenprs.opf
+${PLIST.openprs}share/modules/openprs/dtmOpenprs.sym
+${PLIST.tcl}share/modules/tcl/dtmClient.tcl
+${PLIST.openprs}@dirrm include/dtm/server/openprs
+@dirrm include/dtm/server
+@dirrm include/dtm

@@ -1,0 +1,13 @@
+@comment Fri Mar 13 15:21:56 CET 2009
+bin/bitratetest
+bin/filtertest
+bin/pcan_make_devices
+bin/receivetest
+bin/transmitest
+include/libpcan.h
+include/pcan.h
+lib/libpcan.so
+lib/libpcan.so.0
+lib/libpcan.so.0.6
+lib/modules/${OS_VERSION}/pcan.ko
+lib/pkgconfig/pcan.pc

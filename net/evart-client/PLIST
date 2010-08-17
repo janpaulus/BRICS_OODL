@@ -1,0 +1,5 @@
+@comment Tue Jul 29 18:00:59 CEST 2008
+bin/evart-client
+include/evart-client.h
+lib/libevart-client.la
+lib/pkgconfig/evart-client.pc

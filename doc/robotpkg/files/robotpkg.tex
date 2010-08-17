@@ -1,0 +1,69 @@
+% $LAAS: robotpkg.tex 2009/03/04 16:49:53 mallet $
+%
+% Copyright (c) 2009 LAAS/CNRS
+% All rights reserved.
+%
+% Permission to use, copy, modify, and distribute this software for any purpose
+% with or without   fee is hereby granted, provided   that the above  copyright
+% notice and this permission notice appear in all copies.
+%
+% THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+% REGARD TO THIS  SOFTWARE INCLUDING ALL  IMPLIED WARRANTIES OF MERCHANTABILITY
+% AND FITNESS. IN NO EVENT SHALL THE AUTHOR  BE LIABLE FOR ANY SPECIAL, DIRECT,
+% INDIRECT, OR CONSEQUENTIAL DAMAGES OR  ANY DAMAGES WHATSOEVER RESULTING  FROM
+% LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+% OTHER TORTIOUS ACTION,   ARISING OUT OF OR IN    CONNECTION WITH THE USE   OR
+% PERFORMANCE OF THIS SOFTWARE.
+%
+%                                             Anthony Mallet on Sat Jan 10 2009
+%
+
+\documentclass[a4paper,11pt]{book}
+\newif\iftth\iftth
+   \input{share/robotpkg.tth}
+\else
+   \usepackage[T1]{fontenc}
+   \usepackage{robotpkg}
+\fi
+
+\title{A guide to robotpkg}
+\author{
+   Anthony Mallet --- {\tt anthony.mallet@laas.fr}\\[1em]
+   Copyright 2006-2009 \copyright LAAS/CNRS
+}
+\date{\today}
+
+\def\robotpkg{{\tt robotpkg} }
+
+\begin{document} % ---------------------------------------------------------
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Introduction}
+\label{chapter:introduction}
+\input{introduction}
+
+\chapter{The robotpkg user's guide}
+\label{chapter:user}
+
+Basically, there are two ways of using robotpkg.  The  first is to only install
+the  package tools and to  use binary packages that  someone else has prepared.
+The second way is  to install the  programs from source. Then  you are  able to
+build your own packages,  and you can  still use  binary packages from  someone
+else. Sections in this document will detail both approaches where appropriate.
+
+\input{getting}
+\input{bootstrapping}
+\input{using}
+\input{configuring}
+
+\chapter{The robotpkg developer's guide}
+\label{chapter:developer}
+
+\chapter{The robotpkg infrastructure internals}
+\label{chapter:internal}
+
+\end{document} % -----------------------------------------------------------

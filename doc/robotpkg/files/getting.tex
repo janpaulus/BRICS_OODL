@@ -1,0 +1,126 @@
+% $LAAS: getting.tex 2010/06/23 15:03:35 mallet $
+%
+% Copyright (c) 2009-2010 LAAS/CNRS
+% All rights reserved.
+%
+% Permission to use, copy, modify, and distribute this software for any purpose
+% with or without   fee is hereby granted, provided   that the above  copyright
+% notice and this permission notice appear in all copies.
+%
+% THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+% REGARD TO THIS  SOFTWARE INCLUDING ALL  IMPLIED WARRANTIES OF MERCHANTABILITY
+% AND FITNESS. IN NO EVENT SHALL THE AUTHOR  BE LIABLE FOR ANY SPECIAL, DIRECT,
+% INDIRECT, OR CONSEQUENTIAL DAMAGES OR  ANY DAMAGES WHATSOEVER RESULTING  FROM
+% LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+% OTHER TORTIOUS ACTION,   ARISING OUT OF OR IN    CONNECTION WITH THE USE   OR
+% PERFORMANCE OF THIS SOFTWARE.
+%
+%                                             Anthony Mallet on Sat Jan 10 2009
+%
+
+
+\section{Where to get robotpkg and how to keep it up-to-date} % ------------
+\label{section:getting}
+
+Before you download and extract the files, you need to decide where you want to
+extract them and  where you want robotpkg to install  packages.  By defaut, the
+{\tt  /opt/openrobots} directory is  used. In  the rest  of this  document, the
+installation path is called the {\em prefix}.
+
+{\tt robotpkg}  will {\em never}  require administration privileges  by itself.
+We thus recommend that you do not install or run robotpkg as the root user.  If
+something ever goes really  wrong, it might go less wrong if  it is not running
+as root. If you want to  install to the default location {\tt /opt/openrobots},
+we recommend that you create this directory owned by a regular user.
+
+Creating or using {\tt /opt/openrobots} typically requires administration ({\em
+a.k.a.}  ``{\tt root}'') privileges.  If  you don't have such privileges (or if
+you want  to install to a different  location), you have to  unpack the sources
+and  install the  binary packages  in  another prefix.  If you  don't have  any
+special administration  rights on the target  machine, a safe bet  is to choose
+the {\tt  \${HOME}/openrobots} location, as  the {\tt \${HOME}}  directory will
+always be writable by yourself.
+
+Any prefix  will work, but please  note that you should  choose an installation
+path which is dedicated to robotpkg packages and not shared with other programs
+(e.g., we do  not recommend to use  a prefix of {\tt /usr}).   Also, you should
+not try to add any of your  own files or directories (such as {\tt src/}) below
+the prefix  tree.  This  will prevent possible  conflicts between  programs and
+other files  installed by the  package system and  whatever else may  have been
+installed there.
+
+Finally,  the  installation  path   shall  not  contain  white-space  or  other
+characters that are interpreted specially by the shell and some other programs:
+use only letters, digits, underscores and dashes.
+
+The rest of this document will  assume that you are using {\tt /opt/openrobots}
+as the prefix. You should adapt this path to whatever prefix you choosed.
+
+
+\subsection{Getting the binary bootstrap kit}
+
+At the moment, the  binary bootstrap kit is not  available. Please get the {\tt
+robotpkg} sources as described in the next section.
+
+
+\subsection{Getting robotpkg for source compilation}
+
+{\tt         robotpkg}    sources   are       distributed     {\em    via}  the
+\href{http://git-scm.com/}{\tt git}  software  content management system.  {\tt
+git} will probably be readily available on your system but if you don't have it
+installed   or if you    are  unsure  about it,   contact  your  local   system
+administrator.
+
+There are two download methods: the anonymous one and the authenticated
+one:
+
+\begin{itemize}
+
+  \item  Anonymous download is the  recommended method if  you  don't intend to
+  work on  the   robotpkg infrastructure  itself,  nor commit   any  changes or
+  packages  additions  back to  the  robotpkg main repository. Furthermore, the
+  possibility to send contributions via patches is still open.
+
+  As your regular user, simply run in a shell:
+
+\begin{verbatim}
+% cd /opt/openrobots
+% git clone http://softs.laas.fr/git/robots/robotpkg.git
+\end{verbatim}
+
+
+  \item Authenticated   download requires a  valid  login on the  main robotpkg
+  repository, and will give you full commit access  to this repository.  Simply
+  run the following:
+
+\begin{verbatim}
+% cd /opt/openrobots
+% git clone ssh://softs.laas.fr/git/robots/robotpkg
+\end{verbatim}
+
+\end{itemize}
+
+
+\subsection{Keeping robotpkg up-to-date} % ---------------------------------
+
+{\tt robotpkg} is   a   living thing:    updates  to  the packages are     made
+perdiodicaly,  problems are fixed,   enhancements  are developed\ldots If   you
+downloaded the robotpkg sources via git, you  should keep it up-to-date so that
+you get the most  recent packages descriptions. This is done by running {\tt
+git pull} in the robotpkg source directory:
+
+\begin{verbatim}
+% cd /opt/openrobots/robotpkg
+% git pull
+\end{verbatim}
+
+When you update robotpkg, the git program will only  touch those files that are
+registered in the git repository. That means that any packages that you created
+on your own will stay unmodified. If you change  files that are managed by git,
+later updates will try to merge your changes with those that  have been done by
+others. See the {\tt git-pull} manual for details.
+
+If you want  to be informed  of package additions  and other  updates, a public
+mailing    list  is   available    for   your    reading   pleasure.  Go     to
+\url{https://sympa.laas.fr/sympa/info/robotpkg}    for   more  information  and
+subscription.

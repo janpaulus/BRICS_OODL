@@ -1,0 +1,6 @@
+@comment Fri May 7 18:57:48 CEST 2010
+include/hrp2Dynamics/hrp2OptHumanoidDynamicRobot.h
+lib/libhrp2Dynamics.so
+lib/libhrp2Dynamics.so.${PKGVERSION}
+lib/pkgconfig/hrp2Dynamics.pc
+@dirrm include/hrp2Dynamics

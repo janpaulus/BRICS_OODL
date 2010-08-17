@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+# Copyright (c) 2010 LAAS/CNRS
+# All rights reserved.
+#
+# Permission to use, copy, modify, and distribute this software for any purpose
+# with or without   fee is hereby granted, provided   that the above  copyright
+# notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+# REGARD TO THIS  SOFTWARE INCLUDING ALL  IMPLIED WARRANTIES OF MERCHANTABILITY
+# AND FITNESS. IN NO EVENT SHALL THE AUTHOR  BE LIABLE FOR ANY SPECIAL, DIRECT,
+# INDIRECT, OR CONSEQUENTIAL DAMAGES OR  ANY DAMAGES WHATSOEVER RESULTING  FROM
+# LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+# OTHER TORTIOUS ACTION,   ARISING OUT OF OR IN    CONNECTION WITH THE USE   OR
+# PERFORMANCE OF THIS SOFTWARE.
+#
+#                                            Anthony Mallet on Mon Mar 29 2010
+#
+
+: ${SQLITE:=@SQLITE@}
+: ${ROBOTPKG_DB:=@ROBOTPKG_DB@}
+
+cols=`tput cols || echo 80`
+long=
+
+lookup()
+{
+    pattern=
+    for k in $*; do
+      pattern="$pattern%$k"
+    done
+    pattern="$pattern%"
+
+    if test -z "$long"; then
+	${SQLITE} -column ${ROBOTPKG_DB} <<EOF
+.width $((${cols}/4)) $((${cols}*3/4-2))
+	select pkgdir,comment from pkginfo where
+		pkgdir like '$pattern' or
+		comment like '$pattern' or
+		descr like '$pattern';
+EOF
+    else
+	${SQLITE} -line ${ROBOTPKG_DB} <<EOF
+	select pkgbase,pkgversion,pkgdir,comment,home,descr from pkginfo where
+		pkgdir like '$pattern' or
+		comment like '$pattern' or
+		descr like '$pattern';
+
+EOF
+    fi
+}
+
+usage()
+{
+    echo "Usage: ${0##*/} [options] keywords
+
+${0##*/} searches for 'keywords' in the robotpkg package database.
+Keywords must be separated by spaces.
+Please note that the keyword order *does* matter.
+
+OPTIONS:
+  -l Long output (output the complete package(s) description(s))
+  -h Show this message"
+    exit 1
+}
+
+while getopts hl OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit
+             ;;
+	 l)  long=yes ;;
+
+         \?)
+             usage
+             exit 1
+             ;;
+     esac
+done
+
+shift $(($OPTIND - 1))
+
+if test -z "$*"
+then
+	usage
+	exit 1
+fi
+
+echo "searching for \"$*\""
+lookup $*
