@@ -15,11 +15,10 @@ PREFER.sicktoolbox?=	robotpkg
 DEPEND_USE+=		sicktoolbox
 
 DEPEND_ABI.sicktoolbox?=	sicktoolbox>=1.0.1
-DEPEND_DIR.sicktoolbox?=	../../hardware/sicktoolbox
+DEPEND_DIR.sicktoolbox?=	../../brics/sicktoolbox
 
 SYSTEM_SEARCH.sicktoolbox=\
-	include/sicklms-1.0/SickLMS.hh \
-	lib/pkgconfig/sicktoolbox.pc
+	include/sicklms-1.0/SickLMS.hh
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}

@@ -25,7 +25,7 @@ WRKSRC=			${WRKDIR}/brics-oodl-${BRICS_OODL_VERSION}
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
 #include ../../hardware/serial/depend.mk
-include ../../hardware/sicktoolbox/depend.mk
+include ../../brics/sicktoolbox/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk
