@@ -22,5 +22,4 @@ GNU_CONFIGURE=		yes
 
 #WRKSRC=			${WRKDIR}/sick-lidar-toolbox-${SICK_LIDAR_TOOLBOX_VERSION}
 
-#include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk

@@ -18,13 +18,12 @@ LICENSE=		original-bsd
 
 USE_LANGUAGES=		c c++
 
-#CMAKE_ARGS+=	-DBOOST_INCLUDEDIR=${PREFIX.boost-headers}/include
+CMAKE_ARGS+=		-DSICK_TOOLBOX_PATH=${PREFIX.sicktoolbox}
 
 WRKSRC=			${WRKDIR}/brics-oodl-${BRICS_OODL_VERSION}
 
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
-#include ../../hardware/serial/depend.mk
 include ../../brics/sicktoolbox/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk
