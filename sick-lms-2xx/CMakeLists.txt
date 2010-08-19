@@ -1,0 +1,49 @@
+PROJECT(OODL_SickLMS2xx)
+
+cmake_minimum_required(VERSION 2.4)
+
+SET( OODL_SickLMS2xx_VERSION 0.01 )
+
+SET( PROJ_SOURCE_DIR ${OODL_SickLMS2xx_SOURCE_DIR} )
+SET( PROJ_BINARY_DIR ${OODL_SickLMS2xx_BINARY_DIR} )
+
+#SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin CACHE PATH "executable output path" )
+
+SET( SICK_TOOLBOX_PATH /opt/ros/cturtle/stacks/laser_drivers/sicktoolbox/sicktoolbox CACHE PATH "Sick Toolbox path")
+
+
+FIND_PACKAGE( Boost REQUIRED )
+#FIND_PACKAGE( SDL REQUIRED )
+
+
+
+include_directories(
+  ${CMAKE_HOME_DIRECTORY}
+  ${CMAKE_HOME_DIRECTORY}/../generic/
+  ${Boost_INCLUDE_DIR}
+  ${SICK_TOOLBOX_PATH}/include
+)
+
+link_directories(
+  ${Boost_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIR}/lib
+  ${SICK_TOOLBOX_PATH}/lib
+)
+
+link_libraries(	
+  libsicklms-1.0.so
+  pthread
+)
+
+ADD_EXECUTABLE(OODL_SickLMS2xx_test
+  ${CMAKE_HOME_DIRECTORY}/applications/Test.cpp
+  ${CMAKE_HOME_DIRECTORY}/../generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/../generic/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/../generic/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/../generic/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/../generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/SickLMS2xx.cpp
+  ${CMAKE_HOME_DIRECTORY}/SickLMS2xxConfiguration.cpp 
+)
+
+INSTALL(TARGETS OODL_SickLMS2xx_test RUNTIME DESTINATION bin )
