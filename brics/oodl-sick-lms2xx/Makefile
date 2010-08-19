@@ -1,26 +1,24 @@
-# robotpkg Makefile for:	hardware/brics-oodl
+# robotpkg Makefile for:	hardware/oodl-sicklms2xx
 # Created:			Jan Paulus on 17 Aug 2010
 #
 
-BRICS_OODL_VERSION=		0.01
-DISTNAME=		brics-oodl-${BRICS_OODL_VERSION}
-PKGNAME=		brics-oodl-${BRICS_OODL_VERSION}
+BRICS_OODL_VERSION=	0.01
+DISTNAME=		oodl-sicklms2xx-${BRICS_OODL_VERSION}
+PKGNAME=		oodl-sicklms2xx-${BRICS_OODL_VERSION}
 CATEGORIES=		hardware
 MASTER_SITES=		http://brics.inf.h-brs.de/
-MASTER_REPOSITORY= 	git ssh://github.com/janpaulus/BRICS_OODL.git
-
-
+MASTER_REPOSITORY= 	git git://github.com/janpaulus/BRICS_OODL.git
 
 MAINTAINER=		jan.paulus@h-brs.de
 HOMEPAGE=		http://www.best-of-robotics.org
-COMMENT=		BRICS Object Oriented Device Layer
-LICENSE=		original-bsd
+COMMENT=		Sick LMS 2xx part of the BRICS Object Oriented Device Layer
+LICENSE=		gnu-gpl-v3
 
 USE_LANGUAGES=		c c++
 
+CMAKE_ARGS+=		-DSELECTED_DRIVER=${sick-lms-2xx}
 CMAKE_ARGS+=		-DSICK_TOOLBOX_PATH=${PREFIX.sicktoolbox}
 
-WRKSRC=			${WRKDIR}/brics-oodl-${BRICS_OODL_VERSION}
 
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk

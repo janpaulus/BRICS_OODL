@@ -13,7 +13,7 @@ MASTER_REPOSITORY= 	svn https://sicktoolbox.svn.sourceforge.net/svnroot/sicktool
 MAINTAINER=		Jason Derenick
 HOMEPAGE=		https://sicktoolbox.svn.sourceforge.net/
 COMMENT=		The Sick LIDAR Matlab/C++ Toolbox 
-LICENSE=		original-bsd
+LICENSE=		modified-bsd
 
 USE_LANGUAGES=		c c++
 
