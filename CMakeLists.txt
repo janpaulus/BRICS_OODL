@@ -1,0 +1,10 @@
+PROJECT(BRICS_OODL)
+
+cmake_minimum_required(VERSION 2.4)
+
+IF(NOT DEFINED SELECTED_DRIVER)
+  SET( SELECTED_DRIVER sick-lms-2xx CACHE PATH "just for testing")
+ENDIF(NOT DEFINED SELECTED_DRIVER)
+
+
+add_subdirectory(${SELECTED_DRIVER})

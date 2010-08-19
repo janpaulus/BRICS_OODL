@@ -1,8 +1,8 @@
 
 #include "LaserScannerDataWithIntensities.h"
 
-LaserScannerDataWithIntensities::LaserScannerDataWithIntensities(unsigned int num_intensities_measurements)
-: LaserScannerData(num_intensities_measurements) {
+LaserScannerDataWithIntensities::LaserScannerDataWithIntensities(unsigned int num_intensities_measurements) 
+:LaserScannerData(num_intensities_measurements){
   // Bouml preserved body begin 00024C71
   this->intensities = NULL;
   this->setNumIntensitiesValues(num_intensities_measurements);
