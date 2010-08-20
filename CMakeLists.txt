@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.4)
 
 
 IF(NOT DEFINED SELECTED_DRIVER)
-  SET( SELECTED_DRIVER sick-ld CACHE PATH "just for testing")
+  SET( SELECTED_DRIVER sick-s300 CACHE PATH "just for testing" FORCE)
 ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 
