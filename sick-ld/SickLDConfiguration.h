@@ -4,6 +4,14 @@
 
 #include "LaserScannerConfiguration.h"
 
+#include <boost/units/systems/si.hpp>
+#include <boost/units/make_scaled_unit.hpp>
+#include <boost/units/systems/si/prefixes.hpp>
+
+using namespace std;
+using namespace boost::units;
+using namespace boost::units::si;
+
 class SickLDConfiguration : public LaserScannerConfiguration {
   public:
     SickLDConfiguration();
@@ -14,19 +22,9 @@ class SickLDConfiguration : public LaserScannerConfiguration {
 
     virtual SickLDConfiguration & operator=(const SickLDConfiguration & source);
 
-    sick_lms_measuring_mode_t measuring_mode;
+    quantity<frequency> motor_speed;
 
-    uint8_t availability_level;
-
-    sick_lms_sensitivity_t sensitivity;
-
-    sick_lms_peak_threshold_t peak_threshold;
-
-    sick_lms_operating_mode_t operating_mode;
-
-    bool is_sick_lms_fast;
-
-    sick_lms_measuring_units_t measuring_units;
+    unsigned int num_sectors;
 
 };
 #endif

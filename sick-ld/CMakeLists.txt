@@ -31,13 +31,13 @@ link_libraries(
 
 ADD_EXECUTABLE(OODL_SickLD_test
   ${CMAKE_HOME_DIRECTORY}/sick-ld/applications/Test.cpp
-#  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-#  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
-#  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
-#  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
-#  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
-#  ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLD.cpp
-#  ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLDConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLD.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLDConfiguration.cpp
 )
 
 INSTALL(TARGETS OODL_SickLD_test RUNTIME DESTINATION bin )

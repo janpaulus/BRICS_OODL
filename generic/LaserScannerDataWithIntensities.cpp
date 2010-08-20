@@ -17,7 +17,7 @@ LaserScannerDataWithIntensities::~LaserScannerDataWithIntensities() {
   // Bouml preserved body end 00024CF1
 }
 
-uint* LaserScannerDataWithIntensities::getIntensitiesPointer() {
+unsigned int* LaserScannerDataWithIntensities::getIntensitiesPointer() {
   // Bouml preserved body begin 00024BF1
   return this->intensities;
   // Bouml preserved body end 00024BF1

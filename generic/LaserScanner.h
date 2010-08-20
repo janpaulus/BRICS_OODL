@@ -11,10 +11,6 @@
 #include "LaserScannerConfiguration.h"
 #include "LaserScannerData.h"
 #include "Errors.h"
-class Errors;
-class LaserScannerConfiguration;
-class LaserScannerData;
-
 /**
  * \brief 
  *

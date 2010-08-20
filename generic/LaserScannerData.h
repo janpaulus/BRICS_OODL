@@ -21,7 +21,7 @@ class LaserScannerData {
 
     quantity<length> getRanges() const;
 
-    unsigned int* getRangesPointer();
+    double* getRangesPointer();
 
     quantity<si::time> getTimeStamp() const;
 
@@ -31,7 +31,7 @@ class LaserScannerData {
 
 
   protected:
-    unsigned int* ranges;
+    double* ranges;
 
     quantity<si::time> timestamp;
 

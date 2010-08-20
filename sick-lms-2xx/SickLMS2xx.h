@@ -3,6 +3,7 @@
 
 
 #include "LaserScanner.h"
+#include "SickLMS2xxConfiguration.h"
 
 #include <string>
 #include "LaserScannerConfiguration.h"
@@ -16,10 +17,6 @@
 #include "sicklms-1.0/SickLMSBufferMonitor.hh"
 #include "sicklms-1.0/SickLMSMessage.hh"
 #include "sicklms-1.0/SickLMS.hh"
-class Errors;
-class LaserScannerConfiguration;
-class SickLMS2xxConfiguration;
-class LaserScannerData;
 class LaserScannerDataWithIntensities;
 
 using namespace SickToolbox;

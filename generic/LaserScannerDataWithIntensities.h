@@ -14,7 +14,7 @@ class LaserScannerDataWithIntensities : public LaserScannerData {
 
     virtual ~LaserScannerDataWithIntensities();
 
-    uint* getIntensitiesPointer();
+    unsigned int* getIntensitiesPointer();
 
     void setNumIntensitiesValues(unsigned int num_intensities_measurements);
 
