@@ -7,6 +7,7 @@
  * \author
  * \date
  */
+#include <vector>
 #include <iostream>
 #include <string>
 #include <boost/units/systems/si.hpp>

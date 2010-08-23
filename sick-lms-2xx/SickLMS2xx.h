@@ -6,6 +6,7 @@
 #include "SickLMS2xxConfiguration.h"
 
 #include <string>
+#include <vector>
 #include "LaserScannerConfiguration.h"
 #include "LaserScannerData.h"
 #include "LaserScannerDataWithIntensities.h"

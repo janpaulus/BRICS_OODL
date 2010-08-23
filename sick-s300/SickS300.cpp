@@ -1,6 +1,5 @@
 
 #include "SickS300.h"
-#include "LaserScannerDataWithIntensities.h"
 
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
@@ -26,19 +25,20 @@ bool SickS300::close(Errors& error) {
     try {
       this->sick_s300->stopScanner();
     } catch (...) {
-      error.addError("unable_to_uninitialize", "could not uninitialize the Sick LMS");
+      error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
       return false;
     }
     delete sick_s300;
     this->sick_s300 = NULL;
   }
   this->isConnected = false;
+  return true;
   // Bouml preserved body end 00020F67
 }
 
 bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 00020FE7
-  error.addError("configuration_not_possible", "the configuration is not possible. Please configurate with SickLMS2xxConfiguration.");
+  error.addError("configuration_not_possible", "the configuration is not possible. Please configurate with SickS300Configuration.");
   /*
   if (this->config != NULL) {
     delete this->config;
@@ -50,6 +50,7 @@ bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, 
     return false;
   }
    */
+  return false;
   // Bouml preserved body end 00020FE7
 }
 
@@ -58,21 +59,23 @@ bool SickS300::setConfiguration(const SickS300Configuration& configuration, Erro
   if (this->config != NULL) {
     delete this->config;
   }
-
+  this->config = new SickS300Configuration;
+  *(this->config) = configuration;
+  
   if (!this->open(error)) {
     return false;
   }
-  try{
+ /* try{
   
     
   } catch (...) {
-    error.addError("unable_to_set_configuration", "could not set the configuration to the Sick LMS");
+    error.addError("unable_to_set_configuration", "could not set the configuration to the Sick S300");
     return false;
-  }
+  }*/
 
   // configuration.operating_mode = this->sick_s300->GetSickOperatingMode();
   // configuration.model = this->sick_s300->SickTypeToString(this->sick_s300->GetSickType());
-
+  return true;
   // Bouml preserved body end 00021067
 }
 
@@ -85,7 +88,7 @@ bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors
    
 
   } catch (...) {
-    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick LMS");
+    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
   }
 
@@ -103,7 +106,7 @@ bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& er
    
 
   } catch (...) {
-    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick LMS");
+    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
   }
 
@@ -117,13 +120,27 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
     return false;
   }
   try {
-    unsigned int size = data.getNumMeasurementValues();
+    std::vector<double> intput_ranges; //meter
+    std::vector<double> intput_range_angles; //rad
+    std::vector<double> intput_intensity; //?
     
-    //getScan(std::vector<double> &vdDistanceM, std::vector<double> &vdAngleRAD, std::vector<double> &vdIntensityAU);
- //   this->sick_s300->GetSickScan(data.getRangesPointer(), size);
+    this->sick_s300->getScan(intput_ranges, intput_range_angles, intput_intensity);
+    
+    if(intput_ranges.size() != intput_range_angles.size()){
+      error.addError("unable_to_get_data", "ranges vector and range_angles vector have to have the same size");
+      return false;
+    }
+    std::vector< quantity<length> > output_ranges;
+    std::vector< quantity<plane_angle> > output_range_angles;
+    for(unsigned int i=0; i< intput_ranges.size(); i++){
+      output_ranges[i] = intput_ranges[i] * meter;
+      output_range_angles[i] = intput_range_angles[i] * radian;
+    }
+    data.setNumMeasurementValues(intput_ranges.size());
+    data.setRanges(output_ranges, output_range_angles);
 
   } catch (...) {
-    error.addError("unable_to_get_data", "could not get data from the Sick LMS");
+    error.addError("unable_to_get_data", "could not get data from the Sick S300");
     return false;
   }
 
@@ -145,7 +162,7 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
  //   this->sick_s300->GetSickScan(data.getRangesPointer(), data.getIntensitiesPointer(), ranges_size, intensities_size);
 
   } catch (...) {
-    error.addError("unable_to_get_data", "could not get data from the Sick LMS");
+    error.addError("unable_to_get_data", "could not get data from the Sick S300");
     return false;
   }
 
@@ -157,7 +174,7 @@ bool SickS300::resetDevice() {
   // Bouml preserved body begin 000212E7
   Errors error;
 
-  error.addError("unable_to_reset_sick_s300", "could not reset the Sick LMS");
+  error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
 
   return false;
   // Bouml preserved body end 000212E7

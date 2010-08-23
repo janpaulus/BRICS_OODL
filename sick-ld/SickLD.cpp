@@ -29,6 +29,8 @@ bool SickLD::close(Errors& error) {
   if (this->sick_ld != NULL) {
     try {
       this->sick_ld->Uninitialize();
+    } catch (SickToolbox::SickException &e){
+      error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick LD");
       return false;
@@ -37,12 +39,14 @@ bool SickLD::close(Errors& error) {
     this->sick_ld = NULL;
   }
   this->isConnected = false;
+  return true;
   // Bouml preserved body end 00026871
 }
 
 bool SickLD::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 000268F1
   error.addError("configuration_not_possible", "the configuration is not possible. Please configurate with SickLDConfiguration.");
+  return false;
   /*
   if (this->config != NULL) {
     delete this->config;
@@ -82,7 +86,8 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
                                                    stop_angs,
                                                    configuration.num_sectors);
     
-   
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_set_configuration", e.what());
   } catch (...) {
     error.addError("unable_to_set_configuration", "could not set the configuration to the Sick LD");
     return false;
@@ -90,7 +95,7 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
 
   // configuration.operating_mode = this->sick_ld->GetSickOperatingMode();
   // configuration.model = this->sick_ld->SickTypeToString(this->sick_ld->GetSickType());
-
+  return true;
   // Bouml preserved body end 00026971
 }
 
@@ -102,6 +107,8 @@ bool SickLD::getConfiguration(LaserScannerConfiguration& configuration, Errors& 
   try {
    
 
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_read_configuration", e.what());
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick LD");
     return false;
@@ -130,6 +137,8 @@ bool SickLD::getConfiguration(SickLDConfiguration& configuration, Errors& error)
     configuration.num_sectors = this->sick_ld->GetSickNumActiveSectors();
     configuration.scan_angle = (this->sick_ld->GetSickScanArea()*M_PI/180.0) *radian;
 
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_read_configuration", e.what());
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick LD");
     return false;
@@ -145,9 +154,27 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
     return false;
   }
   try {
-    unsigned int num_measurements = 0;
-    this->sick_ld->GetSickMeasurements(data.getRangesPointer(), NULL, &num_measurements);
 
+    unsigned int num_measurements = 0;
+    //TODO derive num_measurements from configuration
+    double* intput_ranges = new double[num_measurements];
+
+    this->sick_ld->GetSickMeasurements(intput_ranges, NULL, &num_measurements);
+
+
+    std::vector< quantity<length> > output_ranges;
+    std::vector< quantity<plane_angle> > output_range_angles;
+
+    for(unsigned int i=0; i< num_measurements; i++){
+      output_ranges[i] = intput_ranges[i] * meter;
+      output_range_angles[i] =  this->config->scan_resolution * i + this->config->scan_angle.value()/2 * (-1) ;
+    }
+    data.setNumMeasurementValues(num_measurements);
+    data.setRanges(output_ranges, output_range_angles);
+
+
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_get_data", e.what());
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick LD");
     return false;
@@ -164,8 +191,28 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   }
   try {
     unsigned int num_measurements = 0;
-    this->sick_ld->GetSickMeasurements(data.getRangesPointer(), data.getIntensitiesPointer(), &num_measurements);
+    //TODO derive num_measurements from configuration
+    double* intput_ranges = new double[num_measurements];
+    unsigned int* intput_intensities = new unsigned int[num_measurements];
 
+    this->sick_ld->GetSickMeasurements(intput_ranges, intput_intensities, &num_measurements);
+
+
+    std::vector< quantity<length> > output_ranges;
+    std::vector< quantity<plane_angle> > output_range_angles;
+    std::vector< double > output_intensities;
+
+    for(unsigned int i=0; i< num_measurements; i++){
+      output_ranges[i] = intput_ranges[i] * meter;
+      output_range_angles[i] =  this->config->scan_resolution.value() * (i + this->config->scan_angle.value()/2 * (-1)) *radian ;
+      output_intensities[i] = intput_intensities[i];
+    }
+    data.setNumMeasurementValues(num_measurements);
+    data.setRanges(output_ranges, output_range_angles);
+    // TODO set intensities
+
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_get_data", e.what());
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick LD");
     return false;
@@ -183,6 +230,8 @@ bool SickLD::resetDevice() {
   }
   try {
     this->sick_ld->ResetSick();
+  } catch (SickToolbox::SickException &e){
+    error.addError("unable_to_reset_sick_ld", e.what());
   } catch (...) {
     error.addError("unable_to_reset_sick_ld", "could not reset the Sick LD");
     return false;
@@ -217,6 +266,8 @@ bool SickLD::open(Errors& error) {
   try {
     this->sick_ld->Initialize();
     this->isConnected = true;
+  } catch (SickToolbox::SickException &e){
+    error.addError("Initialize_failed", e.what());
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
     this->isConnected = false;

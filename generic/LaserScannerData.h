@@ -2,6 +2,7 @@
 #define _LASERSCANNERDATA_H
 
 
+#include <vector>
 #include <boost/units/systems/si.hpp>
 #include <boost/units/make_scaled_unit.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
@@ -19,9 +20,13 @@ class LaserScannerData {
 
     ~LaserScannerData();
 
-    quantity<length> getRanges() const;
+    void getRanges(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& range_angles) const;
 
-    double* getRangesPointer();
+    void setRanges(const std::vector< quantity<length> >& ranges, const std::vector< quantity<plane_angle> >& range_angles);
+
+    void setRanges(double* ranges, unsigned int num_ranges, const boost::units::si::length& unit);
+
+    void setRanges(unsigned int* ranges, unsigned int num_ranges, const boost::units::si::length& unit);
 
     quantity<si::time> getTimeStamp() const;
 
@@ -31,7 +36,9 @@ class LaserScannerData {
 
 
   protected:
-    double* ranges;
+    std::vector< quantity<length> > _ranges;
+
+    std::vector< quantity<plane_angle> > _range_angles;
 
     quantity<si::time> timestamp;
 

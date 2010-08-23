@@ -14,6 +14,7 @@
 #include "LaserScannerDataWithIntensities.h"
 #include "LaserScanner.h"
 
+#include <vector>
 #include <sickld-1.0/SickLD.hh>
 /**
  * \brief 

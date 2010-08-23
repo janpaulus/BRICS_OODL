@@ -7,10 +7,10 @@
 #include "LaserScannerConfiguration.h"
 #include "SickS300Configuration.h"
 #include "LaserScannerData.h"
+#include "LaserScannerDataWithIntensities.h"
 
+#include <vector>
 #include "ScannerSickS300.h"
-class LaserScannerDataWithIntensities;
-
 /**
  * \brief 
  *
