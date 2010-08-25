@@ -57,5 +57,13 @@ class SickLMS2xx : public LaserScanner {
 
     SickLMS* sickLMS;
 
+    unsigned int* ranges;
+
+    double* rangeAngles;
+
+    unsigned int* intensities;
+
+    unsigned int numMeasurements;
+
 };
 #endif

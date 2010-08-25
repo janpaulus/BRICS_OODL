@@ -6,6 +6,10 @@ SickLMS2xx::SickLMS2xx() {
   this->sickLMS = NULL;
   this->config = NULL;
   this->isConnected = false;
+  this->ranges = NULL;
+  this->rangeAngles = NULL;
+  this->intensities = NULL;
+  this->numMeasurements = 0;
   // Bouml preserved body end 0001F471
 }
 
@@ -15,6 +19,15 @@ SickLMS2xx::~SickLMS2xx() {
   this->close(er);
   if (this->config != NULL) {
     delete this->config;
+  }
+  if (this->ranges != NULL) {
+    delete this->ranges;
+  }
+  if (this->rangeAngles != NULL) {
+    delete this->rangeAngles;
+  }
+  if (this->intensities != NULL) {
+    delete this->intensities;
   }
   // Bouml preserved body end 0001F4F1
 }
@@ -212,24 +225,30 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
   }
   try {
 
-    unsigned int num_measurements = 0;
-    //TODO derive num_measurements from configuration
-    unsigned int* intput_ranges = new unsigned int[num_measurements];
-
-
-    //Gets measurement data from the Sick. NOTE: Data can be either range or reflectivity given the Sick mode.
-    this->sickLMS->GetSickScan(intput_ranges, num_measurements);
-
-
-    std::vector< quantity<length> > output_ranges;
-    std::vector< quantity<plane_angle> > output_range_angles;
-
-    for(unsigned int i=0; i< num_measurements; i++){
-      output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) *radian ;
+    // derive num_measurements from configuration
+    if(this->config->scanResolution.value() == 0.0){
+      error.addError("unable_to_get_data", "the scan resolution can not be zero");
+      return false;
     }
 
-    data.setMeasurements(output_ranges, output_range_angles);
+    unsigned int newNumMeasurements = ((1.0/this->config->scanResolution) * this->config->scanAngle).value();;
+
+    if(this->numMeasurements != newNumMeasurements){
+      this->numMeasurements  = newNumMeasurements;
+      delete this->ranges;
+      delete this->rangeAngles;
+      this->ranges = new unsigned int[this->numMeasurements];
+      this->rangeAngles = new double[this->numMeasurements];
+    }
+
+    this->sickLMS->GetSickScan(ranges, this->numMeasurements);
+
+
+    for(unsigned int i=0; i< this->numMeasurements; i++){
+      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+    }
+
+    data.setMeasurements(ranges, rangeAngles, this->numMeasurements, meter, radian); //TODO find out right units
 
 
   } catch (SickToolbox::SickException &e){
@@ -249,34 +268,33 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     return false;
   }
   try {
-  //  unsigned int ranges_size = data.getNumMeasurementValues();
- //   unsigned int intensities_size = data.getNumIntensitiesValues();
 
-    //Gets range and reflectivity data from the Sick. NOTE: This only applies to Sick LMS 211/221/291-S14!
-//    this->sickLMS->GetSickScan(data.getRangesPointer(), data.getIntensitiesPointer(), ranges_size, intensities_size);
-
-
-    unsigned int num_measurements = 0;
-    // @todo: derive num_measurements from configuration
-
-    unsigned int* intput_ranges = new unsigned int[num_measurements];
-    unsigned int* intput_intensities = new unsigned int[num_measurements];
-
-    this->sickLMS->GetSickScan(intput_ranges, intput_intensities, num_measurements, num_measurements);
-
-
-    std::vector< quantity<length> > output_ranges;
-    std::vector< quantity<plane_angle> > output_range_angles;
-    std::vector< double > output_intensities;
-
-    for(unsigned int i=0; i< num_measurements; i++){
-      output_ranges[i] = intput_ranges[i] * meter; //TODO use mesurment unit to derive right unit
-      output_range_angles[i] =  this->config->scanResolution * (i + this->config->scanAngle.value()/2 * (-1)) ;
-      output_intensities[i] = intput_intensities[i];
+    // derive num_measurements from configuration
+    if(this->config->scanResolution.value() == 0.0){
+      error.addError("unable_to_get_data", "the scan resolution can not be zero");
+      return false;
     }
-//    data.setNumMeasurementValues(num_measurements);
- //   data.setMeasurements(output_ranges, output_range_angles);
-    // TODO set intensities
+
+    unsigned int newNumMeasurements = ((1.0/this->config->scanResolution) * this->config->scanAngle).value();;
+
+    if(this->numMeasurements != newNumMeasurements){
+      this->numMeasurements  = newNumMeasurements;
+      delete this->ranges;
+      delete this->rangeAngles;
+      delete this->intensities;
+      this->ranges = new unsigned int[this->numMeasurements];
+      this->rangeAngles = new double[this->numMeasurements];
+      this->intensities = new unsigned int[this->numMeasurements];
+    }
+
+    this->sickLMS->GetSickScan(ranges, intensities, this->numMeasurements, this->numMeasurements);
+
+
+    for(unsigned int i=0; i< this->numMeasurements; i++){
+      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+    }
+
+    data.setMeasurements(ranges, rangeAngles, intensities, this->numMeasurements, meter, radian, meter); //TODO find out right units
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -350,6 +368,7 @@ bool SickLMS2xx::open(Errors& error) {
   //Initialize the Sick LMS 2xx
   try {
     this->sickLMS->Initialize(desired_baud);
+    this->getConfiguration(*(this->config), error);
     this->isConnected = true;
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
