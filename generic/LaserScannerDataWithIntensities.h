@@ -10,21 +10,19 @@
  */
 class LaserScannerDataWithIntensities : public LaserScannerData {
   public:
-    LaserScannerDataWithIntensities(unsigned int num_intensities_measurements);
+    LaserScannerDataWithIntensities();
 
     virtual ~LaserScannerDataWithIntensities();
 
-    unsigned int* getIntensitiesPointer();
+    void getMesasurementIterator(std::vector< quantity<length> >::iterator rangesIterator, std::vector< quantity<plane_angle> >::iterator rangeAnglesIterator, const std::vector< double >::iterator intensitieIterator);
 
-    void setNumIntensitiesValues(unsigned int num_intensities_measurements);
+    void getsMeasurements(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& rangeAngles, std::vector< double >& intensities) const;
 
-    unsigned int getNumIntensitiesValues();
+    void setMeasurements(const std::vector< quantity<length> >& ranges, const std::vector< quantity<plane_angle> >& rangeAngles, const std::vector< double >& intensities);
 
 
   protected:
-    unsigned int* intensities;
-
-    unsigned int num_intensities_measurements;
+    std::vector< double > intensities;
 
 };
 #endif

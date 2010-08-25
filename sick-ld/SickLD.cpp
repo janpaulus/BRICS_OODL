@@ -8,7 +8,7 @@
 
 SickLD::SickLD() {
   // Bouml preserved body begin 00026771
-  this->sick_ld = NULL;
+  this->sickLD = NULL;
   this->config = NULL;
   this->isConnected = false;
   // Bouml preserved body end 00026771
@@ -26,17 +26,17 @@ SickLD::~SickLD() {
 
 bool SickLD::close(Errors& error) {
   // Bouml preserved body begin 00026871
-  if (this->sick_ld != NULL) {
+  if (this->sickLD != NULL) {
     try {
-      this->sick_ld->Uninitialize();
+      this->sickLD->Uninitialize();
     } catch (SickToolbox::SickException &e){
       error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick LD");
       return false;
     }
-    delete sick_ld;
-    this->sick_ld = NULL;
+    delete sickLD;
+    this->sickLD = NULL;
   }
   this->isConnected = false;
   return true;
@@ -76,15 +76,15 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
 
   double start_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
   double stop_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
-  start_angs[0] = 180.0 - ((configuration.scan_angle.value()*180.0/M_PI)/2);
-  stop_angs[0]  = 180.0 + ((configuration.scan_angle.value()*180.0/M_PI)/2);
+  start_angs[0] = 180.0 - ((configuration.scanAngle.value()*180.0/M_PI)/2);
+  stop_angs[0]  = 180.0 + ((configuration.scanAngle.value()*180.0/M_PI)/2);
   try {
 
-    this->sick_ld->SetSickGlobalParamsAndScanAreas(configuration.motor_speed.value(),
-                                                   configuration.scan_resolution.value(),
+    this->sickLD->SetSickGlobalParamsAndScanAreas(configuration.motorSpeed.value(),
+                                                   configuration.scanResolution.value(),
                                                    start_angs,
                                                    stop_angs,
-                                                   configuration.num_sectors);
+                                                   configuration.numSectors);
     
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_set_configuration", e.what());
@@ -93,8 +93,8 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
     return false;
   }
 
-  // configuration.operating_mode = this->sick_ld->GetSickOperatingMode();
-  // configuration.model = this->sick_ld->SickTypeToString(this->sick_ld->GetSickType());
+  // configuration.operating_mode = this->sickLD->GetSickOperatingMode();
+  // configuration.model = this->sickLD->SickTypeToString(this->sickLD->GetSickType());
   return true;
   // Bouml preserved body end 00026971
 }
@@ -127,15 +127,15 @@ bool SickLD::getConfiguration(SickLDConfiguration& configuration, Errors& error)
   try {
     configuration.vendor = "SICK";
     configuration.product = "LD";
-    configuration.firmware = this->sick_ld->GetSickFirmwareName()+ this->sick_ld->GetSickFirmwareVersion();
+    configuration.firmware = this->sickLD->GetSickFirmwareName()+ this->sickLD->GetSickFirmwareVersion();
   //  configuration.model
   //  configuration.protocol
-    configuration.serialnumber = this->sick_ld->GetSickSerialNumber();
-    configuration.device_path = this->sick_ld->GetSickIPAddress();
-    configuration.scan_resolution = (this->sick_ld->GetSickScanResolution()*M_PI/180.0) *radian;
-    configuration.motor_speed = this->sick_ld->GetSickMotorSpeed() * hertz;
-    configuration.num_sectors = this->sick_ld->GetSickNumActiveSectors();
-    configuration.scan_angle = (this->sick_ld->GetSickScanArea()*M_PI/180.0) *radian;
+    configuration.serialnumber = this->sickLD->GetSickSerialNumber();
+    configuration.devicePath = this->sickLD->GetSickIPAddress();
+    configuration.scanResolution = (this->sickLD->GetSickScanResolution()*M_PI/180.0) *radian;
+    configuration.motorSpeed = this->sickLD->GetSickMotorSpeed() * hertz;
+    configuration.numSectors = this->sickLD->GetSickNumActiveSectors();
+    configuration.scanAngle = (this->sickLD->GetSickScanArea()*M_PI/180.0) *radian;
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -159,7 +159,7 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
     //TODO derive num_measurements from configuration
     double* intput_ranges = new double[num_measurements];
 
-    this->sick_ld->GetSickMeasurements(intput_ranges, NULL, &num_measurements);
+    this->sickLD->GetSickMeasurements(intput_ranges, NULL, &num_measurements);
 
 
     std::vector< quantity<length> > output_ranges;
@@ -167,10 +167,10 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
 
     for(unsigned int i=0; i< num_measurements; i++){
       output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scan_resolution * i + this->config->scan_angle.value()/2 * (-1) ;
+      output_range_angles[i] =  this->config->scanResolution * (i + this->config->scanAngle.value()/2 * (-1));
     }
-    data.setNumMeasurementValues(num_measurements);
-    data.setRanges(output_ranges, output_range_angles);
+//    data.setNumMeasurementValues(num_measurements);
+ //   data.setMeasurements(output_ranges, output_range_angles);
 
 
   } catch (SickToolbox::SickException &e){
@@ -195,7 +195,7 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     double* intput_ranges = new double[num_measurements];
     unsigned int* intput_intensities = new unsigned int[num_measurements];
 
-    this->sick_ld->GetSickMeasurements(intput_ranges, intput_intensities, &num_measurements);
+    this->sickLD->GetSickMeasurements(intput_ranges, intput_intensities, &num_measurements);
 
 
     std::vector< quantity<length> > output_ranges;
@@ -204,11 +204,11 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     for(unsigned int i=0; i< num_measurements; i++){
       output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scan_resolution.value() * (i + this->config->scan_angle.value()/2 * (-1)) *radian ;
+      output_range_angles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) *radian ;
       output_intensities[i] = intput_intensities[i];
     }
-    data.setNumMeasurementValues(num_measurements);
-    data.setRanges(output_ranges, output_range_angles);
+//    data.setNumMeasurementValues(num_measurements);
+//    data.setMeasurements(output_ranges, output_range_angles);
     // TODO set intensities
 
   } catch (SickToolbox::SickException &e){
@@ -229,11 +229,11 @@ bool SickLD::resetDevice() {
     return false;
   }
   try {
-    this->sick_ld->ResetSick();
+    this->sickLD->ResetSick();
   } catch (SickToolbox::SickException &e){
-    error.addError("unable_to_reset_sick_ld", e.what());
+    error.addError("unable_to_reset_sickLD", e.what());
   } catch (...) {
-    error.addError("unable_to_reset_sick_ld", "could not reset the Sick LD");
+    error.addError("unable_to_reset_sickLD", "could not reset the Sick LD");
     return false;
   }
   return true;
@@ -246,33 +246,33 @@ bool SickLD::open(Errors& error) {
     return true;
   }
 
-  if (this->config->device_path == "") {
+  if (this->config->devicePath == "") {
     error.addError("no_DevicePath", "the device path is not specified in the configuration");
     this->isConnected = false;
     return false;
   }
 
-  if (this->sick_ld != NULL) {
+  if (this->sickLD != NULL) {
     error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
     this->isConnected = false;
     return false;
   }
 
-  this->sick_ld = new SickToolbox::SickLD(this->config->device_path);
+  this->sickLD = new SickToolbox::SickLD(this->config->devicePath);
 
  
 
   //Initialize the Sick LD
   try {
-    this->sick_ld->Initialize();
+    this->sickLD->Initialize();
     this->isConnected = true;
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
     this->isConnected = false;
-    delete this->sick_ld;
-    this->sick_ld = NULL;
+    delete this->sickLD;
+    this->sickLD = NULL;
     return false;
   }
   return true;

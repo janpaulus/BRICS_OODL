@@ -16,19 +16,19 @@ class SickLMS2xxConfiguration : public LaserScannerConfiguration {
 
     virtual SickLMS2xxConfiguration & operator=(const SickLMS2xxConfiguration & source);
 
-    sick_lms_measuring_mode_t measuring_mode;
+    sick_lms_measuring_mode_t measuringMode;
 
-    uint8_t availability_level;
+    uint8_t availabilityLevel;
 
     sick_lms_sensitivity_t sensitivity;
 
-    sick_lms_peak_threshold_t peak_threshold;
+    sick_lms_peak_threshold_t peakThreshold;
 
-    sick_lms_operating_mode_t operating_mode;
+    sick_lms_operating_mode_t operatingMode;
 
-    bool is_sick_lms_fast;
+    bool isSickLMSFast;
 
-    sick_lms_measuring_units_t measuring_units;
+    sick_lms_measuring_units_t measuringUnits;
 
 };
 #endif

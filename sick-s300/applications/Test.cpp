@@ -35,14 +35,14 @@ int main(){
             << "test: " << test <<std::endl;
 */
   SickS300Configuration config;
-  config.device_path = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
+  config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
   config.boud = BAUD_500K;
 
   SickS300 scanner;
 
   Errors errors;
 
-  LaserScannerData scanData(180);
+  LaserScannerData scanData;
 
   if(!scanner.setConfiguration(config, errors))
     return 0;

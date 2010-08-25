@@ -59,21 +59,21 @@ class LaserScannerConfiguration {
 
     std::string model;
 
-    quantity<plane_angle> scan_angle;
+    quantity<plane_angle> scanAngle;
 
-    quantity<plane_angle> scan_resolution;
+    quantity<plane_angle> scanResolution;
 
     std::string sensitivity;
 
-    std::string peak_threshold;
+    std::string peakThreshold;
 
-    std::string measuring_mode;
+    std::string measuringMode;
 
-    std::string operating_mode;
+    std::string operatingMode;
 
     baud_rate boud;
 
-    std::string device_path;
+    std::string devicePath;
 
 };
 #endif

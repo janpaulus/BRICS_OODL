@@ -37,7 +37,7 @@ int main(){
 */
   
   SickLDConfiguration config;
-  config.device_path = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
+  config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
 
 
 
@@ -45,7 +45,7 @@ int main(){
 
   Errors errors;
 
-  LaserScannerData scanData(180);
+  LaserScannerData scanData;
 
   if(!scanner.setConfiguration(config, errors))
     return 0;

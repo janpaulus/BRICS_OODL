@@ -55,7 +55,7 @@ class SickLMS2xx : public LaserScanner {
 
     bool isConnected;
 
-    SickLMS* sick_lms;
+    SickLMS* sickLMS;
 
 };
 #endif

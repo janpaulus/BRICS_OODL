@@ -3,7 +3,7 @@
 
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
-  this->sick_s300 = NULL;
+  this->sickS300 = NULL;
   this->config = NULL;
   this->isConnected = false;
   // Bouml preserved body end 00020E67
@@ -21,15 +21,15 @@ SickS300::~SickS300() {
 
 bool SickS300::close(Errors& error) {
   // Bouml preserved body begin 00020F67
-  if (this->sick_s300 != NULL) {
+  if (this->sickS300 != NULL) {
     try {
-      this->sick_s300->stopScanner();
+      this->sickS300->stopScanner();
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
       return false;
     }
-    delete sick_s300;
-    this->sick_s300 = NULL;
+    delete sickS300;
+    this->sickS300 = NULL;
   }
   this->isConnected = false;
   return true;
@@ -124,7 +124,7 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
     std::vector<double> intput_range_angles; //rad
     std::vector<double> intput_intensity; //?
     
-    this->sick_s300->getScan(intput_ranges, intput_range_angles, intput_intensity);
+    this->sickS300->getScan(intput_ranges, intput_range_angles, intput_intensity);
     
     if(intput_ranges.size() != intput_range_angles.size()){
       error.addError("unable_to_get_data", "ranges vector and range_angles vector have to have the same size");
@@ -136,8 +136,8 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
       output_ranges[i] = intput_ranges[i] * meter;
       output_range_angles[i] = intput_range_angles[i] * radian;
     }
-    data.setNumMeasurementValues(intput_ranges.size());
-    data.setRanges(output_ranges, output_range_angles);
+//    data.setNumMeasurementValues(intput_ranges.size());
+ //   data.setMeasurements(output_ranges, output_range_angles);
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -154,8 +154,8 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     return false;
   }
   try {
-    unsigned int ranges_size = data.getNumMeasurementValues();
-    unsigned int intensities_size = data.getNumIntensitiesValues();
+//    unsigned int ranges_size = data.getNumMeasurementValues();
+//    unsigned int intensities_size = data.getNumIntensitiesValues();
 
 
 //    getScan(std::vector<double> &vdDistanceM, std::vector<double> &vdAngleRAD, std::vector<double> &vdIntensityAU);
@@ -186,19 +186,19 @@ bool SickS300::open(Errors& error) {
     return true;
   }
 
-  if (this->config->device_path == "") {
+  if (this->config->devicePath == "") {
     error.addError("no_DevicePath", "the device path is not specified in the configuration");
     this->isConnected = false;
     return false;
   }
 
-  if (this->sick_s300 != NULL) {
+  if (this->sickS300 != NULL) {
     error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
     this->isConnected = false;
     return false;
   }
 
-  this->sick_s300 = new ScannerSickS300();
+  this->sickS300 = new ScannerSickS300();
 
   int desired_baud = 500000;
 
@@ -222,13 +222,13 @@ bool SickS300::open(Errors& error) {
 
   //Initialize the Sick LMS 2xx
   try {
-    this->sick_s300->open(this->config->device_path.c_str(), desired_baud);
+    this->sickS300->open(this->config->devicePath.c_str(), desired_baud);
     this->isConnected = true;
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
     this->isConnected = false;
-    delete this->sick_s300;
-    this->sick_s300 = NULL;
+    delete this->sickS300;
+    this->sickS300 = NULL;
     return false;
   }
   return true;

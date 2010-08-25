@@ -3,7 +3,7 @@
 
 SickLMS2xx::SickLMS2xx() {
   // Bouml preserved body begin 0001F471
-  this->sick_lms = NULL;
+  this->sickLMS = NULL;
   this->config = NULL;
   this->isConnected = false;
   // Bouml preserved body end 0001F471
@@ -21,17 +21,17 @@ SickLMS2xx::~SickLMS2xx() {
 
 bool SickLMS2xx::close(Errors& error) {
   // Bouml preserved body begin 00021071
-  if (this->sick_lms != NULL) {
+  if (this->sickLMS != NULL) {
     try {
-      this->sick_lms->Uninitialize();
+      this->sickLMS->Uninitialize();
     } catch (SickToolbox::SickException &e){
       error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick LMS");
       return false;
     }
-    delete sick_lms;
-    this->sick_lms = NULL;
+    delete sickLMS;
+    this->sickLMS = NULL;
   }
   this->isConnected = false;
   return true;
@@ -75,28 +75,28 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
 
   try {
 
-    if (configuration.availability_level != currentConfig.availability_level) {
-      this->sick_lms->SetSickAvailability(configuration.availability_level);
+    if (configuration.availabilityLevel != currentConfig.availabilityLevel) {
+      this->sickLMS->SetSickAvailability(configuration.availabilityLevel);
     }
-    if (configuration.measuring_mode != currentConfig.measuring_mode) {
-      this->sick_lms->SetSickMeasuringMode(configuration.measuring_mode);
+    if (configuration.measuringMode != currentConfig.measuringMode) {
+      this->sickLMS->SetSickMeasuringMode(configuration.measuringMode);
     }
     if (configuration.sensitivity != currentConfig.sensitivity) {
-      this->sick_lms->SetSickSensitivity(configuration.sensitivity);
+      this->sickLMS->SetSickSensitivity(configuration.sensitivity);
     }
-    if (configuration.peak_threshold != currentConfig.peak_threshold) {
-      this->sick_lms->SetSickPeakThreshold(configuration.peak_threshold);
+    if (configuration.peakThreshold != currentConfig.peakThreshold) {
+      this->sickLMS->SetSickPeakThreshold(configuration.peakThreshold);
     }
-    if (configuration.measuring_units != currentConfig.measuring_units) {
-      this->sick_lms->SetSickMeasuringUnits(configuration.measuring_units);
+    if (configuration.measuringUnits != currentConfig.measuringUnits) {
+      this->sickLMS->SetSickMeasuringUnits(configuration.measuringUnits);
     }
-    if ((configuration.scan_angle != currentConfig.scan_angle) || (configuration.scan_resolution != currentConfig.scan_resolution)) {
+    if ((configuration.scanAngle != currentConfig.scanAngle) || (configuration.scanResolution != currentConfig.scanResolution)) {
 
       sick_lms_scan_angle_t desired_scan_angle;
       sick_lms_scan_resolution_t desired_scan_resolution;
 
-      double angle = configuration.scan_angle.value()*180.0 / M_PI;
-      double resolution = configuration.scan_resolution.value()*180.0 / M_PI;
+      double angle = configuration.scanAngle.value()*180.0 / M_PI;
+      double resolution = configuration.scanResolution.value()*180.0 / M_PI;
       double offset = 1;
 
       if (90 > angle - offset && 90 < angle + offset) {
@@ -128,7 +128,7 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
         error.addError("unknown_scan_resolution", "the scan resolution is unknown. Please select one of 0.25°, 0.5° or 1°");
       }
 
-      this->sick_lms->SetSickVariant(desired_scan_angle, desired_scan_resolution);
+      this->sickLMS->SetSickVariant(desired_scan_angle, desired_scan_resolution);
     }
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_set_configuration", e.what());
@@ -137,8 +137,8 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
     return false;
   }
 
-  // configuration.operating_mode = this->sick_lms->GetSickOperatingMode();
-  // configuration.model = this->sick_lms->SickTypeToString(this->sick_lms->GetSickType());
+  // configuration.operating_mode = this->sickLMS->GetSickOperatingMode();
+  // configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
   return true;
   // Bouml preserved body end 000213F1
 }
@@ -151,15 +151,15 @@ bool SickLMS2xx::getConfiguration(LaserScannerConfiguration& configuration, Erro
   try {
     configuration.vendor = "SICK";
     configuration.product = "LMS";
-    configuration.measuring_mode = this->sick_lms->SickMeasuringModeToString(this->sick_lms->GetSickMeasuringMode());
-    configuration.sensitivity = this->sick_lms->SickSensitivityToString(this->sick_lms->GetSickSensitivity());
-    configuration.peak_threshold = this->sick_lms->SickPeakThresholdToString(this->sick_lms->GetSickPeakThreshold());
-    configuration.scan_angle = this->sick_lms->GetSickScanAngle() * M_PI / 180.0 * radian;
-    configuration.scan_resolution = this->sick_lms->GetSickScanResolution() * M_PI / 180.0 * radian;
-    configuration.firmware = this->sick_lms->GetSickSoftwareVersionAsString();
-    // this->sick_lms->GetSickStatusAsString();
-    configuration.operating_mode = this->sick_lms->SickOperatingModeToString(this->sick_lms->GetSickOperatingMode());
-    configuration.model = this->sick_lms->SickTypeToString(this->sick_lms->GetSickType());
+    configuration.measuringMode = this->sickLMS->SickMeasuringModeToString(this->sickLMS->GetSickMeasuringMode());
+    configuration.sensitivity = this->sickLMS->SickSensitivityToString(this->sickLMS->GetSickSensitivity());
+    configuration.peakThreshold = this->sickLMS->SickPeakThresholdToString(this->sickLMS->GetSickPeakThreshold());
+    configuration.scanAngle = this->sickLMS->GetSickScanAngle() * M_PI / 180.0 * radian;
+    configuration.scanResolution = this->sickLMS->GetSickScanResolution() * M_PI / 180.0 * radian;
+    configuration.firmware = this->sickLMS->GetSickSoftwareVersionAsString();
+    // this->sickLMS->GetSickStatusAsString();
+    configuration.operatingMode = this->sickLMS->SickOperatingModeToString(this->sickLMS->GetSickOperatingMode());
+    configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -181,18 +181,18 @@ bool SickLMS2xx::getConfiguration(SickLMS2xxConfiguration& configuration, Errors
   try {
     configuration.vendor = "SICK";
     configuration.product = "LMS";
-    configuration.availability_level = this->sick_lms->GetSickAvailability();
-    configuration.measuring_mode = this->sick_lms->GetSickMeasuringMode();
-    configuration.sensitivity = this->sick_lms->GetSickSensitivity();
-    configuration.peak_threshold = this->sick_lms->GetSickPeakThreshold();
-    configuration.scan_angle = this->sick_lms->GetSickScanAngle() * M_PI / 180.0 * radian;
-    configuration.scan_resolution = this->sick_lms->GetSickScanResolution() * M_PI / 180.0 * radian;
-    configuration.firmware = this->sick_lms->GetSickSoftwareVersionAsString();
-    // this->sick_lms->GetSickStatusAsString();
-    configuration.operating_mode = this->sick_lms->GetSickOperatingMode();
-    configuration.measuring_units = this->sick_lms->GetSickMeasuringUnits();
-    configuration.model = this->sick_lms->SickTypeToString(this->sick_lms->GetSickType());
-    configuration.is_sick_lms_fast = this->sick_lms->IsSickLMSFast();
+    configuration.availabilityLevel = this->sickLMS->GetSickAvailability();
+    configuration.measuringMode = this->sickLMS->GetSickMeasuringMode();
+    configuration.sensitivity = this->sickLMS->GetSickSensitivity();
+    configuration.peakThreshold = this->sickLMS->GetSickPeakThreshold();
+    configuration.scanAngle = this->sickLMS->GetSickScanAngle() * M_PI / 180.0 * radian;
+    configuration.scanResolution = this->sickLMS->GetSickScanResolution() * M_PI / 180.0 * radian;
+    configuration.firmware = this->sickLMS->GetSickSoftwareVersionAsString();
+    // this->sickLMS->GetSickStatusAsString();
+    configuration.operatingMode = this->sickLMS->GetSickOperatingMode();
+    configuration.measuringUnits = this->sickLMS->GetSickMeasuringUnits();
+    configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
+    configuration.isSickLMSFast = this->sickLMS->IsSickLMSFast();
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -218,7 +218,7 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
 
 
     //Gets measurement data from the Sick. NOTE: Data can be either range or reflectivity given the Sick mode.
-    this->sick_lms->GetSickScan(intput_ranges, num_measurements); 
+    this->sickLMS->GetSickScan(intput_ranges, num_measurements);
 
 
     std::vector< quantity<length> > output_ranges;
@@ -226,10 +226,10 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
 
     for(unsigned int i=0; i< num_measurements; i++){
       output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scan_resolution.value() * (i + this->config->scan_angle.value()/2 * (-1)) *radian ;
+      output_range_angles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) *radian ;
     }
-    data.setNumMeasurementValues(num_measurements);
-    data.setRanges(output_ranges, output_range_angles);
+
+    data.setMeasurements(output_ranges, output_range_angles);
 
 
   } catch (SickToolbox::SickException &e){
@@ -249,19 +249,20 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     return false;
   }
   try {
-    unsigned int ranges_size = data.getNumMeasurementValues();
-    unsigned int intensities_size = data.getNumIntensitiesValues();
+  //  unsigned int ranges_size = data.getNumMeasurementValues();
+ //   unsigned int intensities_size = data.getNumIntensitiesValues();
 
     //Gets range and reflectivity data from the Sick. NOTE: This only applies to Sick LMS 211/221/291-S14!
-//    this->sick_lms->GetSickScan(data.getRangesPointer(), data.getIntensitiesPointer(), ranges_size, intensities_size);
+//    this->sickLMS->GetSickScan(data.getRangesPointer(), data.getIntensitiesPointer(), ranges_size, intensities_size);
 
 
     unsigned int num_measurements = 0;
-    //TODO derive num_measurements from configuration
+    // @todo: derive num_measurements from configuration
+
     unsigned int* intput_ranges = new unsigned int[num_measurements];
     unsigned int* intput_intensities = new unsigned int[num_measurements];
 
-    this->sick_lms->GetSickScan(intput_ranges, intput_intensities, num_measurements, num_measurements);
+    this->sickLMS->GetSickScan(intput_ranges, intput_intensities, num_measurements, num_measurements);
 
 
     std::vector< quantity<length> > output_ranges;
@@ -270,11 +271,11 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     for(unsigned int i=0; i< num_measurements; i++){
       output_ranges[i] = intput_ranges[i] * meter; //TODO use mesurment unit to derive right unit
-      output_range_angles[i] =  this->config->scan_resolution.value() * (i + this->config->scan_angle.value()/2 * (-1)) *radian ;
+      output_range_angles[i] =  this->config->scanResolution * (i + this->config->scanAngle.value()/2 * (-1)) ;
       output_intensities[i] = intput_intensities[i];
     }
-    data.setNumMeasurementValues(num_measurements);
-    data.setRanges(output_ranges, output_range_angles);
+//    data.setNumMeasurementValues(num_measurements);
+ //   data.setMeasurements(output_ranges, output_range_angles);
     // TODO set intensities
 
   } catch (SickToolbox::SickException &e){
@@ -295,11 +296,11 @@ bool SickLMS2xx::resetDevice() {
     return false;
   }
   try {
-    this->sick_lms->ResetSick();
+    this->sickLMS->ResetSick();
   } catch (SickToolbox::SickException &e){
-    error.addError("unable_to_reset_Sick_LMS", e.what());
+    error.addError("unable_to_reset_sickLMS", e.what());
   } catch (...) {
-    error.addError("unable_to_reset_Sick_LMS", "could not reset the Sick LMS");
+    error.addError("unable_to_reset_sickLMS", "could not reset the Sick LMS");
     return false;
   }
   return true;
@@ -312,19 +313,19 @@ bool SickLMS2xx::open(Errors& error) {
     return true;
   }
 
-  if (this->config->device_path == "") {
+  if (this->config->devicePath == "") {
     error.addError("no_DevicePath", "the device path is not specified in the configuration");
     this->isConnected = false;
     return false;
   }
 
-  if (this->sick_lms != NULL) {
+  if (this->sickLMS != NULL) {
     error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
     this->isConnected = false;
     return false;
   }
 
-  this->sick_lms = new SickToolbox::SickLMS(this->config->device_path);
+  this->sickLMS = new SickToolbox::SickLMS(this->config->devicePath);
 
   SickToolbox::SickLMS::sick_lms_baud_t desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
 
@@ -348,15 +349,15 @@ bool SickLMS2xx::open(Errors& error) {
 
   //Initialize the Sick LMS 2xx
   try {
-    this->sick_lms->Initialize(desired_baud);
+    this->sickLMS->Initialize(desired_baud);
     this->isConnected = true;
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
     this->isConnected = false;
-    delete this->sick_lms;
-    this->sick_lms = NULL;
+    delete this->sickLMS;
+    this->sickLMS = NULL;
     return false;
   }
   return true;

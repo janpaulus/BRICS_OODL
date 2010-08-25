@@ -50,7 +50,7 @@ class SickLD : public LaserScanner {
 
     bool isConnected;
 
-    SickToolbox::SickLD* sick_ld;
+    SickToolbox::SickLD* sickLD;
 
 };
 #endif

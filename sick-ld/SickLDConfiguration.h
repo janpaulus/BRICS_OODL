@@ -22,9 +22,9 @@ class SickLDConfiguration : public LaserScannerConfiguration {
 
     virtual SickLDConfiguration & operator=(const SickLDConfiguration & source);
 
-    quantity<frequency> motor_speed;
+    quantity<frequency> motorSpeed;
 
-    unsigned int num_sectors;
+    unsigned int numSectors;
 
 };
 #endif

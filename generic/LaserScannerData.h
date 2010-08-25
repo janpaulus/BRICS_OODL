@@ -16,33 +16,25 @@ using namespace boost::units::si;
  */
 class LaserScannerData {
   public:
-    LaserScannerData(const unsigned int& num_range_measurements_values);
+    LaserScannerData();
 
     ~LaserScannerData();
 
-    void getRanges(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& range_angles) const;
+    void getMesasurementIterator(std::vector< quantity<length> >::iterator rangesIterator);
 
-    void setRanges(const std::vector< quantity<length> >& ranges, const std::vector< quantity<plane_angle> >& range_angles);
+    void getMeasurements(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& rangeAngles) const;
 
-    void setRanges(double* ranges, unsigned int num_ranges, const boost::units::si::length& unit);
-
-    void setRanges(unsigned int* ranges, unsigned int num_ranges, const boost::units::si::length& unit);
+    void setMeasurements(const std::vector< quantity<length> >& ranges, const std::vector< quantity<plane_angle> >& rangeAngles);
 
     quantity<si::time> getTimeStamp() const;
 
-    void setNumMeasurementValues(const unsigned int& num_range_measurements_values);
-
-    unsigned int getNumMeasurementValues();
-
 
   protected:
-    std::vector< quantity<length> > _ranges;
+    std::vector< quantity<length> > ranges;
 
-    std::vector< quantity<plane_angle> > _range_angles;
+    std::vector< quantity<plane_angle> > rangeAngles;
 
     quantity<si::time> timestamp;
-
-    unsigned int num_range_measurements;
 
 };
 #endif
