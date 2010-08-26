@@ -30,6 +30,8 @@ class LaserScannerData {
 
     void setMeasurements(unsigned int* ranges, double* rangeAngles, const unsigned int& numRanges, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit);
 
+    void setMeasurements(const std::vector<double>& ranges, const std::vector<double>& rangeAngles, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit);
+
     quantity<si::time> getTimeStamp() const;
 
 

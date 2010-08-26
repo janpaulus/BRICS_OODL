@@ -20,9 +20,11 @@ class LaserScannerDataWithIntensities : public LaserScannerData {
 
     void setMeasurements(const std::vector< quantity<length> >& ranges, const std::vector< quantity<plane_angle> >& rangeAngles, const std::vector< double >& intensities);
 
-    void setMeasurements(double* ranges, double* rangeAngles, double* intensities, const unsigned int& numMeasurements, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit, const boost::units::si::length& intensitieUnit);
+    void setMeasurements(double* ranges, double* rangeAngles, unsigned int* intensities, const unsigned int& numMeasurements, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit, const boost::units::si::length& intensitieUnit);
 
     void setMeasurements(unsigned int* ranges, double* rangeAngles, unsigned int* intensities, const unsigned int& numMeasurements, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit, const boost::units::si::length& intensitieUnit);
+
+    void setMeasurements(const std::vector<double>& ranges, const std::vector<double>& rangeAngles, const std::vector<double>& intensities, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit, const boost::units::si::length& intensitieUnit);
 
 
   protected:

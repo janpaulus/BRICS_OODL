@@ -11,6 +11,12 @@ SickLD::SickLD() {
   this->sickLD = NULL;
   this->config = NULL;
   this->isConnected = false;
+  this->ranges = NULL;
+  this->rangeAngles = NULL;
+  this->intensities = NULL;
+  this->ranges = new double[SickToolbox::SickLD::SICK_MAX_NUM_MEASUREMENTS];
+  this->rangeAngles = new double[SickToolbox::SickLD::SICK_MAX_NUM_MEASUREMENTS];
+  this->intensities = new unsigned int[SickToolbox::SickLD::SICK_MAX_NUM_MEASUREMENTS];
   // Bouml preserved body end 00026771
 }
 
@@ -20,6 +26,15 @@ SickLD::~SickLD() {
   this->close(er);
   if (this->config != NULL) {
     delete this->config;
+  }
+  if (this->ranges != NULL) {
+    delete this->ranges;
+  }
+  if (this->rangeAngles != NULL) {
+    delete this->rangeAngles;
+  }
+  if (this->intensities != NULL) {
+    delete this->intensities;
   }
   // Bouml preserved body end 000267F1
 }
@@ -155,22 +170,15 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
   }
   try {
 
-    unsigned int num_measurements = 0;
-    //TODO derive num_measurements from configuration
-    double* intput_ranges = new double[num_measurements];
+    unsigned int NumMeasurements = 0;
 
-    this->sickLD->GetSickMeasurements(intput_ranges, NULL, &num_measurements);
+    this->sickLD->GetSickMeasurements(ranges, NULL, &NumMeasurements);
 
-
-    std::vector< quantity<length> > output_ranges;
-    std::vector< quantity<plane_angle> > output_range_angles;
-
-    for(unsigned int i=0; i< num_measurements; i++){
-      output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scanResolution * (i + this->config->scanAngle.value()/2 * (-1));
+    for(unsigned int i=0; i< NumMeasurements; i++){
+      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
     }
-//    data.setNumMeasurementValues(num_measurements);
- //   data.setMeasurements(output_ranges, output_range_angles);
+
+    data.setMeasurements(ranges, rangeAngles, NumMeasurements, meter, radian); //TODO find out right units
 
 
   } catch (SickToolbox::SickException &e){
@@ -190,26 +198,19 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     return false;
   }
   try {
-    unsigned int num_measurements = 0;
-    //TODO derive num_measurements from configuration
-    double* intput_ranges = new double[num_measurements];
-    unsigned int* intput_intensities = new unsigned int[num_measurements];
 
-    this->sickLD->GetSickMeasurements(intput_ranges, intput_intensities, &num_measurements);
+   unsigned int NumMeasurements = 0;
 
 
-    std::vector< quantity<length> > output_ranges;
-    std::vector< quantity<plane_angle> > output_range_angles;
-    std::vector< double > output_intensities;
+    this->sickLD->GetSickMeasurements(this->ranges, this->intensities, &NumMeasurements);
 
-    for(unsigned int i=0; i< num_measurements; i++){
-      output_ranges[i] = intput_ranges[i] * meter;
-      output_range_angles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) *radian ;
-      output_intensities[i] = intput_intensities[i];
+
+
+    for(unsigned int i=0; i< NumMeasurements; i++){
+      this->rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
     }
-//    data.setNumMeasurementValues(num_measurements);
-//    data.setMeasurements(output_ranges, output_range_angles);
-    // TODO set intensities
+
+    data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, NumMeasurements, meter, radian, meter); //TODO find out right units
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());

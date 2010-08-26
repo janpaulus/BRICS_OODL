@@ -61,17 +61,17 @@ bool SickS300::setConfiguration(const SickS300Configuration& configuration, Erro
   }
   this->config = new SickS300Configuration;
   *(this->config) = configuration;
-  
+
   if (!this->open(error)) {
     return false;
   }
- /* try{
+  /* try{
   
     
-  } catch (...) {
-    error.addError("unable_to_set_configuration", "could not set the configuration to the Sick S300");
-    return false;
-  }*/
+   } catch (...) {
+     error.addError("unable_to_set_configuration", "could not set the configuration to the Sick S300");
+     return false;
+   }*/
 
   // configuration.operating_mode = this->sick_s300->GetSickOperatingMode();
   // configuration.model = this->sick_s300->SickTypeToString(this->sick_s300->GetSickType());
@@ -85,7 +85,7 @@ bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors
     return false;
   }
   try {
-   
+
 
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
@@ -103,7 +103,7 @@ bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& er
   }
 
   try {
-   
+
 
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
@@ -123,21 +123,21 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
     std::vector<double> intput_ranges; //meter
     std::vector<double> intput_range_angles; //rad
     std::vector<double> intput_intensity; //?
-    
+
     this->sickS300->getScan(intput_ranges, intput_range_angles, intput_intensity);
-    
-    if(intput_ranges.size() != intput_range_angles.size()){
+
+    if (intput_ranges.size() != intput_range_angles.size()) {
       error.addError("unable_to_get_data", "ranges vector and range_angles vector have to have the same size");
       return false;
     }
     std::vector< quantity<length> > output_ranges;
     std::vector< quantity<plane_angle> > output_range_angles;
-    for(unsigned int i=0; i< intput_ranges.size(); i++){
+    for (unsigned int i = 0; i < intput_ranges.size(); i++) {
       output_ranges[i] = intput_ranges[i] * meter;
       output_range_angles[i] = intput_range_angles[i] * radian;
     }
-//    data.setNumMeasurementValues(intput_ranges.size());
- //   data.setMeasurements(output_ranges, output_range_angles);
+    //    data.setNumMeasurementValues(intput_ranges.size());
+    //   data.setMeasurements(output_ranges, output_range_angles);
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -150,16 +150,18 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
 
 bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body begin 00021267
-   if (!this->open(error)) {
+  if (!this->open(error)) {
     return false;
   }
   try {
-//    unsigned int ranges_size = data.getNumMeasurementValues();
-//    unsigned int intensities_size = data.getNumIntensitiesValues();
 
+    std::vector<double> vdDistanceM;
+    std::vector<double> vdAngleRAD;
+    std::vector<double> vdIntensityAU;
 
-//    getScan(std::vector<double> &vdDistanceM, std::vector<double> &vdAngleRAD, std::vector<double> &vdIntensityAU);
- //   this->sick_s300->GetSickScan(data.getRangesPointer(), data.getIntensitiesPointer(), ranges_size, intensities_size);
+    this->sickS300->getScan(vdDistanceM, vdAngleRAD, vdIntensityAU);
+
+    data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");

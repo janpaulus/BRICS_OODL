@@ -60,6 +60,23 @@ void LaserScannerData::setMeasurements(unsigned int* ranges, double* rangeAngles
   // Bouml preserved body end 0002A5F1
 }
 
+void LaserScannerData::setMeasurements(const std::vector<double>& ranges, const std::vector<double>& rangeAngles, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit) {
+  // Bouml preserved body begin 0002BFF1
+  if(ranges.size() != rangeAngles.size()){
+
+    return;
+  }
+  this->ranges.reserve(ranges.size());
+  this->rangeAngles.reserve(ranges.size());
+  
+  for(unsigned int i=0; i< ranges.size(); i++){
+      this->ranges[i] = (ranges[i]) * rangeUnit;
+      this->rangeAngles[i] =  rangeAngles[i] * angleUnit;
+  }
+
+  // Bouml preserved body end 0002BFF1
+}
+
 quantity<si::time> LaserScannerData::getTimeStamp() const {
   // Bouml preserved body begin 0001F9FC
   // Bouml preserved body end 0001F9FC

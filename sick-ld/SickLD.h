@@ -52,5 +52,11 @@ class SickLD : public LaserScanner {
 
     SickToolbox::SickLD* sickLD;
 
+    double* ranges;
+
+    double* rangeAngles;
+
+    unsigned int* intensities;
+
 };
 #endif

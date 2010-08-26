@@ -63,7 +63,5 @@ class SickLMS2xx : public LaserScanner {
 
     unsigned int* intensities;
 
-    unsigned int numMeasurements;
-
 };
 #endif

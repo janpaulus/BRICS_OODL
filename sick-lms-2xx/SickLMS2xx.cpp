@@ -9,7 +9,9 @@ SickLMS2xx::SickLMS2xx() {
   this->ranges = NULL;
   this->rangeAngles = NULL;
   this->intensities = NULL;
-  this->numMeasurements = 0;
+  this->ranges = new unsigned int[SickToolbox::SickLMS::SICK_MAX_NUM_MEASUREMENTS];
+  this->rangeAngles = new double[SickToolbox::SickLMS::SICK_MAX_NUM_MEASUREMENTS];
+  this->intensities = new unsigned int[SickToolbox::SickLMS::SICK_MAX_NUM_MEASUREMENTS];
   // Bouml preserved body end 0001F471
 }
 
@@ -225,30 +227,15 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
   }
   try {
 
-    // derive num_measurements from configuration
-    if(this->config->scanResolution.value() == 0.0){
-      error.addError("unable_to_get_data", "the scan resolution can not be zero");
-      return false;
-    }
+    unsigned int newNumMeasurements = 0;
 
-    unsigned int newNumMeasurements = ((1.0/this->config->scanResolution) * this->config->scanAngle).value();;
+    this->sickLMS->GetSickScan(ranges, newNumMeasurements);
 
-    if(this->numMeasurements != newNumMeasurements){
-      this->numMeasurements  = newNumMeasurements;
-      delete this->ranges;
-      delete this->rangeAngles;
-      this->ranges = new unsigned int[this->numMeasurements];
-      this->rangeAngles = new double[this->numMeasurements];
-    }
-
-    this->sickLMS->GetSickScan(ranges, this->numMeasurements);
-
-
-    for(unsigned int i=0; i< this->numMeasurements; i++){
+    for(unsigned int i=0; i< newNumMeasurements; i++){
       rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
     }
 
-    data.setMeasurements(ranges, rangeAngles, this->numMeasurements, meter, radian); //TODO find out right units
+    data.setMeasurements(this->ranges, this->rangeAngles, newNumMeasurements, meter, radian); //TODO find out right units
 
 
   } catch (SickToolbox::SickException &e){
@@ -269,35 +256,26 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   }
   try {
 
-    // derive num_measurements from configuration
-    if(this->config->scanResolution.value() == 0.0){
-      error.addError("unable_to_get_data", "the scan resolution can not be zero");
-      return false;
+    unsigned int numMeasurements = 0;
+    unsigned int numintensitiesMeasurements = 0;
+
+ 
+    this->sickLMS->GetSickScan(this->ranges, this->intensities, numMeasurements, numintensitiesMeasurements);
+
+    if(numMeasurements != numintensitiesMeasurements){
+      error.addError("unable_to_get_data", "number of ranges and intensities have to be the same");
+      return false;  
     }
 
-    unsigned int newNumMeasurements = ((1.0/this->config->scanResolution) * this->config->scanAngle).value();;
-
-    if(this->numMeasurements != newNumMeasurements){
-      this->numMeasurements  = newNumMeasurements;
-      delete this->ranges;
-      delete this->rangeAngles;
-      delete this->intensities;
-      this->ranges = new unsigned int[this->numMeasurements];
-      this->rangeAngles = new double[this->numMeasurements];
-      this->intensities = new unsigned int[this->numMeasurements];
-    }
-
-    this->sickLMS->GetSickScan(ranges, intensities, this->numMeasurements, this->numMeasurements);
-
-
-    for(unsigned int i=0; i< this->numMeasurements; i++){
+    for(unsigned int i=0; i< numMeasurements; i++){
       rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
     }
 
-    data.setMeasurements(ranges, rangeAngles, intensities, this->numMeasurements, meter, radian, meter); //TODO find out right units
+    data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, numMeasurements, meter, radian, meter); //TODO find out right units
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
+    return false;
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick LMS");
     return false;
