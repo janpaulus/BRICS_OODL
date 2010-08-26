@@ -229,7 +229,7 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
 
     unsigned int newNumMeasurements = 0;
 
-    this->sickLMS->GetSickScan(ranges, newNumMeasurements);
+    this->sickLMS->GetSickScan(this->ranges, newNumMeasurements);
 
     for(unsigned int i=0; i< newNumMeasurements; i++){
       rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
