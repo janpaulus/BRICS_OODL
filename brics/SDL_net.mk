@@ -2,17 +2,18 @@ DEPEND_DEPTH:=		${DEPEND_DEPTH}+
 SDL_NET_DEPEND_MK:=	${SDL_NET_DEPEND_MK}+
 
 ifeq (+,$(DEPEND_DEPTH))
-DEPEND_PKG+=		SDL_NET
+DEPEND_PKG+=		sdl_net
 endif
 
 ifeq (+,$(SDL_NET_DEPEND_MK)) # -------------------------------------
 
-PREFER.sdl?=	system
+PREFER.sdl_net?=	system
 DEPEND_USE+=		sdl_net
 DEPEND_ABI.sdl_net?=	sdl_net>=1.2
 
 SYSTEM_SEARCH.sdl_net=	\
-	'bin/sdl:/SDL/{s/[^.0-9]//gp;q;}:% --version'
+	'include/SDL/SDL_net.h' \
+	'lib/libSDL_net.{a,so,dylib}'
 
 SYSTEM_PKG.Linux.sdl_net=libsdl-net1.2-dev
 
