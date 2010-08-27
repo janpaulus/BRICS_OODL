@@ -22,6 +22,18 @@ link_libraries(
 
 )
 
+ADD_LIBRARY(OODL_SickS300
+  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300Configuration.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
+)
+
 ADD_EXECUTABLE(OODL_SickS300_test
   ${CMAKE_HOME_DIRECTORY}/sick-s300/applications/Test.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
@@ -35,4 +47,5 @@ ADD_EXECUTABLE(OODL_SickS300_test
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
 )
 
-INSTALL(TARGETS OODL_SickS300_test RUNTIME DESTINATION bin )
+INSTALL(TARGETS OODL_SickS300_test OODL_SickS300 RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
