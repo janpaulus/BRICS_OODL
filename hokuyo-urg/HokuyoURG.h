@@ -5,16 +5,17 @@
 #include "LaserScanner.h"
 #include "Errors.h"
 #include "LaserScannerConfiguration.h"
-#include "LaserScannerData.h"
-
 #include "HokuyoURGConfiguration.h"
+#include "LaserScannerData.h"
+#include "LaserScannerDataWithIntensities.h"
 
 #include "UrgCtrl.h"
-
-using namespace qrk;
-
-class LaserScannerDataWithIntensities;
-
+#include "RangeSensorParameter.h"
+#include <boost/units/systems/si.hpp>
+#include <boost/units/make_scaled_unit.hpp>
+#include <boost/units/systems/si/prefixes.hpp>
+using namespace boost::units;
+using namespace boost::units::si;
 /**
  * \brief 
  *
@@ -49,7 +50,7 @@ class HokuyoURG : public LaserScanner {
 
     bool isConnected;
 
-    UrgCtrl urgDevice;
+    qrk::UrgCtrl hokuyo;
 
 };
 #endif

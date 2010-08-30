@@ -4,12 +4,12 @@ SET( OODL_HokuyoURG_VERSION 0.01 )
 #SET( PROJ_SOURCE_DIR ${OODL_HokuyoURG_SOURCE_DIR} )
 #SET( PROJ_BINARY_DIR ${OODL_HokuyoURG_BINARY_DIR} )
 
-#IF(NOT DEFINED HOKUYO_URG_PATH)
-  SET( HOKUYO_URG_PATH /home/brics/openrobots/ CACHE PATH "Hokuyo URG path")
-#ENDIF(NOT DEFINED HOKUYO_URG_PATH)
+IF(NOT DEFINED HOKUYO_URG_PATH)
+  SET( HOKUYO_URG_PATH ${CMAKE_HOME_DIRECTORY}/../BRICS_Software/ CACHE PATH "Hokuyo URG path")
+ENDIF(NOT DEFINED HOKUYO_URG_PATH)
 
 FIND_PACKAGE( Boost REQUIRED )
-FIND_PACKAGE( SDL REQUIRED )
+#FIND_PACKAGE( SDL REQUIRED )
 #FIND_PACKAGE( SDL_net REQUIRED )
 
 include_directories(
@@ -35,11 +35,10 @@ link_libraries(
     liburg_geometry.a
     liburg_monitor.a
     liburg_system.a
-
  #  libc_urg.a
  #  libc_urg_connection.a
  #  libc_urg_system.a
- SDL
+    SDL
 )
 
 ADD_EXECUTABLE(OODL_HokuyoURG_test

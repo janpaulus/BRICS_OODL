@@ -37,12 +37,13 @@ int main(){
 */
   SickLMS2xxConfiguration config;
   config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
-  config.boud = BAUD_500K;
+  config.baud = BAUD_500K;
   config.measuringMode = SickLMS::SICK_MS_MODE_REFLECTIVITY;
   config.availabilityLevel = SickLMS::SICK_FLAG_AVAILABILITY_DEFAULT;
   config.sensitivity = SickLMS::SICK_SENSITIVITY_STANDARD;
   config.scanResolution = 0.25 * M_PI/180.0 *radian;
-  config.scanAngle = 100.0 * M_PI/180.0 *radian;
+  config.scanAngleStart = -100.0 * M_PI/180.0 *radian;
+  config.scanAngleStop = 100.0 * M_PI/180.0 *radian;
 
   SickLMS2xx scanner;
 

@@ -91,8 +91,8 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
 
   double start_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
   double stop_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
-  start_angs[0] = 180.0 - ((configuration.scanAngle.value()*180.0/M_PI)/2);
-  stop_angs[0]  = 180.0 + ((configuration.scanAngle.value()*180.0/M_PI)/2);
+  start_angs[0] = configuration.scanAngleStart.value()*180.0/M_PI;
+  stop_angs[0]  = configuration.scanAngleStop.value()*180.0/M_PI;
   try {
 
     this->sickLD->SetSickGlobalParamsAndScanAreas(configuration.motorSpeed.value(),
@@ -145,12 +145,12 @@ bool SickLD::getConfiguration(SickLDConfiguration& configuration, Errors& error)
     configuration.firmware = this->sickLD->GetSickFirmwareName()+ this->sickLD->GetSickFirmwareVersion();
   //  configuration.model
   //  configuration.protocol
-    configuration.serialnumber = this->sickLD->GetSickSerialNumber();
+    configuration.serialNumber = this->sickLD->GetSickSerialNumber();
     configuration.devicePath = this->sickLD->GetSickIPAddress();
     configuration.scanResolution = (this->sickLD->GetSickScanResolution()*M_PI/180.0) *radian;
     configuration.motorSpeed = this->sickLD->GetSickMotorSpeed() * hertz;
     configuration.numSectors = this->sickLD->GetSickNumActiveSectors();
-    configuration.scanAngle = (this->sickLD->GetSickScanArea()*M_PI/180.0) *radian;
+    configuration.scanAngleStart = (this->sickLD->GetSickScanArea()*M_PI/180.0)/-2.0 *radian;
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -175,7 +175,7 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
     this->sickLD->GetSickMeasurements(ranges, NULL, &NumMeasurements);
 
     for(unsigned int i=0; i< NumMeasurements; i++){
-      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
     }
 
     data.setMeasurements(ranges, rangeAngles, NumMeasurements, meter, radian); //TODO find out right units
@@ -207,7 +207,7 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
 
     for(unsigned int i=0; i< NumMeasurements; i++){
-      this->rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      this->rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, NumMeasurements, meter, radian, meter); //TODO find out right units

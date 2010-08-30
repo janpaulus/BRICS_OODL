@@ -204,7 +204,7 @@ bool SickS300::open(Errors& error) {
 
   int desired_baud = 500000;
 
-  switch (this->config->boud) {
+  switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = 9600;
       break;

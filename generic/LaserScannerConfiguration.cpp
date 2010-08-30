@@ -25,19 +25,20 @@ LaserScannerConfiguration::LaserScannerConfiguration(const LaserScannerConfigura
 LaserScannerConfiguration & LaserScannerConfiguration::operator=(const LaserScannerConfiguration & source) {
   // Bouml preserved body begin 00021571
 
-  this->boud = source.boud;
+  this->baud = source.baud;
   this->devicePath = source.devicePath;
   this->firmware = source.firmware;
-  this->measuringMode = source.measuringMode;
+
   this->model = source.model;
-  this->operatingMode = source.operatingMode;
-  this->peakThreshold = source.peakThreshold;
+
   this->product = source.product;
   this->protocol = source.protocol;
-  this->scanAngle = source.scanAngle;
+  this->scanAngleStart = source.scanAngleStart;
+  this->scanAngleStop = source.scanAngleStop;
   this->scanResolution = source.scanResolution;
-  this->sensitivity = source.sensitivity;
-  this->serialnumber = source.serialnumber;
+  this->maxRangeDistance = source.maxRangeDistance;
+  this->minRangeDistance = source.minRangeDistance;
+  this->serialNumber = source.serialNumber;
   this->vendor = source.vendor;
 
   return *this;

@@ -1,6 +1,8 @@
 
 #include "SickLMS2xx.h"
 
+
+
 SickLMS2xx::SickLMS2xx() {
   // Bouml preserved body begin 0001F471
   this->sickLMS = NULL;
@@ -105,12 +107,12 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
     if (configuration.measuringUnits != currentConfig.measuringUnits) {
       this->sickLMS->SetSickMeasuringUnits(configuration.measuringUnits);
     }
-    if ((configuration.scanAngle != currentConfig.scanAngle) || (configuration.scanResolution != currentConfig.scanResolution)) {
+    if ((configuration.scanAngleStart != currentConfig.scanAngleStart) || (configuration.scanAngleStop != currentConfig.scanAngleStop) || (configuration.scanResolution != currentConfig.scanResolution)) {
 
       sick_lms_scan_angle_t desired_scan_angle;
       sick_lms_scan_resolution_t desired_scan_resolution;
 
-      double angle = configuration.scanAngle.value()*180.0 / M_PI;
+      double angle = -configuration.scanAngleStart.value()+configuration.scanAngleStop.value() *180.0 / M_PI;  //TODO do proper calculation
       double resolution = configuration.scanResolution.value()*180.0 / M_PI;
       double offset = 1;
 
@@ -166,14 +168,14 @@ bool SickLMS2xx::getConfiguration(LaserScannerConfiguration& configuration, Erro
   try {
     configuration.vendor = "SICK";
     configuration.product = "LMS";
-    configuration.measuringMode = this->sickLMS->SickMeasuringModeToString(this->sickLMS->GetSickMeasuringMode());
-    configuration.sensitivity = this->sickLMS->SickSensitivityToString(this->sickLMS->GetSickSensitivity());
-    configuration.peakThreshold = this->sickLMS->SickPeakThresholdToString(this->sickLMS->GetSickPeakThreshold());
-    configuration.scanAngle = this->sickLMS->GetSickScanAngle() * M_PI / 180.0 * radian;
+ //   configuration.measuringMode = this->sickLMS->SickMeasuringModeToString(this->sickLMS->GetSickMeasuringMode());
+ //   configuration.sensitivity = this->sickLMS->SickSensitivityToString(this->sickLMS->GetSickSensitivity());
+ //   configuration.peakThreshold = this->sickLMS->SickPeakThresholdToString(this->sickLMS->GetSickPeakThreshold());
+ //   configuration.scanAngle = this->sickLMS->GetSickScanAngle() * M_PI / 180.0 * radian;
     configuration.scanResolution = this->sickLMS->GetSickScanResolution() * M_PI / 180.0 * radian;
     configuration.firmware = this->sickLMS->GetSickSoftwareVersionAsString();
     // this->sickLMS->GetSickStatusAsString();
-    configuration.operatingMode = this->sickLMS->SickOperatingModeToString(this->sickLMS->GetSickOperatingMode());
+//    configuration.operatingMode = this->sickLMS->SickOperatingModeToString(this->sickLMS->GetSickOperatingMode());
     configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
 
   } catch (SickToolbox::SickException &e){
@@ -200,7 +202,9 @@ bool SickLMS2xx::getConfiguration(SickLMS2xxConfiguration& configuration, Errors
     configuration.measuringMode = this->sickLMS->GetSickMeasuringMode();
     configuration.sensitivity = this->sickLMS->GetSickSensitivity();
     configuration.peakThreshold = this->sickLMS->GetSickPeakThreshold();
-    configuration.scanAngle = this->sickLMS->GetSickScanAngle() * M_PI / 180.0 * radian;
+    configuration.scanAngleStart = (this->sickLMS->GetSickScanAngle() * M_PI / 180.0)/-2.0 * radian;
+    configuration.scanAngleStop = (this->sickLMS->GetSickScanAngle() * M_PI / 180.0)/2.0 * radian;
+
     configuration.scanResolution = this->sickLMS->GetSickScanResolution() * M_PI / 180.0 * radian;
     configuration.firmware = this->sickLMS->GetSickSoftwareVersionAsString();
     // this->sickLMS->GetSickStatusAsString();
@@ -231,8 +235,10 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
 
     this->sickLMS->GetSickScan(this->ranges, newNumMeasurements);
 
+
     for(unsigned int i=0; i< newNumMeasurements; i++){
-      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
+
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, newNumMeasurements, meter, radian); //TODO find out right units
@@ -268,7 +274,7 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     }
 
     for(unsigned int i=0; i< numMeasurements; i++){
-      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, numMeasurements, meter, radian, meter); //TODO find out right units
@@ -325,7 +331,7 @@ bool SickLMS2xx::open(Errors& error) {
 
   SickToolbox::SickLMS::sick_lms_baud_t desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
 
-  switch (this->config->boud) {
+  switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_9600;
       break;

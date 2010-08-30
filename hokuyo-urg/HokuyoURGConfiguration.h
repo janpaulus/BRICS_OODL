@@ -4,6 +4,11 @@
 
 #include "LaserScannerConfiguration.h"
 
+#include <boost/units/systems/si.hpp>
+#include <boost/units/make_scaled_unit.hpp>
+#include <boost/units/systems/si/prefixes.hpp>
+using namespace boost::units;
+using namespace boost::units::si;
 class HokuyoURGConfiguration : public LaserScannerConfiguration {
   public:
     HokuyoURGConfiguration();
