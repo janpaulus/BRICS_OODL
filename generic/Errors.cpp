@@ -37,6 +37,18 @@ void Errors::addError(std::string name, std::string description) {
   // Bouml preserved body begin 000212F1
   this->occurredErrors[name] = description;
   std::cout << "ERROR: " << name << " " << description << std::endl;
+ // src::logger lg;
+//  ::boost::log::sources::severity_logger<4> lg;
+
+  // The logger implicitly adds a source-specific attribute 'Severity'
+// of type 'severity_level' on construction
+src::severity_logger< severity_level > lg;
+
+BOOST_LOG_SEV(lg, normal) << "A regular message";
+BOOST_LOG_SEV(lg, warning) << "Something bad is going on but I can handle it";
+BOOST_LOG_SEV(lg, critical) << "Everything crumbles, shoot me now!";
+
+//    BOOST_LOG(lg) << name;
   // Bouml preserved body end 000212F1
 }
 

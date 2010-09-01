@@ -1,8 +1,6 @@
 
 #include "SickLMS2xx.h"
 
-
-
 SickLMS2xx::SickLMS2xx() {
   // Bouml preserved body begin 0001F471
   this->sickLMS = NULL;

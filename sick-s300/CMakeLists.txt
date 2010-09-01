@@ -14,12 +14,18 @@ include_directories(
 )
 
 link_directories(
-  ${Boost_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIR}/lib
+  ${Boost_LIBRARY_DIRS}
+
 )
 
-link_libraries(	
-
+link_libraries(
+boost_thread
+boost_date_time
+boost_system
+boost_filesystem
+boost_regex
+boost_log_setup
+boost_log
 )
 
 ADD_LIBRARY(OODL_SickS300

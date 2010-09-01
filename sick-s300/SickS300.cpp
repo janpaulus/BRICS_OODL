@@ -6,6 +6,12 @@ SickS300::SickS300() {
   this->sickS300 = NULL;
   this->config = NULL;
   this->isConnected = false;
+  src::severity_logger< severity_level > lg;
+
+  BOOST_LOG_SEV(lg, normal) << "A regular message";
+  BOOST_LOG_SEV(lg, warning) << "Something bad is going on but I can handle it";
+  BOOST_LOG_SEV(lg, critical) << "Everything crumbles, shoot me now!";
+
   // Bouml preserved body end 00020E67
 }
 
