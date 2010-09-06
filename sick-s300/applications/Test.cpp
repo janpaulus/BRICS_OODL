@@ -53,10 +53,6 @@ int main(){
     logging::init_log_to_file("log.txt");
 
 
-// Here we go, we can write logs right away
-    src::logger lg;
-    BOOST_LOG(lg) << "Hello world!";
-
 
   SickS300Configuration config;
   config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx

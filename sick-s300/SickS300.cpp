@@ -8,9 +8,6 @@ SickS300::SickS300() {
   this->isConnected = false;
   src::severity_logger< severity_level > lg;
 
-  BOOST_LOG_SEV(lg, normal) << "A regular message";
-  BOOST_LOG_SEV(lg, warning) << "Something bad is going on but I can handle it";
-  BOOST_LOG_SEV(lg, critical) << "Everything crumbles, shoot me now!";
 
   // Bouml preserved body end 00020E67
 }
@@ -130,20 +127,27 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
     std::vector<double> intput_range_angles; //rad
     std::vector<double> intput_intensity; //?
 
+    intput_ranges.assign(541, 110);
+    intput_range_angles.assign(541, 0);
+    intput_intensity.assign(541, 0);
+    
+
     this->sickS300->getScan(intput_ranges, intput_range_angles, intput_intensity);
 
     if (intput_ranges.size() != intput_range_angles.size()) {
       error.addError("unable_to_get_data", "ranges vector and range_angles vector have to have the same size");
       return false;
     }
-    std::vector< quantity<length> > output_ranges;
+/*    std::vector< quantity<length> > output_ranges;
     std::vector< quantity<plane_angle> > output_range_angles;
     for (unsigned int i = 0; i < intput_ranges.size(); i++) {
       output_ranges[i] = intput_ranges[i] * meter;
       output_range_angles[i] = intput_range_angles[i] * radian;
     }
-    //    data.setNumMeasurementValues(intput_ranges.size());
-    //   data.setMeasurements(output_ranges, output_range_angles);
+*/
+    std::cout << "S300 " << intput_ranges.size() << " "<< intput_range_angles.size()<< std::endl;
+    data.setMeasurements(intput_ranges, intput_range_angles, meter, radian);
+//    data.setMeasurements(output_ranges, output_range_angles);
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -230,10 +234,12 @@ bool SickS300::open(Errors& error) {
 
   //Initialize the Sick LMS 2xx
   try {
-    this->sickS300->open(this->config->devicePath.c_str(), desired_baud);
+    if(!this->sickS300->open(this->config->devicePath.c_str(), desired_baud)){
+      throw "could not initilize Sick S300";
+    }
     this->isConnected = true;
   } catch (...) {
-    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
+    error.addError("Initialize_failed", "could not initilize Sick S300");
     this->isConnected = false;
     delete this->sickS300;
     this->sickS300 = NULL;

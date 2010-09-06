@@ -28,6 +28,8 @@ class Errors {
 
     void deleteAllErrors();
 
+    void printErrorsToConsole();
+
 
   private:
     //map of error name and error description

@@ -36,12 +36,12 @@ void LaserScannerData::setMeasurements(const std::vector< quantity<length> >& ra
 
 void LaserScannerData::setMeasurements(double* ranges, double* rangeAngles, const unsigned int& numRanges, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit) {
   // Bouml preserved body begin 00028871
-  this->ranges.reserve(numRanges);
-  this->rangeAngles.reserve(numRanges);
+  this->ranges.clear();
+  this->rangeAngles.clear();
   
   for(unsigned int i=0; i< numRanges; i++){
-      this->ranges[i] = ranges[i] * rangeUnit;
-      this->rangeAngles[i] =  rangeAngles[i] * angleUnit;
+      this->ranges.push_back(ranges[i] * rangeUnit);
+      this->rangeAngles.push_back(rangeAngles[i] * angleUnit);
   }
 
   // Bouml preserved body end 00028871
@@ -49,12 +49,12 @@ void LaserScannerData::setMeasurements(double* ranges, double* rangeAngles, cons
 
 void LaserScannerData::setMeasurements(unsigned int* ranges, double* rangeAngles, const unsigned int& numRanges, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit) {
   // Bouml preserved body begin 0002A5F1
-  this->ranges.reserve(numRanges);
-  this->rangeAngles.reserve(numRanges);
+  this->ranges.clear();
+  this->rangeAngles.clear();
   
   for(unsigned int i=0; i< numRanges; i++){
-      this->ranges[i] = ((double)ranges[i]) * rangeUnit;
-      this->rangeAngles[i] =  rangeAngles[i] * angleUnit;
+      this->ranges.push_back(((double)ranges[i]) * rangeUnit);
+      this->rangeAngles.push_back(rangeAngles[i] * angleUnit);
   }
 
   // Bouml preserved body end 0002A5F1
@@ -63,15 +63,14 @@ void LaserScannerData::setMeasurements(unsigned int* ranges, double* rangeAngles
 void LaserScannerData::setMeasurements(const std::vector<double>& ranges, const std::vector<double>& rangeAngles, const boost::units::si::length& rangeUnit, const boost::units::si::plane_angle& angleUnit) {
   // Bouml preserved body begin 0002BFF1
   if(ranges.size() != rangeAngles.size()){
-
     return;
   }
-  this->ranges.reserve(ranges.size());
-  this->rangeAngles.reserve(ranges.size());
+  this->ranges.clear();
+  this->rangeAngles.clear();
   
   for(unsigned int i=0; i< ranges.size(); i++){
-      this->ranges[i] = (ranges[i]) * rangeUnit;
-      this->rangeAngles[i] =  rangeAngles[i] * angleUnit;
+      this->ranges.push_back((ranges[i]) * rangeUnit);
+      this->rangeAngles.push_back(rangeAngles[i] * angleUnit);
   }
 
   // Bouml preserved body end 0002BFF1

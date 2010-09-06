@@ -11,6 +11,10 @@
 #include <boost/units/make_scaled_unit.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
 
+using namespace boost::units;
+using namespace boost::units::si;
+using namespace boost::units::angle;
+
 
 #endif	/* UNITS_H */
 

@@ -159,9 +159,12 @@ bool HokuyoURG::getData(LaserScannerData& data, Errors& error) {
   }
   try {
     std::vector<long> intput_ranges; //meter
+ //   intput_ranges.assign(541, 0);
     long timestamp;
 
     this->hokuyo.capture(intput_ranges, &timestamp);
+
+    std::cout << "tset "<< intput_ranges.size() << std::endl;
 
     std::vector< quantity<length> > output_ranges;
     std::vector< quantity<plane_angle> > output_range_angles;
@@ -271,7 +274,9 @@ bool HokuyoURG::open(Errors& error) {
 
 
   try {
-    this->hokuyo.connect(this->config->devicePath.c_str(), desired_baud);
+    if(!this->hokuyo.connect(this->config->devicePath.c_str(), desired_baud)){
+      throw "Could not initialize the hokuyo!";
+    }
     this->isConnected = true;
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");

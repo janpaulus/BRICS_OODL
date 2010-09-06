@@ -15,7 +15,11 @@ Errors::~Errors() {
 
 void Errors::getNextError(std::string& name, std::string& description) {
   // Bouml preserved body begin 00022AFC
-  iter++;
+  if(iter == this->occurredErrors.end()){
+    iter = this->occurredErrors.begin();
+  }else{
+    iter++;
+  }
   name = iter->first;
   description = iter->second;
   // Bouml preserved body end 00022AFC
@@ -36,19 +40,11 @@ unsigned int Errors::getAmountOfErrors() {
 void Errors::addError(std::string name, std::string description) {
   // Bouml preserved body begin 000212F1
   this->occurredErrors[name] = description;
-  std::cout << "ERROR: " << name << " " << description << std::endl;
- // src::logger lg;
-//  ::boost::log::sources::severity_logger<4> lg;
+  //  std::cout << "ERROR: " << name << " " << description << std::endl;
 
-  // The logger implicitly adds a source-specific attribute 'Severity'
-// of type 'severity_level' on construction
-src::severity_logger< severity_level > lg;
+  src::severity_logger< severity_level > lg;
+  BOOST_LOG_SEV(lg, error) << name << ": " << description;
 
-BOOST_LOG_SEV(lg, normal) << "A regular message";
-BOOST_LOG_SEV(lg, warning) << "Something bad is going on but I can handle it";
-BOOST_LOG_SEV(lg, critical) << "Everything crumbles, shoot me now!";
-
-//    BOOST_LOG(lg) << name;
   // Bouml preserved body end 000212F1
 }
 
@@ -56,5 +52,15 @@ void Errors::deleteAllErrors() {
   // Bouml preserved body begin 00021371
   this->occurredErrors.clear();
   // Bouml preserved body end 00021371
+}
+
+void Errors::printErrorsToConsole() {
+  // Bouml preserved body begin 0002FA71
+  map<std::string,std::string>::iterator iterator;;
+  for(iterator = this->occurredErrors.begin();iterator != this->occurredErrors.end(); iterator++){
+    std::cout << iterator->first << ": " << iterator->second << std::endl;
+  }
+
+  // Bouml preserved body end 0002FA71
 }
 

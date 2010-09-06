@@ -19,8 +19,7 @@ include_directories(
 )
 
 link_directories(
-  ${Boost_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIR}/lib
+  ${Boost_LIBRARY_DIRS}
   ${SICK_TOOLBOX_PATH}/lib
 )
 

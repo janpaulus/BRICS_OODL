@@ -27,11 +27,12 @@ namespace keywords = boost::log::keywords;
 // We define our own severity levels
 enum severity_level
 {
-    normal,
-    notification,
+    trace,
+    debug,
+    info,
     warning,
     error,
-    critical
+    fatal
 };
 
 /*

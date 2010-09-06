@@ -14,6 +14,7 @@ FIND_PACKAGE( Boost REQUIRED )
 
 include_directories(
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/
+${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications
   ${CMAKE_HOME_DIRECTORY}/generic/
   ${Boost_INCLUDE_DIR}
   ${HOKUYO_URG_PATH}/include/urg
@@ -21,8 +22,7 @@ include_directories(
 )
 
 link_directories(
-  ${Boost_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIR}/lib
+  ${Boost_LIBRARY_DIRS}
   ${HOKUYO_URG_PATH}/lib
 )
 
@@ -39,10 +39,29 @@ link_libraries(
  #  libc_urg_connection.a
  #  libc_urg_system.a
     SDL
+boost_thread
+boost_date_time
+boost_system
+boost_filesystem
+boost_regex
+boost_log_setup
+boost_log
 )
 
 ADD_EXECUTABLE(OODL_HokuyoURG_test
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/Test.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURG.cpp
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURGConfiguration.cpp
+)
+
+ADD_EXECUTABLE(OODL_HokuyoURG_plot
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/plot_laserscanner_values.cpp
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/gnuplot_i.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
