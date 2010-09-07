@@ -37,7 +37,7 @@ class LaserScanner {
 
     virtual bool getData(LaserScannerData& data, Errors& error) = 0;
 
-    virtual bool resetDevice() = 0;
+    virtual bool resetDevice(Errors& error) = 0;
 
 };
 #endif

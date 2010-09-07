@@ -48,7 +48,7 @@ class SickLD {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:
@@ -65,6 +65,8 @@ class SickLD {
     double* rangeAngles;
 
     unsigned int* intensities;
+
+    src::severity_logger< severity_level > lg;
 
 };
 #endif

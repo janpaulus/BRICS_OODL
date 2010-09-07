@@ -43,7 +43,7 @@ class HokuyoURG : public LaserScanner {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:
@@ -54,6 +54,8 @@ class HokuyoURG : public LaserScanner {
     bool isConnected;
 
     qrk::UrgCtrl hokuyo;
+
+    src::severity_logger< severity_level > lg;
 
 };
 #endif

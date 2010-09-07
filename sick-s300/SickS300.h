@@ -43,7 +43,7 @@ class SickS300 : public LaserScanner {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:
@@ -54,6 +54,8 @@ class SickS300 : public LaserScanner {
     bool isConnected;
 
     ScannerSickS300* sickS300;
+
+    src::severity_logger< severity_level > lg;
 
 };
 #endif

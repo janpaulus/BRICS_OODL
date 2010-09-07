@@ -26,6 +26,7 @@ bool SickS300::close(Errors& error) {
   if (this->sickS300 != NULL) {
     try {
       this->sickS300->stopScanner();
+       BOOST_LOG_SEV(lg, trace) << "connection to Sick S300 closed";
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
       return false;
@@ -40,79 +41,29 @@ bool SickS300::close(Errors& error) {
 
 bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 00020FE7
-  error.addError("configuration_not_possible", "the configuration is not possible. Please configurate with SickS300Configuration.");
-  /*
-  if (this->config != NULL) {
-    delete this->config;
-  }
-  this->config = new LaserScannerConfiguration;
-   *(this->config) = configuration;
-  
-  if (!this->open(error)) {
-    return false;
-  }
-   */
+  error.addError("configuration_not_possible", "the configuration is not possible.");
   return false;
   // Bouml preserved body end 00020FE7
 }
 
 bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021067
-  if (this->config != NULL) {
-    delete this->config;
-  }
-  this->config = new SickS300Configuration;
-  *(this->config) = configuration;
-
-  if (!this->open(error)) {
-    return false;
-  }
-  /* try{
-  
-    
-   } catch (...) {
-     error.addError("unable_to_set_configuration", "could not set the configuration to the Sick S300");
-     return false;
-   }*/
-
-  // configuration.operating_mode = this->sick_s300->GetSickOperatingMode();
-  // configuration.model = this->sick_s300->SickTypeToString(this->sick_s300->GetSickType());
-  return true;
+  error.addError("configuration_not_possible", "the configuration is not possible.");
+  return false;
   // Bouml preserved body end 00021067
 }
 
 bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 000210E7
-  if (!this->open(error)) {
-    return false;
-  }
-  try {
-
-
-  } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
-  }
-
-  return true;
   // Bouml preserved body end 000210E7
 }
 
 bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021167
-  if (!this->open(error)) {
+  error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
-  }
-
-  try {
-
-
-  } catch (...) {
-    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
-    return false;
-  }
-
-  return true;
   // Bouml preserved body end 00021167
 }
 
@@ -144,9 +95,9 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
       output_range_angles[i] = intput_range_angles[i] * radian;
     }
 */
-    std::cout << "S300 " << intput_ranges.size() << " "<< intput_range_angles.size()<< std::endl;
     data.setMeasurements(intput_ranges, intput_range_angles, meter, radian);
-//    data.setMeasurements(output_ranges, output_range_angles);
+
+    BOOST_LOG_SEV(lg, trace) << "receiving range scan from Sick S300" ;
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -172,6 +123,8 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
 
+    BOOST_LOG_SEV(lg, trace) << "receiving range and intensity scan from Sick S300";
+
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
     return false;
@@ -181,12 +134,9 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body end 00021267
 }
 
-bool SickS300::resetDevice() {
+bool SickS300::resetDevice(Errors& error) {
   // Bouml preserved body begin 000212E7
-  Errors error;
-
   error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
-
   return false;
   // Bouml preserved body end 000212E7
 }
@@ -216,15 +166,19 @@ bool SickS300::open(Errors& error) {
   switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = 9600;
+      BOOST_LOG_SEV(lg, trace) << "using 9600 baut to comunicate to Sick S300";
       break;
     case BAUD_19200:
       desired_baud = 19200;
+      BOOST_LOG_SEV(lg, trace) << "using 19200 baut to comunicate to Sick S300";
       break;
     case BAUD_38400:
       desired_baud = 38400;
+      BOOST_LOG_SEV(lg, trace) << "using 38400 baut to comunicate to Sick S300";
       break;
     case BAUD_500K:
       desired_baud = 500000;
+      BOOST_LOG_SEV(lg, trace) << "using 500000 baut to comunicate to Sick S300";
       break;
     case BAUD_UNKNOWN:
       desired_baud = 0;
@@ -237,6 +191,7 @@ bool SickS300::open(Errors& error) {
       throw "could not initilize Sick S300";
     }
     this->isConnected = true;
+    BOOST_LOG_SEV(lg, trace) << "connection to Sick S300 initialized";
   } catch (...) {
     error.addError("Initialize_failed", "could not initilize Sick S300");
     this->isConnected = false;
