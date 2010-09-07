@@ -2,15 +2,17 @@
 #define _SICKLMS2XX_H
 
 
-#include "LaserScanner.h"
-#include "SickLMS2xxConfiguration.h"
-
 #include <string>
 #include <vector>
-#include "LaserScannerConfiguration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-#include "Errors.h"
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-lms-2xx/SickLMS2xxConfiguration.h"
+
 #include "sicklms-1.0/SickLIDAR.hh"
 #include "sicklms-1.0/SickException.hh"
 #include "sicklms-1.0/SickBufferMonitor.hh"
@@ -18,6 +20,10 @@
 #include "sicklms-1.0/SickLMSBufferMonitor.hh"
 #include "sicklms-1.0/SickLMSMessage.hh"
 #include "sicklms-1.0/SickLMS.hh"
+class Errors;
+class LaserScannerConfiguration;
+class SickLMS2xxConfiguration;
+class LaserScannerData;
 class LaserScannerDataWithIntensities;
 
 using namespace SickToolbox;

@@ -4,8 +4,7 @@
  * \author
  * \date
  */
-#include "SickLD.h"
-
+#include "sick-ld/SickLD.h"
 SickLD::SickLD() {
   // Bouml preserved body begin 00026771
   this->sickLD = NULL;

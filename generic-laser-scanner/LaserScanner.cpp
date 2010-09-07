@@ -4,8 +4,7 @@
  * \author
  * \date
  */
-#include "LaserScanner.h"
-
+#include "generic-laser-scanner/LaserScanner.h"
 LaserScanner::LaserScanner() {
   // Bouml preserved body begin 0001FCFC
   // Bouml preserved body end 0001FCFC

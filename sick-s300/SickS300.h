@@ -2,22 +2,23 @@
 #define _SICKS300_H
 
 
-#include "LaserScanner.h"
-#include "Errors.h"
-#include "LaserScannerConfiguration.h"
-#include "SickS300Configuration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-
 #include <vector>
-#include "ScannerSickS300.h"
-#include "Logger.h"
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-s300/SickS300Configuration.h"
 
-using namespace boost::units;
-using namespace boost::units::si;
+#include "ScannerSickS300.h"
+class Errors;
+class LaserScannerConfiguration;
+class SickS300Configuration;
+class LaserScannerData;
+class LaserScannerDataWithIntensities;
+
 /**
  * \brief 
  *

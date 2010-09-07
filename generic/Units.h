@@ -15,6 +15,8 @@ using namespace boost::units;
 using namespace boost::units::si;
 using namespace boost::units::angle;
 
+typedef boost::units::make_scaled_unit<si::length, boost::units::scale<10, boost::units::static_rational<-3> > >::type millimeter;
+//BOOST_UNITS_STATIC_CONSTANT(millimeters, millimeter);
 
 #endif	/* UNITS_H */
 

@@ -2,9 +2,17 @@
 #define _SICKLMS2XXCONFIGURATION_H
 
 
-#include "LaserScannerConfiguration.h"
-
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
+#include "sicklms-1.0/SickLIDAR.hh"
+#include "sicklms-1.0/SickException.hh"
+#include "sicklms-1.0/SickBufferMonitor.hh"
+#include "sicklms-1.0/SickMessage.hh"
+#include "sicklms-1.0/SickLMSBufferMonitor.hh"
+#include "sicklms-1.0/SickLMSMessage.hh"
 #include "sicklms-1.0/SickLMS.hh"
+
 using namespace SickToolbox;
 class SickLMS2xxConfiguration : public LaserScannerConfiguration {
   public:

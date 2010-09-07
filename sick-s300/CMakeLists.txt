@@ -8,8 +8,7 @@ SET( OODL_SickS300_VERSION 0.01 )
 FIND_PACKAGE( Boost REQUIRED )
 
 include_directories(
-  ${CMAKE_HOME_DIRECTORY}/sick-s300/
-  ${CMAKE_HOME_DIRECTORY}/generic/
+  ${CMAKE_HOME_DIRECTORY}
   ${Boost_INCLUDE_DIR}
 )
 
@@ -19,21 +18,21 @@ link_directories(
 )
 
 link_libraries(
-boost_thread
-boost_date_time
-boost_system
-boost_filesystem
-boost_regex
-boost_log_setup
-boost_log
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  boost_log_setup
+  boost_log
 )
 
 ADD_LIBRARY(OODL_SickS300
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300Configuration.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.cpp
@@ -43,10 +42,10 @@ ADD_LIBRARY(OODL_SickS300
 ADD_EXECUTABLE(OODL_SickS300_test
   ${CMAKE_HOME_DIRECTORY}/sick-s300/applications/Test.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300Configuration.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.cpp

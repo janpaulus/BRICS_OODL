@@ -2,13 +2,9 @@
 #define _HOKUYOURGCONFIGURATION_H
 
 
-#include "LaserScannerConfiguration.h"
-
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-using namespace boost::units;
-using namespace boost::units::si;
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
 class HokuyoURGConfiguration : public LaserScannerConfiguration {
   public:
     HokuyoURGConfiguration();

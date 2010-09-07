@@ -4,6 +4,7 @@
 
 #include "LaserScannerData.h"
 
+#include "generic-laser-scanner/LaserScannerData.h"
 /**
  * \brief 
  *

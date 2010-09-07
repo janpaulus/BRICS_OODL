@@ -1,6 +1,5 @@
 
-#include "LaserScannerData.h"
-
+#include "generic-laser-scanner/LaserScannerData.h"
 LaserScannerData::LaserScannerData() {
   // Bouml preserved body begin 0001F67C
 

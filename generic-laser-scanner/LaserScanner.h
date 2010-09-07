@@ -8,9 +8,13 @@
  * \date
  */
 #include <string>
-#include "LaserScannerConfiguration.h"
-#include "LaserScannerData.h"
-#include "Errors.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic/Errors.h"
+class Errors;
+class LaserScannerConfiguration;
+class LaserScannerData;
+
 /**
  * \brief 
  *

@@ -10,18 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-
-using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-
-typedef boost::units::make_scaled_unit<si::length, boost::units::scale<10, boost::units::static_rational<-3> > >::type millimeter;
-//BOOST_UNITS_STATIC_CONSTANT(millimeters, millimeter);
-
-
+#include "generic/Units.h"
 enum baud_rate {
   BAUD_9600,
   BAUD_19200,

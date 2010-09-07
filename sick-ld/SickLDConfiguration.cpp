@@ -1,6 +1,5 @@
 
-#include "SickLDConfiguration.h"
-
+#include "sick-ld/SickLDConfiguration.h"
 SickLDConfiguration::SickLDConfiguration() {
   // Bouml preserved body begin 00026CF1
   // Bouml preserved body end 00026CF1

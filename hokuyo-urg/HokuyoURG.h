@@ -2,20 +2,23 @@
 #define _HOKUYOURG_H
 
 
-#include "LaserScanner.h"
-#include "Errors.h"
-#include "LaserScannerConfiguration.h"
-#include "HokuyoURGConfiguration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "hokuyo-urg/HokuyoURGConfiguration.h"
 
 #include "UrgCtrl.h"
 #include "RangeSensorParameter.h"
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-using namespace boost::units;
-using namespace boost::units::si;
+class Errors;
+class LaserScannerConfiguration;
+class HokuyoURGConfiguration;
+class LaserScannerData;
+class LaserScannerDataWithIntensities;
+
 /**
  * \brief 
  *

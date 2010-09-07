@@ -1,23 +1,17 @@
 #include <iostream>
 
-#include "LaserScannerConfiguration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-#include "LaserScanner.h"
-#include "Errors.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic/Errors.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
+
 #include "UrgCtrl.h"
 
-
-
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-
-
 using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-using namespace boost::units::angle;
+
 
 
 int main(){

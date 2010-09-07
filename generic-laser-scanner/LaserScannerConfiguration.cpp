@@ -4,8 +4,7 @@
  * \author
  * \date
  */
-#include "LaserScannerConfiguration.h"
-
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
 LaserScannerConfiguration::LaserScannerConfiguration(){
   // Bouml preserved body begin 0001F47C
   // Bouml preserved body end 0001F47C

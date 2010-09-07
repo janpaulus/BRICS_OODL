@@ -2,16 +2,9 @@
 #define _SICKLDCONFIGURATION_H
 
 
-#include "LaserScannerConfiguration.h"
-
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-
-using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
 class SickLDConfiguration : public LaserScannerConfiguration {
   public:
     SickLDConfiguration();
