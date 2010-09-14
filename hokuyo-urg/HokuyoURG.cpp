@@ -17,6 +17,63 @@ HokuyoURG::~HokuyoURG() {
   // Bouml preserved body end 0002DC71
 }
 
+bool HokuyoURG::open(Errors& error) {
+  // Bouml preserved body begin 0002E0F1
+  if (this->hokuyo.isConnected()) {
+    return true;
+  }
+
+  if (this->config->devicePath == "") {
+    error.addError("no_DevicePath", "the device path is not specified in the configuration");
+    this->isConnected = false;
+    return false;
+  }
+
+
+  int desired_baud = 115200;
+
+  switch (this->config->baud) {
+    case BAUD_9600:
+      desired_baud = 9600;
+      BOOST_LOG_SEV(lg, trace) << "using 9600 baut to comunicate to Hokuyo URG";
+      break;
+    case BAUD_19200:
+      desired_baud = 19200;
+      BOOST_LOG_SEV(lg, trace) << "using 19200 baut to comunicate to Hokuyo URG";
+      break;
+    case BAUD_38400:
+      desired_baud = 38400;
+      BOOST_LOG_SEV(lg, trace) << "using 38400 baut to comunicate to Hokuyo URG";
+      break;
+    case BAUD_115200:
+      desired_baud = 115200;
+      BOOST_LOG_SEV(lg, trace) << "using 115200 baut to comunicate to Hokuyo URG";
+      break;
+    case BAUD_500K:
+      desired_baud = 500000;
+      BOOST_LOG_SEV(lg, trace) << "using 500K baut to comunicate to Hokuyo URG";
+      break;
+    case BAUD_UNKNOWN:
+      desired_baud = 0;
+      break;
+  }
+
+
+  try {
+    if(!this->hokuyo.connect(this->config->devicePath.c_str(), desired_baud)){
+      throw "Could not initialize the hokuyo!";
+    }
+    this->isConnected = true;
+    BOOST_LOG_SEV(lg, trace) << "connection to Hokuyo URG initilized";
+  } catch (...) {
+    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
+    this->isConnected = false;
+    return false;
+  }
+  return true;
+  // Bouml preserved body end 0002E0F1
+}
+
 bool HokuyoURG::close(Errors& error) {
   // Bouml preserved body begin 0002DCF1
 
@@ -239,62 +296,5 @@ bool HokuyoURG::resetDevice(Errors& error) {
   BOOST_LOG_SEV(lg, trace) << "Hokuyo URG reseted";
   return true;
   // Bouml preserved body end 0002E071
-}
-
-bool HokuyoURG::open(Errors& error) {
-  // Bouml preserved body begin 0002E0F1
-  if (this->hokuyo.isConnected()) {
-    return true;
-  }
-
-  if (this->config->devicePath == "") {
-    error.addError("no_DevicePath", "the device path is not specified in the configuration");
-    this->isConnected = false;
-    return false;
-  }
-
-
-  int desired_baud = 115200;
-
-  switch (this->config->baud) {
-    case BAUD_9600:
-      desired_baud = 9600;
-      BOOST_LOG_SEV(lg, trace) << "using 9600 baut to comunicate to Hokuyo URG";
-      break;
-    case BAUD_19200:
-      desired_baud = 19200;
-      BOOST_LOG_SEV(lg, trace) << "using 19200 baut to comunicate to Hokuyo URG";
-      break;
-    case BAUD_38400:
-      desired_baud = 38400;
-      BOOST_LOG_SEV(lg, trace) << "using 38400 baut to comunicate to Hokuyo URG";
-      break;
-    case BAUD_115200:
-      desired_baud = 115200;
-      BOOST_LOG_SEV(lg, trace) << "using 115200 baut to comunicate to Hokuyo URG";
-      break;
-    case BAUD_500K:
-      desired_baud = 500000;
-      BOOST_LOG_SEV(lg, trace) << "using 500K baut to comunicate to Hokuyo URG";
-      break;
-    case BAUD_UNKNOWN:
-      desired_baud = 0;
-      break;
-  }
-
-
-  try {
-    if(!this->hokuyo.connect(this->config->devicePath.c_str(), desired_baud)){
-      throw "Could not initialize the hokuyo!";
-    }
-    this->isConnected = true;
-    BOOST_LOG_SEV(lg, trace) << "connection to Hokuyo URG initilized";
-  } catch (...) {
-    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
-    this->isConnected = false;
-    return false;
-  }
-  return true;
-  // Bouml preserved body end 0002E0F1
 }
 
