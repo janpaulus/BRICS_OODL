@@ -45,6 +45,10 @@ class MesaSwissRanger : public ToFCamera {
 
 
   private:
+    bool reserveMemory();
+
+    bool freeMemory();
+
     SRCAM srCam;
 
     src::severity_logger< severity_level > lg;

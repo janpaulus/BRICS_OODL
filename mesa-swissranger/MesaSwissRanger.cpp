@@ -319,3 +319,25 @@ bool MesaSwissRanger::resetDevice(Errors& error) {
   // Bouml preserved body end 00032471
 }
 
+bool MesaSwissRanger::reserveMemory() {
+  // Bouml preserved body begin 000357F1
+//_imgSz.cx=SR_GetCols(srCam);
+//_imgSz.cy=SR_GetRows(srCam);
+//_numImgages=SR_GetImageList(srCam,&_imgEntryArray);
+//
+//SAFE_FREE(_dibCam);
+//_dibCam=(RGBQUAD*)malloc(_imgSz.cx*_imgSz.cy*_numImg*sizeof(RGBQUAD));//RGBQUAD,  RGBTRIPLE, BYTE, WORD
+//_bmiCam->bmiHeader.biWidth =_imgSz.cx;
+//_bmiCam->bmiHeader.biHeight=-_numImg*_imgSz.cy;
+//
+//SAFE_FREE(_z);
+// _z=(float*)malloc(_imgSz.cx*_imgSz.cy*sizeof(float));
+
+  // Bouml preserved body end 000357F1
+}
+
+bool MesaSwissRanger::freeMemory() {
+  // Bouml preserved body begin 00035871
+  // Bouml preserved body end 00035871
+}
+
