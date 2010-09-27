@@ -1,5 +1,5 @@
 /*!
- * \file SickLMS2xxMessage.cc
+ * \file SickS300Message.cc
  * \brief Implementation of class SickFrame.
  * 
  * Code by Jason C. Derenick and Thomas H. Miller.
@@ -29,7 +29,7 @@ namespace SickToolbox {
   /*!
    * \brief A default constructor
    */
-  SickLMS2xxMessage::SickLMS2xxMessage( ) {
+  SickS300Message::SickS300Message( ) {
 
     /* Initialize the object */
     Clear(); 
@@ -41,8 +41,8 @@ namespace SickToolbox {
    * \param payload_buffer The payload of the message as an array of bytes (including the command code)
    * \param payload_length The length of the payload array in bytes
    */
-  SickLMS2xxMessage::SickLMS2xxMessage( const uint8_t dest_address, const uint8_t * const payload_buffer, const unsigned int payload_length ) :
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >()  {
+  SickS300Message::SickS300Message( const uint8_t dest_address, const uint8_t * const payload_buffer, const unsigned int payload_length ) :
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >()  {
 
     /* Build the message */
     BuildMessage(dest_address,payload_buffer,payload_length);
@@ -52,8 +52,8 @@ namespace SickToolbox {
    * \brief A constructor for parsing a byte sequence into a message object
    * \param message_buffer A well-formed message to be parsed into the class' fields
    */
-  SickLMS2xxMessage::SickLMS2xxMessage( uint8_t * const message_buffer ) :
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >()  {
+  SickS300Message::SickS300Message( uint8_t * const message_buffer ) :
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >()  {
 
     /* Parse the byte sequence into a message object */
     ParseMessage(message_buffer);
@@ -65,30 +65,30 @@ namespace SickToolbox {
    * \param *payload_buffer The payload for the frame as an array of bytes (including the command code)
    * \param payload_length The length of the payload array in bytes
    */
-  void SickLMS2xxMessage::BuildMessage( const uint8_t dest_address, const uint8_t * const payload_buffer,
+  void SickS300Message::BuildMessage( const uint8_t dest_address, const uint8_t * const payload_buffer,
 				     const unsigned int payload_length ) {
 
     /* Call the parent method!
      * NOTE: The parent method resets the object and assigns _message_length, _payload_length,
      *       _populated and copies the payload into the message buffer at the correct position
      */
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >
       ::BuildMessage(payload_buffer,payload_length);
 
     /*
      * Set the message header!
      */
     _message_buffer[0] = 0x02;         // Start of transmission (stx)
-    _message_buffer[1] = dest_address; // Sick LMS address
+    _message_buffer[1] = dest_address; // Sick S300 address
         
     /* Include the payload length in the header */
-    uint16_t payload_length_16 = host_to_sick_lms_2xx_byte_order((uint16_t)_payload_length);
+    uint16_t payload_length_16 = host_to_sick_s300_byte_order((uint16_t)_payload_length);
     memcpy(&_message_buffer[2],&payload_length_16,2);
 
     /*
      * Set the message trailer!
      */    
-    _checksum = host_to_sick_lms_2xx_byte_order(_computeCRC(_message_buffer,_payload_length+4));
+    _checksum = host_to_sick_s300_byte_order(_computeCRC(_message_buffer,_payload_length+4));
     memcpy(&_message_buffer[_payload_length+4],&_checksum,2);
 
   }
@@ -97,18 +97,18 @@ namespace SickToolbox {
    * \brief Parses a sequence of bytes into a well-formed message
    * \param *message_buffer The buffer containing the source message
    */
-  void SickLMS2xxMessage::ParseMessage( const uint8_t * const message_buffer ) {
+  void SickS300Message::ParseMessage( const uint8_t * const message_buffer ) {
 
     /* Call the parent method!
      * NOTE: This method resets the object and assigns _populated as true
      */
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >
       ::ParseMessage(message_buffer);
     
     /* Extract the payload length */
     uint16_t payload_length_16 = 0;
     memcpy(&payload_length_16,&message_buffer[2],2);
-    _payload_length = (unsigned int)sick_lms_2xx_to_host_byte_order(payload_length_16);
+    _payload_length = (unsigned int)sick_s300_to_host_byte_order(payload_length_16);
 
     /* Compute the total message length */    
     _message_length = MESSAGE_HEADER_LENGTH + MESSAGE_TRAILER_LENGTH + _payload_length;
@@ -118,17 +118,17 @@ namespace SickToolbox {
 
     /* Extract the checksum from the frame */
     memcpy(&_checksum,&_message_buffer[_payload_length+MESSAGE_HEADER_LENGTH],2);
-    _checksum = sick_lms_2xx_to_host_byte_order(_checksum);
+    _checksum = sick_s300_to_host_byte_order(_checksum);
 
   }
 
   /*!
    * \brief Reset all internal fields and buffers associated with the object.
    */
-  void SickLMS2xxMessage::Clear( ) {    
+  void SickS300Message::Clear( ) {    
 
     /* Call the parent method and clear out class' protected members */
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >::Clear();
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >::Clear();
 
     /* Reset the class' additional fields */
     _checksum = 0;
@@ -138,7 +138,7 @@ namespace SickToolbox {
   /*!
    * \brief Print the message contents.
    */
-  void SickLMS2xxMessage::Print( ) const {
+  void SickS300Message::Print( ) const {
     
     std::cout.setf(std::ios::hex,std::ios::basefield);
     std::cout << "Checksum: " << (unsigned int) GetChecksum() << std::endl;  
@@ -147,7 +147,7 @@ namespace SickToolbox {
     std::cout << std::flush;
 
     /* Call parent's print function */
-    SickMessage< SICK_LMS_2XX_MSG_HEADER_LEN, SICK_LMS_2XX_MSG_PAYLOAD_MAX_LEN, SICK_LMS_2XX_MSG_TRAILER_LEN >::Print();    
+    SickMessage< SICK_S300_MSG_HEADER_LEN, SICK_S300_MSG_PAYLOAD_MAX_LEN, SICK_S300_MSG_TRAILER_LEN >::Print();    
   }
   
   /*!
@@ -156,7 +156,7 @@ namespace SickToolbox {
    * \param len The length of the data array
    * \return CRC16 computed over given data buffer
    */
-  uint16_t SickLMS2xxMessage::_computeCRC( uint8_t * data, unsigned int data_length ) const {
+  uint16_t SickS300Message::_computeCRC( uint8_t * data, unsigned int data_length ) const {
   
     uint16_t uCrc16;
     uint8_t abData[2];
@@ -176,6 +176,6 @@ namespace SickToolbox {
     return uCrc16;
   }
 
-  SickLMS2xxMessage::~SickLMS2xxMessage( ) { }
+  SickS300Message::~SickS300Message( ) { }
 
 } /* namespace SickToolbox */

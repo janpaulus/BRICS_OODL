@@ -185,7 +185,7 @@ bool SickS300::open(Errors& error) {
       break;
   }
 
-  //Initialize the Sick LMS 2xx
+  //Initialize the Sick S300
   try {
     if(!this->sickS300->open(this->config->devicePath.c_str(), desired_baud)){
       throw "could not initilize Sick S300";

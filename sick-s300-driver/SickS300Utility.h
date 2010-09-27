@@ -1,7 +1,7 @@
 /*!
- * \file SickLMS2xxUtility.hh
+ * \file SickS300Utility.hh
  * \brief Defines simple utility functions for working with the
- *        Sick LMS 2xx laser range finder units.
+ *        Sick S300 laser range finder units.
  *
  * Code by Jason C. Derenick and Thomas H. Miller.
  * Contact derenick(at)lehigh(dot)edu
@@ -39,76 +39,76 @@ namespace SickToolbox {
  */
 
 /**
- * \brief Converts host byte order (little-endian) to Sick LMS byte order (little-endian)
+ * \brief Converts host byte order (little-endian) to Sick S300 byte order (little-endian)
  * \param value The 2-byte value to convert to little-endian
- * \return Value in Sick LMS byte order (little-endian)
+ * \return Value in Sick S300 byte order (little-endian)
  */
-inline uint16_t host_to_sick_lms_2xx_byte_order( uint16_t value ) {
+inline uint16_t host_to_sick_s300_byte_order( uint16_t value ) {
   return value;
 }
 
 /**
- * \brief Converts host byte order (little-endian) to Sick LMS byte order (little-endian)
+ * \brief Converts host byte order (little-endian) to Sick S300 byte order (little-endian)
  * \param value The 4-byte value to convert to little-endian
- * \return Value in Sick LMS byte order (little-endian)
+ * \return Value in Sick S300 byte order (little-endian)
  */
-inline uint32_t host_to_sick_lms_2xx_byte_order( uint32_t value ) {
+inline uint32_t host_to_sick_s300_byte_order( uint32_t value ) {
   return value;
 }
 
 /**
- * \brief Converts Sick LMS byte order (little-endian) to host byte order (little-endian)
+ * \brief Converts Sick S300 byte order (little-endian) to host byte order (little-endian)
  * \param value The 2-byte value to convert to little-endian
  * \return Value in host byte order (little-endian)
  */
-inline uint16_t sick_lms_2xx_to_host_byte_order( uint16_t value ) {
+inline uint16_t sick_s300_to_host_byte_order( uint16_t value ) {
   return value;
 }
 
 /**
- * \brief Converts Sick LMS byte order (little-endian) to host byte order (little-endian)
+ * \brief Converts Sick S300 byte order (little-endian) to host byte order (little-endian)
  * \param value The 4-byte value to convert to little-endian
  * \return Value in host byte order (little-endian)
  */
-inline uint32_t sick_lms_2xx_to_host_byte_order( uint32_t value ) {
+inline uint32_t sick_s300_to_host_byte_order( uint32_t value ) {
   return value;
 }
 
 #else // The host has a big-endian architecture
 
 /**
- * \brief Converts host byte order (big-endian) to Sick LMS byte order (little-endian)
+ * \brief Converts host byte order (big-endian) to Sick S300 byte order (little-endian)
  * \param value The 2-byte value to convert to little-endian
- * \return Value in Sick LMS byte order (little-endian)
+ * \return Value in Sick S300 byte order (little-endian)
  */
-inline uint16_t host_to_sick_lms_2xx_byte_order( uint16_t value ) {
+inline uint16_t host_to_sick_s300_byte_order( uint16_t value ) {
   return REVERSE_BYTE_ORDER_16(value);
 }
 
 /**
- * \brief Converts host byte order (big-endian) to Sick LMS byte order (little-endian)
+ * \brief Converts host byte order (big-endian) to Sick S300 byte order (little-endian)
  * \param value The 4-byte value to convertto little-endian
- * \return Value in Sick LMS byte order (little-endian)
+ * \return Value in Sick S300 byte order (little-endian)
  */
-inline uint32_t host_to_sick_lms_2xx_byte_order( uint32_t value ) {
+inline uint32_t host_to_sick_s300_byte_order( uint32_t value ) {
   return REVERSE_BYTE_ORDER_32(value);
 }
 
 /**
- * \brief Converts Sick LMS byte order (little-endian) to host byte order (big-endian)
+ * \brief Converts Sick S300 byte order (little-endian) to host byte order (big-endian)
  * \param value The 2-byte value to convert to big-endian
  * \return Value in host byte order (big-endian)
  */
-inline uint16_t sick_lms_2xx_to_host_byte_order( uint16_t value ) {
+inline uint16_t sick_s300_to_host_byte_order( uint16_t value ) {
   return REVERSE_BYTE_ORDER_16(value);
 }
 
 /**
- * \brief Converts Sick LMS byte order (little-endian) to host byte order (big-endian)
+ * \brief Converts Sick S300 byte order (little-endian) to host byte order (big-endian)
  * \param value The 4-byte value to convert to big-endian
  * \return Value in host byte order (big-endian)
  */
-inline uint32_t sick_lms_2xx_to_host_byte_order( uint32_t value ) {
+inline uint32_t sick_s300_to_host_byte_order( uint32_t value ) {
   return REVERSE_BYTE_ORDER_32(value);
 }
 

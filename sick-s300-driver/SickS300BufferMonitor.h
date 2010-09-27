@@ -1,7 +1,7 @@
 /*!
- * \file SickLMS2xxBufferMonitor.hh
+ * \file SickS300BufferMonitor.hh
  * \brief Defines a class for monitoring the receive
- *        buffer when interfacing w/ a Sick LMS 2xx
+ *        buffer when interfacing w/ a Sick S300
  *        laser range finder.
  *
  * Code by Jason C. Derenick and Thomas H. Miller.
@@ -15,10 +15,10 @@
  * See http://sicktoolbox.sourceforge.net
  */
 
-#ifndef SICK_LMS_2XX_BUFFER_MONITOR_HH
-#define SICK_LMS_2XX_BUFFER_MONITOR_HH
+#ifndef SICK_S300_BUFFER_MONITOR_HH
+#define SICK_S300_BUFFER_MONITOR_HH
 
-#define DEFAULT_SICK_LMS_2XX_SICK_BYTE_TIMEOUT      (35000)  ///< Max allowable time between consecutive bytes
+#define DEFAULT_SICK_S300_BYTE_TIMEOUT      (35000)  ///< Max allowable time between consecutive bytes
 
 /* Definition dependencies */
 #include "SickS300Message.h"
@@ -29,23 +29,23 @@
 namespace SickToolbox {
 
   /*!
-   * \brief A class for monitoring the receive buffer when interfacing with a Sick LMS LIDAR
+   * \brief A class for monitoring the receive buffer when interfacing with a Sick S300 LIDAR
    */
-  class SickLMS2xxBufferMonitor : public SickBufferMonitor< SickLMS2xxBufferMonitor, SickLMS2xxMessage > {
+  class SickS300BufferMonitor : public SickBufferMonitor< SickS300BufferMonitor, SickS300Message > {
 
   public:
 
     /** A standard constructor */
-    SickLMS2xxBufferMonitor( );
+    SickS300BufferMonitor( );
 
     /** A method for extracting a single message from the stream */
-    void GetNextMessageFromDataStream( SickLMS2xxMessage &sick_message ) throw( SickIOException );
+    void GetNextMessageFromDataStream( SickS300Message &sick_message ) throw( SickIOException );
 
     /** A standard destructor */
-    ~SickLMS2xxBufferMonitor( );
+    ~SickS300BufferMonitor( );
 
   };
     
 } /* namespace SickToolbox */
 
-#endif /* SICK_LMS_2XX_BUFFER_MONITOR_HH */
+#endif /* SICK_S300_BUFFER_MONITOR_HH */
