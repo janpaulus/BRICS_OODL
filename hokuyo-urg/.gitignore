@@ -3,5 +3,6 @@ cmake_install.cmake
 Makefile
 .dep.inc
 CMakeFiles
-OODL_SickS300_test
-libOODL_SickS300.a
+OODL_HokuyoURG_plot
+OODL_HokuyoURG_plot
+
