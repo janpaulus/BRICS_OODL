@@ -38,7 +38,7 @@ else
 PKGNAME=		boost-${BOOST_PACKAGE}-${BOOST_VERSION}
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=boost/}
-EXTRACT_SUFX=		.tar.bz2
+EXTRACT_SUFX=		.zip
 
 MAINTAINER=		openrobots@laas.fr
 HOMEPAGE=		http://www.boost.org/
