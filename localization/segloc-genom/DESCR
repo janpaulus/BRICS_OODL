@@ -1,3 +1,0 @@
-The segloc genom modules provides two main functions :
-  - builds maps on the base of laser point
-  - provides a localization of the robot on the map in real-time

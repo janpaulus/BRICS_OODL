@@ -1,7 +1,0 @@
-@comment Mon Nov 23 09:28:37 CET 2009
-include//walkGenJrl/PatternGeneratorInterface.h
-include//walkGenJrl/PGTypes.h
-lib/libwalkGenJrl.so
-lib/libwalkGenJrl.so.${PKGVERSION}
-lib/pkgconfig/walkGenJrl.pc
-@dirrm include/walkGenJrl

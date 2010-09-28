@@ -1,5 +1,0 @@
-@comment $Id:$
-bin/mkdep
-lib/pkgconfig/mkdep.pc
-man/man1/mkdep.1
-share/aclocal/mkdep.m4

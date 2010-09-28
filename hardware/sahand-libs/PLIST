@@ -1,7 +1,0 @@
-@comment Thu Jun 10 15:44:23 CEST 2010
-include/sahand/CY9449.h
-include/sahand/DLRHITDpr.h
-include/sahand/SAHandCtrlApi.h
-include/sahand/SAHandCtrlApiDef.h
-lib/libsahand.so
-share/doc/sahand/Hand_Manual.pdf
