@@ -14,6 +14,7 @@ void Logger::init(){
   // Initialize logging to the "test.log" file
   logging::init_log_to_file("log.txt");
 #endif  /* BOOST_LOG_FOUND */
+  
 }
 
 /*

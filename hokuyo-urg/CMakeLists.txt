@@ -46,6 +46,7 @@ link_libraries(
 
 set(MESA_SWISSRANGER_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp

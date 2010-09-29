@@ -26,10 +26,7 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 
-  // Initialize logging to std::cout
-  logging::init_log_to_console(std::cout);
-  // Initialize logging to the "test.log" file
-  logging::init_log_to_file("log.txt");
+  (Logger::getInstance()).init();
 
   SickS300Configuration config;
   config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick S300

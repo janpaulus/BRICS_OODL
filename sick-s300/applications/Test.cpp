@@ -34,10 +34,8 @@ int main(){
 // Read logging settings from a file
   //  std::ifstream file("log_settings.ini");
  //   logging::init_from_stream(file);
-      // Initialize logging to std::cout
-    logging::init_log_to_console(std::cout);
-    // Initialize logging to the "test.log" file
-    logging::init_log_to_file("log.txt");
+
+  (Logger::getInstance()).init();
 
 
 

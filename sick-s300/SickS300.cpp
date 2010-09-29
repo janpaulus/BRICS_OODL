@@ -5,7 +5,6 @@ SickS300::SickS300() {
   this->sickS300 = NULL;
   this->config = NULL;
   this->isConnected = false;
-  src::severity_logger< severity_level > lg;
 
 
   // Bouml preserved body end 00020E67

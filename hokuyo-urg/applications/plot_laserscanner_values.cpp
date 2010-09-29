@@ -24,10 +24,7 @@ void sigintHandler(int signal);
 
 int main(int argc, char * argv[]) {
 
-  // Initialize logging to std::cout
-  logging::init_log_to_console(std::cout);
-  // Initialize logging to the "test.log" file
-  logging::init_log_to_file("log.txt");
+  (Logger::getInstance()).init();
 
   HokuyoURGConfiguration config;
   config.devicePath = "/dev/ttyACM0"; // Device path of the Sick LMS 2xx

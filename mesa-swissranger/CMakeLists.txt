@@ -32,6 +32,7 @@ link_libraries(
 
 set(MESA_SWISSRANGER_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-tof-camera/ToFCamera.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-tof-camera/ToFCameraData.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-tof-camera/ToFCameraConfiguration.cpp
