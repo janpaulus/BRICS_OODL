@@ -69,7 +69,7 @@ class SickLMS2xx : public LaserScanner {
 
     unsigned int* intensities;
 
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
 };
 #endif

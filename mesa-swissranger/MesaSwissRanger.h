@@ -51,7 +51,7 @@ class MesaSwissRanger : public ToFCamera {
 
     SRCAM srCam;
 
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
     AcquireMode acquireMode;
 

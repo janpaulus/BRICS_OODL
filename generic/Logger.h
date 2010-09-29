@@ -35,6 +35,10 @@ enum severity_level
     fatal
 };
 
+#define logger src::severity_logger< severity_level >
+
+#define LOG(logger, level) BOOST_LOG_STREAM_SEV(logger, level)
+
 /*
 void init()
 {

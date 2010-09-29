@@ -66,7 +66,7 @@ class SickLD {
 
     unsigned int* intensities;
 
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
 };
 #endif

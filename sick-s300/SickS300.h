@@ -55,7 +55,7 @@ class SickS300 : public LaserScanner {
 
     ScannerSickS300* sickS300;
 
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
 };
 #endif

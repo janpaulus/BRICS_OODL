@@ -44,7 +44,7 @@ class PMDCamCube : public ToFCamera {
 
 
   private:
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
     bool isConnected;
 

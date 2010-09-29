@@ -59,7 +59,7 @@ class HokuyoURG : public LaserScanner {
 
     qrk::UrgCtrl hokuyo;
 
-    src::severity_logger< severity_level > lg;
+    logger lg;
 
 };
 #endif

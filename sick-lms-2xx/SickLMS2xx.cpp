@@ -39,7 +39,7 @@ bool SickLMS2xx::close(Errors& error) {
     try {
       this->sickLMS->Uninitialize();
        
-       BOOST_LOG_SEV(lg, trace) << "connection to Sick LMS closed";
+       LOG(lg, trace) << "connection to Sick LMS closed";
     } catch (SickToolbox::SickException &e){
       error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
@@ -93,23 +93,23 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
 
     if (configuration.availabilityLevel != currentConfig.availabilityLevel) {
       this->sickLMS->SetSickAvailability(configuration.availabilityLevel);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS availability level";
+      LOG(lg, trace) << "set Sick LMS availability level";
     }
     if (configuration.measuringMode != currentConfig.measuringMode) {
       this->sickLMS->SetSickMeasuringMode(configuration.measuringMode);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS measuring mode";
+      LOG(lg, trace) << "set Sick LMS measuring mode";
     }
     if (configuration.sensitivity != currentConfig.sensitivity) {
       this->sickLMS->SetSickSensitivity(configuration.sensitivity);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS sensitivity";
+      LOG(lg, trace) << "set Sick LMS sensitivity";
     }
     if (configuration.peakThreshold != currentConfig.peakThreshold) {
       this->sickLMS->SetSickPeakThreshold(configuration.peakThreshold);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS peak threshold";
+      LOG(lg, trace) << "set Sick LMS peak threshold";
     }
     if (configuration.measuringUnits != currentConfig.measuringUnits) {
       this->sickLMS->SetSickMeasuringUnits(configuration.measuringUnits);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS measuring units";
+      LOG(lg, trace) << "set Sick LMS measuring units";
     }
     if ((configuration.scanAngleStart != currentConfig.scanAngleStart) || (configuration.scanAngleStop != currentConfig.scanAngleStop) || (configuration.scanResolution != currentConfig.scanResolution)) {
 
@@ -150,7 +150,7 @@ bool SickLMS2xx::setConfiguration(const SickLMS2xxConfiguration& configuration, 
       }
 
       this->sickLMS->SetSickVariant(desired_scan_angle, desired_scan_resolution);
-      BOOST_LOG_SEV(lg, trace) << "set Sick LMS scan angle and scan resolution";
+      LOG(lg, trace) << "set Sick LMS scan angle and scan resolution";
     }
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_set_configuration", e.what());
@@ -182,7 +182,7 @@ bool SickLMS2xx::getConfiguration(LaserScannerConfiguration& configuration, Erro
     // this->sickLMS->GetSickStatusAsString();
 //    configuration.operatingMode = this->sickLMS->SickOperatingModeToString(this->sickLMS->GetSickOperatingMode());
     configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
-    BOOST_LOG_SEV(lg, trace) << "read Sick LMS configuration";
+    LOG(lg, trace) << "read Sick LMS configuration";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -218,7 +218,7 @@ bool SickLMS2xx::getConfiguration(SickLMS2xxConfiguration& configuration, Errors
     configuration.measuringUnits = this->sickLMS->GetSickMeasuringUnits();
     configuration.model = this->sickLMS->SickTypeToString(this->sickLMS->GetSickType());
     configuration.isSickLMSFast = this->sickLMS->IsSickLMSFast();
-    BOOST_LOG_SEV(lg, trace) << "read Sick LMS configuration";
+    LOG(lg, trace) << "read Sick LMS configuration";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -249,7 +249,7 @@ bool SickLMS2xx::getData(LaserScannerData& data, Errors& error) {
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, newNumMeasurements, meter, radian); //TODO find out right units
-    BOOST_LOG_SEV(lg, trace) << "receiving range scan from Sick LMS" ;
+    LOG(lg, trace) << "receiving range scan from Sick LMS" ;
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -285,7 +285,7 @@ bool SickLMS2xx::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, numMeasurements, meter, radian, meter); //TODO find out right units
-    BOOST_LOG_SEV(lg, trace) << "range and intensity scan  received from Sick LMS" ;
+    LOG(lg, trace) << "range and intensity scan  received from Sick LMS" ;
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -306,7 +306,7 @@ bool SickLMS2xx::resetDevice(Errors& error) {
   }
   try {
     this->sickLMS->ResetSick();
-    BOOST_LOG_SEV(lg, trace) << "reseting Sick LMS";
+    LOG(lg, trace) << "reseting Sick LMS";
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_reset_sickLMS", e.what());
   } catch (...) {
@@ -342,19 +342,19 @@ bool SickLMS2xx::open(Errors& error) {
   switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_9600;
-      BOOST_LOG_SEV(lg, trace) << "using 9600 baut to comunicate to Sick LMS";
+      LOG(lg, trace) << "using 9600 baut to comunicate to Sick LMS";
       break;
     case BAUD_19200:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_19200;
-      BOOST_LOG_SEV(lg, trace) << "using 19200 baut to comunicate to Sick LMS";
+      LOG(lg, trace) << "using 19200 baut to comunicate to Sick LMS";
       break;
     case BAUD_38400:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
-      BOOST_LOG_SEV(lg, trace) << "using 38400 baut to comunicate to Sick LMS";
+      LOG(lg, trace) << "using 38400 baut to comunicate to Sick LMS";
       break;
     case BAUD_500K:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_500K;
-      BOOST_LOG_SEV(lg, trace) << "using 500K baut to comunicate to Sick LMS";
+      LOG(lg, trace) << "using 500K baut to comunicate to Sick LMS";
       break;
     case BAUD_UNKNOWN:
       desired_baud = SickToolbox::SickLMS::SICK_BAUD_UNKNOWN;
@@ -366,7 +366,7 @@ bool SickLMS2xx::open(Errors& error) {
     this->sickLMS->Initialize(desired_baud);
     this->getConfiguration(*(this->config), error);
     this->isConnected = true;
-    BOOST_LOG_SEV(lg, trace) << "connection to Sick LMS initialize";
+    LOG(lg, trace) << "connection to Sick LMS initialize";
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
   } catch (...) {
