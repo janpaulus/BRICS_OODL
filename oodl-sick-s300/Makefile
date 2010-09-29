@@ -22,6 +22,7 @@ CMAKE_ARGS+=		-DSELECTED_DRIVER=sick-s300
 
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
+include ../../wip/boost-log/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk

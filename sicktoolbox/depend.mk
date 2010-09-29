@@ -1,4 +1,4 @@
-# robotpkg depend.mk for:	hardware/sicktoolbox
+# robotpkg depend.mk for:	brics/sicktoolbox
 # Created:			Jan Paulus on 18 Aug 2010
 #
 

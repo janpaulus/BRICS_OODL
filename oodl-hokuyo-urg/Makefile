@@ -1,4 +1,4 @@
-# robotpkg Makefile for:	hardware/oodl-hokuyo-urg-ld
+# robotpkg Makefile for:	brics/oodl-hokuyo-urg-ld
 # Created:			Micahel Reckhaus on 27 Aug 2010
 #
 
@@ -16,12 +16,13 @@ LICENSE=		gnu-gpl-v3
 
 USE_LANGUAGES=		c c++
 
-CMAKE_ARGS+=		-DSELECTED_DRIVER=hukuyo-urg
+CMAKE_ARGS+=		-DSELECTED_DRIVER=hokuyo-urg
 CMAKE_ARGS+=		-DHOKUYO_URG_PATH=${PREFIX.hokuyo-urg}
 
 
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
+include ../../wip/boost-log/depend.mk
 include ../../brics/hokuyo-urg/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk

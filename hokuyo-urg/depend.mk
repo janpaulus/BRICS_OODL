@@ -18,7 +18,7 @@ DEPEND_ABI.hokuyo-urg?=	hokuyo-urg>=0.8.11
 DEPEND_DIR.hokuyo-urg?=	../../brics/hokuyo-urg
 
 SYSTEM_SEARCH.hokuyo-urg=\
-#	include/sicklms-1.0/SickLMS.hh
+  include/urg/UrgCtrl.h
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}

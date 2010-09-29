@@ -1,4 +1,4 @@
-# robotpkg Makefile for:	hardware/sicktoolbox
+# robotpkg Makefile for:	brics/sicktoolbox
 # Created:			Jan Paulus on 17 Aug 2010
 #
 
