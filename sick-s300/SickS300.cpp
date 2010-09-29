@@ -26,7 +26,7 @@ bool SickS300::close(Errors& error) {
   if (this->sickS300 != NULL) {
     try {
       this->sickS300->stopScanner();
-       LOG(lg, trace) << "connection to Sick S300 closed";
+       LOG( trace) << "connection to Sick S300 closed";
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
       return false;
@@ -116,7 +116,7 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
 */
     data.setMeasurements(intput_ranges, intput_range_angles, meter, radian);
 
-    LOG(lg, trace) << "receiving range scan from Sick S300" ;
+    LOG( trace) << "receiving range scan from Sick S300" ;
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -142,7 +142,7 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
 
-    LOG(lg, trace) << "receiving range and intensity scan from Sick S300";
+    LOG( trace) << "receiving range and intensity scan from Sick S300";
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -185,19 +185,19 @@ bool SickS300::open(Errors& error) {
   switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = 9600;
-      LOG(lg, trace) << "using 9600 baut to comunicate to Sick S300";
+      LOG( trace) << "using 9600 baut to comunicate to Sick S300";
       break;
     case BAUD_19200:
       desired_baud = 19200;
-      LOG(lg, trace) << "using 19200 baut to comunicate to Sick S300";
+      LOG( trace) << "using 19200 baut to comunicate to Sick S300";
       break;
     case BAUD_38400:
       desired_baud = 38400;
-      LOG(lg, trace) << "using 38400 baut to comunicate to Sick S300";
+      LOG( trace) << "using 38400 baut to comunicate to Sick S300";
       break;
     case BAUD_500K:
       desired_baud = 500000;
-      LOG(lg, trace) << "using 500000 baut to comunicate to Sick S300";
+      LOG( trace) << "using 500000 baut to comunicate to Sick S300";
       break;
     case BAUD_UNKNOWN:
       desired_baud = 0;
@@ -210,7 +210,7 @@ bool SickS300::open(Errors& error) {
       throw "could not initilize Sick S300";
     }
     this->isConnected = true;
-    LOG(lg, trace) << "connection to Sick S300 initialized";
+    LOG( trace) << "connection to Sick S300 initialized";
   } catch (...) {
     error.addError("Initialize_failed", "could not initilize Sick S300");
     this->isConnected = false;

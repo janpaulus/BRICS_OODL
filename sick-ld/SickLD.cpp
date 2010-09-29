@@ -43,7 +43,7 @@ bool SickLD::close(Errors& error) {
   if (this->sickLD != NULL) {
     try {
       this->sickLD->Uninitialize();
-      LOG(lg, trace) << "connection to Sick LD cosed";
+      LOG( trace) << "connection to Sick LD cosed";
     } catch (SickToolbox::SickException &e){
       error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
@@ -101,7 +101,7 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
                                                    stop_angs,
                                                    configuration.numSectors);
 
-  LOG(lg, trace) << "configuration set to Sick LD";
+  LOG( trace) << "configuration set to Sick LD";
     
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_set_configuration", e.what());
@@ -132,7 +132,7 @@ bool SickLD::getConfiguration(LaserScannerConfiguration& configuration, Errors& 
     configuration.scanResolution = (this->sickLD->GetSickScanResolution()*M_PI/180.0) *radian;
     configuration.scanAngleStart = (this->sickLD->GetSickScanArea()*M_PI/180.0)/-2.0 *radian;
 
-    LOG(lg, trace) << "configuration received from Sick LD";
+    LOG( trace) << "configuration received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -164,7 +164,7 @@ bool SickLD::getConfiguration(SickLDConfiguration& configuration, Errors& error)
     configuration.numSectors = this->sickLD->GetSickNumActiveSectors();
     configuration.scanAngleStart = (this->sickLD->GetSickScanArea()*M_PI/180.0)/-2.0 *radian;
 
-    LOG(lg, trace) << "configuration received from Sick LD";
+    LOG( trace) << "configuration received from Sick LD";
     
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -194,7 +194,7 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
 
     data.setMeasurements(ranges, rangeAngles, NumMeasurements, meter, radian); //TODO find out right units
 
-    LOG(lg, trace) << "range scan received from Sick LD";
+    LOG( trace) << "range scan received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -227,7 +227,7 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, NumMeasurements, meter, radian, meter); //TODO find out right units
 
-    LOG(lg, trace) << "range and intensity scan received from Sick LD";
+    LOG( trace) << "range and intensity scan received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -247,7 +247,7 @@ bool SickLD::resetDevice(Errors& error) {
   }
   try {
     this->sickLD->ResetSick();
-    LOG(lg, trace) << "Sick LD reseted";
+    LOG( trace) << "Sick LD reseted";
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_reset_sickLD", e.what());
   } catch (...) {
@@ -284,7 +284,7 @@ bool SickLD::open(Errors& error) {
   try {
     this->sickLD->Initialize();
     this->isConnected = true;
-    LOG(lg, trace) << "connection to Sick LD initialized";
+    LOG( trace) << "connection to Sick LD initialized";
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
   } catch (...) {

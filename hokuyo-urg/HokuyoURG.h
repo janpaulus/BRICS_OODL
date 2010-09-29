@@ -59,7 +59,5 @@ class HokuyoURG : public LaserScanner {
 
     qrk::UrgCtrl hokuyo;
 
-    logger lg;
-
 };
 #endif

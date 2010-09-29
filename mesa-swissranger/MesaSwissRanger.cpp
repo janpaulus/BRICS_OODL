@@ -26,9 +26,9 @@ bool MesaSwissRanger::open(Errors& error) {
     return false;
   }
   this->isConnected = true;
-  LOG(lg, trace) << "connection to Mesa SwissRanger initialized";
+  LOG( trace) << "connection to Mesa SwissRanger initialized";
  // SR_Acquire(srCam);
- // LOG(lg, trace) << "acquisition from Mesa SwissRanger started";
+ // LOG( trace) << "acquisition from Mesa SwissRanger started";
   return true;
   // Bouml preserved body end 00033DF1
 }
@@ -40,7 +40,7 @@ bool MesaSwissRanger::close(Errors& error) {
   returnValue = SR_Close(srCam);
 
   if (returnValue >= 0) {
-    LOG(lg, trace) << "connection to Mesa SwissRanger cosed";
+    LOG( trace) << "connection to Mesa SwissRanger cosed";
     return true;
   }
 
@@ -89,15 +89,15 @@ bool MesaSwissRanger::setConfiguration(const ToFCameraConfiguration& configurati
   if (config.product == "SR2A") {
     intTime = (configuration.integrationTime.value() * 1000.0) / 0.256;
     SR_SetIntegrationTime(srCam, intTime);
-    LOG(lg, trace) << "set integration time: " << configuration.integrationTime;
+    LOG( trace) << "set integration time: " << configuration.integrationTime;
   } else if (config.product == "SR2B" || config.product == "SR-3100") {
     intTime = ((configuration.integrationTime.value() * 1000.0) / 0.200) - 1.0;
     SR_SetIntegrationTime(srCam, intTime);
-    LOG(lg, trace) << "set integration time: " << configuration.integrationTime;
+    LOG( trace) << "set integration time: " << configuration.integrationTime;
   } else if (config.product == "SR4k") {
     intTime = (((configuration.integrationTime.value() * 1000.0) - 0.300) / 0.100);
     SR_SetIntegrationTime(srCam, intTime);
-    LOG(lg, trace) << "set integration time: " << configuration.integrationTime;
+    LOG( trace) << "set integration time: " << configuration.integrationTime;
   } else {
     error.addError("unable_to_set_Integration_Time", "unable to set Integration Time for the Mesa SwissRanger");
   }
@@ -162,7 +162,7 @@ bool MesaSwissRanger::setConfiguration(const ToFCameraConfiguration& configurati
   if(returnValue < 0){
     error.addError("unable_to_set_Modulation_Frequency", "unable to set the Modulation Frequency for the Mesa SwissRanger");
   }else{
-    LOG(lg, trace) << "set modulation frequency: " << configuration.modulationFrequency;
+    LOG( trace) << "set modulation frequency: " << configuration.modulationFrequency;
   }
 
   // int 	SR_SetAmplitudeThreshold (SRCAM srCam, unsigned short val)
@@ -203,7 +203,7 @@ bool MesaSwissRanger::getConfiguration(ToFCameraConfiguration& configuration, Er
   }
   configuration.product = "SR-3100";
 
- // LOG(lg, trace) << "Vendor: " << configuration.vendor << " Product: " <<productID << " SN: " << configuration.serialNumber ;
+ // LOG( trace) << "Vendor: " << configuration.vendor << " Product: " <<productID << " SN: " << configuration.serialNumber ;
   double intTime = 0;
 
   intTime = (double) SR_GetIntegrationTime(srCam);
@@ -218,17 +218,17 @@ bool MesaSwissRanger::getConfiguration(ToFCameraConfiguration& configuration, Er
   if (configuration.product == "SR2A") {
     quantity<si::time> integrationTime((intTime * 0.256) * milli * second);
     configuration.integrationTime = integrationTime;
-    LOG(lg, trace) << "got Integration Time: " << configuration.integrationTime;
+    LOG( trace) << "got Integration Time: " << configuration.integrationTime;
 
   } else if (configuration.product == "SR2B" || configuration.product == "SR-3100") {
     quantity<si::time> integrationTime(((intTime + 1)*0.200) * milli * second);
     configuration.integrationTime = integrationTime;
-    LOG(lg, trace) << "got Integration Time: " << configuration.integrationTime;
+    LOG( trace) << "got Integration Time: " << configuration.integrationTime;
 
   } else if (configuration.product == "SR4k") {
     quantity<si::time> integrationTime((0.300 * intTime * 0.100) * milli * second);
     configuration.integrationTime = integrationTime;
-    LOG(lg, trace) << "got Integration Time: " << configuration.integrationTime;
+    LOG( trace) << "got Integration Time: " << configuration.integrationTime;
 
   } else {
     error.addError("unable_to_get_Integration_Time", "unable to get Integration Time for the Mesa SwissRanger");
@@ -292,7 +292,7 @@ bool MesaSwissRanger::getConfiguration(ToFCameraConfiguration& configuration, Er
       break;
   }
 
-  LOG(lg, trace) << "got modulation frequency: " << configuration.modulationFrequency;
+  LOG( trace) << "got modulation frequency: " << configuration.modulationFrequency;
 
 
   // unsigned short 	SR_GetAmplitudeThreshold (SRCAM srCam)

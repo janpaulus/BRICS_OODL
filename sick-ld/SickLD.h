@@ -66,7 +66,5 @@ class SickLD {
 
     unsigned int* intensities;
 
-    logger lg;
-
 };
 #endif

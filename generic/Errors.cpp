@@ -41,8 +41,8 @@ void Errors::addError(std::string name, std::string description) {
   this->occurredErrors[name] = description;
   //  std::cout << "ERROR: " << name << " " << description << std::endl;
 
-  logger lg;
-  LOG(lg, error) << name << ": " << description;
+
+  LOG(error) << name << ": " << description;
 
   // Bouml preserved body end 000212F1
 }

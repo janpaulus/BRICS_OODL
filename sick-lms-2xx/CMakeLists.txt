@@ -31,38 +31,31 @@ link_libraries(
   boost_log
 )
 
-ADD_LIBRARY(OODL_SickLMS2xx
+set(SickLMS2xx_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xx.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xxConfiguration.cpp
+)
+
+ADD_LIBRARY(OODL_SickLMS2xx
+  ${SickLMS2xx_SRC}
 )
 
 
 ADD_EXECUTABLE(OODL_SickLMS2xx_test
   ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/applications/Test.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
-  ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xx.cpp
-  ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xxConfiguration.cpp
+  ${SickLMS2xx_SRC}
 )
 
 ADD_EXECUTABLE(OODL_SickLMS2xx_plot
   ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/applications/plot_laserscanner_values.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/gnuplot_i.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
-  ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xx.cpp
-  ${CMAKE_HOME_DIRECTORY}/sick-lms-2xx/SickLMS2xxConfiguration.cpp
+  ${SickLMS2xx_SRC}
 )
 
 INSTALL(TARGETS OODL_SickLMS2xx_test OODL_SickLMS2xx_plot OODL_SickLMS2xx RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)

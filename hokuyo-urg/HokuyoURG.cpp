@@ -35,23 +35,23 @@ bool HokuyoURG::open(Errors& error) {
   switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = 9600;
-      LOG(lg, trace) << "using 9600 baut to comunicate to Hokuyo URG";
+      LOG( trace) << "using 9600 baut to comunicate to Hokuyo URG";
       break;
     case BAUD_19200:
       desired_baud = 19200;
-      LOG(lg, trace) << "using 19200 baut to comunicate to Hokuyo URG";
+      LOG( trace) << "using 19200 baut to comunicate to Hokuyo URG";
       break;
     case BAUD_38400:
       desired_baud = 38400;
-      LOG(lg, trace) << "using 38400 baut to comunicate to Hokuyo URG";
+      LOG( trace) << "using 38400 baut to comunicate to Hokuyo URG";
       break;
     case BAUD_115200:
       desired_baud = 115200;
-      LOG(lg, trace) << "using 115200 baut to comunicate to Hokuyo URG";
+      LOG( trace) << "using 115200 baut to comunicate to Hokuyo URG";
       break;
     case BAUD_500K:
       desired_baud = 500000;
-      LOG(lg, trace) << "using 500K baut to comunicate to Hokuyo URG";
+      LOG( trace) << "using 500K baut to comunicate to Hokuyo URG";
       break;
     case BAUD_UNKNOWN:
       desired_baud = 0;
@@ -64,7 +64,7 @@ bool HokuyoURG::open(Errors& error) {
       throw "Could not initialize the hokuyo!";
     }
     this->isConnected = true;
-    LOG(lg, trace) << "connection to Hokuyo URG initilized";
+    LOG( trace) << "connection to Hokuyo URG initilized";
   } catch (...) {
     error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
     this->isConnected = false;
@@ -79,7 +79,7 @@ bool HokuyoURG::close(Errors& error) {
 
     try {
       this->hokuyo.disconnect();
-      LOG(lg, trace) << "connection to Hokuyo URG closed";
+      LOG( trace) << "connection to Hokuyo URG closed";
 
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Hokuyo URG");
@@ -113,7 +113,7 @@ bool HokuyoURG::setConfiguration(const LaserScannerConfiguration& configuration,
      parameters.distance_min = config->minRangeDistance.value();    //!< Least possible measurement range [mm]
      parameters.model =   config->model;           //!< Sensor model information
      parameters.scan_rpm = 600;  //!< Standard angular velocity [rpm]
-     LOG(lg, trace) << "configuration set to Hokuyo URG";
+     LOG( trace) << "configuration set to Hokuyo URG";
      this->hokuyo.setParameter(parameters);
 
    } catch (...) {
@@ -149,7 +149,7 @@ bool HokuyoURG::setConfiguration(const HokuyoURGConfiguration& configuration, Er
      parameters.scan_rpm = 600;  //!< Standard angular velocity [rpm]
 
      this->hokuyo.setParameter(parameters);
-     LOG(lg, trace) << "configuration set to Hokuyo URG";
+     LOG( trace) << "configuration set to Hokuyo URG";
     
    } catch (...) {
      error.addError("unable_to_set_configuration", "could not set the configuration to the Hokuyo URG");
@@ -175,7 +175,7 @@ bool HokuyoURG::getConfiguration(LaserScannerConfiguration& configuration, Error
      config->maxRangeDistance = parameters.distance_max /1000.0 *meter;    //!< Maximum possible measurement range [mm]
      config->minRangeDistance = parameters.distance_min /1000.0 * meter;    //!< Least possible measurement range [mm]
      config->model = parameters.model;           //!< Sensor model information
-     LOG(lg, trace) << "configuration read from Hokuyo URG";
+     LOG( trace) << "configuration read from Hokuyo URG";
 
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Hokuyo URG");
@@ -201,7 +201,7 @@ if (!this->open(error)) {
      config->maxRangeDistance = parameters.distance_max /1000.0 *meter;    //!< Maximum possible measurement range [mm]
      config->minRangeDistance = parameters.distance_min /1000.0 * meter;    //!< Least possible measurement range [mm]
      config->model = parameters.model;           //!< Sensor model information
-     LOG(lg, trace) << "configuration read from Hokuyo URG";
+     LOG( trace) << "configuration read from Hokuyo URG";
 
   } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Hokuyo URG");
@@ -235,7 +235,7 @@ bool HokuyoURG::getData(LaserScannerData& data, Errors& error) {
     }
 
     data.setMeasurements(output_ranges, output_range_angles);
-    LOG(lg, trace) << "range scan received from Hokuyo URG";
+    LOG( trace) << "range scan received from Hokuyo URG";
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Hokuyo URG");
@@ -275,7 +275,7 @@ bool HokuyoURG::getData(LaserScannerDataWithIntensities& data, Errors& error) {
     }
 
     data.setMeasurements(output_ranges, output_range_angles, output_intensity);
-    LOG(lg, trace) << "range and intensity scan received from Hokuyo URG";
+    LOG( trace) << "range and intensity scan received from Hokuyo URG";
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Hokuyo URG");
@@ -293,7 +293,7 @@ bool HokuyoURG::resetDevice(Errors& error) {
     error.addError("unable_to_reset_hokuyo_urg", "could not reset the Hokuyo URG");
     return false;
   }
-  LOG(lg, trace) << "Hokuyo URG reseted";
+  LOG( trace) << "Hokuyo URG reseted";
   return true;
   // Bouml preserved body end 0002E071
 }

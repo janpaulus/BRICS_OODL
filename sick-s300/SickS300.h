@@ -55,7 +55,5 @@ class SickS300 : public LaserScanner {
 
     ScannerSickS300* sickS300;
 
-    logger lg;
-
 };
 #endif
