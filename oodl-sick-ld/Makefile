@@ -18,10 +18,12 @@ USE_LANGUAGES=		c c++
 
 CMAKE_ARGS+=		-DSELECTED_DRIVER=sick-ld
 CMAKE_ARGS+=		-DSICK_TOOLBOX_PATH=${PREFIX.sicktoolbox}
+CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
 
 
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
+include ../../wip/boost-log/depend.mk
 include ../../brics/sicktoolbox/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk

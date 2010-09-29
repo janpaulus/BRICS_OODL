@@ -19,7 +19,10 @@ USE_LANGUAGES=		c c++
 
 GNU_CONFIGURE=		yes
 
+CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
+
 
 #WRKSRC=			${WRKDIR}/sick-lidar-toolbox-${SICK_LIDAR_TOOLBOX_VERSION}
 
+include ../../wip/boost-log/depend.mk
 include ../../mk/robotpkg.mk
