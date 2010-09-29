@@ -27,8 +27,8 @@
 /** Makes a "short" in little endian */
 #define MKSHORT(a,b) ((unsigned short) (a) | ((unsigned short)(b) << 8))
 
-#define SICK_S300_MSG_HEADER_LEN            (4)  ///< Sick S300 message length in bytes
-#define SICK_S300_MSG_PAYLOAD_MAX_LEN     (812)  ///< Sick S300 max payload length in bytes
+#define SICK_S300_MSG_HEADER_LEN            (20)  ///< Sick S300 message length in bytes
+#define SICK_S300_MSG_PAYLOAD_MAX_LEN     (1082)  ///< Sick S300 max payload length in bytes
 #define SICK_S300_MSG_TRAILER_LEN           (2)  ///< Sick S300 message trailer length in bytes 
 
 /* Associate the namespace */

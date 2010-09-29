@@ -52,5 +52,20 @@ ADD_EXECUTABLE(OODL_SickS300_test
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
 )
 
-INSTALL(TARGETS OODL_SickS300_test OODL_SickS300 RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+ADD_EXECUTABLE(OODL_SickS300_plot
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/applications/plot_laserscanner_values.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/LaserScannerTools.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/gnuplot_i.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300Configuration.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.cpp
+  ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
+)
+
+INSTALL(TARGETS OODL_SickS300_plot OODL_SickS300_test OODL_SickS300 RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 

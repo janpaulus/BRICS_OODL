@@ -41,15 +41,34 @@ bool SickS300::close(Errors& error) {
 
 bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 00020FE7
-  error.addError("configuration_not_possible", "the configuration is not possible.");
-  return false;
+  if (this->config != NULL) {
+    delete this->config;
+  }
+  this->config = new SickS300Configuration;
+  *(this->config) = configuration;
+
+  if (!this->open(error)) {
+    return false;
+  }
+
+//  error.addError("configuration_not_possible", "the configuration is not possible.");
+  return true;
   // Bouml preserved body end 00020FE7
 }
 
 bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021067
-  error.addError("configuration_not_possible", "the configuration is not possible.");
-  return false;
+  if (this->config != NULL) {
+    delete this->config;
+  }
+  this->config = new SickS300Configuration;
+  *(this->config) = configuration;
+
+  if (!this->open(error)) {
+    return false;
+  }
+//  error.addError("configuration_not_possible", "the configuration is not possible.");
+  return true;
   // Bouml preserved body end 00021067
 }
 

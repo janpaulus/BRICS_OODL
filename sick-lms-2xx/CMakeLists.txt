@@ -22,13 +22,13 @@ link_directories(
 link_libraries(	
   libsicklms-1.0.so
   pthread
-boost_thread
-boost_date_time
-boost_system
-boost_filesystem
-boost_regex
-boost_log_setup
-boost_log
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  boost_log_setup
+  boost_log
 )
 
 ADD_LIBRARY(OODL_SickLMS2xx
