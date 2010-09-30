@@ -26,8 +26,7 @@ link_libraries(
 	boost_system
 	boost_filesystem
 	boost_regex
-	boost_log_setup
-	boost_log
+	boost_log-mt
 )
 
 set(MESA_SWISSRANGER_SRC

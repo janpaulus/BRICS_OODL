@@ -31,7 +31,7 @@ link_libraries(
   boost_filesystem
   boost_regex
   boost_log_setup
-  boost_log
+  boost_log-mt
 )
 
 ADD_EXECUTABLE(OODL_SickLD_test
