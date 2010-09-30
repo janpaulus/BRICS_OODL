@@ -3,13 +3,7 @@
 
 
 #include <vector>
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-
-using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
+#include "generic/Units.h"
 /**
  * \brief 
  *

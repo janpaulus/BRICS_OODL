@@ -10,22 +10,12 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
-
-using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-
-typedef boost::units::make_scaled_unit<si::length, boost::units::scale<10, boost::units::static_rational<-3> > >::type millimeter;
-//BOOST_UNITS_STATIC_CONSTANT(millimeters, millimeter);
-
-
+#include "generic/Units.h"
 enum baud_rate {
   BAUD_9600,
   BAUD_19200,
   BAUD_38400,
+  BAUD_115200,
   BAUD_500K,
   BAUD_UNKNOWN
 
@@ -55,23 +45,21 @@ class LaserScannerConfiguration {
 
     std::string protocol;
 
-    std::string serialnumber;
+    std::string serialNumber;
 
     std::string model;
 
-    quantity<plane_angle> scanAngle;
+    quantity<plane_angle> scanAngleStart;
+
+    quantity<plane_angle> scanAngleStop;
 
     quantity<plane_angle> scanResolution;
 
-    std::string sensitivity;
+    quantity<length> minRangeDistance;
 
-    std::string peakThreshold;
+    quantity<length> maxRangeDistance;
 
-    std::string measuringMode;
-
-    std::string operatingMode;
-
-    baud_rate boud;
+    baud_rate baud;
 
     std::string devicePath;
 

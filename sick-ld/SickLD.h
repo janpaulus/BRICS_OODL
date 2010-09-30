@@ -7,20 +7,28 @@
  * \author
  * \date
  */
-#include "Errors.h"
-#include "LaserScannerConfiguration.h"
-#include "SickLDConfiguration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-#include "LaserScanner.h"
-
 #include <vector>
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-ld/SickLDConfiguration.h"
+
 #include <sickld-1.0/SickLD.hh>
+class Errors;
+class LaserScannerConfiguration;
+class SickLDConfiguration;
+class LaserScannerData;
+class LaserScannerDataWithIntensities;
+
 /**
  * \brief 
  *
  */
-class SickLD : public LaserScanner {
+class SickLD {
   public:
     SickLD();
 
@@ -40,7 +48,7 @@ class SickLD : public LaserScanner {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:

@@ -2,8 +2,9 @@
 #define _SICKS300CONFIGURATION_H
 
 
-#include "LaserScannerConfiguration.h"
-
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
 class SickS300Configuration : public LaserScannerConfiguration {
   public:
     SickS300Configuration();

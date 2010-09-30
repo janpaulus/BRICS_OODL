@@ -1,6 +1,5 @@
 
-#include "LaserScannerDataWithIntensities.h"
-
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
 LaserScannerDataWithIntensities::LaserScannerDataWithIntensities() {
   // Bouml preserved body begin 00024C71
 

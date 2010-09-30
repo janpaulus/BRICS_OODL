@@ -1,6 +1,5 @@
 
-#include "SickS300Configuration.h"
-
+#include "sick-s300/SickS300Configuration.h"
 SickS300Configuration::SickS300Configuration() {
   // Bouml preserved body begin 000213E7
   // Bouml preserved body end 000213E7

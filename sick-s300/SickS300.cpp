@@ -1,11 +1,12 @@
 
-#include "SickS300.h"
-
+#include "sick-s300/SickS300.h"
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
   this->sickS300 = NULL;
   this->config = NULL;
   this->isConnected = false;
+
+
   // Bouml preserved body end 00020E67
 }
 
@@ -24,6 +25,7 @@ bool SickS300::close(Errors& error) {
   if (this->sickS300 != NULL) {
     try {
       this->sickS300->stopScanner();
+       LOG( trace) << "connection to Sick S300 closed";
     } catch (...) {
       error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
       return false;
@@ -38,19 +40,18 @@ bool SickS300::close(Errors& error) {
 
 bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 00020FE7
-  error.addError("configuration_not_possible", "the configuration is not possible. Please configurate with SickS300Configuration.");
-  /*
   if (this->config != NULL) {
     delete this->config;
   }
-  this->config = new LaserScannerConfiguration;
-   *(this->config) = configuration;
-  
+  this->config = new SickS300Configuration;
+  *(this->config) = configuration;
+
   if (!this->open(error)) {
     return false;
   }
-   */
-  return false;
+
+//  error.addError("configuration_not_possible", "the configuration is not possible.");
+  return true;
   // Bouml preserved body end 00020FE7
 }
 
@@ -65,52 +66,22 @@ bool SickS300::setConfiguration(const SickS300Configuration& configuration, Erro
   if (!this->open(error)) {
     return false;
   }
-  /* try{
-  
-    
-   } catch (...) {
-     error.addError("unable_to_set_configuration", "could not set the configuration to the Sick S300");
-     return false;
-   }*/
-
-  // configuration.operating_mode = this->sick_s300->GetSickOperatingMode();
-  // configuration.model = this->sick_s300->SickTypeToString(this->sick_s300->GetSickType());
+//  error.addError("configuration_not_possible", "the configuration is not possible.");
   return true;
   // Bouml preserved body end 00021067
 }
 
 bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 000210E7
-  if (!this->open(error)) {
-    return false;
-  }
-  try {
-
-
-  } catch (...) {
     error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
-  }
-
-  return true;
   // Bouml preserved body end 000210E7
 }
 
 bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021167
-  if (!this->open(error)) {
+  error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
     return false;
-  }
-
-  try {
-
-
-  } catch (...) {
-    error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
-    return false;
-  }
-
-  return true;
   // Bouml preserved body end 00021167
 }
 
@@ -124,20 +95,27 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
     std::vector<double> intput_range_angles; //rad
     std::vector<double> intput_intensity; //?
 
+    intput_ranges.assign(541, 110);
+    intput_range_angles.assign(541, 0);
+    intput_intensity.assign(541, 0);
+    
+
     this->sickS300->getScan(intput_ranges, intput_range_angles, intput_intensity);
 
     if (intput_ranges.size() != intput_range_angles.size()) {
       error.addError("unable_to_get_data", "ranges vector and range_angles vector have to have the same size");
       return false;
     }
-    std::vector< quantity<length> > output_ranges;
+/*    std::vector< quantity<length> > output_ranges;
     std::vector< quantity<plane_angle> > output_range_angles;
     for (unsigned int i = 0; i < intput_ranges.size(); i++) {
       output_ranges[i] = intput_ranges[i] * meter;
       output_range_angles[i] = intput_range_angles[i] * radian;
     }
-    //    data.setNumMeasurementValues(intput_ranges.size());
-    //   data.setMeasurements(output_ranges, output_range_angles);
+*/
+    data.setMeasurements(intput_ranges, intput_range_angles, meter, radian);
+
+    LOG( trace) << "receiving range scan from Sick S300" ;
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -163,6 +141,8 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
 
+    LOG( trace) << "receiving range and intensity scan from Sick S300";
+
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
     return false;
@@ -172,12 +152,9 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body end 00021267
 }
 
-bool SickS300::resetDevice() {
+bool SickS300::resetDevice(Errors& error) {
   // Bouml preserved body begin 000212E7
-  Errors error;
-
   error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
-
   return false;
   // Bouml preserved body end 000212E7
 }
@@ -204,30 +181,37 @@ bool SickS300::open(Errors& error) {
 
   int desired_baud = 500000;
 
-  switch (this->config->boud) {
+  switch (this->config->baud) {
     case BAUD_9600:
       desired_baud = 9600;
+      LOG( trace) << "using 9600 baut to comunicate to Sick S300";
       break;
     case BAUD_19200:
       desired_baud = 19200;
+      LOG( trace) << "using 19200 baut to comunicate to Sick S300";
       break;
     case BAUD_38400:
       desired_baud = 38400;
+      LOG( trace) << "using 38400 baut to comunicate to Sick S300";
       break;
     case BAUD_500K:
       desired_baud = 500000;
+      LOG( trace) << "using 500000 baut to comunicate to Sick S300";
       break;
     case BAUD_UNKNOWN:
       desired_baud = 0;
       break;
   }
 
-  //Initialize the Sick LMS 2xx
+  //Initialize the Sick S300
   try {
-    this->sickS300->open(this->config->devicePath.c_str(), desired_baud);
+    if(!this->sickS300->open(this->config->devicePath.c_str(), desired_baud)){
+      throw "could not initilize Sick S300";
+    }
     this->isConnected = true;
+    LOG( trace) << "connection to Sick S300 initialized";
   } catch (...) {
-    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
+    error.addError("Initialize_failed", "could not initilize Sick S300");
     this->isConnected = false;
     delete this->sickS300;
     this->sickS300 = NULL;

@@ -7,6 +7,7 @@ using namespace std;
 
 #include <string>
 #include <iostream>
+#include "generic/Logger.h"
 /**
  * \brief 
  *
@@ -26,6 +27,8 @@ class Errors {
     void addError(std::string name, std::string description);
 
     void deleteAllErrors();
+
+    void printErrorsToConsole();
 
 
   private:

@@ -12,30 +12,36 @@ ENDIF(NOT DEFINED SICK_TOOLBOX_PATH)
 FIND_PACKAGE( Boost REQUIRED )
 
 include_directories(
-  ${CMAKE_HOME_DIRECTORY}/sick-ld/
-  ${CMAKE_HOME_DIRECTORY}/generic/
+  ${CMAKE_HOME_DIRECTORY}
   ${Boost_INCLUDE_DIR}
   ${SICK_TOOLBOX_PATH}/include
 )
 
 link_directories(
-  ${Boost_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIR}/lib
+  ${Boost_LIBRARY_DIRS}
   ${SICK_TOOLBOX_PATH}/lib
 )
 
 link_libraries(	
   libsickld-1.0.so
   pthread
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  boost_log_setup
+  boost_log-mt
 )
 
 ADD_EXECUTABLE(OODL_SickLD_test
   ${CMAKE_HOME_DIRECTORY}/sick-ld/applications/Test.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/LaserScannerDataWithIntensities.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLD.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-ld/SickLDConfiguration.cpp
 )

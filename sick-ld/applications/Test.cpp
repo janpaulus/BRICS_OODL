@@ -1,24 +1,17 @@
 #include <iostream>
 
-#include "LaserScannerConfiguration.h"
-#include "SickLDConfiguration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-#include "LaserScanner.h"
-#include "SickLD.h"
-#include "Errors.h"
-
-
-
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-ld/SickLDConfiguration.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "sick-ld/SickLD.h"
+#include "generic/Errors.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
 
 
 using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-using namespace boost::units::angle;
 
 //using namespace SickToolbox;
 

@@ -4,8 +4,7 @@
  * \author
  * \date
  */
-#include "SickLD.h"
-
+#include "sick-ld/SickLD.h"
 SickLD::SickLD() {
   // Bouml preserved body begin 00026771
   this->sickLD = NULL;
@@ -44,6 +43,7 @@ bool SickLD::close(Errors& error) {
   if (this->sickLD != NULL) {
     try {
       this->sickLD->Uninitialize();
+      LOG( trace) << "connection to Sick LD cosed";
     } catch (SickToolbox::SickException &e){
       error.addError("unable_to_uninitialize", e.what());
     } catch (...) {
@@ -91,8 +91,8 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
 
   double start_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
   double stop_angs[SickToolbox::SickLD::SICK_MAX_NUM_MEASURING_SECTORS] = {0};
-  start_angs[0] = 180.0 - ((configuration.scanAngle.value()*180.0/M_PI)/2);
-  stop_angs[0]  = 180.0 + ((configuration.scanAngle.value()*180.0/M_PI)/2);
+  start_angs[0] = configuration.scanAngleStart.value()*180.0/M_PI;
+  stop_angs[0]  = configuration.scanAngleStop.value()*180.0/M_PI;
   try {
 
     this->sickLD->SetSickGlobalParamsAndScanAreas(configuration.motorSpeed.value(),
@@ -100,6 +100,8 @@ bool SickLD::setConfiguration(const SickLDConfiguration& configuration, Errors& 
                                                    start_angs,
                                                    stop_angs,
                                                    configuration.numSectors);
+
+  LOG( trace) << "configuration set to Sick LD";
     
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_set_configuration", e.what());
@@ -120,7 +122,17 @@ bool SickLD::getConfiguration(LaserScannerConfiguration& configuration, Errors& 
     return false;
   }
   try {
-   
+    configuration.vendor = "SICK";
+    configuration.product = "LD";
+    configuration.firmware = this->sickLD->GetSickFirmwareName()+ this->sickLD->GetSickFirmwareVersion();
+  //  configuration.model
+  //  configuration.protocol
+    configuration.serialNumber = this->sickLD->GetSickSerialNumber();
+    configuration.devicePath = this->sickLD->GetSickIPAddress();
+    configuration.scanResolution = (this->sickLD->GetSickScanResolution()*M_PI/180.0) *radian;
+    configuration.scanAngleStart = (this->sickLD->GetSickScanArea()*M_PI/180.0)/-2.0 *radian;
+
+    LOG( trace) << "configuration received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
@@ -145,13 +157,15 @@ bool SickLD::getConfiguration(SickLDConfiguration& configuration, Errors& error)
     configuration.firmware = this->sickLD->GetSickFirmwareName()+ this->sickLD->GetSickFirmwareVersion();
   //  configuration.model
   //  configuration.protocol
-    configuration.serialnumber = this->sickLD->GetSickSerialNumber();
+    configuration.serialNumber = this->sickLD->GetSickSerialNumber();
     configuration.devicePath = this->sickLD->GetSickIPAddress();
     configuration.scanResolution = (this->sickLD->GetSickScanResolution()*M_PI/180.0) *radian;
     configuration.motorSpeed = this->sickLD->GetSickMotorSpeed() * hertz;
     configuration.numSectors = this->sickLD->GetSickNumActiveSectors();
-    configuration.scanAngle = (this->sickLD->GetSickScanArea()*M_PI/180.0) *radian;
+    configuration.scanAngleStart = (this->sickLD->GetSickScanArea()*M_PI/180.0)/-2.0 *radian;
 
+    LOG( trace) << "configuration received from Sick LD";
+    
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_read_configuration", e.what());
   } catch (...) {
@@ -175,11 +189,12 @@ bool SickLD::getData(LaserScannerData& data, Errors& error) {
     this->sickLD->GetSickMeasurements(ranges, NULL, &NumMeasurements);
 
     for(unsigned int i=0; i< NumMeasurements; i++){
-      rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
     }
 
     data.setMeasurements(ranges, rangeAngles, NumMeasurements, meter, radian); //TODO find out right units
 
+    LOG( trace) << "range scan received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -207,10 +222,12 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
 
     for(unsigned int i=0; i< NumMeasurements; i++){
-      this->rangeAngles[i] =  this->config->scanResolution.value() * (i + this->config->scanAngle.value()/2 * (-1)) ;
+      this->rangeAngles[i] =  (this->config->scanResolution.value() * i) + this->config->scanAngleStart.value() ;
     }
 
     data.setMeasurements(this->ranges, this->rangeAngles, this->intensities, NumMeasurements, meter, radian, meter); //TODO find out right units
+
+    LOG( trace) << "range and intensity scan received from Sick LD";
 
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_get_data", e.what());
@@ -223,14 +240,14 @@ bool SickLD::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body end 00026B71
 }
 
-bool SickLD::resetDevice() {
+bool SickLD::resetDevice(Errors& error) {
   // Bouml preserved body begin 00026BF1
-  Errors error;
   if (!this->open(error)) {
     return false;
   }
   try {
     this->sickLD->ResetSick();
+    LOG( trace) << "Sick LD reseted";
   } catch (SickToolbox::SickException &e){
     error.addError("unable_to_reset_sickLD", e.what());
   } catch (...) {
@@ -267,6 +284,7 @@ bool SickLD::open(Errors& error) {
   try {
     this->sickLD->Initialize();
     this->isConnected = true;
+    LOG( trace) << "connection to Sick LD initialized";
   } catch (SickToolbox::SickException &e){
     error.addError("Initialize_failed", e.what());
   } catch (...) {

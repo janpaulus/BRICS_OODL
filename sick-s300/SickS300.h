@@ -2,15 +2,23 @@
 #define _SICKS300_H
 
 
-#include "LaserScanner.h"
-#include "Errors.h"
-#include "LaserScannerConfiguration.h"
-#include "SickS300Configuration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-
 #include <vector>
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-s300/SickS300Configuration.h"
+
 #include "ScannerSickS300.h"
+class Errors;
+class LaserScannerConfiguration;
+class SickS300Configuration;
+class LaserScannerData;
+class LaserScannerDataWithIntensities;
+
 /**
  * \brief 
  *
@@ -35,7 +43,7 @@ class SickS300 : public LaserScanner {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:

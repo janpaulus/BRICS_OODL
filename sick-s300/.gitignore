@@ -1,6 +1,7 @@
 CMakeCache.txt
 cmake_install.cmake
 Makefile
-OODL_SickS300_test
 .dep.inc
 CMakeFiles
+OODL_SickS300_test
+libOODL_SickS300.a

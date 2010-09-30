@@ -2,8 +2,9 @@
 #define _HOKUYOURGCONFIGURATION_H
 
 
-#include "LaserScannerConfiguration.h"
-
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Units.h"
+#include "generic/Logger.h"
 class HokuyoURGConfiguration : public LaserScannerConfiguration {
   public:
     HokuyoURGConfiguration();

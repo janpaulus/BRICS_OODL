@@ -2,17 +2,21 @@
 #define _HOKUYOURG_H
 
 
-#include "LaserScanner.h"
-#include "Errors.h"
-#include "LaserScannerConfiguration.h"
-#include "LaserScannerData.h"
-
-#include "HokuyoURGConfiguration.h"
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "hokuyo-urg/HokuyoURGConfiguration.h"
 
 #include "UrgCtrl.h"
-
-using namespace qrk;
-
+#include "RangeSensorParameter.h"
+class Errors;
+class LaserScannerConfiguration;
+class HokuyoURGConfiguration;
+class LaserScannerData;
 class LaserScannerDataWithIntensities;
 
 /**
@@ -25,6 +29,12 @@ class HokuyoURG : public LaserScanner {
 
     virtual ~HokuyoURG();
 
+
+  private:
+    bool open(Errors& error);
+
+
+  public:
     bool close(Errors& error);
 
     bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error);
@@ -39,17 +49,15 @@ class HokuyoURG : public LaserScanner {
 
     bool getData(LaserScannerDataWithIntensities& data, Errors& error);
 
-    bool resetDevice();
+    bool resetDevice(Errors& error);
 
 
   private:
-    bool open(Errors& error);
-
     LaserScannerConfiguration* config;
 
     bool isConnected;
 
-    UrgCtrl urgDevice;
+    qrk::UrgCtrl hokuyo;
 
 };
 #endif

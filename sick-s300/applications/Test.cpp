@@ -1,24 +1,20 @@
 #include <iostream>
+#include <fstream>
 
-#include "LaserScannerConfiguration.h"
-#include "SickS300Configuration.h"
-#include "LaserScannerData.h"
-#include "LaserScannerDataWithIntensities.h"
-#include "LaserScanner.h"
-#include "SickS300.h"
-#include "Errors.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "sick-s300/SickS300Configuration.h"
+#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
+#include "generic-laser-scanner/LaserScanner.h"
+#include "sick-s300/SickS300.h"
+#include "generic/Errors.h"
+#include "generic/Logger.h"
+#include "generic/Units.h"
 
 
-
-#include <boost/units/systems/si.hpp>
-#include <boost/units/make_scaled_unit.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
 
 
 using namespace std;
-using namespace boost::units;
-using namespace boost::units::si;
-using namespace boost::units::angle;
 
 
 int main(){
@@ -34,9 +30,18 @@ int main(){
             << "max Range: " << config.scan_resolution <<std::endl
             << "test: " << test <<std::endl;
 */
+
+// Read logging settings from a file
+  //  std::ifstream file("log_settings.ini");
+ //   logging::init_from_stream(file);
+
+  (Logger::getInstance()).init();
+
+
+
   SickS300Configuration config;
   config.devicePath = "/dev/ttyUSB0"; // Device path of the Sick LMS 2xx
-  config.boud = BAUD_500K;
+  config.baud = BAUD_500K;
 
   SickS300 scanner;
 
