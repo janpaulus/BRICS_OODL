@@ -1,6 +1,6 @@
 Every Package is in one folder. To create a new package create a folder in one of the topic folders e.g. architecture, archivers, audio...
 A package is composed of five text files:
-
+xxxxxx
 
 depend.mk
 The depend.mk file will be included by other packages to resolve the dependency.
