@@ -17,6 +17,7 @@ LICENSE=		gnu-gpl-v3
 USE_LANGUAGES=		c c++
 
 CMAKE_ARGS+=		-DSELECTED_DRIVER=sick-s300
+CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
 
 
 
