@@ -2,8 +2,9 @@
 #define _MONOCULARCAMERACONFIGURATION_H_
 
 #include <unicap.h>
+#include <unicap_status.h>
 #include <string>
-
+#include <vector>
 
 
 class MonocularCameraConfiguration 
@@ -11,12 +12,24 @@ class MonocularCameraConfiguration
   public:
     MonocularCameraConfiguration();
     ~MonocularCameraConfiguration();
-    bool getDeviceInfo(std::string deviceInfo[], int index);
+ 
+    bool getDeviceName(std::string &deviceId);
+    bool getDeviceNodeID(std::string &deviceNodeId);
+    bool getDevicePluginType(std::string &pluginName);
+
+    std::vector<std::string> deviceFullInfo;
+
   private:
+    bool getDeviceFullInfoVector();
+
+
     unicap_property_t *deviceConfig;
-    unicap_device_t *deviceGeneralInfo;
-    std::string deviceInf[10];
+    unicap_device_t *device;
+    std::string deviceID;
+    std::string deviceNodeID;
+    std::string devicePluginType;
     int returnStatus;
+
 };
 
 
@@ -34,21 +47,6 @@ class MonocularCameraConfiguration
  * @cpi_layer: name of the plugin used to communicate with the device
  * @device: name of the device file, if any
  * @flags: 
-
-struct unicap_device_t
-{
-	char identifier[128];
-	char model_name[128];
-	char vendor_name[128];
-		
-	unsigned long long model_id;
-	unsigned int vendor_id;
-	
-	char cpi_layer[1024];
-	char device[1024];
-		
-	unsigned int flags;
-};
 
 
 /* Camera Configuration 
