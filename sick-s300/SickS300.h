@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <pthread.h>
 #include "generic/Logger.h"
 #include "generic/Units.h"
 #include "generic-laser-scanner/LaserScanner.h"
@@ -49,11 +50,24 @@ class SickS300 : public LaserScanner {
   private:
     bool open(Errors& error);
 
+    // do in BOUML
+  //  void receiveScan(void *t);
+
     LaserScannerConfiguration* config;
 
     bool isConnected;
 
-    ScannerSickS300* sickS300;
+
+
+    // do in BOUML
+    pthread_t callThd;
+
+    pthread_attr_t attr;
+
+    long threadid;
+
+
+
 
 };
 #endif
