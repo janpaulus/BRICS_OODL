@@ -15,7 +15,7 @@ HOMEPAGE=		http://www.zeromq.org/
 COMMENT=		small and fast socket communication library
 LICENSE=		gnu-lgpl-v3
 
-USE_LANGUAGES=		c 
+USE_LANGUAGES=		c c++
 #PREFIX= /home/azamat/documents/euprojects/brics/development/BRICSWP2/Software/brocre_pkg_mng/
 
 
