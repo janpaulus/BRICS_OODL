@@ -1,19 +1,9 @@
 
 #include "sick-s300/SickS300.h"
 
-pthread_mutex_t mutex;
-pthread_mutex_t mutexSickS300;
-pthread_mutex_t mutexStopThread;
-
-std::vector<double> vdDistanceM;
-std::vector<double> vdAngleRAD;
-std::vector<double> vdIntensityAU;
-bool stopThread;
-ScannerSickS300* sickS300;
-
-void* receiveScan(void *t) {
+void SickS300::receiveScan() {
   // Bouml preserved body begin 000371F1
-  bool localStopThread = false;
+
   std::vector<double> DistanceM;
   std::vector<double> AngleRAD;
   std::vector<double> IntensityAU;
@@ -24,29 +14,32 @@ void* receiveScan(void *t) {
   IntensityAU.assign(541, 0);
   bool returnValue = false;
 
-  pthread_mutex_lock(&mutexSickS300);
+  {
+    boost::mutex::scoped_lock lock_it(mutexSickS300);
 
-  while (!localStopThread) {
-    pthread_mutex_lock(&mutexStopThread);
-    localStopThread = stopThread;
-    pthread_mutex_unlock(&mutexStopThread);
 
-    returnValue = sickS300->getScan(DistanceM, AngleRAD, IntensityAU);
+    while (!stopThread) {
+      
+      returnValue = sickS300->getScan(DistanceM, AngleRAD, IntensityAU);
 
-    if (returnValue) {
-      pthread_mutex_lock(&mutex);
-      vdDistanceM = DistanceM;
-      vdAngleRAD = AngleRAD;
-      vdIntensityAU = IntensityAU;
-      LOG(trace) << "get Scan";
-      pthread_mutex_unlock(&mutex);
+      if (returnValue) {
+        {
+          boost::mutex::scoped_lock vecLock(mutex);
+
+          this->vdDistanceM = DistanceM;
+          this->vdAngleRAD = AngleRAD;
+          this->vdIntensityAU = IntensityAU;
+          printf("Scan found\n");
+      //    LOG(trace) << "get Scan";
+
+        }
+      }else{
+      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+   //   usleep(100000);
+      }
     }
-    usleep(100000);
+
   }
-  pthread_mutex_unlock(&mutexSickS300);
-
-  pthread_exit((void*) 0);
-
 
   //   LOG( trace) << "receiving range and intensity scan from Sick S300";
   // Bouml preserved body end 000371F1
@@ -55,7 +48,7 @@ void* receiveScan(void *t) {
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
 
-  sickS300 = NULL;
+  this->sickS300 = NULL;
   this->config = NULL;
   this->isConnected = false;
 
@@ -63,14 +56,6 @@ SickS300::SickS300() {
   vdDistanceM.assign(541, 0);
   vdAngleRAD.assign(541, 0);
   vdIntensityAU.assign(541, 0);
-
-  pthread_mutex_init(&mutex, NULL);
-  pthread_mutex_init(&mutexStopThread, NULL);
-  pthread_mutex_init(&mutexSickS300, NULL);
-  /* Create threads to perform the dotproduct  */
-  pthread_attr_init(&attr);
-  pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
 
   // Bouml preserved body end 00020E67
 }
@@ -89,37 +74,27 @@ bool SickS300::close(Errors& error) {
   // Bouml preserved body begin 00020F67
   void *status;
 
-  pthread_mutex_lock(&mutexStopThread);
+
   stopThread = true;
-  pthread_mutex_unlock(&mutexStopThread);
 
-  sleep(10);
+  threads.join_all();
 
-  pthread_attr_destroy(&attr);
 
-  /* Wait on the other thread */
-  pthread_join(callThd, &status);
+  {
+    boost::mutex::scoped_lock lock_it(mutexSickS300);
+    if (sickS300 != NULL) {
+      try {
 
-  /* After joining, print out the results and cleanup */
-  pthread_mutex_destroy(&mutex);
-  pthread_mutex_destroy(&mutexStopThread);
-  pthread_mutex_destroy(&mutexSickS300);
-  pthread_exit(NULL);
-
-  pthread_mutex_lock(&mutexSickS300);
-  if (sickS300 != NULL) {
-    try {
-
-      LOG(trace) << "connection to Sick S300 closed";
-    } catch (...) {
-      error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
-      return false;
+        LOG(trace) << "connection to Sick S300 closed";
+      } catch (...) {
+        error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
+        return false;
+      }
+      delete sickS300;
+      sickS300 = NULL;
     }
-    delete sickS300;
-    sickS300 = NULL;
+    this->isConnected = false;
   }
-  this->isConnected = false;
-  pthread_mutex_unlock(&mutexSickS300);
   return true;
   // Bouml preserved body end 00020F67
 }
@@ -178,14 +153,15 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
   }
   try {
 
-    pthread_mutex_lock(&mutex);
+    {
+      boost::mutex::scoped_lock vecLock(mutex);
 
-    data.setMeasurements(vdDistanceM, vdAngleRAD, meter, radian);
+      data.setMeasurements(vdDistanceM, vdAngleRAD, meter, radian);
 
-    pthread_mutex_unlock(&mutex);
+    }
 
-    LOG(trace) << "receiving range scan from Sick S300";
-
+  //  LOG(trace) << "receiving range scan from Sick S300";
+    printf("SickS300::getData\n");
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
     return false;
@@ -202,13 +178,15 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   }
   try {
 
-    pthread_mutex_lock(&mutex);
+    {
+      boost::mutex::scoped_lock vecLock(mutex);
 
-    data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
+      data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
 
-    pthread_mutex_unlock(&mutex);
+    }
 
-    LOG(trace) << "receiving range and intensity scan from Sick S300";
+    
+   // LOG(trace) << "receiving range and intensity scan from Sick S300";
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -238,17 +216,18 @@ bool SickS300::open(Errors& error) {
     return false;
   }
 
-  pthread_mutex_lock(&mutexSickS300);
+  {
+    boost::mutex::scoped_lock lock_it(mutexSickS300);
 
-  if (sickS300 != NULL) {
-    error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
-    this->isConnected = false;
-    return false;
+    if (sickS300 != NULL) {
+      error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
+      this->isConnected = false;
+      return false;
+    }
+
+    sickS300 = new ScannerSickS300();
+
   }
-
-  sickS300 = new ScannerSickS300();
-
-  pthread_mutex_unlock(&mutexSickS300);
 
   int desired_baud = 500000;
 
@@ -276,24 +255,27 @@ bool SickS300::open(Errors& error) {
 
   //Initialize the Sick S300
   try {
-    pthread_mutex_lock(&mutexSickS300);
-    if (!sickS300->open(this->config->devicePath.c_str(), desired_baud)) {
-      throw "could not initilize Sick S300";
+    {
+      boost::mutex::scoped_lock lock_it(mutexSickS300);
+      if (!sickS300->open(this->config->devicePath.c_str(), desired_baud)) {
+        throw "could not initilize Sick S300";
+      }
+      this->isConnected = true;
     }
-    this->isConnected = true;
-    pthread_mutex_unlock(&mutexSickS300);
     LOG(trace) << "connection to Sick S300 initialized";
 
-    threadid = 1;
     stopThread = false;
-    pthread_create(&callThd, &attr, receiveScan, (void*) threadid);
+
+    threads.create_thread(boost::bind(&SickS300::receiveScan, this));
+
   } catch (...) {
     error.addError("Initialize_failed", "could not initilize Sick S300");
-    pthread_mutex_lock(&mutexSickS300);
-    this->isConnected = false;
-    delete sickS300;
-    sickS300 = NULL;
-    pthread_mutex_unlock(&mutexSickS300);
+    {
+      boost::mutex::scoped_lock lock_it(mutexSickS300);
+      this->isConnected = false;
+      delete sickS300;
+      sickS300 = NULL;
+    }
     return false;
   }
   return true;

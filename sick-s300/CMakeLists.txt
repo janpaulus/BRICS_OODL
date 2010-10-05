@@ -18,7 +18,6 @@ link_directories(
 )
 
 link_libraries(
-  pthread
   boost_thread
   boost_date_time
   boost_system
