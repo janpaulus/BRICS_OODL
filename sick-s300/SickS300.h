@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <boost/thread.hpp>
 #include "generic/Logger.h"
 #include "generic/Units.h"
 #include "generic-laser-scanner/LaserScanner.h"
@@ -24,7 +25,7 @@ class LaserScannerDataWithIntensities;
  *
  */
 class SickS300 : public LaserScanner {
-  public:
+public:
     SickS300();
 
     virtual ~SickS300();
@@ -46,14 +47,43 @@ class SickS300 : public LaserScanner {
     bool resetDevice(Errors& error);
 
 
-  private:
+private:
     bool open(Errors& error);
+
+    // do in BOUML
+    void receiveScan();
 
     LaserScannerConfiguration* config;
 
     bool isConnected;
 
+
+
+    // do in BOUML
+
+    boost::thread_group threads;
+
+    boost::mutex mutex;
+    boost::mutex mutexSickS300;
+
+
+    std::vector<double> distance1;
+    std::vector<double> angle1;
+    std::vector<double> intensity1;
+
+    std::vector<double> distance2;
+    std::vector<double> angle2;
+    std::vector<double> intensity2;
+
+    std::vector<double>* pDistance;
+    std::vector<double>* pAngle;
+    std::vector<double>* pIntensity;
+
+    volatile bool stopThread;
     ScannerSickS300* sickS300;
+
+
+
 
 };
 #endif

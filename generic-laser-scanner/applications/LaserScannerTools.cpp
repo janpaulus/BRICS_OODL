@@ -24,7 +24,7 @@ bool LaserScannerTools::plot_laserscanner_values(LaserScanner& scanner,Errors& e
      * them using gnuplot_i++
      */
     cout << "\tGrabbing 100 measurements..." << endl << endl;
-    for (unsigned int i = 0; i < 100; i++) {
+    for (unsigned int i = 0; i < 50; i++) {
 
       /* Acquire the most recent scan from the Sick */
       if (!scanner.getData(scanData, errors))
@@ -43,7 +43,7 @@ bool LaserScannerTools::plot_laserscanner_values(LaserScanner& scanner,Errors& e
       data_plot.plot_x(scan, plot_label.c_str());
 
       /* Sleep a bit (gnuplot likes this) */
-      usleep(100000);
+      boost::this_thread::sleep(boost::posix_time::milliseconds(200));
 
       /* Reset plot and vector */
       data_plot.reset_plot();
@@ -54,7 +54,8 @@ bool LaserScannerTools::plot_laserscanner_values(LaserScanner& scanner,Errors& e
     }
 
   }
-  /* Handle anything else */ catch (...) {
+  /* Handle anything else */
+  catch (...) {
     cerr << "An error occurred!" << endl;
   }
   return true;

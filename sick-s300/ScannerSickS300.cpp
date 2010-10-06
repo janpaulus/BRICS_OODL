@@ -189,7 +189,9 @@ bool ScannerSickS300::getScan(std::vector<double> &vdDistanceM, std::vector<doub
 {
 	bool bRet = false;
 	int i,j;
-	int iNumRead;
+  static int actualBufferSize = 0;
+	int iNumRead = 0;
+  int iNumRead2 = 0;
 	int iNumData;
 	int iFirstByteOfHeader;
 	int iFirstByteOfData;
@@ -198,12 +200,19 @@ bool ScannerSickS300::getScan(std::vector<double> &vdDistanceM, std::vector<doub
 	std::vector<ScanPolarType> vecScanPolar;
 	vecScanPolar.resize(m_Param.iNumScanPoints);
 
-	iNumRead = m_SerialIO.readNonBlocking((char*)m_ReadBuf, SCANNER_S300_READ_BUF_SIZE-2);
+  
+	iNumRead2 = m_SerialIO.readNonBlocking((char*)m_ReadBuf+actualBufferSize, SCANNER_S300_READ_BUF_SIZE-2-actualBufferSize);
+
+  iNumRead = actualBufferSize + iNumRead2;
+  actualBufferSize = actualBufferSize + iNumRead2;
 
 	if( iNumRead < m_Param.iDataLength )
 	{
+
 		// not enough data in queue --> abort reading
-		return false;
+  //  printf("not enough data in queue read bytes: %d total buffer: %d\n",iNumRead2, actualBufferSize);
+//    std::cout << "not enough data in queue read bytes: " << iNumRead2  << " total buffer: " <<iNumRead<< std::endl;
+    return false;
 	}
 
 	// Try to find scan.
@@ -253,13 +262,17 @@ bool ScannerSickS300::getScan(std::vector<double> &vdDistanceM, std::vector<doub
 				}
 				// Scan was succesfully read from buffer
 				bRet = true;
+        actualBufferSize = 0;
 				break;
 			}
 		}
 	}
-	
+
+  
+  
 	if(bRet)
 	{
+    
 		// convert data into range and intensity information
 		convertScanToPolar(m_viScanRaw, vecScanPolar);
 

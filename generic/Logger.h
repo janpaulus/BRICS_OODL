@@ -18,7 +18,7 @@ enum severity_level
     fatal
 };
 
-//#define BOOST_LOG_FOUND
+#define BOOST_LOG_FOUND
 
 #ifndef BOOST_LOG_FOUND
   #define LOG(level) std::cout
