@@ -67,9 +67,18 @@ private:
     boost::mutex mutexSickS300;
 
 
-    std::vector<double> vdDistanceM;
-    std::vector<double> vdAngleRAD;
-    std::vector<double> vdIntensityAU;
+    std::vector<double> distance1;
+    std::vector<double> angle1;
+    std::vector<double> intensity1;
+
+    std::vector<double> distance2;
+    std::vector<double> angle2;
+    std::vector<double> intensity2;
+
+    std::vector<double>* pDistance;
+    std::vector<double>* pAngle;
+    std::vector<double>* pIntensity;
+
     volatile bool stopThread;
     ScannerSickS300* sickS300;
 

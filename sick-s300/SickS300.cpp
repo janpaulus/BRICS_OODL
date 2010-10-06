@@ -19,26 +19,45 @@ void SickS300::receiveScan() {
 
 
     while (!stopThread) {
-      
-      returnValue = sickS300->getScan(DistanceM, AngleRAD, IntensityAU);
 
-      if (returnValue) {
-        {
-          boost::mutex::scoped_lock vecLock(mutex);
+      if (pDistance == &distance2) {
+        returnValue = sickS300->getScan(distance1, angle1, intensity1);
 
-          this->vdDistanceM = DistanceM;
-          this->vdAngleRAD = AngleRAD;
-          this->vdIntensityAU = IntensityAU;
-          printf("Scan found\n");
-      //    LOG(trace) << "get Scan";
-
+        if (returnValue) {
+          {
+            boost::mutex::scoped_lock vecLock(mutex);
+            this->pDistance = &(this->distance1);
+            this->pAngle = &(this->angle1);
+            this->pIntensity = &(this->intensity1);
+            printf("Scan found\n");
+            //    LOG(trace) << "get Scan";
+          }
+        } else {
+          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+          //   usleep(100000);
         }
-      }else{
-      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
-   //   usleep(100000);
-      }
-    }
 
+      } else if (pDistance == &distance1) {
+        returnValue = sickS300->getScan(distance2, angle2, intensity2);
+
+        if (returnValue) {
+          {
+            boost::mutex::scoped_lock vecLock(mutex);
+            this->pDistance = &(this->distance2);
+            this->pAngle = &(this->angle2);
+            this->pIntensity = &(this->intensity2);
+            printf("Scan found\n");
+            //    LOG(trace) << "get Scan";
+          }
+
+        } else {
+          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+          //   usleep(100000);
+        }
+
+      }
+
+    }
   }
 
   //   LOG( trace) << "receiving range and intensity scan from Sick S300";
@@ -53,10 +72,20 @@ SickS300::SickS300() {
   this->isConnected = false;
 
 
-  vdDistanceM.assign(541, 0);
-  vdAngleRAD.assign(541, 0);
-  vdIntensityAU.assign(541, 0);
 
+  distance1.assign(541, 0);
+  angle1.assign(541, 0);
+  intensity1.assign(541, 0);
+
+  distance2.assign(541, 0);
+  angle2.assign(541, 0);
+  intensity2.assign(541, 0);
+  {
+    boost::mutex::scoped_lock vecLock(mutex);
+    pDistance = &distance1;
+    pAngle = &angle1;
+    pIntensity = &intensity1;
+  }
   // Bouml preserved body end 00020E67
 }
 
@@ -70,7 +99,7 @@ SickS300::~SickS300() {
   // Bouml preserved body end 00020EE7
 }
 
-bool SickS300::close(Errors& error) {
+bool SickS300::close(Errors & error) {
   // Bouml preserved body begin 00020F67
   void *status;
 
@@ -99,7 +128,7 @@ bool SickS300::close(Errors& error) {
   // Bouml preserved body end 00020F67
 }
 
-bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
+bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors & error) {
   // Bouml preserved body begin 00020FE7
   if (this->config != NULL) {
     delete this->config;
@@ -116,7 +145,7 @@ bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, 
   // Bouml preserved body end 00020FE7
 }
 
-bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors& error) {
+bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors & error) {
   // Bouml preserved body begin 00021067
   if (this->config != NULL) {
     delete this->config;
@@ -132,21 +161,21 @@ bool SickS300::setConfiguration(const SickS300Configuration& configuration, Erro
   // Bouml preserved body end 00021067
 }
 
-bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors& error) {
+bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors & error) {
   // Bouml preserved body begin 000210E7
   error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
   return false;
   // Bouml preserved body end 000210E7
 }
 
-bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& error) {
+bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors & error) {
   // Bouml preserved body begin 00021167
   error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
   return false;
   // Bouml preserved body end 00021167
 }
 
-bool SickS300::getData(LaserScannerData& data, Errors& error) {
+bool SickS300::getData(LaserScannerData& data, Errors & error) {
   // Bouml preserved body begin 000211E7
   if (!this->open(error)) {
     return false;
@@ -155,12 +184,11 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
 
     {
       boost::mutex::scoped_lock vecLock(mutex);
-
-      data.setMeasurements(vdDistanceM, vdAngleRAD, meter, radian);
+      data.setMeasurements(*pDistance, *pAngle, meter, radian);
 
     }
 
-  //  LOG(trace) << "receiving range scan from Sick S300";
+    //  LOG(trace) << "receiving range scan from Sick S300";
     printf("SickS300::getData\n");
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -171,7 +199,7 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
   // Bouml preserved body end 000211E7
 }
 
-bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
+bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors & error) {
   // Bouml preserved body begin 00021267
   if (!this->open(error)) {
     return false;
@@ -180,13 +208,12 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
 
     {
       boost::mutex::scoped_lock vecLock(mutex);
-
-      data.setMeasurements(vdDistanceM, vdAngleRAD, vdIntensityAU, meter, radian, meter);
+      data.setMeasurements(*pDistance, *pAngle, *pIntensity, meter, radian, meter);
 
     }
 
-    
-   // LOG(trace) << "receiving range and intensity scan from Sick S300";
+
+    // LOG(trace) << "receiving range and intensity scan from Sick S300";
 
   } catch (...) {
     error.addError("unable_to_get_data", "could not get data from the Sick S300");
@@ -197,14 +224,14 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body end 00021267
 }
 
-bool SickS300::resetDevice(Errors& error) {
+bool SickS300::resetDevice(Errors & error) {
   // Bouml preserved body begin 000212E7
   error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
   return false;
   // Bouml preserved body end 000212E7
 }
 
-bool SickS300::open(Errors& error) {
+bool SickS300::open(Errors & error) {
   // Bouml preserved body begin 00021367
   if (this->isConnected) {
     return true;

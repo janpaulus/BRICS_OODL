@@ -43,7 +43,7 @@ bool LaserScannerTools::plot_laserscanner_values(LaserScanner& scanner,Errors& e
       data_plot.plot_x(scan, plot_label.c_str());
 
       /* Sleep a bit (gnuplot likes this) */
-      usleep(1000000);
+      boost::this_thread::sleep(boost::posix_time::milliseconds(200));
 
       /* Reset plot and vector */
       data_plot.reset_plot();
