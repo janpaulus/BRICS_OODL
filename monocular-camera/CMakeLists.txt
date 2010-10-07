@@ -1,15 +1,19 @@
-
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 
 SET(UNICAP_LIB /usr/local/lib)
+SET(SOURCES test.cpp MonocularCamera.cpp)
 
-#SET(CC gcc)
-#SET(CXX g++)
+
 
 SET(SOURCES 
 test.cpp 
 MonocularCamera.cpp
 ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/MonocularCameraConfiguration.cpp
+)
+
+INCLUDE_DIRECTORIES(
+/usr/local/include/unicap
+${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
 )
 
 LINK_DIRECTORIES(
@@ -21,12 +25,6 @@ LINK_LIBRARIES(
   unicap
   MonocularCameraConfiguration
 )
-
-INCLUDE_DIRECTORIES(
-/usr/local/include/unicap
-../generic-monocular-camera/
-)
-
 
 ADD_EXECUTABLE(Test ${SOURCES}
 )
