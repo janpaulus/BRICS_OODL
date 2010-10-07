@@ -1,69 +1,5 @@
 
 #include "sick-s300/SickS300.h"
-
-void SickS300::receiveScan() {
-  // Bouml preserved body begin 000371F1
-
-  std::vector<double> DistanceM;
-  std::vector<double> AngleRAD;
-  std::vector<double> IntensityAU;
-
-
-  DistanceM.assign(541, 0);
-  AngleRAD.assign(541, 0);
-  IntensityAU.assign(541, 0);
-  bool returnValue = false;
-
-  {
-    boost::mutex::scoped_lock lock_it(mutexSickS300);
-
-
-    while (!stopThread) {
-
-      if (pDistance == &distance2) {
-        returnValue = sickS300->getScan(distance1, angle1, intensity1);
-
-        if (returnValue) {
-          {
-            boost::mutex::scoped_lock vecLock(mutex);
-            this->pDistance = &(this->distance1);
-            this->pAngle = &(this->angle1);
-            this->pIntensity = &(this->intensity1);
-            printf("Scan found\n");
-            //    LOG(trace) << "get Scan";
-          }
-        } else {
-          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
-          //   usleep(100000);
-        }
-
-      } else if (pDistance == &distance1) {
-        returnValue = sickS300->getScan(distance2, angle2, intensity2);
-
-        if (returnValue) {
-          {
-            boost::mutex::scoped_lock vecLock(mutex);
-            this->pDistance = &(this->distance2);
-            this->pAngle = &(this->angle2);
-            this->pIntensity = &(this->intensity2);
-            printf("Scan found\n");
-            //    LOG(trace) << "get Scan";
-          }
-
-        } else {
-          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
-          //   usleep(100000);
-        }
-
-      }
-
-    }
-  }
-
-  //   LOG( trace) << "receiving range and intensity scan from Sick S300";
-  // Bouml preserved body end 000371F1
-}
-
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
 
@@ -99,7 +35,7 @@ SickS300::~SickS300() {
   // Bouml preserved body end 00020EE7
 }
 
-bool SickS300::close(Errors & error) {
+bool SickS300::close(Errors& error) {
   // Bouml preserved body begin 00020F67
   void *status;
 
@@ -128,7 +64,7 @@ bool SickS300::close(Errors & error) {
   // Bouml preserved body end 00020F67
 }
 
-bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors & error) {
+bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 00020FE7
   if (this->config != NULL) {
     delete this->config;
@@ -145,7 +81,7 @@ bool SickS300::setConfiguration(const LaserScannerConfiguration& configuration, 
   // Bouml preserved body end 00020FE7
 }
 
-bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors & error) {
+bool SickS300::setConfiguration(const SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021067
   if (this->config != NULL) {
     delete this->config;
@@ -161,21 +97,21 @@ bool SickS300::setConfiguration(const SickS300Configuration& configuration, Erro
   // Bouml preserved body end 00021067
 }
 
-bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors & error) {
+bool SickS300::getConfiguration(LaserScannerConfiguration& configuration, Errors& error) {
   // Bouml preserved body begin 000210E7
   error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
   return false;
   // Bouml preserved body end 000210E7
 }
 
-bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors & error) {
+bool SickS300::getConfiguration(SickS300Configuration& configuration, Errors& error) {
   // Bouml preserved body begin 00021167
   error.addError("unable_to_read_configuration", "could not get the configuration from the Sick S300");
   return false;
   // Bouml preserved body end 00021167
 }
 
-bool SickS300::getData(LaserScannerData& data, Errors & error) {
+bool SickS300::getData(LaserScannerData& data, Errors& error) {
   // Bouml preserved body begin 000211E7
   if (!this->open(error)) {
     return false;
@@ -199,7 +135,7 @@ bool SickS300::getData(LaserScannerData& data, Errors & error) {
   // Bouml preserved body end 000211E7
 }
 
-bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors & error) {
+bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
   // Bouml preserved body begin 00021267
   if (!this->open(error)) {
     return false;
@@ -224,14 +160,14 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors & error) {
   // Bouml preserved body end 00021267
 }
 
-bool SickS300::resetDevice(Errors & error) {
+bool SickS300::resetDevice(Errors& error) {
   // Bouml preserved body begin 000212E7
   error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
   return false;
   // Bouml preserved body end 000212E7
 }
 
-bool SickS300::open(Errors & error) {
+bool SickS300::open(Errors& error) {
   // Bouml preserved body begin 00021367
   if (this->isConnected) {
     return true;
@@ -307,5 +243,60 @@ bool SickS300::open(Errors & error) {
   }
   return true;
   // Bouml preserved body end 00021367
+}
+
+void SickS300::receiveScan() {
+  // Bouml preserved body begin 000371F1
+
+  bool returnValue = false;
+
+  {
+    boost::mutex::scoped_lock lock_it(mutexSickS300);
+
+
+    while (!stopThread) {
+
+      if (pDistance == &distance2) {
+        returnValue = sickS300->getScan(distance1, angle1, intensity1);
+
+        if (returnValue) {
+          {
+            boost::mutex::scoped_lock vecLock(mutex);
+            this->pDistance = &(this->distance1);
+            this->pAngle = &(this->angle1);
+            this->pIntensity = &(this->intensity1);
+            printf("Scan found\n");
+            //    LOG(trace) << "get Scan";
+          }
+        } else {
+          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+          //   usleep(100000);
+        }
+
+      } else if (pDistance == &distance1) {
+        returnValue = sickS300->getScan(distance2, angle2, intensity2);
+
+        if (returnValue) {
+          {
+            boost::mutex::scoped_lock vecLock(mutex);
+            this->pDistance = &(this->distance2);
+            this->pAngle = &(this->angle2);
+            this->pIntensity = &(this->intensity2);
+            printf("Scan found\n");
+            //    LOG(trace) << "get Scan";
+          }
+
+        } else {
+          boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+          //   usleep(100000);
+        }
+
+      }
+
+    }
+  }
+
+  //   LOG( trace) << "receiving range and intensity scan from Sick S300";
+  // Bouml preserved body end 000371F1
 }
 
