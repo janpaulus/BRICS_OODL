@@ -1,5 +1,5 @@
 # robotpkg depend.mk for:	brics/xerces-c
-# Created:			Michael Reckhaus on 24 Aug 2010
+# Created:			Michael Reckhaus on 07 Oct 2010
 #
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH}+
