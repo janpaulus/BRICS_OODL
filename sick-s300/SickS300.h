@@ -77,10 +77,12 @@ class SickS300 : public LaserScanner {
     std::vector<double>* pIntensity;
 
     volatile bool stopThread;
+    volatile bool newData1;
+    volatile bool newData2;
 
     boost::thread_group threads;
 
-    boost::mutex mutex;
+ //   boost::mutex mutex;
 
     boost::mutex mutexSickS300;
 

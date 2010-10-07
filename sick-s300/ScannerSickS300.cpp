@@ -210,7 +210,7 @@ bool ScannerSickS300::getScan(std::vector<double> &vdDistanceM, std::vector<doub
 	{
 
 		// not enough data in queue --> abort reading
-  //  printf("not enough data in queue read bytes: %d total buffer: %d\n",iNumRead2, actualBufferSize);
+    printf("not enough data in queue read bytes: %d total buffer: %d\n",iNumRead2, actualBufferSize);
 //    std::cout << "not enough data in queue read bytes: " << iNumRead2  << " total buffer: " <<iNumRead<< std::endl;
     return false;
 	}
