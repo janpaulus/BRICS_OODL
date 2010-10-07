@@ -23,7 +23,6 @@ LINK_DIRECTORIES(
 
 LINK_LIBRARIES(	
   unicap
-  MonocularCameraConfiguration
 )
 
 ADD_EXECUTABLE(Test ${SOURCES}
