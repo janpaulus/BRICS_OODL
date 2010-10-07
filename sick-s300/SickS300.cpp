@@ -256,16 +256,19 @@ void SickS300::receiveScan() {
 
     while (!stopThread) {
 
+      std::cout << "mutex: "<<mutex.try_lock() << std::endl;
+
       if (pDistance == &distance2) {
         returnValue = sickS300->getScan(distance1, angle1, intensity1);
 
-        if (returnValue) {
+        if (returnValue && (mutex.try_lock() == false)) {
+          printf("Scan found\n");
           {
             boost::mutex::scoped_lock vecLock(mutex);
             this->pDistance = &(this->distance1);
             this->pAngle = &(this->angle1);
             this->pIntensity = &(this->intensity1);
-            printf("Scan found\n");
+            
             //    LOG(trace) << "get Scan";
           }
         } else {
@@ -276,13 +279,15 @@ void SickS300::receiveScan() {
       } else if (pDistance == &distance1) {
         returnValue = sickS300->getScan(distance2, angle2, intensity2);
 
-        if (returnValue) {
+        
+        if (returnValue && (mutex.try_lock() == false)) {
+          printf("Scan found\n");
+
           {
             boost::mutex::scoped_lock vecLock(mutex);
             this->pDistance = &(this->distance2);
             this->pAngle = &(this->angle2);
             this->pIntensity = &(this->intensity2);
-            printf("Scan found\n");
             //    LOG(trace) << "get Scan";
           }
 

@@ -6,11 +6,15 @@ SET(UNICAP_LIB /usr/local/lib)
 #SET(CC gcc)
 #SET(CXX g++)
 
-SET(SOURCES test.cpp MonocularCamera.cpp)
+SET(SOURCES 
+test.cpp 
+MonocularCamera.cpp
+${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/MonocularCameraConfiguration.cpp
+)
 
 LINK_DIRECTORIES(
   ${UNICAP_LIB}
-  ../generic-monocular-camera/
+  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
 )
 
 LINK_LIBRARIES(	
@@ -27,6 +31,4 @@ INCLUDE_DIRECTORIES(
 ADD_EXECUTABLE(Test ${SOURCES}
 )
 
-
-
-
+INSTALL(TARGETS Test RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)

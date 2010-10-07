@@ -1,6 +1,8 @@
 #ifndef _MONOCULARCAMERACONFIGURATION_H_
 #define _MONOCULARCAMERACONFIGURATION_H_
 
+#define cplusplus
+
 #include <unicap.h>
 #include <unicap_status.h>
 #include <string>
