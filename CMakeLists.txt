@@ -1,18 +1,20 @@
 PROJECT(BRICS_OODL)
 
-cmake_minimum_required(VERSION 2.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+SET(COMPILE_C_FLAGS_DEBUG "-Wall -g")
+SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
 
 
 IF(DEFINED BOOST_LOG_PATH)
-  link_directories(${BOOST_LOG_PATH}/lib)
-  include_directories(${BOOST_LOG_PATH}/include)
+  LINK_DIRECTORIES(${BOOST_LOG_PATH}/lib)
+  INCLUDE_DIRECTORIES(${BOOST_LOG_PATH}/include)
   MESSAGE(STATUS "BOOST_LOG_PATH= ${BOOST_LOG_PATH}")
 ENDIF(DEFINED BOOST_LOG_PATH)
 
 IF(NOT DEFINED BOOST_LOG_PATH)
-  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include)
+  LINK_DIRECTORIES(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
+  INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY}/../openrobots/include)
 ENDIF(NOT DEFINED BOOST_LOG_PATH)
 
 
@@ -22,7 +24,7 @@ IF(NOT DEFINED SELECTED_DRIVER)
  # add_subdirectory(sick-lms-2xx)
  # add_subdirectory(sick-ld)
 #  add_subdirectory(sick-s300)
-  add_subdirectory(monocular-camera)
+ ADD_SUBDIRECTORY(monocular-camera)
 #add_subdirectory(sick-s300-test)
   
  # add_subdirectory(mesa-swissranger)
@@ -31,7 +33,7 @@ ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 
 IF(DEFINED SELECTED_DRIVER)
-  add_subdirectory(${SELECTED_DRIVER})
+  ADD_SUBDIRECTORY(${SELECTED_DRIVER})
 ENDIF(DEFINED SELECTED_DRIVER)
 
 
