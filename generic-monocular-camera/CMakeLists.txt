@@ -1,6 +1,6 @@
 SET(UNICAP_LIB /usr/local/lib)
-SET(CC gcc)
-SET(CXX g++)
+#SET(CC gcc)
+#SET(CXX g++)
 SET(SOURCES MonocularCameraConfiguration.cpp)
 SET(LIBNAME MonocularCameraConfiguation)
 
@@ -12,8 +12,12 @@ LINK_LIBRARIES(
   unicap
 )
 
+INCLUDE_DIRECTORIES(
+/usr/local/include/unicap
+)
 
-ADD_LIBRARY(
+
+ADD_LIBRARY(${LIBNAME}
   ${SOURCES}
 )
 
