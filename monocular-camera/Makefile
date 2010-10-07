@@ -16,5 +16,6 @@ LICENSE=		gnu-gpl-v3
 
 USE_LANGUAGES=		c c++
 
+CMAKE_ARGS+=		-DSELECTED_DRIVER=monocular-camera
 
 include ../../mk/robotpkg.mk
