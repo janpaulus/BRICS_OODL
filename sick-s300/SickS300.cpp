@@ -129,7 +129,8 @@ bool SickS300::getData(LaserScannerData& data, Errors& error) {
       data.setMeasurements(distance2, angle2, meter, radian);
       newData2 = false;
     } else {
-      error.addError("unable_to_get_data", "could not get data from the Sick S300");
+   //   error.addError("unable_to_get_data", "could not get data from the Sick S300");
+      return false;
     }
 
     //  LOG(trace) << "receiving range scan from Sick S300";
@@ -157,7 +158,8 @@ bool SickS300::getData(LaserScannerDataWithIntensities& data, Errors& error) {
       data.setMeasurements(distance2, angle2, intensity2, meter, radian, meter);
       newData2 = false;
     } else {
-      error.addError("unable_to_get_data", "could not get data from the Sick S300");
+    //  error.addError("unable_to_get_data", "could not get data from the Sick S300");
+      return false;
     }
 
 
@@ -271,25 +273,25 @@ void SickS300::receiveScan() {
       if (newData1 == false) {
 
         returnValue = sickS300->getScan(distance1, angle1, intensity1);
-        printf("data 1\n");
+  //      printf("data 1\n");
         if (returnValue) {
           newData1 = true;
           newData2 = false;
-          printf("Scan found\n");
+  //        printf("Scan found\n");
 
         }
 
       } else if (newData2 == false) {
         returnValue = sickS300->getScan(distance2, angle2, intensity2);
-        printf("data 2\n");
+   //     printf("data 2\n");
         if (returnValue) {
 
           newData2 = true;
           newData1 = false;
-          printf("Scan found\n");
+    //      printf("Scan found\n");
         }
       }
-      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+      boost::this_thread::sleep(boost::posix_time::milliseconds(20));
     }
   }
   // Bouml preserved body end 000371F1
