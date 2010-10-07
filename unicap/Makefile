@@ -18,6 +18,6 @@ LICENSE=		gnu-gpl-v2
 USE_LANGUAGES=		c 
 
 GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+= --prefix=${PREFIX}
+CONFIGURE_ARGS+= --prefix=${PREFIX} --disable-euvccam
 
 include ../../mk/robotpkg.mk
