@@ -1,8 +1,11 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+
 SET(UNICAP_LIB /usr/local/lib)
 #SET(CC gcc)
 #SET(CXX g++)
+
 SET(SOURCES MonocularCameraConfiguration.cpp)
-SET(LIBNAME MonocularCameraConfiguation)
+SET(LIBNAME MonocularCameraConfiguration)
 
 LINK_DIRECTORIES(
   ${UNICAP_LIB}
@@ -17,10 +20,10 @@ INCLUDE_DIRECTORIES(
 )
 
 
-ADD_LIBRARY(${LIBNAME}
+ADD_LIBRARY(${LIBNAME} SHARED
   ${SOURCES}
 )
 
 
-INSTALL()
+
 
