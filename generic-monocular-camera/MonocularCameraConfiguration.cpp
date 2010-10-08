@@ -4,7 +4,6 @@
 
 
 
-
 MonocularCameraConfiguration::MonocularCameraConfiguration()
 {
    deviceConfig = new unicap_property_t;

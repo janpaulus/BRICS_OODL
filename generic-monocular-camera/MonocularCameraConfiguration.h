@@ -18,19 +18,16 @@ class MonocularCameraConfiguration
     bool getDeviceName(std::string &deviceId);
     bool getDeviceNodeID(std::string &deviceNodeId);
     bool getDevicePluginType(std::string &pluginName);
-
-    std::vector<std::string> deviceFullInfo;
-
-  private:
     bool getDeviceFullInfoVector();
 
-
+  private:
     unicap_property_t *deviceConfig;
     unicap_device_t *device;
+    int returnStatus;
     std::string deviceID;
     std::string deviceNodeID;
     std::string devicePluginType;
-    int returnStatus;
+    std::vector<std::string> deviceFullInfo;
 
 };
 
@@ -90,7 +87,7 @@ struct unicap_property_t
       
       union
       {
-	    double value; // default if enumerated
+ 	    double value; // default if enumerated
 	    char menu_item[128]; 
       };
       
