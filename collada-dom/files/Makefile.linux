@@ -1,0 +1,8 @@
+all:
+	make os=linux project=minizip -C dom
+	make os=linux project=dom -C dom
+	
+clean:
+	make os=linux project=minizip -C dom clean
+	make os=linux project=dom -C dom clean
+
