@@ -19,24 +19,20 @@ class MonocularCamera
     MonocularCamera();
     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
     ~MonocularCamera();
-/*
-    bool close (Errors &error);
-    bool getConfiguration (MonocularCameraConfiguration &config, Errors &error);
-    bool setConfiguration (MonocularCameraConfiguration &config, Errors &error);
-    bool resetDevice (Errors &error);
-*/
-    bool close ();
-    bool getConfiguration (MonocularCameraConfiguration &config);
-    bool setConfiguration (MonocularCameraConfiguration &config);
+
+    bool getConfiguration (MonocularCameraConfiguration *config);
+    bool setConfiguration (MonocularCameraConfiguration *config);
     bool resetDevice ();
+    bool close ();
 
   private:
-    bool isConnected;
-    MonocularCameraConfiguration *config;
+    MonocularCameraConfiguration *cameraConfig;
     ImageFormat *format;
     Image2dData *pixelData;
-//    bool open (Errors &error);
+    unicap_device_t *device;
+    unicap_handle_t *deviceHandle;
     bool open ();
+    bool isConnected;
 };
 
 

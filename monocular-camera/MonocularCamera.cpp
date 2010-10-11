@@ -4,8 +4,9 @@
 
 MonocularCamera::MonocularCamera() 
 {
-
-
+    device = new unicap_device_t;
+    deviceHandle = new unicap_handle_t;
+    cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
 }
 
 MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format)
@@ -17,9 +18,9 @@ MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, ImageForm
  
 MonocularCamera::~MonocularCamera()
 {
-
-
-
+  delete device;
+  delete deviceHandle;
+  delete cameraConfig;
 }
 
 //bool MonocularCamera::open (Errors &error)
@@ -39,15 +40,14 @@ bool MonocularCamera ::close ()
 
 
 //bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config, Errors &error)
-bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config)
+bool MonocularCamera::getConfiguration (MonocularCameraConfiguration *config)
 {
-
-
+  config = cameraConfig;
 }
 
 
 //bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config, Errors &error)
-bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
+bool MonocularCamera::setConfiguration (MonocularCameraConfiguration *config)
 {
 
 
