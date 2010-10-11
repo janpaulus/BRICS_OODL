@@ -1,10 +1,9 @@
-# robotpkg Makefile for:	brics/coin-3d
+# robotpkg Makefile for:	brics/coin3d
 # Created:			Michael Reckhaus on 07 Oct 2010
 
 COIN-3D_LIBRARY_VERSION=	3.1.3
-#EXTRACT_SUFX?=		        .tar.gz
 DISTNAME=		        Coin-${COIN-3D_LIBRARY_VERSION}
-PKGNAME=		        Coin-${COIN-3D_LIBRARY_VERSION}
+PKGNAME=		        coin3d-${COIN-3D_LIBRARY_VERSION}
 CATEGORIES=			graphics
 MASTER_SITES=        	     	http://ftp.coin3d.org/coin/src/all/
 

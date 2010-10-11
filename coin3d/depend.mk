@@ -1,28 +1,25 @@
-# robotpkg depend.mk for:	brics/coin-3d
+# robotpkg depend.mk for:	brics/coin3d
 # Created:			Michael Reckhaus on 07 Oct 2010
 #
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH}+
-COIN-3D_DEPEND_MK:= ${COIN-3D_DEPEND_MK}+
+COIN3D_DEPEND_MK:= ${COIN3D_DEPEND_MK}+
 
 ifeq (+,$(DEPEND_DEPTH))
-DEPEND_PKG+=		coin-3d
+DEPEND_PKG+=		coin3d
 endif
 
-ifeq (+,$(COIN-3D_DEPEND_MK))
-PREFER.coin-3d?=	robotpkg
+ifeq (+,$(COIN3D_DEPEND_MK))
+PREFER.coin3d?=	robotpkg
 
-DEPEND_USE+=		coin-3d
+DEPEND_USE+=		coin3d
 
-DEPEND_ABI.coin-3d?=	coin-3d>=3.1.3
-DEPEND_DIR.coin-3d?=	../../brics/coin-3d
+DEPEND_ABI.coin3d?=	coin3d>=3.1.3
+DEPEND_DIR.coin3d?=	../../brics/coin3d
 
-SYSTEM_SEARCH.coin-3d=\
-	libs/libCoin.la
-	libs/libCoin.so
-	libs/libCoin.so.60
-	libs/pkgconfig/Coin.pc
-	libs/libCoin.so.60.1.3
+SYSTEM_SEARCH.coin3d=\
+  include/SoWinLeaveScope.h\
+  include/SoDebug.h
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
