@@ -25,6 +25,8 @@ IF(NOT DEFINED SELECTED_DRIVER)
  # add_subdirectory(sick-ld)
 #  add_subdirectory(sick-s300)
  ADD_SUBDIRECTORY(monocular-camera)
+
+#  add_subdirectory(monocular-camera)
 #add_subdirectory(sick-s300-test)
   
  # add_subdirectory(mesa-swissranger)

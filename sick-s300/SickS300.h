@@ -12,13 +12,16 @@
 #include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
 #include "generic-laser-scanner/LaserScannerConfiguration.h"
 #include "sick-s300/SickS300Configuration.h"
+#include <boost/units/systems/si/prefixes.hpp>
+
 
 #include "ScannerSickS300.h"
 class Errors;
 class LaserScannerConfiguration;
-class SickS300Configuration;
 class LaserScannerData;
 class LaserScannerDataWithIntensities;
+
+
 
 /**
  * \brief 
@@ -34,11 +37,7 @@ class SickS300 : public LaserScanner {
 
     bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error);
 
-    bool setConfiguration(const SickS300Configuration& configuration, Errors& error);
-
     bool getConfiguration(LaserScannerConfiguration& configuration, Errors& error);
-
-    bool getConfiguration(SickS300Configuration& configuration, Errors& error);
 
     bool getData(LaserScannerData& data, Errors& error);
 
@@ -51,6 +50,8 @@ class SickS300 : public LaserScanner {
     bool open(Errors& error);
 
     void receiveScan();
+
+    static const unsigned int numberOfScanPoints = 541;
 
     LaserScannerConfiguration* config;
 
@@ -78,9 +79,15 @@ class SickS300 : public LaserScanner {
 
     volatile bool stopThread;
 
+    volatile bool newData1;
+
+    volatile bool newData2;
+
     boost::thread_group threads;
 
-    boost::mutex mutex;
+    boost::mutex mutexData1;
+
+    boost::mutex mutexData2;
 
     boost::mutex mutexSickS300;
 
