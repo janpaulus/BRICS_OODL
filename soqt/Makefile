@@ -3,7 +3,7 @@
 
 SOQT_LIBRARY_VERSION=	1.5.0
 DISTNAME=		        SoQt-${SOQT_LIBRARY_VERSION}
-PKGNAME=		        SoQt-${SOQT_LIBRARY_VERSION}
+PKGNAME=		        soqt-${SOQT_LIBRARY_VERSION}
 CATEGORIES=			graphics
 MASTER_SITES=        	     	http://ftp.coin3d.org/coin/src/all/
 
@@ -17,7 +17,7 @@ USE_LANGUAGES=			c c++
 
 GNU_CONFIGURE=			yes
 
-include ../qt/depend.mk
+include ../qt.mk
 include ../coin3d/depend.mk
 include ../../mk/robotpkg.mk
 

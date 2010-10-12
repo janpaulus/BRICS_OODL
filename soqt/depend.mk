@@ -18,7 +18,8 @@ DEPEND_ABI.soqt?=	soqt>=1.5.0
 DEPEND_DIR.soqt?=	../../brics/soqt
 
 SYSTEM_SEARCH.soqt=\
-   #include/xercesc/parsers/XercesDOMParser.hpp
+	'lib/libSoQt.{a,so,dylib}'\
+	'bin/soqt-config'
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
