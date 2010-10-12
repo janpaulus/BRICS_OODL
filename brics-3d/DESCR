@@ -1,0 +1,1 @@
+BRICS_3D is the BRICS library for 3D perception and modeling. It implements the processing chain to create a 3D model (e.g. triangle representation) out of data from laser range finders, ToF cameras or depth images from stereo cameras. 
