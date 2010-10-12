@@ -18,7 +18,8 @@ DEPEND_ABI.collada-dom?=	collada-dom>=2.2
 DEPEND_DIR.collada-dom?=	../../brics/collada-dom
 
 SYSTEM_SEARCH.collada-dom=\
-   #include/xercesc/parsers/XercesDOMParser.hpp
+	include/collada-dom/dom.h \
+	include/collada-dom/dae.h
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
