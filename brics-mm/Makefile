@@ -3,8 +3,8 @@
 #
 
 BRICS_MM_VERSION=	0.00
-DISTNAME=		brics-mm-${OODL_HOKUYO_URG_VERSION}
-PKGNAME=		brics-mm-${OODL_HOKUYO_URG_VERSION}
+DISTNAME=		brics-mm-${BRICS_MM_VERSION}
+PKGNAME=		brics-mm-${BRICS_MM_VERSION}
 CATEGORIES=		path
 MASTER_SITES=		http://brics.inf.h-brs.de/
 MASTER_REPOSITORY= 	svn https://svn.best-of-robotics.org/brics/BROCRE/BRICS_MM/trunk
