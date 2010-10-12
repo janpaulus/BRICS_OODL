@@ -17,6 +17,7 @@ USE_LANGUAGES=			c c++
 
 GNU_CONFIGURE=			yes
 
+include ../qt/depend.mk
 include ../coin3d/depend.mk
 include ../../mk/robotpkg.mk
 
