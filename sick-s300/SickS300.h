@@ -12,16 +12,12 @@
 #include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
 #include "generic-laser-scanner/LaserScannerConfiguration.h"
 #include "sick-s300/SickS300Configuration.h"
-#include <boost/units/systems/si/prefixes.hpp>
-
 
 #include "ScannerSickS300.h"
 class Errors;
 class LaserScannerConfiguration;
 class LaserScannerData;
 class LaserScannerDataWithIntensities;
-
-
 
 /**
  * \brief 
@@ -32,6 +28,8 @@ class SickS300 : public LaserScanner {
     SickS300();
 
     virtual ~SickS300();
+
+    bool open(Errors& error);
 
     bool close(Errors& error);
 
@@ -47,8 +45,6 @@ class SickS300 : public LaserScanner {
 
 
   private:
-    bool open(Errors& error);
-
     void receiveScan();
 
     static const unsigned int numberOfScanPoints = 541;

@@ -30,7 +30,6 @@ link_libraries(
   boost_system
   boost_filesystem
   boost_regex
-  boost_log_setup
   boost_log-mt
 )
 

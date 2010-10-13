@@ -37,6 +37,84 @@ SickS300::~SickS300() {
   // Bouml preserved body end 00020EE7
 }
 
+bool SickS300::open(Errors& error) {
+  // Bouml preserved body begin 00021367
+  if (this->isConnected) {
+    return true;
+  }
+
+  if (this->config->devicePath == "") {
+    error.addError("no_DevicePath", "the device path is not specified in the configuration");
+    this->isConnected = false;
+    return false;
+  }
+
+  {
+    boost::mutex::scoped_lock lock_it(mutexSickS300);
+
+    if (sickS300 != NULL) {
+      error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
+      this->isConnected = false;
+      return false;
+    }
+
+    sickS300 = new ScannerSickS300();
+
+  }
+
+  int desired_baud = 500000;
+
+  switch (this->config->baud) {
+    case BAUD_9600:
+      desired_baud = 9600;
+      LOG(trace) << "using 9600 baut to comunicate to Sick S300";
+      break;
+    case BAUD_19200:
+      desired_baud = 19200;
+      LOG(trace) << "using 19200 baut to comunicate to Sick S300";
+      break;
+    case BAUD_38400:
+      desired_baud = 38400;
+      LOG(trace) << "using 38400 baut to comunicate to Sick S300";
+      break;
+    case BAUD_500K:
+      desired_baud = 500000;
+      LOG(trace) << "using 500000 baut to comunicate to Sick S300";
+      break;
+    case BAUD_UNKNOWN:
+      desired_baud = 0;
+      break;
+  }
+
+  //Initialize the Sick S300
+  try {
+    {
+      boost::mutex::scoped_lock lock_it(mutexSickS300);
+      if (!sickS300->open(this->config->devicePath.c_str(), desired_baud)) {
+        throw "could not initilize Sick S300";
+      }
+      this->isConnected = true;
+    }
+    LOG(trace) << "connection to Sick S300 initialized";
+
+    stopThread = false;
+
+    threads.create_thread(boost::bind(&SickS300::receiveScan, this));
+
+  } catch (...) {
+    error.addError("Initialize_failed", "could not initilize Sick S300");
+    {
+      boost::mutex::scoped_lock lock_it(mutexSickS300);
+      this->isConnected = false;
+      delete sickS300;
+      sickS300 = NULL;
+    }
+    return false;
+  }
+  return true;
+  // Bouml preserved body end 00021367
+}
+
 bool SickS300::close(Errors& error) {
   // Bouml preserved body begin 00020F67
   void *status;
@@ -201,84 +279,6 @@ bool SickS300::resetDevice(Errors& error) {
   error.addError("unable_to_reset_sick_s300", "could not reset the Sick S300");
   return false;
   // Bouml preserved body end 000212E7
-}
-
-bool SickS300::open(Errors& error) {
-  // Bouml preserved body begin 00021367
-  if (this->isConnected) {
-    return true;
-  }
-
-  if (this->config->devicePath == "") {
-    error.addError("no_DevicePath", "the device path is not specified in the configuration");
-    this->isConnected = false;
-    return false;
-  }
-
-  {
-    boost::mutex::scoped_lock lock_it(mutexSickS300);
-
-    if (sickS300 != NULL) {
-      error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
-      this->isConnected = false;
-      return false;
-    }
-
-    sickS300 = new ScannerSickS300();
-
-  }
-
-  int desired_baud = 500000;
-
-  switch (this->config->baud) {
-    case BAUD_9600:
-      desired_baud = 9600;
-      LOG(trace) << "using 9600 baut to comunicate to Sick S300";
-      break;
-    case BAUD_19200:
-      desired_baud = 19200;
-      LOG(trace) << "using 19200 baut to comunicate to Sick S300";
-      break;
-    case BAUD_38400:
-      desired_baud = 38400;
-      LOG(trace) << "using 38400 baut to comunicate to Sick S300";
-      break;
-    case BAUD_500K:
-      desired_baud = 500000;
-      LOG(trace) << "using 500000 baut to comunicate to Sick S300";
-      break;
-    case BAUD_UNKNOWN:
-      desired_baud = 0;
-      break;
-  }
-
-  //Initialize the Sick S300
-  try {
-    {
-      boost::mutex::scoped_lock lock_it(mutexSickS300);
-      if (!sickS300->open(this->config->devicePath.c_str(), desired_baud)) {
-        throw "could not initilize Sick S300";
-      }
-      this->isConnected = true;
-    }
-    LOG(trace) << "connection to Sick S300 initialized";
-
-    stopThread = false;
-
-    threads.create_thread(boost::bind(&SickS300::receiveScan, this));
-
-  } catch (...) {
-    error.addError("Initialize_failed", "could not initilize Sick S300");
-    {
-      boost::mutex::scoped_lock lock_it(mutexSickS300);
-      this->isConnected = false;
-      delete sickS300;
-      sickS300 = NULL;
-    }
-    return false;
-  }
-  return true;
-  // Bouml preserved body end 00021367
 }
 
 void SickS300::receiveScan() {
