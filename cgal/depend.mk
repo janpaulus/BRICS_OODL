@@ -1,25 +1,25 @@
-# robotpkg depend.mk for:	brics/coin3d
-# Created:			Michael Reckhaus on 07 Oct 2010
+# robotpkg depend.mk for:	brics/cgal
+# Created:			Jan Paulus on 13 Oct 2010
 #
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH}+
-COIN3D_DEPEND_MK:= ${COIN3D_DEPEND_MK}+
+CGAL_DEPEND_MK:= ${CGAL_DEPEND_MK}+
 
 ifeq (+,$(DEPEND_DEPTH))
-DEPEND_PKG+=		coin3d
+DEPEND_PKG+=		cgal
 endif
 
-ifeq (+,$(COIN3D_DEPEND_MK))
-PREFER.coin3d?=	robotpkg
+ifeq (+,$(CGAL_DEPEND_MK))
+PREFER.cgal?=	robotpkg
 
-DEPEND_USE+=		coin3d
+DEPEND_USE+=		cgal
 
-DEPEND_ABI.coin3d?=	coin3d>=3.1.3
-DEPEND_DIR.coin3d?=	../../brics/coin3d
+DEPEND_ABI.cgal?=	cgal>=3.4
+DEPEND_DIR.cgal?=	../../brics/cgal
 
-SYSTEM_SEARCH.coin3d=\
-  include/SoWinLeaveScope.h\
-  include/SoDebug.h
+SYSTEM_SEARCH.cgal=\
+  lib/libCGAL.so\
+  include/CGAL/AABB_tree/AABB_node.h
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
