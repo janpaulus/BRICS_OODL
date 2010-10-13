@@ -1,25 +1,35 @@
-# robotpkg Makefile for:	brics/zeromq
-# Created:			Azamat BRSU on 17 Aug 2010
+# robotpkg Makefile for:	brics/brics-3d
+# Created:			Jan Paulus on 12 Oct 2010
 #
 
-ZEROMQ_VERSION=	2.0.9
-DISTNAME=		zeromq-${ZEROMQ_VERSION}
-PKGNAME=		zeromq-${ZEROMQ_VERSION}
-CATEGORIES=		middleware
-MASTER_SITES=   http://www.zeromq.org/local--files/area:download/
+BRICS_3D_VERSION=	0.00
+DISTNAME=		brics-3d-${BRICS_3D_VERSION}
+PKGNAME=		brics-3d-${BRICS_3D_VERSION}
+CATEGORIES=		image
+MASTER_SITES=		http://brics.inf.h-brs.de/
+MASTER_REPOSITORY= 	svn https://svn.best-of-robotics.org/brics/BROCRE/BRICS_3D/trunk
 
-
-
-MAINTAINER=		iMatix Corp.
-HOMEPAGE=		http://www.zeromq.org/
-COMMENT=		small and fast socket communication library
-LICENSE=		gnu-lgpl-v3
+MAINTAINER=		nowak@gps-stuttgart.de
+HOMEPAGE=		http://www.best-of-robotics.org
+CO3DENT=		BRICS 3D is the BRICS library for 3D perception and modeling.
+LICENSE=		2-clause-bsd
 
 USE_LANGUAGES=		c c++
-#PREFIX= /home/azamat/documents/euprojects/brics/development/BRICSWP2/Software/brocre_pkg_mng/
+
+#CMAKE_ARGS+=		-DSELECTED_DRIVER=hokuyo-urg
+#CMAKE_ARGS+=		-DHOKUYO_URG_PATH=${PREFIX.hokuyo-urg}
+#CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
 
 
-GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+= --prefix=${PREFIX} --with-pgm
+include ../../image/opencv/depend.mk
+include ../../devel/boost-headers/depend.mk
+include ../../devel/boost-libs/depend.mk
+#CGAL
+include ../../math/eigen2/depend.mk
+include ../../brics/xerces-c/depend.mk
+#OpenSceneGraph? (OSG)
+#CppUnit
 
+include ../../mk/sysdep/cmake.mk
+#include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk

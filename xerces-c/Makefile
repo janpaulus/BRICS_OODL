@@ -17,8 +17,6 @@ LICENSE=		  	apache-2.0
 USE_LANGUAGES=			c c++
 
 GNU_CONFIGURE=			yes
-CONFIGURE_ARGS+= --prefix=${PREFIX}
-
 
 include ../../mk/robotpkg.mk
 

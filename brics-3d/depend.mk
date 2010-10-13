@@ -1,23 +1,23 @@
-# robotpkg depend.mk for:	brics/libunicap
-# Created:	 Azamat BRSU on 18 Aug 2010
+# robotpkg depend.mk for:	brics/brics-3d
+# Created:	 Jan Paulus on 12 Oct 2010
 #
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH}+
-ZEROMQ_DEPEND_MK:= ${ZEROMQ_DEPEND_MK}+
+BRICS_3D_DEPEND_MK:= ${BRICS_3D_DEPEND_MK}+
 
 ifeq (+,$(DEPEND_DEPTH))
-DEPEND_PKG+=		zeromq
+DEPEND_PKG+=		brics-3d
 endif
 
-ifeq (+,$(ZEROMQ_DEPEND_MK))
-PREFER.zeromq?=	robotpkg
+ifeq (+,$(BRICS_3D_DEPEND_MK))
+PREFER.brics-3d?=	robotpkg
 
-DEPEND_USE+=		zeromq
+DEPEND_USE+=		brics-3d
 
-DEPEND_ABI.zeromq?=	zeromq>=2.0.9
-DEPEND_DIR.zeromq?=	../../brics/zeromq
+DEPEND_ABI.brics-3d?=	brics-3d>=2.0.9
+DEPEND_DIR.brics-3d?=	../../brics/brics-3d
 
-SYSTEM_SEARCH.zeromq=\
+SYSTEM_SEARCH.brics-3d=\
 	include/zmq.h
 endif
 
