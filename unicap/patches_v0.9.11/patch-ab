@@ -1,0 +1,11 @@
+--- include/unicap.h	2010-08-05 08:51:58.000000000 +0200
++++ ../libunicap-0.9.11Mod/include/unicap.h	2010-10-08 14:45:52.000000000 +0200
+@@ -215,7 +215,7 @@
+ 
+    unicap_buffer_flags_t flags;
+    
+-   unicap_data_buffer_private_t *private;
++   unicap_data_buffer_private_t *private_buffer;
+ };
+ 
+ typedef struct _unicap_data_buffer_t unicap_data_buffer_t;

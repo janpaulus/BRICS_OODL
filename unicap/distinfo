@@ -1,3 +1,5 @@
 SHA1 (libunicap-0.9.11.tar.gz) = ba7cc08c2ce8b0c61a69eb2de55cd62a765a6609
 RMD160 (libunicap-0.9.11.tar.gz) = cefa6fb45cda78809059a93136372ec62383d755
-Size (libunicap-0.9.11.tar.gz) = 604852 bytes
+Size (libunicap-0.9.11.tar.gz) = 604852 bytes  
+SHA1 (patch-ab) = 4f6ab8d5a79afef36f318684a560549b47b02668
+SHA1 (patch-ac) = 52240023d95e884d8a606a4c620f000dde5e0d13
