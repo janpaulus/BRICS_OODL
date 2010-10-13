@@ -23,8 +23,8 @@ class MonocularCamera
     MonocularCamera& operator= (const MonocularCamera &camera);
     ~MonocularCamera();
 
-    bool getConfiguration (MonocularCameraConfiguration *config);
-    bool setConfiguration (MonocularCameraConfiguration *config);
+    bool getConfiguration (MonocularCameraConfiguration &config);
+    bool setConfiguration (MonocularCameraConfiguration &config);
     bool resetDevice ();
     bool close ();
 

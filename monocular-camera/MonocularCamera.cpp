@@ -60,16 +60,16 @@ bool MonocularCamera ::close ()
 
 
 //bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config, Errors &error)
-bool MonocularCamera::getConfiguration (MonocularCameraConfiguration *config)
+bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config)
 {
   std::cout<<"In Monocular Camera getConfiguration"<<std::endl;
 
-  config = cameraConfig;
+  config = *cameraConfig;
 }
 
 
 //bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config, Errors &error)
-bool MonocularCamera::setConfiguration (MonocularCameraConfiguration *config)
+bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
 {
 
 
