@@ -4,7 +4,7 @@
 
 UNICAP_VERSION=	0.9.8
 DISTNAME=		libunicap-${UNICAP_VERSION}
-PKGNAME=		libunicap-${UNICAP_VERSION}
+PKGNAME=		unicap-${UNICAP_VERSION}
 CATEGORIES=		hardware
 MASTER_SITES=		http://unicap-imaging.org/downloads/
 
