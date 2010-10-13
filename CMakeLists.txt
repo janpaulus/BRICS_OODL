@@ -1,7 +1,8 @@
 PROJECT(BRICS_OODL)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
-SET(COMPILE_C_FLAGS_DEBUG "-Wall -g")
+SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_C_FLAGS_DEBUG "-Wall -g")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
 
@@ -25,8 +26,7 @@ IF(NOT DEFINED SELECTED_DRIVER)
  # add_subdirectory(sick-ld)
 #  add_subdirectory(sick-s300)
  ADD_SUBDIRECTORY(monocular-camera)
-
-#  add_subdirectory(monocular-camera)
+ ADD_SUBDIRECTORY(generic-monocular-camera)
 #add_subdirectory(sick-s300-test)
   
  # add_subdirectory(mesa-swissranger)

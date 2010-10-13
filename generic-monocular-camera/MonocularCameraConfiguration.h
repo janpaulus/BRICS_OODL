@@ -1,18 +1,54 @@
 #ifndef _MONOCULARCAMERACONFIGURATION_H_
 #define _MONOCULARCAMERACONFIGURATION_H_
 
-#define cplusplus
+//#define cplusplus
 
 #include <unicap.h>
 #include <unicap_status.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
-class DeviceConfiguration
+
+
+class CameraDeviceConfiguration;
+class ColorExposureConfiguration;
+
+class MonocularCameraConfiguration 
+{
+  public:
+    MonocularCameraConfiguration();
+    MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig);
+    MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
+    ~MonocularCameraConfiguration();
+ 
+    bool getDeviceName(std::string &deviceId);
+    bool getDeviceNodeID(std::string &deviceNodeId);
+    bool getDevicePluginType(std::string &pluginName);
+    bool getDeviceFullInfoVector();
+
+  private:
+    unicap_property_t *propertyConfig;
+    unicap_device_t *deviceConfig;
+    unicap_handle_t *handleConfig;
+
+    unicap_status_t returnStatus;
+    std::string deviceID;
+    std::string deviceNodeID;
+    std::string devicePluginType;
+    std::vector<std::string> deviceFullInfo;
+    ColorExposureConfiguration *colExpConfiguration;
+    CameraDeviceConfiguration *devConfiguration;
+};
+
+
+
+class CameraDeviceConfiguration
 {
  public:
-  DeviceConfiguration();
- ~DeviceConfiguration();  
+  CameraDeviceConfiguration();
+ ~CameraDeviceConfiguration();  
  
  bool getVideoFrameRate(double &rate);
  bool getVideoGammaValue(double &gamma); 
@@ -80,34 +116,6 @@ class ColorExposureConfiguration
   unicap_property_range_t exposureTime;
   unicap_status_t returnStatus;
 };
-
-
-class MonocularCameraConfiguration 
-{
-  public:
-    MonocularCameraConfiguration();
-    MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-    ~MonocularCameraConfiguration();
- 
-    bool getDeviceName(std::string &deviceId);
-    bool getDeviceNodeID(std::string &deviceNodeId);
-    bool getDevicePluginType(std::string &pluginName);
-    bool getDeviceFullInfoVector();
-
-  private:
-    unicap_property_t *propertyConfig;
-    unicap_device_t *deviceConfig;
-    unicap_handle_t *handleConfig;
-
-    unicap_status_t returnStatus;
-    std::string deviceID;
-    std::string deviceNodeID;
-    std::string devicePluginType;
-    std::vector<std::string> deviceFullInfo;
-    ColorExposureConfiguration *colExpConfiguration;
-    DeviceConfiguration *devConfiguration;
-};
-
 
 
 #endif //~_MONOCULARCAMERACONFIGURATION_H_

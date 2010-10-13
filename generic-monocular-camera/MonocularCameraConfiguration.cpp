@@ -3,9 +3,157 @@
 #include <iostream>
 
 
+MonocularCameraConfiguration::MonocularCameraConfiguration()
+{
+    std::cout<<"Creating MonocularCameraConfiguration without arguments"<<std::endl;
+ 
+}
 
 
-DeviceConfiguration:: DeviceConfiguration()
+MonocularCameraConfiguration::MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle)
+{
+  std::cout<<"Creating MonocularCameraConfiguration with arguments"<<std::endl;
+
+  deviceConfig = device;
+  handleConfig = handle;
+  returnStatus = STATUS_FAILURE;
+  deviceID = "";
+  deviceNodeID = "";
+  devicePluginType = "";
+  colExpConfiguration = new ColorExposureConfiguration;
+  devConfiguration = new CameraDeviceConfiguration;
+  propertyConfig = new unicap_property_t;
+}
+
+MonocularCameraConfiguration::MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig)
+{
+    std::cout<<"Creating Copy of MonocularCameraConfiguration"<<std::endl;
+}
+
+
+MonocularCameraConfiguration& MonocularCameraConfiguration::operator= (MonocularCameraConfiguration &cameraConfig)
+{
+  if(&cameraConfig!=this)
+  {
+    std::cout<<"Assigning MonocularCameraConfiguration"<<std::endl;
+    
+  }
+  return *this;
+}
+
+
+bool MonocularCameraConfiguration::getDeviceName(std::string &deviceId)
+{
+  std::cout<<"In MonocularCameraConfiguration calling getDeviceName"<<std::endl;
+
+  if(SUCCESS(returnStatus))
+  {
+    deviceID = deviceConfig->identifier;
+    deviceId = deviceID;
+    return true;
+  }
+  else
+  {
+    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0);
+    if(SUCCESS(returnStatus))
+    {
+      deviceID = deviceConfig->identifier;
+      deviceId = deviceID; 
+      return true;
+    }
+    
+    else
+    {
+      std::cout << "Can not get device name"<<std::endl;
+      return false;
+    }
+
+  }
+
+}
+
+
+bool MonocularCameraConfiguration::getDeviceNodeID(std::string &deviceNodeId)
+{
+  std::cout<<"In MonocularCameraConfiguration calling getDeviceNodeID"<<std::endl;
+
+  if(SUCCESS(returnStatus))
+  {
+    deviceNodeID = deviceConfig->device;
+    deviceNodeId = deviceNodeID; 
+    return true;
+  }
+
+  else
+  {
+    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0); 
+    if(SUCCESS(returnStatus))
+    {
+      deviceNodeID = deviceConfig->device;
+      deviceNodeId = deviceNodeID; 
+      return true;
+    }
+    else
+    {
+      std::cout << "Can not get device node ID"<<std::endl;
+      return false;
+    }
+  }
+
+}
+
+
+bool MonocularCameraConfiguration::getDevicePluginType(std::string &pluginName)
+{
+  std::cout<<"In MonocularCameraConfiguration calling getDevicePluginType"<<std::endl;
+
+  if(SUCCESS(returnStatus))
+  {
+    devicePluginType = deviceConfig->cpi_layer;
+    pluginName = devicePluginType; 
+    return true;
+  }
+  else
+  {
+    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0);
+    if(SUCCESS(returnStatus))
+    {
+      devicePluginType = deviceConfig->cpi_layer;
+      pluginName = devicePluginType; 
+      return true;
+    }
+    
+    else
+    {
+      std::cout << "Can not get device node ID"<<std::endl;
+      return false;
+    }
+  }
+
+}
+
+
+bool MonocularCameraConfiguration::getDeviceFullInfoVector()
+{
+  std::cout<<"In MonocularCameraConfiguration calling getDeviceFullInfoVector"<<std::endl;
+
+  returnStatus = unicap_enumerate_devices(NULL, deviceConfig, 0);
+
+}
+
+MonocularCameraConfiguration::~MonocularCameraConfiguration()
+{
+  std::cout<<"Destroying MonocularCameraConfiguration"<<std::endl;
+
+  delete colExpConfiguration;
+  delete devConfiguration;
+  delete propertyConfig;
+
+}
+
+
+
+CameraDeviceConfiguration::CameraDeviceConfiguration()
 {
   videoFrameRate.min = 0.0; 
   videoFrameRate.max = 0.0; 
@@ -23,13 +171,13 @@ DeviceConfiguration:: DeviceConfiguration()
 }
 
 
-DeviceConfiguration::~DeviceConfiguration()
+CameraDeviceConfiguration::~CameraDeviceConfiguration()
 {
 
 }
  
 
-bool DeviceConfiguration::getVideoFrameRate(double &rate)
+bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
 {
  
   
@@ -37,69 +185,69 @@ bool DeviceConfiguration::getVideoFrameRate(double &rate)
 }
 
 
-bool DeviceConfiguration::getVideoGammaValue(double &gamma)
+bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
 {
 
 }
 
-bool DeviceConfiguration::getVideoSharpnessValue(double &sharpness)
+bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness)
 {
 
 }
 
-bool DeviceConfiguration::getLensFocus(double &focus)
-{
-
-
-}
-
-bool DeviceConfiguration::getLensZoom(double &zoom)
+bool CameraDeviceConfiguration::getLensFocus(double &focus)
 {
 
 
 }
 
-bool DeviceConfiguration::getLensIris(double &iris)
+bool CameraDeviceConfiguration::getLensZoom(double &zoom)
 {
 
 
 }
 
-
-bool DeviceConfiguration::setVideoFrameRate(double &rate)
+bool CameraDeviceConfiguration::getLensIris(double &iris)
 {
 
 
 }
 
 
-bool DeviceConfiguration::setVideoGammaValue(double &gamma)
-{
-
-
-}
-
-bool DeviceConfiguration::setVideoSharpnessValue(double &sharpness)
+bool CameraDeviceConfiguration::setVideoFrameRate(double &rate)
 {
 
 
 }
 
 
-bool DeviceConfiguration::setLensFocus(double &focus)
+bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)
+{
+
+
+}
+
+bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness)
 {
 
 
 }
 
 
-bool DeviceConfiguration::setLensZoom(double &zoom)
+bool CameraDeviceConfiguration::setLensFocus(double &focus)
 {
 
 
 }
 
-bool DeviceConfiguration::setLensIris(double &iris)
+
+bool CameraDeviceConfiguration::setLensZoom(double &zoom)
+{
+
+
+}
+
+bool CameraDeviceConfiguration::setLensIris(double &iris)
 {
 
 
@@ -220,123 +368,3 @@ bool ColorExposureConfiguration::setExposureTime(double &eTime)
 }
 
 
-
-MonocularCameraConfiguration::MonocularCameraConfiguration()
-{
-  
- 
-}
-
-
-MonocularCameraConfiguration::MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle)
-{
-  deviceConfig = device;
-  handleConfig = handle;
-  returnStatus = STATUS_FAILURE;
-  deviceID = "";
-  deviceNodeID = "";
-  devicePluginType = "";
-  colExpConfiguration = new ColorExposureConfiguration;
-  devConfiguration = new DeviceConfiguration;
-  propertyConfig = new unicap_property_t;
-}
-
-bool MonocularCameraConfiguration::getDeviceName(std::string &deviceId)
-{
-  if(SUCCESS(returnStatus))
-  {
-    deviceID = deviceConfig->identifier;
-    deviceId = deviceID;
-    return true;
-  }
-  else
-  {
-    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0);
-    if(SUCCESS(returnStatus))
-    {
-      deviceID = deviceConfig->identifier;
-      deviceId = deviceID; 
-      return true;
-    }
-    
-    else
-    {
-      std::cout << "Can not get device name"<<std::endl;
-      return false;
-    }
-
-  }
-
-}
-
-
-bool MonocularCameraConfiguration::getDeviceNodeID(std::string &deviceNodeId)
-{
-  if(SUCCESS(returnStatus))
-  {
-    deviceNodeID = deviceConfig->device;
-    deviceNodeId = deviceNodeID; 
-    return true;
-  }
-
-  else
-  {
-    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0); 
-    if(SUCCESS(returnStatus))
-    {
-      deviceNodeID = deviceConfig->device;
-      deviceNodeId = deviceNodeID; 
-      return true;
-    }
-    else
-    {
-      std::cout << "Can not get device node ID"<<std::endl;
-      return false;
-    }
-  }
-
-}
-
-
-bool MonocularCameraConfiguration::getDevicePluginType(std::string &pluginName)
-{
-
-  if(SUCCESS(returnStatus))
-  {
-    devicePluginType = deviceConfig->cpi_layer;
-    pluginName = devicePluginType; 
-    return true;
-  }
-  else
-  {
-    returnStatus = unicap_enumerate_devices(NULL, deviceConfig,0);
-    if(SUCCESS(returnStatus))
-    {
-      devicePluginType = deviceConfig->cpi_layer;
-      pluginName = devicePluginType; 
-      return true;
-    }
-    
-    else
-    {
-      std::cout << "Can not get device node ID"<<std::endl;
-      return false;
-    }
-  }
-
-}
-
-
-bool MonocularCameraConfiguration::getDeviceFullInfoVector()
-{
-  returnStatus = unicap_enumerate_devices(NULL, deviceConfig, 0);
-
-}
-
-MonocularCameraConfiguration::~MonocularCameraConfiguration()
-{
-  delete colExpConfiguration;
-  delete devConfiguration;
-  delete propertyConfig;
-
-}

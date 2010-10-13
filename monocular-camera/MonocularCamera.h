@@ -8,6 +8,7 @@
 #include "../generic-monocular-camera/ImageFormat.h"
 #include "../generic-monocular-camera/Image2dData.h"
 #include <unicap.h>
+#include <iostream>
 
 class MonocularCameraConfiguration;
 class Image2dData;
@@ -18,6 +19,8 @@ class MonocularCamera
   public:
     MonocularCamera();
     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
+    MonocularCamera(MonocularCamera &camera);
+    MonocularCamera& operator= (const MonocularCamera &camera);
     ~MonocularCamera();
 
     bool getConfiguration (MonocularCameraConfiguration *config);
