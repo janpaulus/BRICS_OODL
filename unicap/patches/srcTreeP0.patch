@@ -1,8 +1,8 @@
-Only in libunicap-0.9.12Modified/: autom4te.cache
-Only in libunicap-0.9.12/doc/libunicap: xml
-diff -cr libunicap-0.9.12/include/unicap.h libunicap-0.9.12Modified/include/unicap.h
-*** libunicap-0.9.12/include/unicap.h	2010-08-05 08:51:58.000000000 +0200
---- libunicap-0.9.12Modified/include/unicap.h	2010-10-08 11:03:19.000000000 +0200
+Only in libunicap-0.9.11Modified/: autom4te.cache
+Only in libunicap-0.9.11/doc/libunicap: xml
+diff -cr libunicap-0.9.11/include/unicap.h libunicap-0.9.11Modified/include/unicap.h
+*** libunicap-0.9.11/include/unicap.h	2010-08-05 08:51:58.000000000 +0200
+--- libunicap-0.9.11Modified/include/unicap.h	2010-10-08 11:03:19.000000000 +0200
 ***************
 *** 215,221 ****
   
@@ -20,10 +20,10 @@ diff -cr libunicap-0.9.12/include/unicap.h libunicap-0.9.12Modified/include/unic
   };
   
   typedef struct _unicap_data_buffer_t unicap_data_buffer_t;
-Only in libunicap-0.9.12/include: unicap_version.h
-diff -cr libunicap-0.9.12/src/unicap.c libunicap-0.9.12Modified/src/unicap.c
-*** libunicap-0.9.12/src/unicap.c	2010-09-19 09:02:48.000000000 +0200
---- libunicap-0.9.12Modified/src/unicap.c	2010-10-08 11:03:18.000000000 +0200
+Only in libunicap-0.9.11/include: unicap_version.h
+diff -cr libunicap-0.9.11/src/unicap.c libunicap-0.9.11Modified/src/unicap.c
+*** libunicap-0.9.11/src/unicap.c	2010-09-19 09:02:48.000000000 +0200
+--- libunicap-0.9.11Modified/src/unicap.c	2010-10-08 11:03:18.000000000 +0200
 ***************
 *** 1467,1473 ****
      buffer->buffer_size = buffer->format.buffer_size;
