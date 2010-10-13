@@ -24,12 +24,11 @@ USE_LANGUAGES=		c c++
 include ../../image/opencv/depend.mk
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
-#CGAL
+include ../../brics/cgal/depend.mk
 include ../../math/eigen2/depend.mk
 include ../../brics/xerces-c/depend.mk
-#OpenSceneGraph? (OSG)
-#CppUnit
-
+include ../../brics/openscenegraph.mk
+include ../../brics/cppunit.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk

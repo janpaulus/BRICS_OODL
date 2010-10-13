@@ -22,4 +22,6 @@ SYSTEM_SEARCH.coin3d=\
   include/SoDebug.h
 endif
 
+#SYSTEM_PKG.Linux.cppunit=libcoin40-dev
+
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}

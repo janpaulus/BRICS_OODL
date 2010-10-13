@@ -17,8 +17,11 @@ DEPEND_USE+=		xerces-c
 DEPEND_ABI.xerces-c?=	xerces-c>=3.1.1
 DEPEND_DIR.xerces-c?=	../../brics/xerces-c
 
+
 SYSTEM_SEARCH.xerces-c=\
    include/xercesc/parsers/XercesDOMParser.hpp
 endif
+
+SYSTEM_PKG.Linux.xerces-c=libxerces-c-dev
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
