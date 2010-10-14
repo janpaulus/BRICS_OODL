@@ -34,6 +34,8 @@ class SickLD {
 
     virtual ~SickLD();
 
+    bool open(Errors& error);
+
     bool close(Errors& error);
 
     bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error);
@@ -52,8 +54,6 @@ class SickLD {
 
 
   private:
-    bool open(Errors& error);
-
     LaserScannerConfiguration* config;
 
     bool isConnected;

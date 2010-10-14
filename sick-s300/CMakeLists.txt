@@ -34,7 +34,6 @@ SET(OODL_SickS300_SRC
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.cpp
-  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300Configuration.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.cpp
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
 )

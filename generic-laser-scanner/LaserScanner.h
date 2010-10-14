@@ -8,9 +8,12 @@
  * \date
  */
 #include <string>
+#include "generic/Errors.h"
+#include "generic/Logger.h"
+#include "generic/Units.h"
 #include "generic-laser-scanner/LaserScannerConfiguration.h"
 #include "generic-laser-scanner/LaserScannerData.h"
-#include "generic/Errors.h"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
 class Errors;
 class LaserScannerConfiguration;
 class LaserScannerData;
@@ -24,6 +27,8 @@ class LaserScanner {
     LaserScanner();
 
     virtual ~LaserScanner();
+
+    virtual bool open(Errors& error) = 0;
 
     /// @brief Close the connection to the laser scanner.
     virtual bool close(Errors& error) = 0;

@@ -33,6 +33,69 @@ SickLMS2xx::~SickLMS2xx() {
   // Bouml preserved body end 0001F4F1
 }
 
+bool SickLMS2xx::open(Errors& error) {
+  // Bouml preserved body begin 00020FF1
+  if (this->isConnected) {
+    return true;
+  }
+
+  if (this->config->devicePath == "") {
+    error.addError("no_DevicePath", "the device path is not specified in the configuration");
+    this->isConnected = false;
+    return false;
+  }
+
+  if (this->sickLMS != NULL) {
+    error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
+    this->isConnected = false;
+    return false;
+  }
+
+  this->sickLMS = new SickToolbox::SickLMS(this->config->devicePath);
+
+  SickToolbox::SickLMS::sick_lms_baud_t desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
+
+  switch (this->config->baud) {
+    case BAUD_9600:
+      desired_baud = SickToolbox::SickLMS::SICK_BAUD_9600;
+      LOG( trace) << "using 9600 baut to comunicate to Sick LMS";
+      break;
+    case BAUD_19200:
+      desired_baud = SickToolbox::SickLMS::SICK_BAUD_19200;
+      LOG( trace) << "using 19200 baut to comunicate to Sick LMS";
+      break;
+    case BAUD_38400:
+      desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
+      LOG( trace) << "using 38400 baut to comunicate to Sick LMS";
+      break;
+    case BAUD_500K:
+      desired_baud = SickToolbox::SickLMS::SICK_BAUD_500K;
+      LOG( trace) << "using 500K baut to comunicate to Sick LMS";
+      break;
+    case BAUD_UNKNOWN:
+      desired_baud = SickToolbox::SickLMS::SICK_BAUD_UNKNOWN;
+      break;
+  }
+
+  //Initialize the Sick LMS 2xx
+  try {
+    this->sickLMS->Initialize(desired_baud);
+    this->getConfiguration(*(this->config), error);
+    this->isConnected = true;
+    LOG( trace) << "connection to Sick LMS initialize";
+  } catch (SickToolbox::SickException &e){
+    error.addError("Initialize_failed", e.what());
+  } catch (...) {
+    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
+    this->isConnected = false;
+    delete this->sickLMS;
+    this->sickLMS = NULL;
+    return false;
+  }
+  return true;
+  // Bouml preserved body end 00020FF1
+}
+
 bool SickLMS2xx::close(Errors& error) {
   // Bouml preserved body begin 00021071
   if (this->sickLMS != NULL) {
@@ -315,68 +378,5 @@ bool SickLMS2xx::resetDevice(Errors& error) {
   }
   return true;
   // Bouml preserved body end 00023071
-}
-
-bool SickLMS2xx::open(Errors& error) {
-  // Bouml preserved body begin 00020FF1
-  if (this->isConnected) {
-    return true;
-  }
-
-  if (this->config->devicePath == "") {
-    error.addError("no_DevicePath", "the device path is not specified in the configuration");
-    this->isConnected = false;
-    return false;
-  }
-
-  if (this->sickLMS != NULL) {
-    error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
-    this->isConnected = false;
-    return false;
-  }
-
-  this->sickLMS = new SickToolbox::SickLMS(this->config->devicePath);
-
-  SickToolbox::SickLMS::sick_lms_baud_t desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
-
-  switch (this->config->baud) {
-    case BAUD_9600:
-      desired_baud = SickToolbox::SickLMS::SICK_BAUD_9600;
-      LOG( trace) << "using 9600 baut to comunicate to Sick LMS";
-      break;
-    case BAUD_19200:
-      desired_baud = SickToolbox::SickLMS::SICK_BAUD_19200;
-      LOG( trace) << "using 19200 baut to comunicate to Sick LMS";
-      break;
-    case BAUD_38400:
-      desired_baud = SickToolbox::SickLMS::SICK_BAUD_38400;
-      LOG( trace) << "using 38400 baut to comunicate to Sick LMS";
-      break;
-    case BAUD_500K:
-      desired_baud = SickToolbox::SickLMS::SICK_BAUD_500K;
-      LOG( trace) << "using 500K baut to comunicate to Sick LMS";
-      break;
-    case BAUD_UNKNOWN:
-      desired_baud = SickToolbox::SickLMS::SICK_BAUD_UNKNOWN;
-      break;
-  }
-
-  //Initialize the Sick LMS 2xx
-  try {
-    this->sickLMS->Initialize(desired_baud);
-    this->getConfiguration(*(this->config), error);
-    this->isConnected = true;
-    LOG( trace) << "connection to Sick LMS initialize";
-  } catch (SickToolbox::SickException &e){
-    error.addError("Initialize_failed", e.what());
-  } catch (...) {
-    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
-    this->isConnected = false;
-    delete this->sickLMS;
-    this->sickLMS = NULL;
-    return false;
-  }
-  return true;
-  // Bouml preserved body end 00020FF1
 }
 

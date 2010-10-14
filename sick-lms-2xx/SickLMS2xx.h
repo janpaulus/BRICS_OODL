@@ -37,6 +37,8 @@ class SickLMS2xx : public LaserScanner {
 
     virtual ~SickLMS2xx();
 
+    bool open(Errors& error);
+
     bool close(Errors& error);
 
     bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error);
@@ -55,8 +57,6 @@ class SickLMS2xx : public LaserScanner {
 
 
   private:
-    bool open(Errors& error);
-
     LaserScannerConfiguration* config;
 
     bool isConnected;

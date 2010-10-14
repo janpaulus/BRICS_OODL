@@ -38,6 +38,46 @@ SickLD::~SickLD() {
   // Bouml preserved body end 000267F1
 }
 
+bool SickLD::open(Errors& error) {
+  // Bouml preserved body begin 00026C71
+  if (this->isConnected) {
+    return true;
+  }
+
+  if (this->config->devicePath == "") {
+    error.addError("no_DevicePath", "the device path is not specified in the configuration");
+    this->isConnected = false;
+    return false;
+  }
+
+  if (this->sickLD != NULL) {
+    error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
+    this->isConnected = false;
+    return false;
+  }
+
+  this->sickLD = new SickToolbox::SickLD(this->config->devicePath);
+
+ 
+
+  //Initialize the Sick LD
+  try {
+    this->sickLD->Initialize();
+    this->isConnected = true;
+    LOG( trace) << "connection to Sick LD initialized";
+  } catch (SickToolbox::SickException &e){
+    error.addError("Initialize_failed", e.what());
+  } catch (...) {
+    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
+    this->isConnected = false;
+    delete this->sickLD;
+    this->sickLD = NULL;
+    return false;
+  }
+  return true;
+  // Bouml preserved body end 00026C71
+}
+
 bool SickLD::close(Errors& error) {
   // Bouml preserved body begin 00026871
   if (this->sickLD != NULL) {
@@ -256,45 +296,5 @@ bool SickLD::resetDevice(Errors& error) {
   }
   return true;
   // Bouml preserved body end 00026BF1
-}
-
-bool SickLD::open(Errors& error) {
-  // Bouml preserved body begin 00026C71
-  if (this->isConnected) {
-    return true;
-  }
-
-  if (this->config->devicePath == "") {
-    error.addError("no_DevicePath", "the device path is not specified in the configuration");
-    this->isConnected = false;
-    return false;
-  }
-
-  if (this->sickLD != NULL) {
-    error.addError("still_Connected", "a previous connection was not closed correctly please close it again.");
-    this->isConnected = false;
-    return false;
-  }
-
-  this->sickLD = new SickToolbox::SickLD(this->config->devicePath);
-
- 
-
-  //Initialize the Sick LD
-  try {
-    this->sickLD->Initialize();
-    this->isConnected = true;
-    LOG( trace) << "connection to Sick LD initialized";
-  } catch (SickToolbox::SickException &e){
-    error.addError("Initialize_failed", e.what());
-  } catch (...) {
-    error.addError("Initialize_failed", "Initialize failed! Are you using the correct device path?");
-    this->isConnected = false;
-    delete this->sickLD;
-    this->sickLD = NULL;
-    return false;
-  }
-  return true;
-  // Bouml preserved body end 00026C71
 }
 

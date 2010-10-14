@@ -5,3 +5,7 @@ Makefile-BRICS_OODL.mk
 .dep.inc
 nbproject
 CMakeFiles
+/sick-s300/OODL_SickS300_plot
+/log.txt
+/hokuyo-urg/OODL_HokuyoURG_test
+/hokuyo-urg/libOODL_HokuyoURG.a

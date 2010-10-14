@@ -29,12 +29,8 @@ class HokuyoURG : public LaserScanner {
 
     virtual ~HokuyoURG();
 
-
-  private:
     bool open(Errors& error);
 
-
-  public:
     bool close(Errors& error);
 
     bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error);
