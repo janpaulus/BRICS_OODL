@@ -6,7 +6,9 @@
 MonocularCameraConfiguration::MonocularCameraConfiguration()
 {
     std::cout<<"Creating MonocularCameraConfiguration without arguments"<<std::endl;
- 
+    colExpConfiguration = new ColorExposureConfiguration;
+    devConfiguration = new CameraDeviceConfiguration;
+    propertyConfig = new unicap_property_t;
 }
 
 
@@ -36,8 +38,17 @@ MonocularCameraConfiguration& MonocularCameraConfiguration::operator= (Monocular
   if(&cameraConfig!=this)
   {
     std::cout<<"Assigning MonocularCameraConfiguration"<<std::endl;
-    
+    this->deviceConfig = cameraConfig.deviceConfig;
+    this->handleConfig = cameraConfig.handleConfig;
+    this->returnStatus = cameraConfig.returnStatus;
+    this->deviceID = cameraConfig.deviceID;
+    this->deviceNodeID = cameraConfig.deviceNodeID;
+    this->devicePluginType = cameraConfig.devicePluginType;
+    this->colExpConfiguration = cameraConfig.colExpConfiguration;
+    this->devConfiguration = cameraConfig.devConfiguration;
+    this->propertyConfig = cameraConfig.propertyConfig ; 
   }
+
   return *this;
 }
 
@@ -155,6 +166,7 @@ MonocularCameraConfiguration::~MonocularCameraConfiguration()
 
 CameraDeviceConfiguration::CameraDeviceConfiguration()
 {
+  std::cout<<"Creating CameraDeviceConfiguration with arguments"<<std::endl;
   videoFrameRate.min = 0.0; 
   videoFrameRate.max = 0.0; 
   videoGammaValue.min = 0.0; 
@@ -173,7 +185,7 @@ CameraDeviceConfiguration::CameraDeviceConfiguration()
 
 CameraDeviceConfiguration::~CameraDeviceConfiguration()
 {
-
+   std::cout<<"Destroying CameraDeviceConfiguration with arguments"<<std::endl;
 }
  
 
@@ -257,12 +269,12 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
 
 ColorExposureConfiguration::ColorExposureConfiguration()
 {
-
+   std::cout<<"Creating ColorExposureConfiguration with arguments"<<std::endl;
 }
 
 ColorExposureConfiguration::~ColorExposureConfiguration()
 {
-
+  std::cout<<"Destroying ColorExposureConfiguration with arguments"<<std::endl;
 
 }
  

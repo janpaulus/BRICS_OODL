@@ -5,8 +5,8 @@ int main (int argc, char **argv)
 {
 
  
-  MonocularCamera camera;
   MonocularCameraConfiguration config ;
+  MonocularCamera camera(1);
 
   camera.getConfiguration(config);
 
@@ -14,7 +14,10 @@ int main (int argc, char **argv)
 
   std::string deviceName;
   config.getDeviceName(deviceName);
-
+  std::cout << deviceName<<std::endl;
+  config.getDeviceNodeID(deviceName);
+  std::cout << deviceName<<std::endl;
+  config.getDevicePluginType(deviceName);
   std::cout << deviceName<<std::endl;
 
 

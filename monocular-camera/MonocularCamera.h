@@ -17,7 +17,7 @@ class ImageFormat;
 class MonocularCamera 
 {
   public:
-    MonocularCamera();
+    MonocularCamera(int deviceNumber);
     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
     MonocularCamera(MonocularCamera &camera);
     MonocularCamera& operator= (const MonocularCamera &camera);

@@ -33,7 +33,7 @@ IF(NOT DEFINED SELECTED_DRIVER)
  # add_subdirectory(hokuyourg)
  # add_subdirectory(sicklms2xx)
  # add_subdirectory(sickld)
-  add_subdirectory(sicks300)
+#  add_subdirectory(sicks300)
 #  add_subdirectory(monocularcamera)
 #add_subdirectory(sicks300test)
 

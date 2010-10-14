@@ -2,7 +2,7 @@
 
 
 
-MonocularCamera::MonocularCamera() 
+MonocularCamera::MonocularCamera(int deviceNumber) 
 {
   std::cout<<"Creating Monocular Camera without arguments"<<std::endl;
  
@@ -40,7 +40,7 @@ MonocularCamera::~MonocularCamera()
 
   delete device;
   delete deviceHandle;
-  delete cameraConfig;
+  // delete cameraConfig;
 }
 
 //bool MonocularCamera::open (Errors &error)
@@ -71,8 +71,8 @@ bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config)
 //bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config, Errors &error)
 bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
 {
-
-
+  std::cout<<"In Monocular Camera setConfiguration"<<std::endl;
+  *cameraConfig = config;
 }
 
 
