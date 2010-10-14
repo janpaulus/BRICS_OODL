@@ -11,7 +11,6 @@
 #include "generic-laser-scanner/LaserScannerData.h"
 #include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
 #include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "sick-s300/SickS300Configuration.h"
 
 #include "ScannerSickS300.h"
 class Errors;
@@ -49,35 +48,32 @@ class SickS300 : public LaserScanner {
 
     static const unsigned int numberOfScanPoints = 541;
 
+    //in milliseconds
+    static const unsigned int timeTillNextPollForData = 20;
+
     LaserScannerConfiguration* config;
 
     bool isConnected;
 
     ScannerSickS300* sickS300;
 
-    std::vector<double> distance1;
+    std::vector<double> distanceBufferOne;
 
-    std::vector<double> angle1;
+    std::vector<double> angleBufferOne;
 
-    std::vector<double> intensity1;
+    std::vector<double> intensityBufferOne;
 
-    std::vector<double> distance2;
+    std::vector<double> distanceBufferTwo;
 
-    std::vector<double> angle2;
+    std::vector<double> angleBufferTwo;
 
-    std::vector<double> intensity2;
-
-    std::vector<double>* pDistance;
-
-    std::vector<double>* pAngle;
-
-    std::vector<double>* pIntensity;
+    std::vector<double> intensityBufferTwo;
 
     volatile bool stopThread;
 
-    volatile bool newData1;
+    volatile bool newDataFlagOne;
 
-    volatile bool newData2;
+    volatile bool newDataFlagTwo;
 
     boost::thread_group threads;
 

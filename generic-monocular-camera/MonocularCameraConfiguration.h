@@ -8,30 +8,104 @@
 #include <string>
 #include <vector>
 
+class DeviceConfiguration
+{
+ public:
+  DeviceConfiguration();
+ ~DeviceConfiguration();  
+ 
+ bool getVideoFrameRate(double &rate);
+ bool getVideoGammaValue(double &gamma); 
+ bool getVideoSharpnessValue(double &sharpness);
+ bool getLensFocus(double &focus);
+ bool getLensZoom(double &zoom); 
+ bool getLensIris(double &iris); 
+
+ bool setVideoFrameRate(double &rate);
+ bool setVideoGammaValue(double &gamma); 
+ bool setVideoSharpnessValue(double &sharpness);
+ bool setLensFocus(double &focus);
+ bool setLensZoom(double &zoom); 
+ bool setLensIris(double &iris); 
+
+ private:
+  unicap_property_range_t videoFrameRate; 
+  unicap_property_range_t videoGammaValue; 
+  unicap_property_range_t videoSharpnessValue;
+  unicap_property_range_t lensFocus;
+  unicap_property_range_t lensZoom; 
+  unicap_property_range_t lensIris; 
+  unicap_status_t returnStatus;
+};
+
+
+class ColorExposureConfiguration
+{
+ public:
+  ColorExposureConfiguration();
+  ~ColorExposureConfiguration();
+  
+  bool getHueValue(double &hue); 
+  bool getChromaValue(double &chroma);
+  bool getSaturationValue(double &saturation);
+  bool getColorTemperatureValue(double &temp);
+  bool getWhiteBalanceUValue(double &uValue);
+  bool getWhiteBalanceVValue(double &vValue);
+  bool getBrightnessValue(double &brightness);
+  bool getGainControlValue(double &gain);
+  bool getShutterTime(double &sTime);
+  bool getExposureTime(double &eTime);
+
+  bool setHueValue(double &hue); 
+  bool setChromaValue(double &chroma);
+  bool setSaturationValue(double &saturation);
+  bool setColorTemperatureValue(double &temp);
+  bool setWhiteBalanceUValue(double &uValue);
+  bool setWhiteBalanceVValue(double &vValue);
+  bool setBrightnessValue(double &brightness);
+  bool setGainControlValue(double &gain);
+  bool setShutterTime(double &sTime);
+  bool setExposureTime(double &eTime);
+
+ private:
+  unicap_property_range_t hueValue; 
+  unicap_property_range_t chromaValue;
+  unicap_property_range_t saturationValue;
+  unicap_property_range_t colorTemperatureValue;
+  unicap_property_range_t whiteBalanceUValue;
+  unicap_property_range_t whiteBalanceVValue;
+  unicap_property_range_t brightnessValue;
+  unicap_property_range_t gainControlValue;
+  unicap_property_range_t shutterTime;
+  unicap_property_range_t exposureTime;
+  unicap_status_t returnStatus;
+};
+
 
 class MonocularCameraConfiguration 
 {
   public:
     MonocularCameraConfiguration();
+    MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
     ~MonocularCameraConfiguration();
  
     bool getDeviceName(std::string &deviceId);
     bool getDeviceNodeID(std::string &deviceNodeId);
     bool getDevicePluginType(std::string &pluginName);
-
-    std::vector<std::string> deviceFullInfo;
-
-  private:
     bool getDeviceFullInfoVector();
 
+  private:
+    unicap_property_t *propertyConfig;
+    unicap_device_t *deviceConfig;
+    unicap_handle_t *handleConfig;
 
-    unicap_property_t *deviceConfig;
-    unicap_device_t *device;
+    unicap_status_t returnStatus;
     std::string deviceID;
     std::string deviceNodeID;
     std::string devicePluginType;
-    int returnStatus;
-
+    std::vector<std::string> deviceFullInfo;
+    ColorExposureConfiguration *colExpConfiguration;
+    DeviceConfiguration *devConfiguration;
 };
 
 
@@ -39,6 +113,12 @@ class MonocularCameraConfiguration
 #endif //~_MONOCULARCAMERACONFIGURATION_H_
 
 /*
+
+There are several categories for camera configuration.
+
+CAT1: Device general info which includes all the information accessible through
+unicap_device_t. Listed below. These configuration info can not be changes and provided by the manufacturer.
+
 **
  * unicap_device_t:
  * @identifier: unique textual if of a device
@@ -51,7 +131,56 @@ class MonocularCameraConfiguration
  * @flags: 
 
 
-/* Camera Configuration 
+CAT2:  configuration related to device physical properties, such as of lens and video.
+these are
+
+DeviceConfiguration
+{
+ VideoConfiguration
+ {
+  framerate - range
+  gamma value - range
+  sharpness - range
+ }
+ 
+ LensConfiguration
+ {
+  focus - range
+  zoom - range
+  iris - range
+ }
+
+}
+
+CAT3: configuration related to how sensor perceives light
+
+ColorExposureConfiguration
+{
+ ColorConfiguration
+ {
+   hue -range
+   chroma - range
+   saturation - range
+   color temperature - range
+   white balance - value list/flag
+   {
+     u - range
+     v - range
+   }
+ }
+ 
+ ExposureConfiguration
+ {
+  brightness - range
+  gainControl - range
+  shutterTime - range
+  exposureTime - range
+ }
+
+}
+
+
+/* Camera Configuration  in unicap 
 
 
  * identifier:   unique textual identifier of this properties
@@ -90,7 +219,7 @@ struct unicap_property_t
       
       union
       {
-	    double value; // default if enumerated
+ 	    double value; // default if enumerated
 	    char menu_item[128]; 
       };
       

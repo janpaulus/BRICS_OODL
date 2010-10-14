@@ -18,20 +18,18 @@ ENDIF(NOT DEFINED BOOST_LOG_PATH)
 
 
 IF(NOT DEFINED SELECTED_DRIVER)
-  add_subdirectory(hokuyo-urg)
-  add_subdirectory(sick-lms-2xx)
-  add_subdirectory(sick-ld)
-  add_subdirectory(sick-s300)
-#  add_subdirectory(monocular-camera)
+ # add_subdirectory(hokuyourg)
+ # add_subdirectory(sicklms2xx)
+ # add_subdirectory(sickld)
+  add_subdirectory(sicks300)
+#  add_subdirectory(monocularcamera)
+#add_subdirectory(sicks300test)
   
- # add_subdirectory(mesa-swissranger)
- # add_subdirectory(pmd-camcube)
+ # add_subdirectory(mesaswissranger)
+ # add_subdirectory(pmdcamcube)
 ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 
 IF(DEFINED SELECTED_DRIVER)
   add_subdirectory(${SELECTED_DRIVER})
 ENDIF(DEFINED SELECTED_DRIVER)
-
-
-

@@ -4,20 +4,19 @@
 int main (int argc, char **argv)
 {
 
-  MonocularCameraConfiguration config;
+ 
   MonocularCamera camera;
-  std::string deviceName;
-  std::string deviceNodeID;
-  std::string devicePluginType;
+  MonocularCameraConfiguration *config = new MonocularCameraConfiguration;
 
-  config.getDeviceName(deviceName);
-  config.getDeviceNodeID(deviceNodeID);
-  config.getDevicePluginType(devicePluginType);
+  camera.getConfiguration(config);
+
+
+
+  std::string deviceName;
+  config->getDeviceName(deviceName);
 
   std::cout << deviceName<<std::endl;
-  std::cout << deviceNodeID<<std::endl;
-  std::cout << devicePluginType<<std::endl;
-  
+
 
   return 0;
 }
