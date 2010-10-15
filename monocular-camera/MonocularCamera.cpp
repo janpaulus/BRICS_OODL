@@ -40,7 +40,7 @@ MonocularCamera::~MonocularCamera()
 
   delete device;
   delete deviceHandle;
-  // delete cameraConfig;
+  delete cameraConfig;
 }
 
 //bool MonocularCamera::open (Errors &error)
