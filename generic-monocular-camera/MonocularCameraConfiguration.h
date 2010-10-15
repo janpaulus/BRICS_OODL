@@ -22,7 +22,10 @@ class MonocularCameraConfiguration
     MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig);
     MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
     ~MonocularCameraConfiguration();
- 
+
+    CameraDeviceConfiguration getCameraDeviceConfiguration();
+    ColorExposureConfiguration getColorExposureConfiguration();
+
     bool getDeviceName(std::string &deviceId);
     bool getDeviceNodeID(std::string &deviceNodeId);
     bool getDevicePluginType(std::string &pluginName);
@@ -48,6 +51,7 @@ class CameraDeviceConfiguration
 {
  public:
   CameraDeviceConfiguration();
+  CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle);
  ~CameraDeviceConfiguration();  
  
  bool getVideoFrameRate(double &rate);
@@ -64,7 +68,10 @@ class CameraDeviceConfiguration
  bool setLensZoom(double &zoom); 
  bool setLensIris(double &iris); 
 
+ bool getListOfDeviceProperties();
  private:
+
+
   unicap_property_range_t videoFrameRate; 
   unicap_property_range_t videoGammaValue; 
   unicap_property_range_t videoSharpnessValue;
@@ -72,6 +79,8 @@ class CameraDeviceConfiguration
   unicap_property_range_t lensZoom; 
   unicap_property_range_t lensIris; 
   unicap_status_t returnStatus;
+  unicap_device_t *deviceCameraDevConf;
+  unicap_handle_t *handleCameraDevConf;
 };
 
 
@@ -79,6 +88,7 @@ class ColorExposureConfiguration
 {
  public:
   ColorExposureConfiguration();
+  ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
   ~ColorExposureConfiguration();
   
   bool getHueValue(double &hue); 
@@ -115,6 +125,8 @@ class ColorExposureConfiguration
   unicap_property_range_t shutterTime;
   unicap_property_range_t exposureTime;
   unicap_status_t returnStatus;
+  unicap_device_t *deviceColorExposureDev;
+  unicap_handle_t *handleColorExposureDev;
 };
 
 

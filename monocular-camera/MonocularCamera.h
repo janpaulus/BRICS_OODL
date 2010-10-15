@@ -27,15 +27,15 @@ class MonocularCamera
     bool setConfiguration (MonocularCameraConfiguration &config);
     bool resetDevice ();
     bool close ();
-
+    bool open ();
+    bool capture();
   private:
     MonocularCameraConfiguration *cameraConfig;
     ImageFormat *format;
     Image2dData *pixelData;
     unicap_device_t *device;
     unicap_handle_t *deviceHandle;
-    bool open ();
-    bool isConnected;
+    unicap_status_t isConnected;
 };
 
 

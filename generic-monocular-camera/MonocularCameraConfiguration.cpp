@@ -18,8 +18,8 @@ MonocularCameraConfiguration::MonocularCameraConfiguration(unicap_device_t *devi
   deviceID = "";
   deviceNodeID = "";
   devicePluginType = "";
-  colExpConfiguration = new ColorExposureConfiguration;
-  devConfiguration = new CameraDeviceConfiguration;
+  colExpConfiguration = new ColorExposureConfiguration(deviceConfig, handleConfig);
+  devConfiguration = new CameraDeviceConfiguration(deviceConfig, handleConfig);
   propertyConfig = new unicap_property_t;
 }
 
@@ -30,15 +30,15 @@ MonocularCameraConfiguration::MonocularCameraConfiguration(MonocularCameraConfig
 MonocularCameraConfiguration& MonocularCameraConfiguration::operator=(MonocularCameraConfiguration &cameraConfig) {
   if (&cameraConfig != this) {
     std::cout << "Assigning MonocularCameraConfiguration" << std::endl;
-    cameraConfig.deviceConfig = this->deviceConfig;
-    cameraConfig.handleConfig = this->handleConfig;
-    cameraConfig.returnStatus = this->returnStatus;
-    cameraConfig.deviceID = this->deviceID;
-    cameraConfig.deviceNodeID = this->deviceNodeID;
-    cameraConfig.devicePluginType = this->devicePluginType;
-    cameraConfig.colExpConfiguration = this->colExpConfiguration;
-    cameraConfig.devConfiguration = this->devConfiguration;
-    cameraConfig.propertyConfig = this->propertyConfig;
+    this->deviceConfig = cameraConfig.deviceConfig;
+    this->handleConfig = cameraConfig.handleConfig;
+    this->returnStatus = cameraConfig.returnStatus;
+    this->deviceID = cameraConfig.deviceID;
+    this->deviceNodeID = cameraConfig.deviceNodeID;
+    this->devicePluginType = cameraConfig.devicePluginType;
+    this->colExpConfiguration = cameraConfig.colExpConfiguration;
+    this->devConfiguration = cameraConfig.devConfiguration;
+    this->propertyConfig = cameraConfig.propertyConfig;
   }
 
   return *this;
@@ -127,8 +127,30 @@ MonocularCameraConfiguration::~MonocularCameraConfiguration() {
 
 }
 
+
+CameraDeviceConfiguration MonocularCameraConfiguration::getCameraDeviceConfiguration()
+{
+
+
+    return *(this->devConfiguration);
+}
+
+ColorExposureConfiguration MonocularCameraConfiguration::getColorExposureConfiguration()
+{
+
+
+    return *(this->colExpConfiguration);
+}
+
+
+
+
+
+
+
+
 CameraDeviceConfiguration::CameraDeviceConfiguration() {
-  std::cout << "Creating CameraDeviceConfiguration with arguments" << std::endl;
+  std::cout << "Creating CameraDeviceConfiguration without arguments" << std::endl;
   videoFrameRate.min = 0.0;
   videoFrameRate.max = 0.0;
   videoGammaValue.min = 0.0;
@@ -142,74 +164,140 @@ CameraDeviceConfiguration::CameraDeviceConfiguration() {
   lensIris.min = 0.0;
   lensIris.max = 0.0;
   returnStatus = STATUS_FAILURE;
+  deviceCameraDevConf = NULL;
+  handleCameraDevConf = NULL;
+}
+
+
+CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle) {
+  std::cout << "Creating CameraDeviceConfiguration with arguments" << std::endl;
+  deviceCameraDevConf = device;
+  handleCameraDevConf = handle;
 }
 
 CameraDeviceConfiguration::~CameraDeviceConfiguration() {
+
   std::cout << "Destroying CameraDeviceConfiguration with arguments" << std::endl;
+
 }
 
 bool CameraDeviceConfiguration::getVideoFrameRate(double &rate) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
+  
 
 }
 
 bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma) {
 
+  std::cout << "Inside CameraDeviceConfiguration getVideoGammaValue" << std::endl;
+
 }
 
 bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
+
+  std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
 
 }
 
 bool CameraDeviceConfiguration::getLensFocus(double &focus) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration getLensFocus" << std::endl;
 }
 
 bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
 
+  std::cout << "Inside CameraDeviceConfiguration getLensZoom" << std::endl;
 
 }
 
 bool CameraDeviceConfiguration::getLensIris(double &iris) {
 
+  std::cout << "Inside CameraDeviceConfiguration getLensIris" << std::endl;
 
 }
 
 bool CameraDeviceConfiguration::setVideoFrameRate(double &rate) {
 
+  std::cout << "Inside CameraDeviceConfiguration setVideoFrameRate" << std::endl;
 
 }
 
 bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration setVideoGammaValue" << std::endl;
 }
 
 bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration setVideoSharpnessValue" << std::endl;
 }
 
 bool CameraDeviceConfiguration::setLensFocus(double &focus) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration setLensFocus" << std::endl;
 }
 
 bool CameraDeviceConfiguration::setLensZoom(double &zoom) {
-
+  std::cout << "Inside CameraDeviceConfiguration setLensZoom" << std::endl;
 
 }
 
 bool CameraDeviceConfiguration::setLensIris(double &iris) {
 
-
+  std::cout << "Inside CameraDeviceConfiguration setLensIris" << std::endl;
 }
+
+bool CameraDeviceConfiguration::getListOfDeviceProperties() {
+
+  std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
+  unicap_property_t propertyList[50];
+  int propertyCounter;
+  int p = -1;  
+  
+  for( propertyCounter = 0; propertyCounter < 50 ; propertyCounter++ )
+  {
+      returnStatus = unicap_enumerate_properties( *handleCameraDevConf, NULL, &propertyList[propertyCounter], propertyCounter);
+      if( SUCCESS(returnStatus) )
+      {
+          if( propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+          {
+              std::cout << propertyList[propertyCounter].identifier << std::endl;
+              returnStatus = unicap_get_property( *handleCameraDevConf, &propertyList[p] ); // (3)
+              if( SUCCESS(returnStatus) )
+              {
+                  std::cout << propertyList[p].value<< propertyList[p].range.min <<propertyList[p].range.max << std::endl;
+              }
+              propertyCounter++;
+          }
+      }
+      else
+      {
+          continue;
+      }
+  }
+  
+  return true;
+}
+
+
+
 
 ColorExposureConfiguration::ColorExposureConfiguration() {
-  std::cout << "Creating ColorExposureConfiguration with arguments" << std::endl;
+  std::cout << "Creating ColorExposureConfiguration without arguments" << std::endl;
+  deviceColorExposureDev = NULL;
+  handleColorExposureDev = NULL;
 }
+
+
+ColorExposureConfiguration::ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle) {
+  std::cout << "Creating ColorExposureConfiguration with arguments" << std::endl;
+  deviceColorExposureDev = device;
+  handleColorExposureDev = handle;
+}
+
+
+
 
 ColorExposureConfiguration::~ColorExposureConfiguration() {
   std::cout << "Destroying ColorExposureConfiguration with arguments" << std::endl;

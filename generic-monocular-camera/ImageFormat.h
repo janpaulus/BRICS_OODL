@@ -1,3 +1,14 @@
+/*class ImageFromat
+{
+ public:
+  ImageFormat();
+  ~ImageFormat();
+ private:
+  std::string formatIdentifier;
+
+};
+
+*/
 
 /**
  * unicap_rect_t:
