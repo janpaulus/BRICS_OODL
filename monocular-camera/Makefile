@@ -17,6 +17,7 @@ LICENSE=		gnu-gpl-v3
 USE_LANGUAGES=		c c++
 
 CMAKE_ARGS+=		-DSELECTED_DRIVER=monocular-camera
+CMAKE_ARGS+=		-DUNICAP_PATH=${PREFIX.unicap}
 
 include ../../brics/unicap/depend.mk
 include ../../mk/sysdep/cmake.mk
