@@ -3,6 +3,7 @@ include/unicap/unicap.h
 include/unicap/unicap_status.h
 include/unicap/unicap_version.h
 lib/libunicap.la
+lib/libunicap.so
 lib/pkgconfig/libunicap.pc
 lib/unicap2/cpi/libdcam.la
 lib/unicap2/cpi/libv4l.la
