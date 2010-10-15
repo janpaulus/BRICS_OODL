@@ -7,6 +7,8 @@
  * \author
  * \date
  */
+#include "LaserScanner.h"
+
 #include <vector>
 #include "generic/Logger.h"
 #include "generic/Units.h"
@@ -28,7 +30,7 @@ class LaserScannerDataWithIntensities;
  * \brief 
  *
  */
-class SickLD {
+class SickLD : public LaserScanner {
   public:
     SickLD();
 

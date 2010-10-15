@@ -52,7 +52,7 @@ bool SickS300::open(Errors& error) {
       return false;
     }
 
-    sickS300 = new ScannerSickS300();
+    this->sickS300 = new ScannerSickS300();
 
   }
 

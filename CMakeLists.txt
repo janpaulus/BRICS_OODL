@@ -19,6 +19,18 @@ IF(NOT DEFINED BOOST_LOG_PATH)
 ENDIF(NOT DEFINED BOOST_LOG_PATH)
 
 
+IF(DEFINED UNICAP_PATH)
+  link_directories(${UNICAP_PATH}/lib)
+  include_directories(${UNICAP_PATH}/include/unicap)
+  MESSAGE(STATUS "UNICAP_PATH= ${UNICAP_PATH}")
+ENDIF(DEFINED UNICAP_PATH)
+
+IF(NOT DEFINED UNICAP_PATH)
+  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
+  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
+ENDIF(NOT DEFINED UNICAP_PATH)
+
+
 
 IF(NOT DEFINED SELECTED_DRIVER)
 
