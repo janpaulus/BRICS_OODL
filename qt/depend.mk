@@ -10,15 +10,18 @@ DEPEND_PKG+=		qt
 endif
 
 ifeq (+,$(QT_DEPEND_MK))
-PREFER.qt?=	robotpkg
+PREFER.qt?=	system
 
 DEPEND_USE+=		qt
 
-DEPEND_ABI.qt?=	qt>=4.7.0
+DEPEND_ABI.qt?=	qt>=4.6.2
 DEPEND_DIR.qt?=	../../brics/qt
 
 SYSTEM_SEARCH.qt=\
-   #include/xercesc/parsers/XercesDOMParser.hpp
+   'include/qt4/Qt/qcoreevent.h' \
+	'share/qt4/lib/libQtCore.{a,so,dylib}'
 endif
+
+SYSTEM_PKG.Linux.qt=libqt4-dev
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}

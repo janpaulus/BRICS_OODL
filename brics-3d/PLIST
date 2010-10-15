@@ -1,0 +1,6 @@
+@comment Thu Oct 14 16:42:13 CEST 2010
+include/constants.h
+include/flann.h
+lib/libflann.so
+lib/libflann_s.a
+python/pyflann/bindings/libflann.so

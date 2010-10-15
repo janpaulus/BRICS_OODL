@@ -19,12 +19,14 @@ WRKSRC = 	${WRKDIR}/collada-dom
 
 USE_LANGUAGES=			c c++
 
-post-extract:
-	${RUN}cd ${WRKSRC} &&					\
-	cp ${FILESDIR}/Makefile.linux Makefile
+#post-extract:
+#	${RUN}cd ${WRKSRC} &&					\
+#	cp ${FILESDIR}/Makefile.linux Makefile
 
 pre-configure:
-	${RUN}cd ${WRKSRC} && cd dom && cd include && cd 1.4 && cd dom && \
+	${RUN}cd ${WRKSRC} &&					\
+	cp ${FILESDIR}/Makefile.linux Makefile
+	${RUN}cd ${WRKSRC}/dom/include/1.4/dom && \
 	cp domasset.h domAsset.h
 
 do-install:

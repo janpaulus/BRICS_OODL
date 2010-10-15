@@ -10,15 +10,19 @@ DEPEND_PKG+=		xerces-c
 endif
 
 ifeq (+,$(XERCES-C_DEPEND_MK))
-PREFER.xerces-c?=	robotpkg
+PREFER.xerces-c?=	system
 
 DEPEND_USE+=		xerces-c
 
 DEPEND_ABI.xerces-c?=	xerces-c>=3.1.1
 DEPEND_DIR.xerces-c?=	../../brics/xerces-c
 
+
 SYSTEM_SEARCH.xerces-c=\
-   include/xercesc/parsers/XercesDOMParser.hpp
+   include/xercesc/dom/DOM.hpp \
+	 'lib/libxerces-c.{a,so,dylib}'
 endif
+
+SYSTEM_PKG.Linux.xerces-c=libxerces-c-dev
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}

@@ -18,5 +18,6 @@ USE_LANGUAGES=		c c++
 
 CMAKE_ARGS+=		-DSELECTED_DRIVER=monocular-camera
 
+include ../../brics/unicap/depend.mk
 include ../../mk/sysdep/cmake.mk
 include ../../mk/robotpkg.mk

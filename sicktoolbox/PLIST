@@ -1,10 +1,6 @@
-include/sicklms-1.0/SickBufferMonitor.hh
-include/sicklms-1.0/SickException.hh
-include/sicklms-1.0/SickLIDAR.hh
-include/sicklms-1.0/SickLMS.hh
-include/sicklms-1.0/SickLMSBufferMonitor.hh
-include/sicklms-1.0/SickLMSMessage.hh
-include/sicklms-1.0/SickMessage.hh
+@comment Wed Oct 13 13:46:22 CEST 2010
+bin/ld_config
+bin/lms_config
 include/sickld-1.0/SickBufferMonitor.hh
 include/sickld-1.0/SickException.hh
 include/sickld-1.0/SickLD.hh
@@ -12,15 +8,12 @@ include/sickld-1.0/SickLDBufferMonitor.hh
 include/sickld-1.0/SickLDMessage.hh
 include/sickld-1.0/SickLIDAR.hh
 include/sickld-1.0/SickMessage.hh
-lib/libsickld-1.0.a
+include/sicklms-1.0/SickBufferMonitor.hh
+include/sicklms-1.0/SickException.hh
+include/sicklms-1.0/SickLIDAR.hh
+include/sicklms-1.0/SickLMS.hh
+include/sicklms-1.0/SickLMSBufferMonitor.hh
+include/sicklms-1.0/SickLMSMessage.hh
+include/sicklms-1.0/SickMessage.hh
 lib/libsickld-1.0.la
-lib/libsickld-1.0.so
-lib/libsickld-1.0.so.0
-lib/libsickld-1.0.so.0.0.0
-lib/libsicklms-1.0.a
 lib/libsicklms-1.0.la
-lib/libsicklms-1.0.so
-lib/libsicklms-1.0.so.0
-lib/libsicklms-1.0.so.0.0.0
-bin/ld_config
-bin/lms_config

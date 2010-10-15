@@ -22,8 +22,8 @@ USE_LANGUAGES=		c c++
 
 
 include ../../brics/xerces-c/depend.mk
-include ../../brics/collada-dom/depend.mk
-include ../qt.mk
+#include ../../brics/collada-dom/depend.mk
+include ../../brics/qt/depend.mk
 include ../../brics/coin3d/depend.mk
 include ../../brics/soqt/depend.mk
 include ../../devel/boost-headers/depend.mk
