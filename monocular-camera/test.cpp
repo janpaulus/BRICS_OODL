@@ -24,9 +24,12 @@ int main (int argc, char **argv)
   std::cout << hue <<std::endl;
 
   double brightness = 0.0;
-  (config.getColorExposureConfiguration())->getBrightnessValue(hue);
-  std::cout << hue <<std::endl;
+  (config.getColorExposureConfiguration())->getBrightnessValue(brightness);
+  std::cout << brightness <<std::endl;
 
+  double saturation = 0.0;
+  (config.getColorExposureConfiguration())->getSaturationValue(saturation);
+  std::cout << saturation <<std::endl;
 
 
   return 0;

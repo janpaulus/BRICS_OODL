@@ -348,7 +348,7 @@ ColorExposureConfiguration::~ColorExposureConfiguration() {
 
 bool ColorExposureConfiguration::getHueValue(double &hue) {
 
-  if (getListOfDeviceProperties() == true)
+  if (getListOfColorProperties() == true)
   {
     std::cout << "Inside ColorExposureConfiguration getHueValue" << std::endl;
     
@@ -384,7 +384,7 @@ bool ColorExposureConfiguration::getHueValue(double &hue) {
 
 
 bool ColorExposureConfiguration::getListOfColorProperties() {
-  std::cout << "Inside ColorExposureConfiguration getListOfDeviceProperties" << std::endl;
+  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
 
   //number of properties allocated is 30 for now, change it to const or make it dynamic
   for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
@@ -421,6 +421,36 @@ bool ColorExposureConfiguration::getChromaValue(double &chroma) {
 }
 
 bool ColorExposureConfiguration::getSaturationValue(double &saturation) {
+if (getListOfColorProperties() == true)
+  {
+    std::cout << "Inside ColorExposureConfiguration getSaturationValue" << std::endl;
+    
+    const std::string propertyName ="saturation";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+          if( SUCCESS(returnStatus) )
+          {
+            saturation = listOfProperties[propertyCounter].value;
+            //std::cout << saturation <<std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<<std::endl;
+      return false;
+    }
+  }
 
 }
 
@@ -429,6 +459,36 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp) {
 }
 
 bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue) {
+if (getListOfColorProperties() == true)
+  {
+    std::cout << "Inside ColorExposureConfiguration getWhiteBalanceUValue" << std::endl;
+    
+    const std::string propertyName ="white_balance_u";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+          if( SUCCESS(returnStatus) )
+          {
+            uValue = listOfProperties[propertyCounter].value;
+            //std::cout << uValue <<std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<<std::endl;
+      return false;
+    }
+  }
 
 }
 
