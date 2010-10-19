@@ -82,6 +82,7 @@ class CameraDeviceConfiguration
   unicap_property_t listOfProperties[30];//array of properties
   unicap_device_t *deviceCameraDevConf;
   unicap_handle_t *handleCameraDevConf;
+  int deviceConfPropertyCounter;
 };
 
 
@@ -116,6 +117,7 @@ class ColorExposureConfiguration
 
  private:
   bool getListOfColorProperties();
+  int colorConfPropertyCounter;
   unicap_property_range_t hueValue; 
   unicap_property_range_t chromaValue;
   unicap_property_range_t saturationValue;

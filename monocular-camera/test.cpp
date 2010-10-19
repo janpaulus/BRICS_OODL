@@ -19,6 +19,10 @@ int main (int argc, char **argv)
   (config.getCameraDeviceConfiguration())->getVideoFrameRate(framerate);
   std::cout << framerate <<std::endl;
 
+  double gamma = 0.0;
+  (config.getCameraDeviceConfiguration())->getVideoGammaValue(gamma);
+  std::cout << gamma <<std::endl;
+
   double hue = 0.0;
   (config.getColorExposureConfiguration())->getHueValue(hue);
   std::cout << hue <<std::endl;

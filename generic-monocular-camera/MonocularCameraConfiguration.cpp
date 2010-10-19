@@ -166,6 +166,7 @@ CameraDeviceConfiguration::CameraDeviceConfiguration() {
   returnStatus = STATUS_FAILURE;
   deviceCameraDevConf = NULL;
   handleCameraDevConf = NULL;
+ deviceConfPropertyCounter = 0;
 }
 
 
@@ -186,6 +187,7 @@ CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, un
   returnStatus = STATUS_FAILURE;
   deviceCameraDevConf = device;
   handleCameraDevConf = handle;
+ deviceConfPropertyCounter = 0;
 }
 
 CameraDeviceConfiguration::~CameraDeviceConfiguration() {
@@ -210,6 +212,7 @@ bool CameraDeviceConfiguration::getListOfDeviceProperties() {
       }
       else
       {
+        deviceConfPropertyCounter = propertyCounter;
         std::cout << "Number of properties" << propertyCounter<<std::endl;
         break;
       }
@@ -227,18 +230,20 @@ bool CameraDeviceConfiguration::getListOfDeviceProperties() {
  
 }
 
+
+// Make more efficient, so that I don't need to call enumerate_properties for each of the properties
+// as it is done in if condition
 bool CameraDeviceConfiguration::getVideoFrameRate(double &rate) {
   
+  std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
   
   if (getListOfDeviceProperties() == true)
   {
-    std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
-
     const std::string propertyName ="frame rate";
     if (listOfProperties != NULL)
     {
       //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
         if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
         {
           const std::string charID = listOfProperties[propertyCounter].identifier;
@@ -265,7 +270,36 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate) {
 bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma) {
 
   std::cout << "Inside CameraDeviceConfiguration getVideoGammaValue" << std::endl;
+  
+  if (getListOfDeviceProperties() == true)
+  {
 
+    const std::string propertyName ="gamma";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnStatus) )
+          {
+            gamma = listOfProperties[propertyCounter].value;
+            std::cout << gamma << std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
 }
 
 bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
@@ -329,6 +363,8 @@ ColorExposureConfiguration::ColorExposureConfiguration() {
   std::cout << "Creating ColorExposureConfiguration without arguments" << std::endl;
   deviceColorExposureDev = NULL;
   handleColorExposureDev = NULL;
+  colorConfPropertyCounter = 0;
+
 }
 
 
@@ -336,6 +372,7 @@ ColorExposureConfiguration::ColorExposureConfiguration(unicap_device_t *device, 
   std::cout << "Creating ColorExposureConfiguration with arguments" << std::endl;
   deviceColorExposureDev = device;
   handleColorExposureDev = handle;
+  colorConfPropertyCounter = 0;
 }
 
 
@@ -344,6 +381,40 @@ ColorExposureConfiguration::ColorExposureConfiguration(unicap_device_t *device, 
 ColorExposureConfiguration::~ColorExposureConfiguration() {
   std::cout << "Destroying ColorExposureConfiguration with arguments" << std::endl;
 
+}
+
+
+bool ColorExposureConfiguration::getListOfColorProperties() {
+  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
+
+  //number of properties allocated is 30 for now, change it to const or make it dynamic
+  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
+  {
+      returnStatus = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
+                                                  propertyCounter);
+      if( SUCCESS(returnStatus) )
+      {
+        std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
+        continue;
+      }
+      else
+      {
+        colorConfPropertyCounter = propertyCounter;
+        std::cout << "Number of properties" << propertyCounter<<std::endl;
+        break;
+      }
+  }
+
+  if(listOfProperties != NULL )
+  {
+    return true;
+  }
+  else
+  {
+    std::cout << "Property list is empty"<<std::endl;
+    return false;
+  }
+ 
 }
 
 bool ColorExposureConfiguration::getHueValue(double &hue) {
@@ -356,7 +427,7 @@ bool ColorExposureConfiguration::getHueValue(double &hue) {
     if (listOfProperties != NULL)
     {
       //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
         if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
         {
           const std::string charID = listOfProperties[propertyCounter].identifier;
@@ -383,39 +454,6 @@ bool ColorExposureConfiguration::getHueValue(double &hue) {
 }
 
 
-bool ColorExposureConfiguration::getListOfColorProperties() {
-  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
-
-  //number of properties allocated is 30 for now, change it to const or make it dynamic
-  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
-  {
-      returnStatus = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
-                                                  propertyCounter);
-      if( SUCCESS(returnStatus) )
-      {
-        std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-        continue;
-      }
-      else
-      {
-        std::cout << "Number of properties" << propertyCounter<<std::endl;
-        break;
-      }
-  }
-
-  if(listOfProperties != NULL )
-  {
-    return true;
-  }
-  else
-  {
-    std::cout << "Property list is empty"<<std::endl;
-    return false;
-  }
- 
-}
-
-
 bool ColorExposureConfiguration::getChromaValue(double &chroma) {
 
 }
@@ -429,7 +467,7 @@ if (getListOfColorProperties() == true)
     if (listOfProperties != NULL)
     {
       //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
         if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
         {
           const std::string charID = listOfProperties[propertyCounter].identifier;
@@ -467,7 +505,7 @@ if (getListOfColorProperties() == true)
     if (listOfProperties != NULL)
     {
       //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
         if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
         {
           const std::string charID = listOfProperties[propertyCounter].identifier;
@@ -506,7 +544,7 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness) {
     if (listOfProperties != NULL)
     {
       //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
         if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
         {
           const std::string charID = listOfProperties[propertyCounter].identifier;
