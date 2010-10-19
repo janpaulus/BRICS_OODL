@@ -128,18 +128,18 @@ MonocularCameraConfiguration::~MonocularCameraConfiguration() {
 }
 
 
-CameraDeviceConfiguration MonocularCameraConfiguration::getCameraDeviceConfiguration()
+CameraDeviceConfiguration* MonocularCameraConfiguration::getCameraDeviceConfiguration()
 {
 
 
-    return *(this->devConfiguration);
+    return (this->devConfiguration);
 }
 
-ColorExposureConfiguration MonocularCameraConfiguration::getColorExposureConfiguration()
+ColorExposureConfiguration* MonocularCameraConfiguration::getColorExposureConfiguration()
 {
 
 
-    return *(this->colExpConfiguration);
+    return (this->colExpConfiguration);
 }
 
 
@@ -171,6 +171,19 @@ CameraDeviceConfiguration::CameraDeviceConfiguration() {
 
 CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle) {
   std::cout << "Creating CameraDeviceConfiguration with arguments" << std::endl;
+  videoFrameRate.min = 0.0;
+  videoFrameRate.max = 0.0;
+  videoGammaValue.min = 0.0;
+  videoGammaValue.max = 0.0;
+  videoSharpnessValue.min = 0.0;
+  videoSharpnessValue.max = 0.0;
+  lensFocus.min = 0.0;
+  lensFocus.max = 0.0;
+  lensZoom.min = 0.0;
+  lensZoom.max = 0.0;
+  lensIris.min = 0.0;
+  lensIris.max = 0.0;
+  returnStatus = STATUS_FAILURE;
   deviceCameraDevConf = device;
   handleCameraDevConf = handle;
 }
@@ -181,11 +194,72 @@ CameraDeviceConfiguration::~CameraDeviceConfiguration() {
 
 }
 
+
+bool CameraDeviceConfiguration::getListOfDeviceProperties() {
+  std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
+
+  //number of properties allocated is 30 for now, change it to const or make it dynamic
+  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
+  {
+      returnStatus = unicap_enumerate_properties( *handleCameraDevConf, NULL, &listOfProperties[propertyCounter], 
+                                                  propertyCounter);
+      if( SUCCESS(returnStatus) )
+      {
+        std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
+        continue;
+      }
+      else
+      {
+        std::cout << "Number of properties" << propertyCounter<<std::endl;
+        break;
+      }
+  }
+
+  if(listOfProperties != NULL )
+  {
+    return true;
+  }
+  else
+  {
+    std::cout << "Property list is empty"<<std::endl;
+    return false;
+  }
+ 
+}
+
 bool CameraDeviceConfiguration::getVideoFrameRate(double &rate) {
-
-  std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
   
+  
+  if (getListOfDeviceProperties() == true)
+  {
+    std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
 
+    const std::string propertyName ="frame rate";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnStatus) )
+          {
+            rate = listOfProperties[propertyCounter].value;
+            std::cout << rate << std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
 }
 
 bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma) {
@@ -248,38 +322,6 @@ bool CameraDeviceConfiguration::setLensIris(double &iris) {
   std::cout << "Inside CameraDeviceConfiguration setLensIris" << std::endl;
 }
 
-bool CameraDeviceConfiguration::getListOfDeviceProperties() {
-
-  std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
-  unicap_property_t propertyList[50];
-  int propertyCounter;
-  int p = -1;  
-  
-  for( propertyCounter = 0; propertyCounter < 50 ; propertyCounter++ )
-  {
-      returnStatus = unicap_enumerate_properties( *handleCameraDevConf, NULL, &propertyList[propertyCounter], propertyCounter);
-      if( SUCCESS(returnStatus) )
-      {
-          if( propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-          {
-              std::cout << propertyList[propertyCounter].identifier << std::endl;
-              returnStatus = unicap_get_property( *handleCameraDevConf, &propertyList[p] ); // (3)
-              if( SUCCESS(returnStatus) )
-              {
-                  std::cout << propertyList[p].value<< propertyList[p].range.min <<propertyList[p].range.max << std::endl;
-              }
-              propertyCounter++;
-          }
-      }
-      else
-      {
-          continue;
-      }
-  }
-  
-  return true;
-}
-
 
 
 
@@ -306,7 +348,73 @@ ColorExposureConfiguration::~ColorExposureConfiguration() {
 
 bool ColorExposureConfiguration::getHueValue(double &hue) {
 
+  if (getListOfDeviceProperties() == true)
+  {
+    std::cout << "Inside ColorExposureConfiguration getHueValue" << std::endl;
+    
+    const std::string propertyName ="hue";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+          if( SUCCESS(returnStatus) )
+          {
+            hue = listOfProperties[propertyCounter].value;
+            std::cout << hue<<std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<<std::endl;
+      return false;
+    }
+  }
+
+
 }
+
+
+bool ColorExposureConfiguration::getListOfColorProperties() {
+  std::cout << "Inside ColorExposureConfiguration getListOfDeviceProperties" << std::endl;
+
+  //number of properties allocated is 30 for now, change it to const or make it dynamic
+  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
+  {
+      returnStatus = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
+                                                  propertyCounter);
+      if( SUCCESS(returnStatus) )
+      {
+        std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
+        continue;
+      }
+      else
+      {
+        std::cout << "Number of properties" << propertyCounter<<std::endl;
+        break;
+      }
+  }
+
+  if(listOfProperties != NULL )
+  {
+    return true;
+  }
+  else
+  {
+    std::cout << "Property list is empty"<<std::endl;
+    return false;
+  }
+ 
+}
+
 
 bool ColorExposureConfiguration::getChromaValue(double &chroma) {
 
@@ -329,6 +437,37 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue) {
 }
 
 bool ColorExposureConfiguration::getBrightnessValue(double &brightness) {
+
+  if (getListOfColorProperties() == true)
+  {
+    std::cout << "Inside ColorExposureConfiguration getBrightnessValue" << std::endl;
+    
+    const std::string propertyName ="brightness";
+    if (listOfProperties != NULL)
+    {
+      //number of properties allocated is 30 for now, change it to const or make it dynamic
+      for (int propertyCounter = 0; propertyCounter < 30; propertyCounter++)
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
+        {
+          const std::string charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+          if( SUCCESS(returnStatus) )
+          {
+            brightness = listOfProperties[propertyCounter].value;
+            //std::cout << brightness<<std::endl;
+            return true;
+          }
+        }
+        else
+          continue;
+    }
+    else
+    {
+      std::cout << "Property list is empty"<<std::endl;
+      return false;
+    }
+  }
 
 }
 

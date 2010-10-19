@@ -23,8 +23,8 @@ class MonocularCameraConfiguration
     MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
     ~MonocularCameraConfiguration();
 
-    CameraDeviceConfiguration getCameraDeviceConfiguration();
-    ColorExposureConfiguration getColorExposureConfiguration();
+    CameraDeviceConfiguration* getCameraDeviceConfiguration();
+    ColorExposureConfiguration* getColorExposureConfiguration();
 
     bool getDeviceName(std::string &deviceId);
     bool getDeviceNodeID(std::string &deviceNodeId);
@@ -68,9 +68,9 @@ class CameraDeviceConfiguration
  bool setLensZoom(double &zoom); 
  bool setLensIris(double &iris); 
 
- bool getListOfDeviceProperties();
+ 
  private:
-
+ bool getListOfDeviceProperties();
 
   unicap_property_range_t videoFrameRate; 
   unicap_property_range_t videoGammaValue; 
@@ -79,6 +79,7 @@ class CameraDeviceConfiguration
   unicap_property_range_t lensZoom; 
   unicap_property_range_t lensIris; 
   unicap_status_t returnStatus;
+  unicap_property_t listOfProperties[30];//array of properties
   unicap_device_t *deviceCameraDevConf;
   unicap_handle_t *handleCameraDevConf;
 };
@@ -114,6 +115,7 @@ class ColorExposureConfiguration
   bool setExposureTime(double &eTime);
 
  private:
+  bool getListOfColorProperties();
   unicap_property_range_t hueValue; 
   unicap_property_range_t chromaValue;
   unicap_property_range_t saturationValue;
@@ -124,6 +126,7 @@ class ColorExposureConfiguration
   unicap_property_range_t gainControlValue;
   unicap_property_range_t shutterTime;
   unicap_property_range_t exposureTime;
+  unicap_property_t listOfProperties[30];//array of properties
   unicap_status_t returnStatus;
   unicap_device_t *deviceColorExposureDev;
   unicap_handle_t *handleColorExposureDev;

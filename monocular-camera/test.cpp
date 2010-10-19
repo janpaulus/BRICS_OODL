@@ -14,31 +14,20 @@ int main (int argc, char **argv)
   std::string deviceName;
   config.getDeviceName(deviceName);
   std::cout << deviceName<<std::endl;
-  config.getDeviceNodeID(deviceName);
-  std::cout << deviceName<<std::endl;
-  config.getDevicePluginType(deviceName);
-  std::cout << deviceName<<std::endl;
+
+  double framerate = 0.0;
+  (config.getCameraDeviceConfiguration())->getVideoFrameRate(framerate);
+  std::cout << framerate <<std::endl;
+
+  double hue = 0.0;
+  (config.getColorExposureConfiguration())->getHueValue(hue);
+  std::cout << hue <<std::endl;
+
+  double brightness = 0.0;
+  (config.getColorExposureConfiguration())->getBrightnessValue(hue);
+  std::cout << hue <<std::endl;
 
 
-
-  config.getCameraDeviceConfiguration().getListOfDeviceProperties();
-/*  double framerate;
-  config.getCameraDeviceConfiguration().getVideoFrameRate(framerate);
-  config.getCameraDeviceConfiguration().getVideoGammaValue(framerate); 
-  config.getCameraDeviceConfiguration().getVideoSharpnessValue(framerate);
-  config.getCameraDeviceConfiguration().getLensFocus(framerate);
-  config.getCameraDeviceConfiguration().getLensZoom(framerate); 
-  config.getCameraDeviceConfiguration().getLensIris(framerate); 
-
-
-  config.getCameraDeviceConfiguration().setVideoFrameRate(framerate);
-  config.getCameraDeviceConfiguration().setVideoGammaValue(framerate); 
-  config.getCameraDeviceConfiguration().setVideoSharpnessValue(framerate);
-  config.getCameraDeviceConfiguration().setLensFocus(framerate);
-  config.getCameraDeviceConfiguration().setLensZoom(framerate); 
-  config.getCameraDeviceConfiguration().setLensIris(framerate); 
-
-*/
 
   return 0;
 }
