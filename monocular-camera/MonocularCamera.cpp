@@ -48,43 +48,43 @@ MonocularCamera::~MonocularCamera()
 //bool MonocularCamera::open (Errors &error)
 bool MonocularCamera::open ()
 {
-    std::cout<<"In Monocular Camera open"<<std::endl;
+  std::cout<<"In Monocular Camera open"<<std::endl;
+  if(SUCCESS(isConnected))
+  {
+    std::cout << "Device is already open" <<std::endl;
+    return true;
+  }
+  else
+  {
+    isConnected = unicap_enumerate_devices(NULL, device, 0);
     if(SUCCESS(isConnected))
     {
-        std::cout << "Device is already open" <<std::endl;
+      std::cout << "Openning camera"<<std::endl;
+      isConnected = unicap_open(deviceHandle, device);
+      if(SUCCESS(isConnected))
+      {
+        std::cout << "Device is successfully opened" << std::endl;
         return true;
+      }
+      else
+      {
+        std::cout << "Could not open device" << std::endl;
+        return false;
+      }
     }
     else
     {
-        isConnected = unicap_enumerate_devices(NULL, device, 0);
-        if(SUCCESS(isConnected))
-        {
-            std::cout << "Openning camera"<<std::endl;
-            isConnected = unicap_open(deviceHandle, device);
-            if(SUCCESS(isConnected))
-            {
-                std::cout << "Device is successfully opened" << std::endl;
-                return true;
-            }
-            else
-            {
-                std::cout << "Could not open device" << std::endl;
-                return false;
-            }
-        }
-        else
-        {
-            std::cout << "Could not find devices" << std::endl;
-            return false;
-        }
+      std::cout << "Could not find devices" << std::endl;
+      return false;
     }
+  }
 }
 
 
 //bool MonocularCamera ::close (Errors &error)
 bool MonocularCamera ::close ()
 {
-    std::cout<<"In Monocular Camera close"<<std::endl;
+  std::cout<<"In Monocular Camera close"<<std::endl;
 
 }
 
@@ -111,11 +111,11 @@ bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
 bool MonocularCamera::resetDevice ()
 {
 
-    std::cout<<"In Monocular Camera resetDevice"<<std::endl;
+  std::cout<<"In Monocular Camera resetDevice"<<std::endl;
 }
 
 bool MonocularCamera::capture ()
 {
 
-    std::cout<<"In Monocular Camera capture"<<std::endl;
+  std::cout<<"In Monocular Camera capture"<<std::endl;
 }
