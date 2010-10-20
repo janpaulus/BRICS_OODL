@@ -4,7 +4,7 @@
 //#include "../generic/Errors.h"
 //#include "../generic/Logger.h"
 #include "../generic/Units.h"
-#include "../generic-monocular-camera/MonocularCameraConfiguration.h"
+#include "../generic-monocular-camera/MonocularCameraConfiguration.hpp"
 #include "../generic-monocular-camera/ImageFormat.h"
 #include "../generic-monocular-camera/Image2dData.h"
 #include <unicap.h>
@@ -17,25 +17,25 @@ class ImageFormat;
 class MonocularCamera 
 {
 public:
-  MonocularCamera(int deviceNumber);
-  MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
-  MonocularCamera(MonocularCamera &camera);
-  MonocularCamera& operator= (const MonocularCamera &camera);
-  ~MonocularCamera();
+    MonocularCamera(int deviceNumber);
+    MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
+    MonocularCamera(MonocularCamera &camera);
+    MonocularCamera& operator= (const MonocularCamera &camera);
+    ~MonocularCamera();
 
-  bool getConfiguration (MonocularCameraConfiguration &config);
-  bool setConfiguration (MonocularCameraConfiguration &config);
-  bool resetDevice ();
-  bool close ();
-  bool open ();
-  bool capture();
+    bool getConfiguration (MonocularCameraConfiguration &config);
+    bool setConfiguration (MonocularCameraConfiguration &config);
+    bool resetDevice ();
+    bool close ();
+    bool open ();
+    bool capture();
 private:
-  MonocularCameraConfiguration *cameraConfig;
-  ImageFormat *format;
-  Image2dData *pixelData;
-  unicap_device_t *device;
-  unicap_handle_t *deviceHandle;
-  unicap_status_t isConnected;
+    MonocularCameraConfiguration *cameraConfig;
+    ImageFormat *format;
+    Image2dData *pixelData;
+    unicap_device_t *device;
+    unicap_handle_t *deviceHandle;
+    unicap_status_t isConnected;
 };
 
 

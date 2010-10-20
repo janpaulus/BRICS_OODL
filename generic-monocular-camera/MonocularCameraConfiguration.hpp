@@ -17,32 +17,34 @@ class ColorExposureConfiguration;
 class MonocularCameraConfiguration 
 {
 public:
-     MonocularCameraConfiguration();
-     MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig);
-     MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
-     ~MonocularCameraConfiguration();
+    MonocularCameraConfiguration();
+    MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig);
+    MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
+    ~MonocularCameraConfiguration();
 
-     CameraDeviceConfiguration* getCameraDeviceConfiguration();
-     ColorExposureConfiguration* getColorExposureConfiguration();
+    CameraDeviceConfiguration* getCameraDeviceConfiguration();
+    ColorExposureConfiguration* getColorExposureConfiguration();
+    bool getDeviceName(std::string &deviceId);
+    bool getDeviceNodeID(std::string &deviceNodeId);
+    bool getDevicePluginType(std::string &pluginName);
+    bool getDeviceFullInfoVector();
 
-     bool getDeviceName(std::string &deviceId);
-     bool getDeviceNodeID(std::string &deviceNodeId);
-     bool getDevicePluginType(std::string &pluginName);
-     bool getDeviceFullInfoVector();
+    bool setCameraDeviceConfiguration(CameraDeviceConfiguration &cameradevconf);
+    bool setColorExposureConfiguration(ColorExposureConfiguration &colorexpconf);
 
 private:
-     unicap_property_t *propertyConfig;
-     unicap_device_t *deviceConfig;
-     unicap_handle_t *handleConfig;
+    unicap_property_t *propertyConfig;
+    unicap_device_t *deviceConfig;
+    unicap_handle_t *handleConfig;
 
-     unicap_status_t returnStatus;
-     std::string deviceID;
-     std::string deviceNodeID;
-     std::string devicePluginType;
-     std::vector<std::string> deviceFullInfo;
-     ColorExposureConfiguration *colExpConfiguration;
-     CameraDeviceConfiguration *devConfiguration;
+    unicap_status_t returnStatus;
+    std::string deviceID;
+    std::string deviceNodeID;
+    std::string devicePluginType;
+    std::vector<std::string> deviceFullInfo;
+    ColorExposureConfiguration *colExpConfiguration;
+    CameraDeviceConfiguration *devConfiguration;
 };
 
 
@@ -50,94 +52,94 @@ private:
 class CameraDeviceConfiguration
 {
 public:
-     CameraDeviceConfiguration();
-     CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     CameraDeviceConfiguration(CameraDeviceConfiguration& cameradevconf);
-     CameraDeviceConfiguration& operator=(CameraDeviceConfiguration& cameradevconf); 
+    CameraDeviceConfiguration();
+    CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    CameraDeviceConfiguration(CameraDeviceConfiguration& cameradevconf);
+    CameraDeviceConfiguration& operator=(CameraDeviceConfiguration& cameradevconf); 
 
 
-     ~CameraDeviceConfiguration();  
+    ~CameraDeviceConfiguration();  
  
-     bool getVideoFrameRate(double &rate);
-     bool getVideoGammaValue(double &gamma); 
-     bool getVideoSharpnessValue(double &sharpness);
-     bool getLensFocus(double &focus);
-     bool getLensZoom(double &zoom); 
-     bool getLensIris(double &iris); 
+    bool getVideoFrameRate(double &rate);
+    bool getVideoGammaValue(double &gamma); 
+    bool getVideoSharpnessValue(double &sharpness);
+    bool getLensFocus(double &focus);
+    bool getLensZoom(double &zoom); 
+    bool getLensIris(double &iris); 
 
-     bool setVideoFrameRate(double &rate);
-     bool setVideoGammaValue(double &gamma); 
-     bool setVideoSharpnessValue(double &sharpness);
-     bool setLensFocus(double &focus);
-     bool setLensZoom(double &zoom); 
-     bool setLensIris(double &iris); 
+    bool setVideoFrameRate(double &rate);
+    bool setVideoGammaValue(double &gamma); 
+    bool setVideoSharpnessValue(double &sharpness);
+    bool setLensFocus(double &focus);
+    bool setLensZoom(double &zoom); 
+    bool setLensIris(double &iris); 
 
  
 private:
-     bool getListOfDeviceProperties();
+    bool getListOfDeviceProperties();
  
-     unicap_property_range_t videoFrameRate; 
-     unicap_property_range_t videoGammaValue; 
-     unicap_property_range_t videoSharpnessValue;
-     unicap_property_range_t lensFocus;
-     unicap_property_range_t lensZoom; 
-     unicap_property_range_t lensIris; 
-     unicap_status_t returnStatus;
-     unicap_property_t listOfProperties[30];//array of properties
-     unicap_device_t *deviceCameraDevConf;
-     unicap_handle_t *handleCameraDevConf;
-     int deviceConfPropertyCounter;
+    unicap_property_range_t videoFrameRate; 
+    unicap_property_range_t videoGammaValue; 
+    unicap_property_range_t videoSharpnessValue;
+    unicap_property_range_t lensFocus;
+    unicap_property_range_t lensZoom; 
+    unicap_property_range_t lensIris; 
+    unicap_status_t returnStatus;
+    unicap_property_t listOfProperties[30];//array of properties
+    unicap_device_t *deviceCameraDevConf;
+    unicap_handle_t *handleCameraDevConf;
+    int deviceConfPropertyCounter;
 };
 
 
 class ColorExposureConfiguration
 {
 public:
-     ColorExposureConfiguration();
-     ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     ColorExposureConfiguration(ColorExposureConfiguration &colorconfig);
-     ColorExposureConfiguration& operator=(ColorExposureConfiguration &colorconfig);
-     ~ColorExposureConfiguration();
+    ColorExposureConfiguration();
+    ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    ColorExposureConfiguration(ColorExposureConfiguration &colorconfig);
+    ColorExposureConfiguration& operator=(ColorExposureConfiguration &colorconfig);
+    ~ColorExposureConfiguration();
   
-     bool getHueValue(double &hue); 
-     bool getChromaValue(double &chroma);
-     bool getSaturationValue(double &saturation);
-     bool getColorTemperatureValue(double &temp);
-     bool getWhiteBalanceUValue(double &uValue);
-     bool getWhiteBalanceVValue(double &vValue);
-     bool getBrightnessValue(double &brightness);
-     bool getGainControlValue(double &gain);
-     bool getShutterTime(double &sTime);
-     bool getExposureTime(double &eTime);
+    bool getHueValue(double &hue); 
+    bool getChromaValue(double &chroma);
+    bool getSaturationValue(double &saturation);
+    bool getColorTemperatureValue(double &temp);
+    bool getWhiteBalanceUValue(double &uValue);
+    bool getWhiteBalanceVValue(double &vValue);
+    bool getBrightnessValue(double &brightness);
+    bool getGainControlValue(double &gain);
+    bool getShutterTime(double &sTime);
+    bool getExposureTime(double &eTime);
 
-     bool setHueValue(double &hue); 
-     bool setChromaValue(double &chroma);
-     bool setSaturationValue(double &saturation);
-     bool setColorTemperatureValue(double &temp);
-     bool setWhiteBalanceUValue(double &uValue);
-     bool setWhiteBalanceVValue(double &vValue);
-     bool setBrightnessValue(double &brightness);
-     bool setGainControlValue(double &gain);
-     bool setShutterTime(double &sTime);
-     bool setExposureTime(double &eTime);
+    bool setHueValue(double &hue); 
+    bool setChromaValue(double &chroma);
+    bool setSaturationValue(double &saturation);
+    bool setColorTemperatureValue(double &temp);
+    bool setWhiteBalanceUValue(double &uValue);
+    bool setWhiteBalanceVValue(double &vValue);
+    bool setBrightnessValue(double &brightness);
+    bool setGainControlValue(double &gain);
+    bool setShutterTime(double &sTime);
+    bool setExposureTime(double &eTime);
 
 private:
-     bool getListOfColorProperties();
-     int colorConfPropertyCounter;
-     unicap_property_range_t hueValue; 
-     unicap_property_range_t chromaValue;
-     unicap_property_range_t saturationValue;
-     unicap_property_range_t colorTemperatureValue;
-     unicap_property_range_t whiteBalanceUValue;
-     unicap_property_range_t whiteBalanceVValue;
-     unicap_property_range_t brightnessValue;
-     unicap_property_range_t gainControlValue;
-     unicap_property_range_t shutterTime;
-     unicap_property_range_t exposureTime;
-     unicap_property_t listOfProperties[30];//array of properties
-     unicap_status_t returnStatus;
-     unicap_device_t *deviceColorExposureDev;
-     unicap_handle_t *handleColorExposureDev;
+    bool getListOfColorProperties();
+    int colorConfPropertyCounter;
+    unicap_property_range_t hueValue; 
+    unicap_property_range_t chromaValue;
+    unicap_property_range_t saturationValue;
+    unicap_property_range_t colorTemperatureValue;
+    unicap_property_range_t whiteBalanceUValue;
+    unicap_property_range_t whiteBalanceVValue;
+    unicap_property_range_t brightnessValue;
+    unicap_property_range_t gainControlValue;
+    unicap_property_range_t shutterTime;
+    unicap_property_range_t exposureTime;
+    unicap_property_t listOfProperties[30];//array of properties
+    unicap_status_t returnStatus;
+    unicap_device_t *deviceColorExposureDev;
+    unicap_handle_t *handleColorExposureDev;
 };
 
 

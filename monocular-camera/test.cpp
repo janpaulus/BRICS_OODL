@@ -1,4 +1,4 @@
-#include "MonocularCamera.h"
+#include "MonocularCamera.hpp"
 #include <iostream>
 
 int main (int argc, char **argv)
