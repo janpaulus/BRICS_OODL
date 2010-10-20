@@ -224,27 +224,26 @@ CameraDeviceConfiguration::~CameraDeviceConfiguration() {
 
 bool CameraDeviceConfiguration::getListOfDeviceProperties() {
   std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
-
+  int returnValue = 0;
   //number of properties allocated is 30 for now, change it to const or make it dynamic
   for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
   {
-    returnStatus = unicap_enumerate_properties( *handleCameraDevConf, NULL, &listOfProperties[propertyCounter], 
-                                                propertyCounter);
-    if( SUCCESS(returnStatus) )
+    returnValue = unicap_enumerate_properties( *handleCameraDevConf, NULL, &listOfProperties[propertyCounter], 
+                                               propertyCounter);
+    if( SUCCESS(returnValue) )
     {
       std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-      continue;
+      deviceConfPropertyCounter++;
+      returnStatus = STATUS_SUCCESS;
     }
     else
-    {
-      deviceConfPropertyCounter = propertyCounter;
-      std::cout << "Number of properties" << propertyCounter<<std::endl;
       break;
-    }
+
   }
 
   if(listOfProperties != NULL )
   {
+    std::cout << "Number of properties " << deviceConfPropertyCounter<<std::endl;
     return true;
   }
   else
@@ -267,15 +266,15 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
   //check whether listOfProperties was filled in successfully and not empty
   if (SUCCESS(returnStatus) && (listOfProperties != NULL))
   {
-   //here member variable deviceConfProperty is a total number of 
-   //camera properties returned by getListOfDeviceProperties
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
     for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
     {
-    //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
-    //there are also menu, list, flag property types
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
       if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
       {
-       //if range then check it for correct ID
+        //if range then check it for correct ID
         charID = listOfProperties[propertyCounter].identifier;
         //if ID == frame rate (as defined in unicap API) then return its current value
         if (charID == propertyName)
@@ -290,13 +289,11 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
           }
         }
       }
-     //if property is not of type "range" go to the beginning of the loop
-      else
-        continue;
+      //if property is not of type "range" go to the beginning of the loop
     }
   }
- // if property list was not obtained successfully or was not filled in before through 
- //the call to getListOfDeviceProperties, call the method 
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
     if (listOfProperties != NULL)
@@ -317,50 +314,392 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
           }
         }
         //if property is not of type "range" go to the beginning of the loop
-        else
-          continue;
       }
     }
-    std::cout << "Property list is empty"<< std::endl;
-    return false;
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  
   }
- // if neither of the above return error message
+  // if neither of the above return error message
   else 
   {    
-    std::cout << "Property list is empty"<< std::endl;
+    std::cout << "Can not get property"<< std::endl;
     return false;
   }
-  
 }
 
 
-bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma) {
+
+
+
+
+bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma) 
+{
 
   std::cout << "Inside CameraDeviceConfiguration getVideoGammaValue" << std::endl;
-  
+  const std::string propertyName ="gamma";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
+        {
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
+          {
+            gamma = listOfProperties[propertyCounter].value;
+            //   std::cout << rate << std::endl;
+            return true;
+          }
+        }
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              gamma = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }  
  
 }
 
 bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
 
   std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
+  const std::string propertyName ="sharpness";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
+        {
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
+          {
+            sharpness = listOfProperties[propertyCounter].value;
+            return true;
+          }
+        }
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              sharpness = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 
 bool CameraDeviceConfiguration::getLensFocus(double &focus) {
 
   std::cout << "Inside CameraDeviceConfiguration getLensFocus" << std::endl;
+  const std::string propertyName ="focus";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
+        {
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
+          {
+            focus = listOfProperties[propertyCounter].value;
+            return true;
+          }
+        }
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              focus = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
+
 }
 
 bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
 
   std::cout << "Inside CameraDeviceConfiguration getLensZoom" << std::endl;
+  const std::string propertyName ="zoom";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
+        {
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
+          {
+            zoom = listOfProperties[propertyCounter].value;
+            return true;
+          }
+        }
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              zoom = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 
 bool CameraDeviceConfiguration::getLensIris(double &iris) {
 
   std::cout << "Inside CameraDeviceConfiguration getLensIris" << std::endl;
+  const std::string propertyName ="iris";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
+        {
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
+          {
+            iris = listOfProperties[propertyCounter].value;
+            return true;
+          }
+        }
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              iris = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 
@@ -394,6 +733,8 @@ bool CameraDeviceConfiguration::setLensIris(double &iris) {
 
   std::cout << "Inside CameraDeviceConfiguration setLensIris" << std::endl;
 }
+
+
 
 
 
@@ -439,70 +780,105 @@ ColorExposureConfiguration::~ColorExposureConfiguration() {
 
 bool ColorExposureConfiguration::getListOfColorProperties() {
   std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
-
+  int returnValue = 0;
   //number of properties allocated is 30 for now, change it to const or make it dynamic
   for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
   {
-    returnStatus = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
-                                                propertyCounter);
-    if( SUCCESS(returnStatus) )
+    returnValue = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
+                                               propertyCounter);
+    if( SUCCESS(returnValue) )
     {
       std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-      continue;
+      colorConfPropertyCounter++;
+      returnStatus = STATUS_SUCCESS;
     }
     else
-    {
-      colorConfPropertyCounter = propertyCounter;
-      std::cout << "Number of properties" << propertyCounter<<std::endl;
       break;
-    }
+
   }
 
   if(listOfProperties != NULL )
   {
+    std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
     return true;
   }
   else
   {
     std::cout << "Property list is empty"<<std::endl;
     return false;
-  }
- 
+  } 
 }
 
 bool ColorExposureConfiguration::getHueValue(double &hue) {
 
-  if (getListOfColorProperties() == true)
+  const std::string propertyName ="hue";
+  std::string charID;
+
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
   {
-    std::cout << "Inside ColorExposureConfiguration getHueValue" << std::endl;
-    
-    const std::string propertyName ="hue";
-    if (listOfProperties != NULL)
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
     {
-      //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
-        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+        //if range then check it for correct ID
+        charID = listOfProperties[propertyCounter].identifier;
+        //if ID == frame rate (as defined in unicap API) then return its current value
+        if (charID == propertyName)
         {
-          const std::string charID = listOfProperties[propertyCounter].identifier;
-          if (charID == propertyName)
-            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-          if( SUCCESS(returnStatus) )
+          //check if the call succeeds 
+          int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+          if( SUCCESS(returnValue) )
           {
             hue = listOfProperties[propertyCounter].value;
-            std::cout << hue<<std::endl;
             return true;
           }
         }
-        else
-          continue;
-    }
-    else
-    {
-      std::cout << "Property list is empty"<<std::endl;
-      return false;
+      }
+      //if property is not of type "range" go to the beginning of the loop
+      else
+        continue;
     }
   }
-
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfColorProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+      {
+        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+        {
+          charID = listOfProperties[propertyCounter].identifier;
+          if (charID == propertyName)
+          {
+            int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+            if( SUCCESS(returnValue) )
+            {
+              hue = listOfProperties[propertyCounter].value;
+              return true;
+            }
+          }
+        }
+        //if property is not of type "range" go to the beginning of the loop
+        else
+          continue;
+      }
+    }
+    std::cout << "Property list is empty"<< std::endl;
+    return false;
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 
@@ -512,36 +888,6 @@ bool ColorExposureConfiguration::getChromaValue(double &chroma) {
 }
 
 bool ColorExposureConfiguration::getSaturationValue(double &saturation) {
-  if (getListOfColorProperties() == true)
-  {
-    std::cout << "Inside ColorExposureConfiguration getSaturationValue" << std::endl;
-    
-    const std::string propertyName ="saturation";
-    if (listOfProperties != NULL)
-    {
-      //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
-        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
-        {
-          const std::string charID = listOfProperties[propertyCounter].identifier;
-          if (charID == propertyName)
-            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-          if( SUCCESS(returnStatus) )
-          {
-            saturation = listOfProperties[propertyCounter].value;
-            //std::cout << saturation <<std::endl;
-            return true;
-          }
-        }
-        else
-          continue;
-    }
-    else
-    {
-      std::cout << "Property list is empty"<<std::endl;
-      return false;
-    }
-  }
 
 }
 
@@ -550,36 +896,6 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp) {
 }
 
 bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue) {
-  if (getListOfColorProperties() == true)
-  {
-    std::cout << "Inside ColorExposureConfiguration getWhiteBalanceUValue" << std::endl;
-    
-    const std::string propertyName ="white_balance_u";
-    if (listOfProperties != NULL)
-    {
-      //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
-        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
-        {
-          const std::string charID = listOfProperties[propertyCounter].identifier;
-          if (charID == propertyName)
-            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-          if( SUCCESS(returnStatus) )
-          {
-            uValue = listOfProperties[propertyCounter].value;
-            //std::cout << uValue <<std::endl;
-            return true;
-          }
-        }
-        else
-          continue;
-    }
-    else
-    {
-      std::cout << "Property list is empty"<<std::endl;
-      return false;
-    }
-  }
 
 }
 
@@ -589,36 +905,6 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue) {
 
 bool ColorExposureConfiguration::getBrightnessValue(double &brightness) {
 
-  if (getListOfColorProperties() == true)
-  {
-    std::cout << "Inside ColorExposureConfiguration getBrightnessValue" << std::endl;
-    
-    const std::string propertyName ="brightness";
-    if (listOfProperties != NULL)
-    {
-      //number of properties allocated is 30 for now, change it to const or make it dynamic
-      for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
-        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE )
-        {
-          const std::string charID = listOfProperties[propertyCounter].identifier;
-          if (charID == propertyName)
-            returnStatus = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-          if( SUCCESS(returnStatus) )
-          {
-            brightness = listOfProperties[propertyCounter].value;
-            //std::cout << brightness<<std::endl;
-            return true;
-          }
-        }
-        else
-          continue;
-    }
-    else
-    {
-      std::cout << "Property list is empty"<<std::endl;
-      return false;
-    }
-  }
 
 }
 

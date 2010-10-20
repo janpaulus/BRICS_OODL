@@ -23,17 +23,12 @@ int main (int argc, char **argv)
   (config.getCameraDeviceConfiguration())->getVideoGammaValue(gamma);
   std::cout << gamma <<std::endl;
 
-  double hue = 0.0;
-  (config.getColorExposureConfiguration())->getHueValue(hue);
-  std::cout << hue <<std::endl;
+  double sharpness = 0.0;
+  (config.getCameraDeviceConfiguration())->getVideoSharpnessValue(sharpness);
+  std::cout << sharpness <<std::endl;
 
-  double brightness = 0.0;
-  (config.getColorExposureConfiguration())->getBrightnessValue(brightness);
-  std::cout << brightness <<std::endl;
 
-  double saturation = 0.0;
-  (config.getColorExposureConfiguration())->getSaturationValue(saturation);
-  std::cout << saturation <<std::endl;
+ 
 
 
   return 0;
