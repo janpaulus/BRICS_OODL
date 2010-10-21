@@ -102,26 +102,26 @@ public:
     ~ColorExposureConfiguration();
   
     bool getHueValue(double &hue); 
-    bool getChromaValue(double &chroma);
+    bool getContrastValue(double &conrast);
     bool getSaturationValue(double &saturation);
-    bool getColorTemperatureValue(double &temp);
     bool getWhiteBalanceUValue(double &uValue);
     bool getWhiteBalanceVValue(double &vValue);
     bool getBrightnessValue(double &brightness);
     bool getGainControlValue(double &gain);
     bool getShutterTime(double &sTime);
     bool getExposureTime(double &eTime);
+    bool getColorTemperatureValue(double &temp);
 
     bool setHueValue(double &hue); 
     bool setChromaValue(double &chroma);
     bool setSaturationValue(double &saturation);
-    bool setColorTemperatureValue(double &temp);
     bool setWhiteBalanceUValue(double &uValue);
     bool setWhiteBalanceVValue(double &vValue);
     bool setBrightnessValue(double &brightness);
     bool setGainControlValue(double &gain);
     bool setShutterTime(double &sTime);
     bool setExposureTime(double &eTime);
+    bool setColorTemperatureValue(double &temp);
 
 private:
     bool getListOfColorProperties();
