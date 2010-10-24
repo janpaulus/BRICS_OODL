@@ -21,7 +21,7 @@ void LaserScannerDataWithIntensities::getMesasurementIterator(std::vector< quant
   // Bouml preserved body end 0002A4F1
 }
 
-void LaserScannerDataWithIntensities::getsMeasurements(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& rangeAngles, std::vector< double >& intensities) const {
+void LaserScannerDataWithIntensities::getMeasurements(std::vector< quantity<length> >& ranges, std::vector< quantity<plane_angle> >& rangeAngles, std::vector< double >& intensities) const {
   // Bouml preserved body begin 0002A371
   ranges = this->ranges;
   rangeAngles = this->rangeAngles;

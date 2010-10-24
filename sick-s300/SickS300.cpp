@@ -9,7 +9,7 @@ SickS300::SickS300() {
   this->newDataFlagOne = false;
   this->newDataFlagTwo = false;
 
-
+  //assigning zeros to the two buffers to reserve the memory
   distanceBufferOne.assign(numberOfScanPoints, 0);
   angleBufferOne.assign(numberOfScanPoints, 0);
   intensityBufferOne.assign(numberOfScanPoints, 0);
@@ -56,7 +56,7 @@ bool SickS300::open(Errors& error) {
 
   }
 
-  int desired_baud = 500000;
+  unsigned int desired_baud = 500000;
 
   switch (this->config->baud) {
     case BAUD_9600:
@@ -118,13 +118,7 @@ bool SickS300::close(Errors& error) {
   {
     boost::mutex::scoped_lock lock_it(mutexSickS300);
     if (sickS300 != NULL) {
-      try {
-
-        LOG(trace) << "connection to Sick S300 closed";
-      } catch (...) {
-        error.addError("unable_to_uninitialize", "could not uninitialize the Sick S300");
-        return false;
-      }
+      LOG(trace) << "connection to Sick S300 closed";
       delete sickS300;
       sickS300 = NULL;
     }
