@@ -30,6 +30,17 @@ IF(NOT DEFINED UNICAP_PATH)
   include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
 ENDIF(NOT DEFINED UNICAP_PATH)
 
+IF(DEFINED SOEM_PATH)
+  link_directories(${SOEM_PATH}/lib)
+  include_directories(${SOEM_PATH}/include/soem)
+  MESSAGE(STATUS "SOEM_PATH= ${SOEM_PATH}")
+ENDIF(DEFINED SOEM_PATH)
+
+IF(NOT DEFINED SOEM_PATH)
+  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
+  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem)
+ENDIF(NOT DEFINED SOEM_PATH)
+
 
 
 IF(NOT DEFINED SELECTED_DRIVER)
@@ -38,6 +49,7 @@ IF(NOT DEFINED SELECTED_DRIVER)
  # add_subdirectory(sick-lms-2xx)
  # add_subdirectory(sick-ld)
   add_subdirectory(sick-s300)
+add_subdirectory(youbot)
 # ADD_SUBDIRECTORY(monocular-camera)
 # ADD_SUBDIRECTORY(generic-monocular-camera)
 

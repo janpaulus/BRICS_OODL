@@ -39,15 +39,15 @@ SET(OODL_SickS300_SRC
 )
 
 SET(OODL_SickS300_HEADERS
-  ${CMAKE_HOME_DIRECTORY}/generic/Errors.h
-  ${CMAKE_HOME_DIRECTORY}/generic/Logger.h
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.h
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.h
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.h
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.h
-  ${CMAKE_HOME_DIRECTORY}/sick-s300/SickS300.h
-  ${CMAKE_HOME_DIRECTORY}/sick-s300/ScannerSickS300.h
-  ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.h
+  /generic/Errors.h
+  /generic/Logger.h
+  /generic-laser-scanner/LaserScanner.h
+  /generic-laser-scanner/LaserScannerData.h
+  /generic-laser-scanner/LaserScannerConfiguration.h
+  /generic-laser-scanner/LaserScannerDataWithIntensities.h
+  /sick-s300/SickS300.h
+  /sick-s300/ScannerSickS300.h
+  /sick-s300/SerialIO.h
 )
 
 ADD_LIBRARY(OODL_SickS300
