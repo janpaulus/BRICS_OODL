@@ -1,5 +1,5 @@
 # robotpkg Makefile for:	brics/soem
-# Created:			Jan Paulus on 17 Aug 2010
+# Created: Jan Paulus on 27 Oct 2010
 #
 
 SOEM_VERSION=	1.2.4
@@ -19,10 +19,6 @@ USE_LANGUAGES=		c c++
 pre-configure:
 	${RUN}cd ${WRKSRC} &&					\
 	cp ${FILESDIR}/CMakeLists.txt CMakeLists.txt
-
-#do-configure:
-#	${RUN}cd ${WRKSRC} && ./configure --prefix=${PREFIX}
-
 
 
 include ../../mk/sysdep/cmake.mk
