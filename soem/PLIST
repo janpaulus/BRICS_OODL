@@ -1,0 +1,13 @@
+@comment Wed Oct 27 10:05:37 CEST 2010
+include/soem/src/ethercatbase.h
+include/soem/src/ethercatcoe.h
+include/soem/src/ethercatconfig.h
+include/soem/src/ethercatconfiglist.h
+include/soem/src/ethercatdc.h
+include/soem/src/ethercatfoe.h
+include/soem/src/ethercatmain.h
+include/soem/src/ethercatprint.h
+include/soem/src/ethercatsoe.h
+include/soem/src/ethercattype.h
+include/soem/src/nicdrv.h
+lib/libsoem.a
