@@ -14,22 +14,22 @@ class JointSensorAngle : public JointSensorData {
 };
 class JointSensorVelocity : public JointSensorData {
   public:
-    quantity<angular_velocity> angularVelocity;
+    quantity<si::angular_velocity> angularVelocity;
 
 };
 class JointSensorCurrent : public JointSensorData {
   private:
-    quantity<current> current;
+    quantity<si::current> current;
 
 };
 class JointSensorTorque : public JointSensorData {
   public:
-    quantity<torque> torque;
+    quantity<si::torque> torque;
 
 };
 class JointSensorTemperature : public JointSensorData {
   public:
-    quantity<temperature> temperature;
+    quantity<si::temperature> temperature;
 
 };
 class JointSetpointData : public JointData {
@@ -46,12 +46,19 @@ class JointSetpointVelocity : public JointSetpointData {
 };
 class JointSetpointCurrent : public JointSetpointData {
   private:
-    quantity<current> current;
+    quantity<si::current> current;
 
 };
 class JointSetpointTorque : public JointSetpointData {
   public:
-    quantity<torque> torque;
+    quantity<si::torque> torque;
+
+};
+class JointDataRange {
+  public:
+    JointData JointDataUpper;
+
+    JointData JointDataLower;
 
 };
 #endif

@@ -2,6 +2,7 @@
 #define _JOINT_H
 
 
+#include <vector>
 #include "generic/Units.h"
 class JointConfiguration;
 class JointSetpointData;

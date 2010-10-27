@@ -2,8 +2,12 @@
 #define _YOUBOTJOINT_H
 
 
-#include "Joint.h"
-
+#include <boost/thread.hpp>
+#include "generic/Logger.h"
+#include "generic/Units.h"
+#include "generic-joint/Joint.h"
+#include "generic-joint/JointData.h"
+#include "generic-joint/JointConfiguration.h"
 class JointConfiguration;
 class JointSensorAngle;
 class JointSensorVelocity;

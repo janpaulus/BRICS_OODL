@@ -1,8 +1,5 @@
 
 #include "YouBotJoint.h"
-#include "JointConfiguration.h"
-#include "JointData.h"
-
 void YouBotJoint::setConfiguration(const JointConfiguration& configuration) {
   // Bouml preserved body begin 0003C0F1
   // Bouml preserved body end 0003C0F1

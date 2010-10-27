@@ -1,5 +1,2 @@
 
-#include "Joint.h"
-#include "JointConfiguration.h"
-#include "JointData.h"
-
+#include "generic-joint/Joint.h"
