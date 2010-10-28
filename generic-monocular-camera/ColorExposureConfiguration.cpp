@@ -787,7 +787,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
                     if (charID == propertyName)
                     {
                       listOfProperties[propertyCounter].value = brightness;
-                      int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                      int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
                         if( SUCCESS(returnValue) )
                         {
                           std::cout << "Setting value is successful" << std::endl;
@@ -814,9 +814,92 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
 
 }
 
-bool ColorExposureConfiguration::setGainControlValue(double &gain) {
+
+bool ColorExposureConfiguration::setGainControlValue(double &gain)
+{
+
+  std::cout << "Inside ColorExposureConfiguration setGainControlValue" << std::endl;
+  char propertyName[] ="gain";
+  std::string charID;
+
+    //check whether listOfProperties was filled in successfully and not empty
+    if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+    {
+        //here member variable deviceConfProperty is a total number of 
+        //camera properties returned by getListOfDeviceProperties
+        for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+        {
+            //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+            //there are also menu, list, flag property types
+            if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+            {
+                //if range then check it for correct ID
+                charID = listOfProperties[propertyCounter].identifier;
+                //if ID == frame rate (as defined in unicap API) then return its current value
+                if (charID == propertyName)
+                {
+                  listOfProperties[propertyCounter].value = gain;
+                  //check if the call succeeds 
+		  unicap_set_property_manual(*handleColorExposureDev,propertyName);
+                  int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+                  if( SUCCESS(returnValue) )
+                  {
+                   
+                    std::cout << "Setting value is successful" << std::endl;
+                    return true;
+                  }
+                  else
+                  {
+                    int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, gain);                
+                    if(SUCCESS(returnValue))
+                      return true;
+                  }
+                }
+            }
+            //if property is not of type "range" go to the beginning of the loop
+        }
+    }
+    // if property list was not obtained successfully or was not filled in before through 
+    //the call to getListOfDeviceProperties, call the method 
+    else if (getListOfColorProperties() == true)
+    {
+        if (listOfProperties != NULL)
+        {
+            for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+            {
+                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+                {
+                    charID = listOfProperties[propertyCounter].identifier;
+                    if (charID == propertyName)
+                    {
+                      listOfProperties[propertyCounter].value = gain;
+                      int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                          std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                          int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, gain);
+                          if(SUCCESS(returnValue))
+                            return true;
+                        }
+
+                    }
+                }
+                //if property is not of type "range" go to the beginning of the loop
+            }
+        }
+        else
+        {
+            std::cout << "Property list is empty"<< std::endl;
+            return false;
+        }
+    }
 
 }
+
 
 bool ColorExposureConfiguration::setShutterTime(double &sTime) {
 

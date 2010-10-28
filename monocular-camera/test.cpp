@@ -59,11 +59,23 @@ int main (int argc, char **argv)
   (config.getColorExposureConfiguration())->getBrightnessValue(brightness);
   std::cout << brightness <<std::endl;
 
-  double newBrightness = 0.75;
+  double newBrightness = 255;
   (config.getColorExposureConfiguration())->setBrightnessValue(newBrightness);
 
   (config.getColorExposureConfiguration())->getBrightnessValue(brightness);
   std::cout << brightness <<std::endl;
+
+
+  double gain = 0.0;
+  (config.getColorExposureConfiguration())->getGainControlValue(gain);
+  std::cout << gain <<std::endl;
+
+  double newGain = 250;
+  (config.getColorExposureConfiguration())->setGainControlValue(newGain);
+
+  (config.getColorExposureConfiguration())->getGainControlValue(gain);
+  std::cout << gain <<std::endl;
+
 
   return 0;
 }
