@@ -418,10 +418,15 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
 }
 
 
+//TEMPORARY SOLUTION FOR CAPITAL AND LOWERCASE LETTERS
+//NEED TO SOLVE THIS CLEVERLY
+
 bool ColorExposureConfiguration::getBrightnessValue(double &brightness) 
 {
    std::cout << "Inside ColorExposureConfiguration getBrightnessValue" << std::endl;
-    const std::string propertyName ="brightness";
+   const std::string propertyName1 ="brightness";
+   const std::string propertyName2 = "Brightness";
+
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -438,7 +443,7 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName1) || (charID == propertyName2))
                 {
                     //check if the call succeeds 
                     int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
@@ -464,7 +469,7 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if((charID == propertyName1) || (charID == propertyName2))
                     {
                         int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -489,7 +494,8 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness)
 bool ColorExposureConfiguration::getGainControlValue(double &gain) 
 {
    std::cout << "Inside ColorExposureConfiguration getGainControlValue" << std::endl;
-    const std::string propertyName ="gain";
+    const std::string propertyName1 ="gain";
+    const std::string propertyName2 ="Gain";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -506,7 +512,7 @@ bool ColorExposureConfiguration::getGainControlValue(double &gain)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName1)||(charID == propertyName2))
                 {
                     //check if the call succeeds 
                     int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
@@ -532,7 +538,7 @@ bool ColorExposureConfiguration::getGainControlValue(double &gain)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName1)||(charID == propertyName2))
                     {
                         int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -730,10 +736,14 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue) {
 
 }
 
+
+//Temporary solution for capital and lowercase letters
+//Need to solve this cleverly
 bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
 
   std::cout << "Inside ColorExposureConfiguration setBrightnessValue" << std::endl;
-    char propertyName[] ="brightness";
+    char propertyName1[] ="brightness";
+    char propertyName2[] ="Brightness";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -750,11 +760,11 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName1) || (charID == propertyName2))
                 {
                   listOfProperties[propertyCounter].value = brightness;
                   //check if the call succeeds 
-                   unicap_set_property_manual(*handleColorExposureDev,propertyName);
+                   unicap_set_property_manual(*handleColorExposureDev,propertyName1);
                   int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                   if( SUCCESS(returnValue) )
                   {
@@ -764,7 +774,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
                   }
                   else
                   {
-                    int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, brightness);                   
+                    int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, brightness);                   
                     if(SUCCESS(returnValue))
                       return true;
                   }
@@ -784,7 +794,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName1) || (charID == propertyName2))
                     {
                       listOfProperties[propertyCounter].value = brightness;
                       int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
@@ -795,7 +805,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
                         }
                         else
                         {
-                          int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, brightness);
+                          int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, brightness);
                           if(SUCCESS(returnValue))
                             return true;
                         }
@@ -819,7 +829,8 @@ bool ColorExposureConfiguration::setGainControlValue(double &gain)
 {
 
   std::cout << "Inside ColorExposureConfiguration setGainControlValue" << std::endl;
-  char propertyName[] ="gain";
+  char propertyName[] = "gain";
+
   std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -836,11 +847,11 @@ bool ColorExposureConfiguration::setGainControlValue(double &gain)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if(charID == propertyName)
                 {
                   listOfProperties[propertyCounter].value = gain;
                   //check if the call succeeds 
-		  unicap_set_property_manual(*handleColorExposureDev,propertyName);
+                  unicap_set_property_manual(*handleColorExposureDev,propertyName);
                   int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
                   if( SUCCESS(returnValue) )
                   {
