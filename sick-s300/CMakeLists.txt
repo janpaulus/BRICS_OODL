@@ -38,6 +38,18 @@ SET(OODL_SickS300_SRC
   ${CMAKE_HOME_DIRECTORY}/sick-s300/SerialIO.cpp
 )
 
+SET(OODL_SickS300_HEADERS
+  /generic/Errors.h
+  /generic/Logger.h
+  /generic-laser-scanner/LaserScanner.h
+  /generic-laser-scanner/LaserScannerData.h
+  /generic-laser-scanner/LaserScannerConfiguration.h
+  /generic-laser-scanner/LaserScannerDataWithIntensities.h
+  /sick-s300/SickS300.h
+  /sick-s300/ScannerSickS300.h
+  /sick-s300/SerialIO.h
+)
+
 ADD_LIBRARY(OODL_SickS300
   ${OODL_SickS300_SRC}
 )
@@ -55,5 +67,13 @@ ADD_EXECUTABLE(OODL_SickS300_plot
   ${OODL_SickS300_SRC}
 )
 
+MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
+  FOREACH(HEADER ${${HEADER_LIST}})
+    STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
+    INSTALL(FILES ${HEADER} DESTINATION include/${DIR})
+  ENDFOREACH(HEADER)
+ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
+
+INSTALL_HEADERS_WITH_DIRECTORY(OODL_SickS300_HEADERS)
 INSTALL(TARGETS OODL_SickS300_plot OODL_SickS300_test OODL_SickS300 RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
