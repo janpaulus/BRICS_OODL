@@ -1,18 +1,12 @@
 #ifndef _MONOCULARCAMERACONFIGURATION_H_
 #define _MONOCULARCAMERACONFIGURATION_H_
 
-//#define cplusplus
-
-#include <unicap.h>
-#include <unicap_status.h>
-#include <string>
-#include <vector>
-#include <iostream>
 
 
+#include "ColorExposureConfiguration.hpp"
+#include "CameraDeviceConfiguration.hpp"
 
-class CameraDeviceConfiguration;
-class ColorExposureConfiguration;
+
 
 class MonocularCameraConfiguration 
 {
@@ -48,99 +42,6 @@ private:
 };
 
 
-
-class CameraDeviceConfiguration
-{
-public:
-    CameraDeviceConfiguration();
-    CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-    CameraDeviceConfiguration(CameraDeviceConfiguration& cameradevconf);
-    CameraDeviceConfiguration& operator=(CameraDeviceConfiguration& cameradevconf); 
-
-
-    ~CameraDeviceConfiguration();  
- 
-    bool getVideoFrameRate(double &rate);
-    bool getVideoGammaValue(double &gamma); 
-    bool getVideoSharpnessValue(double &sharpness);
-    bool getLensFocus(double &focus);
-    bool getLensZoom(double &zoom); 
-    bool getLensIris(double &iris); 
-
-    bool setVideoFrameRate(double &rate);
-    bool setVideoGammaValue(double &gamma); 
-    bool setVideoSharpnessValue(double &sharpness);
-    bool setLensFocus(double &focus);
-    bool setLensZoom(double &zoom); 
-    bool setLensIris(double &iris); 
-
- 
-private:
-    bool getListOfDeviceProperties();
- 
-    unicap_property_range_t videoFrameRate; 
-    unicap_property_range_t videoGammaValue; 
-    unicap_property_range_t videoSharpnessValue;
-    unicap_property_range_t lensFocus;
-    unicap_property_range_t lensZoom; 
-    unicap_property_range_t lensIris; 
-    unicap_status_t returnStatus;
-    unicap_property_t listOfProperties[30];//array of properties
-    unicap_device_t *deviceCameraDevConf;
-    unicap_handle_t *handleCameraDevConf;
-    int deviceConfPropertyCounter;
-};
-
-
-class ColorExposureConfiguration
-{
-public:
-    ColorExposureConfiguration();
-    ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-    ColorExposureConfiguration(ColorExposureConfiguration &colorconfig);
-    ColorExposureConfiguration& operator=(ColorExposureConfiguration &colorconfig);
-    ~ColorExposureConfiguration();
-  
-    bool getHueValue(double &hue); 
-    bool getContrastValue(double &conrast);
-    bool getSaturationValue(double &saturation);
-    bool getWhiteBalanceUValue(double &uValue);
-    bool getWhiteBalanceVValue(double &vValue);
-    bool getBrightnessValue(double &brightness);
-    bool getGainControlValue(double &gain);
-    bool getShutterTime(double &sTime);
-    bool getExposureTime(double &eTime);
-    bool getColorTemperatureValue(double &temp);
-
-    bool setHueValue(double &hue); 
-    bool setChromaValue(double &chroma);
-    bool setSaturationValue(double &saturation);
-    bool setWhiteBalanceUValue(double &uValue);
-    bool setWhiteBalanceVValue(double &vValue);
-    bool setBrightnessValue(double &brightness);
-    bool setGainControlValue(double &gain);
-    bool setShutterTime(double &sTime);
-    bool setExposureTime(double &eTime);
-    bool setColorTemperatureValue(double &temp);
-
-private:
-    bool getListOfColorProperties();
-    int colorConfPropertyCounter;
-    unicap_property_range_t hueValue; 
-    unicap_property_range_t chromaValue;
-    unicap_property_range_t saturationValue;
-    unicap_property_range_t colorTemperatureValue;
-    unicap_property_range_t whiteBalanceUValue;
-    unicap_property_range_t whiteBalanceVValue;
-    unicap_property_range_t brightnessValue;
-    unicap_property_range_t gainControlValue;
-    unicap_property_range_t shutterTime;
-    unicap_property_range_t exposureTime;
-    unicap_property_t listOfProperties[30];//array of properties
-    unicap_status_t returnStatus;
-    unicap_device_t *deviceColorExposureDev;
-    unicap_handle_t *handleColorExposureDev;
-};
 
 
 #endif //~_MONOCULARCAMERACONFIGURATION_H_

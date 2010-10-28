@@ -1,0 +1,61 @@
+#ifndef  _COLOREXPOSURECONFIGURATION_
+#define  _COLOREXPOSURECONFIGURATION_
+
+#include <unicap.h>
+#include <unicap_status.h>
+#include <string>
+#include <vector>
+#include <iostream>
+
+
+class ColorExposureConfiguration
+{
+public:
+    ColorExposureConfiguration();
+    ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    ColorExposureConfiguration(ColorExposureConfiguration &colorconfig);
+    ColorExposureConfiguration& operator=(ColorExposureConfiguration &colorconfig);
+    ~ColorExposureConfiguration();
+  
+    bool getHueValue(double &hue); 
+    bool getContrastValue(double &conrast);
+    bool getSaturationValue(double &saturation);
+    bool getWhiteBalanceUValue(double &uValue);
+    bool getWhiteBalanceVValue(double &vValue);
+    bool getBrightnessValue(double &brightness);
+    bool getGainControlValue(double &gain);
+    bool getShutterTime(double &sTime);
+    bool getExposureTime(double &eTime);
+    bool getColorTemperatureValue(double &temp);
+
+    bool setHueValue(double &hue); 
+    bool setChromaValue(double &chroma);
+    bool setSaturationValue(double &saturation);
+    bool setWhiteBalanceUValue(double &uValue);
+    bool setWhiteBalanceVValue(double &vValue);
+    bool setBrightnessValue(double &brightness);
+    bool setGainControlValue(double &gain);
+    bool setShutterTime(double &sTime);
+    bool setExposureTime(double &eTime);
+    bool setColorTemperatureValue(double &temp);
+
+private:
+    bool getListOfColorProperties();
+    int colorConfPropertyCounter;
+    unicap_property_range_t hueValue; 
+    unicap_property_range_t chromaValue;
+    unicap_property_range_t saturationValue;
+    unicap_property_range_t colorTemperatureValue;
+    unicap_property_range_t whiteBalanceUValue;
+    unicap_property_range_t whiteBalanceVValue;
+    unicap_property_range_t brightnessValue;
+    unicap_property_range_t gainControlValue;
+    unicap_property_range_t shutterTime;
+    unicap_property_range_t exposureTime;
+    unicap_property_t listOfProperties[30];//array of properties
+    unicap_status_t returnStatus;
+    unicap_device_t *deviceColorExposureDev;
+    unicap_handle_t *handleColorExposureDev;
+};
+
+#endif// ~ _COLOREXPOSURECONFIGURATION_

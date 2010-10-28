@@ -10,7 +10,6 @@
 #include <unicap.h>
 #include <iostream>
 
-class MonocularCameraConfiguration;
 class Image2dData;
 class ImageFormat;
 
