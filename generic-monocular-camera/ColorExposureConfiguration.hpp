@@ -41,6 +41,7 @@ public:
 
 private:
     bool getListOfColorProperties();
+    bool unifyPropertyNames();
     int colorConfPropertyCounter;
     unicap_property_range_t hueValue; 
     unicap_property_range_t chromaValue;

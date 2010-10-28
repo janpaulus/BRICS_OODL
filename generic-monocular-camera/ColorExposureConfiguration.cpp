@@ -78,6 +78,18 @@ bool ColorExposureConfiguration::getListOfColorProperties()
  
 }
 
+
+//harmonizes possible property name combinations
+//Like if white_u_balance, WhiteUBalance, White U Balance
+// or brightness vs Brightness etc 
+bool ColorExposureConfiguration::unifyPropertyNames()
+{
+
+
+
+}
+
+
 bool ColorExposureConfiguration::getHueValue(double &hue) 
 {
     std::cout << "Inside ColorExposureConfiguration getHueValue" << std::endl;
