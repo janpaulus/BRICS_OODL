@@ -79,9 +79,17 @@ bool ColorExposureConfiguration::getListOfColorProperties()
 }
 
 
+//Issue1: 
 //harmonizes possible property name combinations
 //Like if white_u_balance, WhiteUBalance, White U Balance
 // or brightness vs Brightness etc 
+
+//Issue2:
+//Normalization of values for various camera properties
+//can be done through  through access to "range" member attribute
+//of unicap_property structure. "range" is a structure which holds
+//min and max value for the given property
+
 bool ColorExposureConfiguration::unifyPropertyNames()
 {
 
