@@ -22,7 +22,7 @@ do-configure:
 
 USE_LANGUAGES=			c c++
 
-include ../libxrender-dev.mk
+include ../sysdep/libxrender-dev.mk
 include ../../mk/robotpkg.mk
 
 
