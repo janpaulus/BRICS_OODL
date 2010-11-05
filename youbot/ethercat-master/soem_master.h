@@ -37,7 +37,7 @@ class SoemMaster
      * 
      * @return error code
      */
-    int init(const char *ifname);
+    bool init(const char *ifname);
     /** 
      * send updated data from all drivers to the slaves
      * 

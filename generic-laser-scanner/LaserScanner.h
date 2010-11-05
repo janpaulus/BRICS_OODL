@@ -18,24 +18,12 @@ class Errors;
 class LaserScannerConfiguration;
 class LaserScannerData;
 
-/**
- * \brief 
- *
- */
 class LaserScanner {
   public:
-    LaserScanner();
-
-    virtual ~LaserScanner();
-
     virtual bool open(Errors& error) = 0;
 
-    /// @brief Close the connection to the laser scanner.
     virtual bool close(Errors& error) = 0;
 
-    /**
-     * 
-     */
     virtual bool setConfiguration(const LaserScannerConfiguration& configuration, Errors& error) = 0;
 
     virtual bool getConfiguration(LaserScannerConfiguration& configuration, Errors& error) = 0;
