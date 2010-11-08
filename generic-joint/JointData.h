@@ -18,7 +18,7 @@ class JointSensorVelocity : public JointSensorData {
 
 };
 class JointSensorCurrent : public JointSensorData {
-  private:
+  public:
     quantity<si::current> current;
 
 };
@@ -29,7 +29,7 @@ class JointSensorTorque : public JointSensorData {
 };
 class JointSensorTemperature : public JointSensorData {
   public:
-    quantity<si::temperature> temperature;
+    quantity<celsius::temperature> temperature;
 
 };
 class JointSetpointData : public JointData {
@@ -45,7 +45,7 @@ class JointSetpointVelocity : public JointSetpointData {
 
 };
 class JointSetpointCurrent : public JointSetpointData {
-  private:
+  public:
     quantity<si::current> current;
 
 };

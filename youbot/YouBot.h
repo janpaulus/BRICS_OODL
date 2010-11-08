@@ -8,19 +8,32 @@
 #include "generic/Logger.h"
 #include "generic/Units.h"
 #include "generic/Errors.h"
+#include "youbot/YouBotSlaveMsg.h"
+//#include "youbot/YouBotEthercatSlave.h"
+#include "youbot/ethercat-master/soem_driver.h"
+#include "youbot/ethercat-master/soem_master.h"
+#include "youbot/YouBotJoint.h"
 extern "C"{
 #include <ethercattype.h>
 #include <ethercatmain.h>
 }
-#include "youbot/ethercat-master/soem_driver.h"
-#include "youbot/ethercat-master/soem_master.h"
-#include "youbot/YouBotJoint.h"
+
 //have to be a singleton in the system
 class YouBot {
-  public:
+  private:
+    static YouBot* instance;
+
     YouBot();
 
+    YouBot(const YouBot& ) {};
+
     ~YouBot();
+
+
+  public:
+    static YouBot& getInstance();
+
+    static void destroy();
 
     std::vector<YouBotJoint> Joints;
 
@@ -45,7 +58,9 @@ class YouBot {
     //in milliseconds
     static const unsigned int timeTillNextEthercatUpdate = 4;
 
-    boost::mutex mutexData;
+    boost::mutex mutexDataOne;
+
+    boost::mutex mutexDataTwo;
 
     boost::thread_group threads;
 
@@ -53,9 +68,15 @@ class YouBot {
 
     boost::mutex mutexEthercatMaster;
 
-    std::vector<YouBotSlaveMsg> msgBufferVector;
+    std::vector<YouBotSlaveMsg> firstBufferVector;
+
+    std::vector<YouBotSlaveMsg> secondBufferVector;
 
     unsigned int nrOfSlaves;
+
+    volatile bool newDataFlagTwo;
+
+    volatile bool newDataFlagOne;
 
 };
 #endif

@@ -5,6 +5,7 @@ FIND_PACKAGE( Boost REQUIRED )
 
 include_directories(
   ${CMAKE_HOME_DIRECTORY}
+  ${CMAKE_HOME_DIRECTORY}/youbot/ethercat-master/
   ${Boost_INCLUDE_DIR}
 )
 
@@ -27,8 +28,9 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-joint/JointData.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-joint/JointConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBot.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
+ # ${CMAKE_HOME_DIRECTORY}/youbot/YouBotEthercatSlave.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/ethercat-master/soem_driver_factory.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/ethercat-master/soem_master.cpp
 )

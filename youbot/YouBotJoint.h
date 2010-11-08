@@ -9,11 +9,20 @@
 #include "generic-joint/Joint.h"
 #include "generic-joint/JointData.h"
 #include "generic-joint/JointConfiguration.h"
-#include "YouBotSlaveMsg.h"
+#include "youbot/YouBotSlaveMsg.h"
 
+enum YouBotJointControllerMode
+ {
+  MOTOR_STOP = 0,
+  POSITION_CONTROL = 1,
+  VELOCITY_CONTROL = 2,
+  NO_MORE_ACTION = 3,
+  SET_POSITION_TO_REFERENCE = 4
+
+};
 class YouBotJoint : public Joint {
   public:
-    YouBotJoint();
+    YouBotJoint(unsigned int jointNo);
 
     ~YouBotJoint();
 
@@ -39,7 +48,11 @@ class YouBotJoint : public Joint {
 
 
   private:
+    unsigned int jointNumber;
+
     YouBotSlaveMsg MessageBuffer;
+
+    JointConfiguration configuration;
 
 };
 #endif

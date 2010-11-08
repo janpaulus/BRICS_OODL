@@ -6,28 +6,28 @@
 #include <string>
 #include <time.h>
 
+struct outputBuffer {
+    int32 positionOrSpeed;
+    uint8 controllerMode;
+} __attribute__((__packed__));
+
+//    struct inputbuffer; master view
+
+struct inputBuffer {
+    int32 actualPosition;
+    int32 actualCurrent;
+    int32 actualVelocity;
+    uint16 errorFlags;
+    uint16 driverTemperature;
+} __attribute__((__packed__));
+
+
 class YouBotSlaveMsg {
 public:
     //    struct outputbuffer; master view
 
-    struct outputBuffer {
-        int32 positionOrSpeed;
-        uint8 controllerMode;
-    } __attribute__ ((__packed__));
-
     outputBuffer stctOutput;
-
-    //    struct inputbuffer; master view
-
-    struct inputBuffer {
-        int32 actualPosition;
-        int32 actualCurrent;
-        int32 actualVelocity;
-        uint16 errorFlags;
-        uint16 driverTemperature;
-    } __attribute__ ((__packed__));
     inputBuffer stctInput;
-
     // Constructor
 
     YouBotSlaveMsg() {

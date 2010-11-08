@@ -9,6 +9,7 @@
 #define	UNITS_H
 #include <boost/units/pow.hpp>
 #include <boost/units/systems/si.hpp>
+#include <boost/units/systems/temperature/celsius.hpp>
 
 #include <boost/units/make_scaled_unit.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
