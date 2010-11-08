@@ -17,8 +17,4 @@ DEPEND_USE+=		rgen
 DEPEND_ABI.rgen?=	rgen>=0.5
 DEPEND_DIR.rgen?=	../../brics/rgen
 
-SYSTEM_SEARCH.rgen=\
-  include/urg/UrgCtrl.h
-endif
-
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
