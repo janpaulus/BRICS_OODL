@@ -38,7 +38,9 @@ MonocularCamera& MonocularCamera::operator= (const MonocularCamera &camera)
 MonocularCamera::~MonocularCamera()
 {
     std::cout<<"Destroying Monocular Camera"<<std::endl;
-
+//Maybe we need to call close on device implicitly without user being aware of it.
+//But then open should also be implicit to make things consistent.
+//this->close();
     delete device;
     delete deviceHandle;
 //  delete cameraConfig;
@@ -84,7 +86,7 @@ bool MonocularCamera::open ()
 bool MonocularCamera ::close ()
 {
     std::cout<<"In Monocular Camera close"<<std::endl;
-
+//  unicap_close(deviceHandle[0]);
 }
 
 
@@ -109,12 +111,12 @@ bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
 //bool MonocularCamera::resetDevice (Errors &error)
 bool MonocularCamera::resetDevice ()
 {
-
+// unicap_stop_capture( deviceHandle[0] ); 
     std::cout<<"In Monocular Camera resetDevice"<<std::endl;
 }
 
 bool MonocularCamera::capture ()
 {
-
+  
     std::cout<<"In Monocular Camera capture"<<std::endl;
 }

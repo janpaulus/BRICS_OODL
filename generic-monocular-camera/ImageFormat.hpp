@@ -75,7 +75,7 @@ struct unicap_format_t
       char identifier[128];
       
       // default
-      unicap_rect_t size;
+      unicap_rect_t size; ///size/resolution of the chosen/current format
       
       // min and max extends
       unicap_rect_t min_size;
@@ -85,7 +85,7 @@ struct unicap_format_t
       // 0 if no free scaling available
       int h_stepping;
       int v_stepping;
-      // array of possible sizes
+      // array of possible sizes/resolutions supported by a camera
       unicap_rect_t *sizes;
       int size_count;
       
