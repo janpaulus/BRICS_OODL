@@ -10,17 +10,13 @@ DEPEND_PKG+=		rubygems
 endif
 
 ifeq (+,$(RUBYGEMS_DEPEND_MK))
-PREFER.rubygems?=	system
+PREFER.rubygems?=	robotpkg
 
 DEPEND_USE+=		rubygems
 
 DEPEND_ABI.rubygems?=	rubygems>=1.3.7
 DEPEND_DIR.rubygems?=	../../brics/rubygems
 
-
-SYSTEM_SEARCH.rubygems=\
-   include/xercesc/dom/DOM.hpp \
-	 'lib/librubygems.{a,so,dylib}'
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
