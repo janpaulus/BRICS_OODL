@@ -13,8 +13,8 @@ PREFER.rubygems?=	system
 DEPEND_USE+=		rubygems
 DEPEND_ABI.rubygems?=	rubygems>=$(RUBYGEMS_VERSION)
 
-SYSTEM_SEARCH.rubygems=	\
-	/bin/gem1.8
+SYSTEM_SEARCH.rubygems=		\
+	/bin/gem$(RUBYGEMS_VERSION)
 
 SYSTEM_PKG.Linux.rubygems=rubygems$(RUBYGEMS_VERSION)
 

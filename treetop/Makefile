@@ -21,7 +21,7 @@ do-extract:
 	mkdir ${WRKSRC} && ${CP} -Rp ${DISTDIR}/treetop-${TREETOP_LIBRARY_VERSION}.gem ${WRKSRC}/treetop-${TREETOP_LIBRARY_VERSION}.gem
 
 do-install:
-	gem1.8 install ${WRKSRC}/treetop-${TREETOP_LIBRARY_VERSION}.gem
+	gem${RUBYGEMS_VERSION} install ${WRKSRC}/treetop-${TREETOP_LIBRARY_VERSION}.gem
 
 include ../sysdep/ruby.mk
 include ../sysdep/rubygems.mk
