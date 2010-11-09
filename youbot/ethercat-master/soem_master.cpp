@@ -106,7 +106,7 @@ namespace soem_ethercat_drivers {
           return false;
         }
 
-        this->createDrivers();
+      //  this->createDrivers();
         //Erweiterung START
         //          this->setComponentsState();
         //Erweiterung STOP

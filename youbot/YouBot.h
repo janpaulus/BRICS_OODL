@@ -20,6 +20,7 @@ extern "C"{
 
 //have to be a singleton in the system
 class YouBot {
+friend class YouBotJoint;
   private:
     static YouBot* instance;
 
@@ -35,14 +36,18 @@ class YouBot {
 
     static void destroy();
 
+    unsigned int getNumberOfJoints();
+
+    YouBotJoint& getJoint(unsigned int jointNumber);
+
+
+  private:
     std::vector<YouBotJoint> Joints;
 
     void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
 
     YouBotSlaveMsg getMsgBuffer(unsigned int jointNumber);
 
-
-  private:
     bool initializeEthercat();
 
     bool closeEthercat();
@@ -74,9 +79,17 @@ class YouBot {
 
     unsigned int nrOfSlaves;
 
+    volatile bool newDataFlagOne;
+
     volatile bool newDataFlagTwo;
 
-    volatile bool newDataFlagOne;
+    volatile bool newOutputDataFlagOne;
+
+    volatile bool newOutputDataFlagTwo;
+
+    std::vector<outputBuffer*> ethercatOutputBufferVector;
+
+    std::vector<inputBuffer*> ethercatinputBufferVector;
 
 };
 #endif

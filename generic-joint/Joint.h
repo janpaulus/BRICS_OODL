@@ -5,7 +5,7 @@
 #include <vector>
 #include "generic/Units.h"
 class JointConfiguration;
-class JointSetpointData;
+class JointDataSetpoint;
 class JointData;
 
 enum SyncMode {
@@ -19,7 +19,7 @@ class Joint {
 
     virtual void getConfiguration(JointConfiguration& configuration) = 0;
 
-    virtual void setData(const JointSetpointData& data, SyncMode communicationMode) = 0;
+    virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode) = 0;
 
     virtual void getData(JointData& data) = 0;
 

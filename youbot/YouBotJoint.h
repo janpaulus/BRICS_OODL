@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <sstream>
 #include <boost/thread.hpp>
 #include "generic/Logger.h"
 #include "generic/Units.h"
@@ -20,6 +21,19 @@ enum YouBotJointControllerMode
   SET_POSITION_TO_REFERENCE = 4
 
 };
+enum YouBotErrorFlags {
+  OVER_CURRENT = 1,
+  UNDER_VOLTAGE = 2,
+  OVER_VOLTAGE = 4,
+  OVER_TEMPERATURE = 8,
+  HALTED = 16,
+  HALL_SENSOR = 32,
+  ENCODER = 64,
+  MOTOR_WINDING = 128,
+  CYCLE_TIME_VIOLATION = 256,
+  INIT_SIN_COMM = 512
+
+};
 class YouBotJoint : public Joint {
   public:
     YouBotJoint(unsigned int jointNo);
@@ -30,21 +44,21 @@ class YouBotJoint : public Joint {
 
     void getConfiguration(JointConfiguration& configuration);
 
-    virtual void setData(const JointSetpointData& data, SyncMode communicationMode);
+    virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode);
 
-    void setData(const JointSetpointAngle& data, SyncMode communicationMode);
+    void setData(const JointAngleSetpoint& data, SyncMode communicationMode);
 
-    void setData(const JointSetpointVelocity& data, SyncMode communicationMode);
+    void setData(const JointVelocitySetpoint& data, SyncMode communicationMode);
 
     virtual void getData(JointData& data);
 
-    void getData(JointSensorTemperature& data);
+    virtual void getData(JointSensedTemperature& data);
 
-    void getData(JointSensorAngle& data);
+    virtual void getData(JointSensedAngle& data);
 
-    void getData(JointSensorVelocity& data);
+    virtual void getData(JointSensedVelocity& data);
 
-    void getData(JointSensorCurrent& data);
+    virtual void getData(JointSensedCurrent& data);
 
 
   private:
@@ -53,6 +67,8 @@ class YouBotJoint : public Joint {
     YouBotSlaveMsg MessageBuffer;
 
     JointConfiguration configuration;
+
+    void parseYouBotErrorFlags();
 
 };
 #endif

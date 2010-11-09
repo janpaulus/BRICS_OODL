@@ -24,7 +24,12 @@ void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
   // Bouml preserved body end 0003C171
 }
 
-void YouBotJoint::setData(const JointSetpointAngle& data, SyncMode communicationMode) {
+void YouBotJoint::setData(const JointDataSetpoint& data, SyncMode communicationMode) {
+  // Bouml preserved body begin 000413F1
+  // Bouml preserved body end 000413F1
+}
+
+void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C1F1
   this->MessageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
   this->MessageBuffer.stctOutput.positionOrSpeed = data.angle.value(); //TODO do right convertion
@@ -33,7 +38,7 @@ void YouBotJoint::setData(const JointSetpointAngle& data, SyncMode communication
   // Bouml preserved body end 0003C1F1
 }
 
-void YouBotJoint::setData(const JointSetpointVelocity& data, SyncMode communicationMode) {
+void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C371
 
   this->MessageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
@@ -43,37 +48,111 @@ void YouBotJoint::setData(const JointSetpointVelocity& data, SyncMode communicat
   // Bouml preserved body end 0003C371
 }
 
-void YouBotJoint::getData(JointSensorTemperature& data) {
+void YouBotJoint::getData(JointData& data) {
+  // Bouml preserved body begin 00041471
+  printf("get JointData\n");
+  // Bouml preserved body end 00041471
+}
+
+void YouBotJoint::getData(JointSensedTemperature& data) {
   // Bouml preserved body begin 0003C271
   this->MessageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+  this->parseYouBotErrorFlags();
 
-
-  data.temperature = (25.0 + ( this->MessageBuffer.stctInput.driverTemperature - 1.43/3.3*4095) / 0.0043) * boost::units::celsius::degree;
+  //the formular is taken from the TMCM-174/841: EtherCAT Communication Protocol
+  data.temperature = (25.0 + (((this->MessageBuffer.stctInput.driverTemperature - 1.43) / (3.3 * 4095)) / 0.0043)) * boost::units::celsius::degree;
+ // data.temperature = this->MessageBuffer.stctInput.driverTemperature * boost::units::celsius::degree;
 
   // Bouml preserved body end 0003C271
 }
 
-void YouBotJoint::getData(JointSensorAngle& data) {
+void YouBotJoint::getData(JointSensedAngle& data) {
   // Bouml preserved body begin 0003DCF1
   this->MessageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+  this->parseYouBotErrorFlags();
   data.angle = this->MessageBuffer.stctInput.actualPosition * radian; //TODO do right convertion
   // Bouml preserved body end 0003DCF1
 }
 
-void YouBotJoint::getData(JointSensorVelocity& data) {
+void YouBotJoint::getData(JointSensedVelocity& data) {
   // Bouml preserved body begin 0003DD71
   this->MessageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+  this->parseYouBotErrorFlags();
 
   double motorRPM = this->MessageBuffer.stctInput.actualVelocity;
-
-  data.angularVelocity =  ((motorRPM/60.0)*configuration.GearRatio) * radian_per_second;
+  //convert RPM of the motor to radian per second of the wheel/joint
+  data.angularVelocity = (((motorRPM * 2.0 * M_PI) / 60.0) * configuration.GearRatio) * radian_per_second;
+  data.angularVelocity = this->MessageBuffer.stctInput.actualVelocity * radian_per_second;
+  // Bouml preserved body end 0003DD71
 }
 
-void YouBotJoint::getData(JointSensorCurrent& data) {
+void YouBotJoint::getData(JointSensedCurrent& data) {
   // Bouml preserved body begin 0003DDF1
   this->MessageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
-  //get mili ampere from YouBot convert it o ampere
-  data.current = this->MessageBuffer.stctInput.actualCurrent/1000.0 * ampere; 
+  this->parseYouBotErrorFlags();
+  //convert mili ampere to ampere
+  data.current = this->MessageBuffer.stctInput.actualCurrent / 1000.0 * ampere;
   // Bouml preserved body end 0003DDF1
+}
+
+void YouBotJoint::parseYouBotErrorFlags() {
+  // Bouml preserved body begin 00044AF1
+  std::stringstream errorMessageStream;
+  errorMessageStream << "Joint " << this->jointNumber << " ";
+  std::string errorMessage;
+  errorMessage = errorMessageStream.str();
+
+
+  if (this->MessageBuffer.stctInput.errorFlags & OVER_CURRENT) {
+    LOG(error) << errorMessage << "got over current";
+//    throw std::runtime_error(errorMessage + "got over current");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & UNDER_VOLTAGE) {
+    LOG(error) << errorMessage << "got under voltage";
+//    throw std::runtime_error(errorMessage + "got under voltage");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & OVER_VOLTAGE) {
+    LOG(error) << errorMessage << "got over voltage";
+ //   throw std::runtime_error(errorMessage + "got over voltage");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & OVER_TEMPERATURE) {
+    LOG(error) << errorMessage << "got over temperature";
+ //   throw std::runtime_error(errorMessage + "got over temperature");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & HALTED) {
+    LOG(error) << errorMessage << "is halted";
+ //   throw std::runtime_error(errorMessage + "is halted");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & HALL_SENSOR) {
+    LOG(error) << errorMessage << "got hall sensor problem";
+ //   throw std::runtime_error(errorMessage + "got hall sensor problem");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & ENCODER) {
+    LOG(error) << errorMessage << "got encoder problem";
+ //   throw std::runtime_error(errorMessage + "got encoder problem");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & MOTOR_WINDING) {
+    LOG(error) << errorMessage << "got motor winding problem";
+ //   throw std::runtime_error(errorMessage + "got motor winding problem");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & CYCLE_TIME_VIOLATION) {
+    LOG(error) << errorMessage << "the cycle time is violated";
+ //   throw std::runtime_error(errorMessage + "the cycle time is violated");
+  }
+
+  if (this->MessageBuffer.stctInput.errorFlags & INIT_SIN_COMM) {
+    LOG(error) << errorMessage << "need to initialize the sinus commutation";
+ //   throw std::runtime_error(errorMessage + "need to initialize the sinus commutation");
+  }
+
+  // Bouml preserved body end 00044AF1
 }
 

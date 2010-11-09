@@ -5,51 +5,51 @@
 #include "generic/Units.h"
 class JointData {
 };
-class JointSensorData : public JointData {
+class JointSensedData : public JointData {
 };
-class JointSensorAngle : public JointSensorData {
+class JointSensedAngle : public JointSensedData {
   public:
     quantity<plane_angle> angle;
 
 };
-class JointSensorVelocity : public JointSensorData {
+class JointSensedVelocity : public JointSensedData {
   public:
     quantity<si::angular_velocity> angularVelocity;
 
 };
-class JointSensorCurrent : public JointSensorData {
+class JointSensedCurrent : public JointSensedData {
   public:
     quantity<si::current> current;
 
 };
-class JointSensorTorque : public JointSensorData {
+class JointSensedTorque : public JointSensedData {
   public:
     quantity<si::torque> torque;
 
 };
-class JointSensorTemperature : public JointSensorData {
+class JointSensedTemperature : public JointSensedData {
   public:
     quantity<celsius::temperature> temperature;
 
 };
-class JointSetpointData : public JointData {
+class JointDataSetpoint : public JointData {
 };
-class JointSetpointAngle : public JointSetpointData {
+class JointAngleSetpoint : public JointDataSetpoint {
   public:
     quantity<plane_angle> angle;
 
 };
-class JointSetpointVelocity : public JointSetpointData {
+class JointVelocitySetpoint : public JointDataSetpoint {
   public:
     quantity<angular_velocity> angularVelocity;
 
 };
-class JointSetpointCurrent : public JointSetpointData {
+class JointCurrentSetpoint : public JointDataSetpoint {
   public:
     quantity<si::current> current;
 
 };
-class JointSetpointTorque : public JointSetpointData {
+class JointTorqueSetpoint : public JointDataSetpoint {
   public:
     quantity<si::torque> torque;
 
