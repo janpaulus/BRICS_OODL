@@ -53,7 +53,7 @@ private:
     unicap_property_range_t gainControlValue;
     unicap_property_range_t shutterTime;
     unicap_property_range_t exposureTime;
-    unicap_property_t listOfProperties[30];//array of properties
+    unicap_property_t listOfProperties[30];//array of properties; will be changed later to dynamic vector type
     unicap_status_t returnStatus;
     unicap_device_t *deviceColorExposureDev;
     unicap_handle_t *handleColorExposureDev;

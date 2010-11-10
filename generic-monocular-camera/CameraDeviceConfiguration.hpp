@@ -46,7 +46,7 @@ private:
     unicap_property_range_t lensZoom; 
     unicap_property_range_t lensIris; 
     unicap_status_t returnStatus;
-    unicap_property_t listOfProperties[30];//array of properties
+    unicap_property_t listOfProperties[30];//array of properties; will later be changed to dynamic vector type
     unicap_device_t *deviceCameraDevConf;
     unicap_handle_t *handleCameraDevConf;
     int deviceConfPropertyCounter;

@@ -115,7 +115,7 @@ bool MonocularCamera::resetDevice ()
     std::cout<<"In Monocular Camera resetDevice"<<std::endl;
 }
 
-bool MonocularCamera::capture ()
+bool MonocularCamera::capture (Image2D &image)
 {
   
     std::cout<<"In Monocular Camera capture"<<std::endl;

@@ -1,12 +1,11 @@
 #ifndef  _MONOCULARCAMERA_H_
 #define  _MONOCULARCAMERA_H_
 
-//#include "../generic/Errors.h"
-//#include "../generic/Logger.h"
-#include "../generic/Units.h"
+//#include "../generic/Errors.hpp"
+//#include "../generic/Logger.hpp"
+#include "../generic/Units.hpp"
 #include "../generic-monocular-camera/MonocularCameraConfiguration.hpp"
-#include "../generic-monocular-camera/ImageFormat.hpp"
-#include "../generic-monocular-camera/Image2dData.hpp"
+#include "../generic-monocular-camera/Image2D.hpp"
 #include <unicap.h>
 #include <iostream>
 
@@ -27,11 +26,10 @@ public:
     bool resetDevice ();
     bool close ();
     bool open ();
-    bool capture();
+    bool capture(Image2D &image);
 private:
     MonocularCameraConfiguration *cameraConfig;
-    ImageFormat *format;
-    Image2dData *pixelData;
+    Image2D *image;
     unicap_device_t *device;
     unicap_handle_t *deviceHandle;
     unicap_status_t isConnected;
