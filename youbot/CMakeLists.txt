@@ -5,8 +5,9 @@ FIND_PACKAGE( Boost REQUIRED )
 
 include_directories(
   ${CMAKE_HOME_DIRECTORY}
-  ${CMAKE_HOME_DIRECTORY}/youbot/ethercat-master/
   ${Boost_INCLUDE_DIR}
+  #for soem
+  ${CMAKE_HOME_DIRECTORY}/youbot/src
 )
 
 link_directories(
@@ -15,13 +16,15 @@ link_directories(
 )
 
 link_libraries(
-  libsoem.a
+#  libsoem.a
   boost_thread
   boost_date_time
   boost_system
   boost_filesystem
   boost_regex
   boost_log-mt
+#for soem
+pthread
 )
 
 SET(OODL_YOUBOT_SRC
@@ -36,18 +39,31 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
 )
 
+SET(SOEM_SRC
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatbase.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatcoe.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatconfig.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatfoe.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatsoe.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatmain.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatprint.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/nicdrv.c 
+  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatdc.c
+) 
+
 SET(OODL_YOUBOT_HEADERS
 
 )
 
-ADD_LIBRARY(OODL_YOUBOT
-  ${OODL_YOUBOT_SRC}
-)
+#ADD_LIBRARY(OODL_YOUBOT
+#  ${OODL_YOUBOT_SRC}
+#)
   
 
 ADD_EXECUTABLE(OODL_YOUBOT_test
   ${CMAKE_HOME_DIRECTORY}/youbot/applications/Test.cpp
   ${OODL_YOUBOT_SRC}
+${SOEM_SRC}
 )
 
 
@@ -59,5 +75,5 @@ MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
 ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
 
 INSTALL_HEADERS_WITH_DIRECTORY(OODL_SickS300_HEADERS)
-INSTALL(TARGETS OODL_YOUBOT OODL_YOUBOT_test RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+INSTALL(TARGETS OODL_YOUBOT_test RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 

@@ -29,6 +29,7 @@ int main() {
   JointSensedVelocity vel;
   JointSensedCurrent current;
   JointVelocitySetpoint setVel;
+  JointConfiguration config;
   setVel.angularVelocity = 00 *radian_per_second;
 
   while (running) {
@@ -48,7 +49,10 @@ int main() {
     youbot4.getJoint(2).setData(setVel,NON_BLOCKING);
     youbot4.getJoint(3).setData(setVel,NON_BLOCKING);
     youbot4.getJoint(4).setData(setVel,NON_BLOCKING);
-    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+  
+  
+ // youbot4.getJoint(3).getConfiguration(config);
+    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
   }
 
   }catch(std::exception e){

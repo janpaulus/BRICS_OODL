@@ -11,6 +11,8 @@
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotJoint.hpp"
+#include "youbot/YouBotSlaveMailboxMsg.hpp"
+
 extern "C"{
 #include <ethercattype.h>
 #include <ethercatmain.h>
@@ -45,6 +47,10 @@ friend class YouBotJoint;
     void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
 
     YouBotSlaveMsg getMsgBuffer(unsigned int jointNumber);
+
+    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber);
+
+    YouBotSlaveMailboxMsg getMailboxMsgBuffer(unsigned int jointNumber);
 
     void initializeEthercat();
 
@@ -85,13 +91,31 @@ friend class YouBotJoint;
 
     volatile bool newDataFlagTwo;
 
-    volatile bool newOutputDataFlagOne;
+    std::vector<bool> newOutputDataFlagOne;
 
-    volatile bool newOutputDataFlagTwo;
+    std::vector<bool> newOutputDataFlagTwo;
 
     std::vector<outputBuffer*> ethercatOutputBufferVector;
 
     std::vector<inputBuffer*> ethercatinputBufferVector;
+
+    std::vector<YouBotSlaveMailboxMsg> firstMailboxBufferVector;
+
+    std::vector<YouBotSlaveMailboxMsg> secondMailboxBufferVector;
+
+    std::vector<bool> newMailboxDataFlagOne;
+
+    std::vector<bool> newMailboxDataFlagTwo;
+
+    ec_mbxbuft mailboxBufferSend;
+
+    unsigned int mailboxSendTimeout;
+
+    ec_mbxbuft mailboxBufferReceive;
+
+    std::vector<bool> newMailboxInputDataFlagOne;
+
+    std::vector<bool> newMailboxInputDataFlagTwo;
 
 };
 

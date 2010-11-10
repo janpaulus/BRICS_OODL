@@ -12,6 +12,7 @@
 #include "generic-joint/JointData.hpp"
 #include "generic-joint/JointConfiguration.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
+#include "youbot/YouBotSlaveMailboxMsg.hpp"
 
 namespace brics_oodl {
 
@@ -68,6 +69,8 @@ class YouBotJoint : public Joint {
     unsigned int jointNumber;
 
     YouBotSlaveMsg MessageBuffer;
+
+    YouBotSlaveMailboxMsg MailboxMsgBuffer;
 
     JointConfiguration configuration;
 
