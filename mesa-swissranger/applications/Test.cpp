@@ -1,15 +1,16 @@
 #include <iostream>
 
-#include "generic/Errors.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
-#include "mesa-swissranger/MesaSwissRanger.h"
-#include "generic-tof-camera/ToFCameraConfiguration.h"
-#include "generic-tof-camera/ToFCameraData.h"
-#include "generic-tof-camera/ToFCamera.h"
+#include "generic/Errors.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
+#include "mesa-swissranger/MesaSwissRanger.hpp"
+#include "generic-tof-camera/ToFCameraConfiguration.hpp"
+#include "generic-tof-camera/ToFCameraData.hpp"
+#include "generic-tof-camera/ToFCamera.hpp"
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 

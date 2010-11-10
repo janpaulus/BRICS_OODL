@@ -5,19 +5,20 @@
 #include <signal.h>
 #include <iostream>
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "sick-lms-2xx/SickLMS2xxConfiguration.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "sick-lms-2xx/SickLMS2xx.h"
-#include "generic/Errors.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "sick-lms-2xx/SickLMS2xxConfiguration.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "sick-lms-2xx/SickLMS2xx.hpp"
+#include "generic/Errors.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 

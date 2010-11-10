@@ -1,5 +1,7 @@
 
-#include "hokuyo-urg/HokuyoURGConfiguration.h"
+#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
+namespace brics_oodl {
+
 HokuyoURGConfiguration::HokuyoURGConfiguration() {
   // Bouml preserved body begin 0002D9F1
   // Bouml preserved body end 0002D9F1
@@ -22,3 +24,5 @@ HokuyoURGConfiguration & HokuyoURGConfiguration::operator=(const HokuyoURGConfig
   // Bouml preserved body end 0002DB71
 }
 
+
+} // namespace brics_oodl

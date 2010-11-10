@@ -4,7 +4,9 @@
  * \author
  * \date
  */
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+namespace brics_oodl {
+
 LaserScannerConfiguration::LaserScannerConfiguration(){
   // Bouml preserved body begin 0001F47C
   // Bouml preserved body end 0001F47C
@@ -45,3 +47,5 @@ LaserScannerConfiguration & LaserScannerConfiguration::operator=(const LaserScan
   // Bouml preserved body end 00021571
 }
 
+
+} // namespace brics_oodl

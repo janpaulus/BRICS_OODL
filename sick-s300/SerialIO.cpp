@@ -52,7 +52,7 @@
  ****************************************************************/
 
 //#include "stdafx.h"
-#include "SerialIO.h"
+#include "SerialIO.hpp"
 #include <math.h>
 #include <iostream>
 
@@ -63,7 +63,7 @@
 #include <sys/ioctl.h>
 #include <linux/serial.h>
 
-
+namespace brics_oodl {
 //#define _PRINT_BYTES
 
 /*
@@ -446,4 +446,4 @@ int SerialIO::getSizeRXQueue()
 	return cbInQue;
 }
 
-
+} // namespace brics_oodl

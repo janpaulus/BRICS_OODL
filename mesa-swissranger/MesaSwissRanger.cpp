@@ -1,5 +1,7 @@
 
-#include "mesa-swissranger/MesaSwissRanger.h"
+#include "mesa-swissranger/MesaSwissRanger.hpp"
+namespace brics_oodl {
+
 MesaSwissRanger::MesaSwissRanger() {
   // Bouml preserved body begin 00032171
   this->isConnected = false;
@@ -341,3 +343,5 @@ bool MesaSwissRanger::freeMemory() {
   // Bouml preserved body end 00035871
 }
 
+
+} // namespace brics_oodl

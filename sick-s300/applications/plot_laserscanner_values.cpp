@@ -5,13 +5,14 @@
 #include <signal.h>
 #include <iostream>
 
-#include "sick-s300/SickS300.h"
-#include "generic-laser-scanner/applications/LaserScannerTools.h"
+#include "sick-s300/SickS300.hpp"
+#include "generic-laser-scanner/applications/LaserScannerTools.hpp"
 
 
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 

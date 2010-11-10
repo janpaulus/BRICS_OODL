@@ -1,5 +1,7 @@
 
-#include "sick-lms-2xx/SickLMS2xxConfiguration.h"
+#include "sick-lms-2xx/SickLMS2xxConfiguration.hpp"
+namespace brics_oodl {
+
 SickLMS2xxConfiguration::SickLMS2xxConfiguration() {
   // Bouml preserved body begin 0001F467
   // Bouml preserved body end 0001F467
@@ -22,3 +24,5 @@ SickLMS2xxConfiguration & SickLMS2xxConfiguration::operator=(const SickLMS2xxCon
   // Bouml preserved body end 00021671
 }
 
+
+} // namespace brics_oodl

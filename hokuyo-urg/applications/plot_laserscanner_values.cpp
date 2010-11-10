@@ -5,19 +5,20 @@
 #include <signal.h>
 #include <iostream>
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic/Errors.h"
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic-laser-scanner/applications/LaserScannerTools.h"
-#include "hokuyo-urg/HokuyoURG.h"
-#include "hokuyo-urg/HokuyoURGConfiguration.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic/Errors.hpp"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic-laser-scanner/applications/LaserScannerTools.hpp"
+#include "hokuyo-urg/HokuyoURG.hpp"
+#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 void sigintHandler(int signal);

@@ -1,11 +1,12 @@
 #include <iostream>
 
-#include "generic/Errors.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic/Errors.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 

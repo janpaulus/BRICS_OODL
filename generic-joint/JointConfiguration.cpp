@@ -1,2 +1,6 @@
 
-#include "generic-joint/JointConfiguration.h"
+#include "generic-joint/JointConfiguration.hpp"
+namespace brics_oodl {
+
+
+} // namespace brics_oodl

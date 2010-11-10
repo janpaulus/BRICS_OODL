@@ -1,5 +1,7 @@
 
-#include "sick-ld/SickLDConfiguration.h"
+#include "sick-ld/SickLDConfiguration.hpp"
+namespace brics_oodl {
+
 SickLDConfiguration::SickLDConfiguration() {
   // Bouml preserved body begin 00026CF1
   // Bouml preserved body end 00026CF1
@@ -22,3 +24,5 @@ SickLDConfiguration & SickLDConfiguration::operator=(const SickLDConfiguration &
   // Bouml preserved body end 00026E71
 }
 
+
+} // namespace brics_oodl

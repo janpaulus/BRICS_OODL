@@ -1,17 +1,18 @@
 #include <iostream>
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "sick-ld/SickLDConfiguration.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "sick-ld/SickLD.h"
-#include "generic/Errors.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "sick-ld/SickLDConfiguration.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "sick-ld/SickLD.hpp"
+#include "generic/Errors.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 
 
 using namespace std;
+using namespace brics_oodl;
 
 //using namespace SickToolbox;
 

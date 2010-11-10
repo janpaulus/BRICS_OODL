@@ -1,5 +1,7 @@
 
-#include "sick-lms-2xx/SickLMS2xx.h"
+#include "sick-lms-2xx/SickLMS2xx.hpp"
+namespace brics_oodl {
+
 SickLMS2xx::SickLMS2xx() {
   // Bouml preserved body begin 0001F471
   this->sickLMS = NULL;
@@ -380,3 +382,5 @@ bool SickLMS2xx::resetDevice(Errors& error) {
   // Bouml preserved body end 00023071
 }
 
+
+} // namespace brics_oodl

@@ -1,5 +1,7 @@
 
-#include "generic-tof-camera/ToFCameraData.h"
+#include "generic-tof-camera/ToFCameraData.hpp"
+namespace brics_oodl {
+
 ToFCameraData::ToFCameraData() {
   // Bouml preserved body begin 00031771
 
@@ -30,3 +32,5 @@ quantity<si::time> ToFCameraData::getTimeStamp() const {
   // Bouml preserved body end 00031B71
 }
 
+
+} // namespace brics_oodl

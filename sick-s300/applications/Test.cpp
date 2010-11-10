@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
 
-#include "sick-s300/SickS300.h"
+#include "sick-s300/SickS300.hpp"
 
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 int main(){
