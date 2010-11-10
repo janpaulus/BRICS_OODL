@@ -5,8 +5,8 @@
 //#include "../generic/Logger.h"
 #include "../generic/Units.h"
 #include "../generic-monocular-camera/MonocularCameraConfiguration.hpp"
-#include "../generic-monocular-camera/ImageFormat.h"
-#include "../generic-monocular-camera/Image2dData.h"
+#include "../generic-monocular-camera/ImageFormat.hpp"
+#include "../generic-monocular-camera/Image2dData.hpp"
 #include <unicap.h>
 #include <iostream>
 
