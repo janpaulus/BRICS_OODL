@@ -11,6 +11,7 @@
 #include "UrgCtrl.h"
 
 using namespace std;
+using namespace brics_oodl;
 
 
 

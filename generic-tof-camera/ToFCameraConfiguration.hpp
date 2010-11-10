@@ -1,9 +1,11 @@
-#ifndef _TOFCAMERACONFIGURATION_H
-#define _TOFCAMERACONFIGURATION_H
+#ifndef BRICS_OODL_TOFCAMERACONFIGURATION_H
+#define BRICS_OODL_TOFCAMERACONFIGURATION_H
 
 
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -42,4 +44,6 @@ class ToFCameraConfiguration {
     quantity<length> distanceOffset;
 
 };
+
+} // namespace brics_oodl
 #endif

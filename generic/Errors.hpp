@@ -1,5 +1,5 @@
-#ifndef _ERRORS_H
-#define _ERRORS_H
+#ifndef BRICS_OODL_ERRORS_H
+#define BRICS_OODL_ERRORS_H
 
 
 #include <map>
@@ -8,6 +8,8 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "generic/Logger.hpp"
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -38,4 +40,6 @@ class Errors {
     map<std::string,std::string>::iterator iter;
 
 };
+
+} // namespace brics_oodl
 #endif

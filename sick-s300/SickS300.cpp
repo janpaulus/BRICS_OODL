@@ -1,5 +1,7 @@
 
 #include "sick-s300/SickS300.hpp"
+namespace brics_oodl {
+
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
 
@@ -287,3 +289,5 @@ void SickS300::receiveScan() {
   // Bouml preserved body end 000371F1
 }
 
+
+} // namespace brics_oodl

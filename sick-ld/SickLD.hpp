@@ -1,5 +1,5 @@
-#ifndef _SICKLD_H
-#define _SICKLD_H
+#ifndef BRICS_OODL_SICKLD_H
+#define BRICS_OODL_SICKLD_H
 
 /**
  * \file 
@@ -18,11 +18,13 @@
 #include "sick-ld/SickLDConfiguration.hpp"
 
 #include <sickld-1.0/SickLD.hh>
-class Errors;
-class LaserScannerConfiguration;
-class SickLDConfiguration;
-class LaserScannerData;
-class LaserScannerDataWithIntensities;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class LaserScannerConfiguration; } 
+namespace brics_oodl { class SickLDConfiguration; } 
+namespace brics_oodl { class LaserScannerData; } 
+namespace brics_oodl { class LaserScannerDataWithIntensities; } 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -67,4 +69,6 @@ class SickLD : public LaserScanner {
     unsigned int* intensities;
 
 };
+
+} // namespace brics_oodl
 #endif

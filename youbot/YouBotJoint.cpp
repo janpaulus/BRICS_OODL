@@ -1,6 +1,8 @@
 
 #include "youbot/YouBotJoint.hpp"
 #include "youbot/YouBot.hpp"
+namespace brics_oodl {
+
 YouBotJoint::YouBotJoint(unsigned int jointNo) {
   // Bouml preserved body begin 000412F1
   this->jointNumber = jointNo;
@@ -156,3 +158,5 @@ void YouBotJoint::parseYouBotErrorFlags() {
   // Bouml preserved body end 00044AF1
 }
 
+
+} // namespace brics_oodl

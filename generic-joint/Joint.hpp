@@ -1,11 +1,13 @@
-#ifndef _JOINT_H
-#define _JOINT_H
+#ifndef BRICS_OODL_JOINT_H
+#define BRICS_OODL_JOINT_H
 
 
 #include <vector>
 #include "generic/Units.hpp"
 #include "generic-joint/JointData.hpp"
 #include "generic-joint/JointConfiguration.hpp"
+
+namespace brics_oodl {
 
 enum SyncMode {
   BLOCKING,
@@ -23,4 +25,6 @@ class Joint {
     virtual void getData(JointData& data) = 0;
 
 };
+
+} // namespace brics_oodl
 #endif

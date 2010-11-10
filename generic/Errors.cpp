@@ -1,5 +1,7 @@
 
 #include "generic/Errors.hpp"
+namespace brics_oodl {
+
 Errors::Errors() {
   // Bouml preserved body begin 000211F1
   iter = this->occurredErrors.begin();
@@ -63,3 +65,5 @@ void Errors::printErrorsToConsole() {
   // Bouml preserved body end 0002FA71
 }
 
+
+} // namespace brics_oodl

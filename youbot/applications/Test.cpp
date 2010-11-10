@@ -8,6 +8,7 @@
 
 using namespace boost::posix_time;
 using namespace std;
+using namespace brics_oodl;
 
 bool running = true;
 

@@ -1,5 +1,5 @@
-#ifndef _MESASWISSRANGER_H
-#define _MESASWISSRANGER_H
+#ifndef BRICS_OODL_MESASWISSRANGER_H
+#define BRICS_OODL_MESASWISSRANGER_H
 
 
 #include "generic/Errors.hpp"
@@ -10,8 +10,10 @@
 #include "generic-tof-camera/ToFCameraData.hpp"
 #include "libMesaSR.h"
 #include "definesSR.h"
-class Errors;
-class ToFCameraData;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class ToFCameraData; } 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -60,4 +62,6 @@ class MesaSwissRanger : public ToFCamera {
     bool isConnected;
 
 };
+
+} // namespace brics_oodl
 #endif

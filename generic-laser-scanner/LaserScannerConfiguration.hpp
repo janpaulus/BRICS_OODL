@@ -1,5 +1,5 @@
-#ifndef _LASERSCANNERCONFIGURATION_H
-#define _LASERSCANNERCONFIGURATION_H
+#ifndef BRICS_OODL_LASERSCANNERCONFIGURATION_H
+#define BRICS_OODL_LASERSCANNERCONFIGURATION_H
 
 /**
  * \file 
@@ -11,6 +11,8 @@
 #include <iostream>
 #include <string>
 #include "generic/Units.hpp"
+namespace brics_oodl {
+
 enum baud_rate {
   BAUD_9600,
   BAUD_19200,
@@ -64,4 +66,6 @@ class LaserScannerConfiguration {
     std::string devicePath;
 
 };
+
+} // namespace brics_oodl
 #endif

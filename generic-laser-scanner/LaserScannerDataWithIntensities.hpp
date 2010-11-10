@@ -1,10 +1,12 @@
-#ifndef _LASERSCANNERDATAWITHINTENSITIES_H
-#define _LASERSCANNERDATAWITHINTENSITIES_H
+#ifndef BRICS_OODL_LASERSCANNERDATAWITHINTENSITIES_H
+#define BRICS_OODL_LASERSCANNERDATAWITHINTENSITIES_H
 
 
 #include "LaserScannerData.hpp"
 
 #include "generic-laser-scanner/LaserScannerData.hpp"
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -32,4 +34,6 @@ class LaserScannerDataWithIntensities : public LaserScannerData {
     std::vector< double > intensities;
 
 };
+
+} // namespace brics_oodl
 #endif

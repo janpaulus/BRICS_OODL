@@ -1,5 +1,5 @@
-#ifndef _SICKLMS2XX_H
-#define _SICKLMS2XX_H
+#ifndef BRICS_OODL_SICKLMS2XX_H
+#define BRICS_OODL_SICKLMS2XX_H
 
 
 #include <string>
@@ -21,6 +21,8 @@
 #include "sicklms-1.0/SickLMSMessage.hh"
 #include "sicklms-1.0/SickLMS.hh"
 using namespace SickToolbox;
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -64,4 +66,6 @@ class SickLMS2xx : public LaserScanner {
     unsigned int* intensities;
 
 };
+
+} // namespace brics_oodl
 #endif

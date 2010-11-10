@@ -1,5 +1,7 @@
 
 #include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+namespace brics_oodl {
+
 LaserScannerDataWithIntensities::LaserScannerDataWithIntensities() {
   // Bouml preserved body begin 00024C71
 
@@ -83,3 +85,5 @@ void LaserScannerDataWithIntensities::setMeasurements(const std::vector<double>&
   // Bouml preserved body end 0002C071
 }
 
+
+} // namespace brics_oodl

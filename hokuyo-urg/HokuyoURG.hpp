@@ -1,5 +1,5 @@
-#ifndef _HOKUYOURG_H
-#define _HOKUYOURG_H
+#ifndef BRICS_OODL_HOKUYOURG_H
+#define BRICS_OODL_HOKUYOURG_H
 
 
 #include "generic/Logger.hpp"
@@ -13,11 +13,13 @@
 
 #include "UrgCtrl.h"
 #include "RangeSensorParameter.h"
-class Errors;
-class LaserScannerConfiguration;
-class HokuyoURGConfiguration;
-class LaserScannerData;
-class LaserScannerDataWithIntensities;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class LaserScannerConfiguration; } 
+namespace brics_oodl { class HokuyoURGConfiguration; } 
+namespace brics_oodl { class LaserScannerData; } 
+namespace brics_oodl { class LaserScannerDataWithIntensities; } 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -56,4 +58,6 @@ class HokuyoURG : public LaserScanner {
     qrk::UrgCtrl hokuyo;
 
 };
+
+} // namespace brics_oodl
 #endif

@@ -60,6 +60,7 @@
 #include <string>
 #include <string.h>
 
+namespace brics_oodl {
 /**
  * Wrapper class for serial communication.
  */
@@ -245,6 +246,6 @@ protected:
 	bool m_ShortBytePeriod;
 };
 
-
+} // namespace brics_oodl
 #endif //
 

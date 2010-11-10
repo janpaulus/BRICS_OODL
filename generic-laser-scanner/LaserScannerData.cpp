@@ -1,5 +1,7 @@
 
 #include "generic-laser-scanner/LaserScannerData.hpp"
+namespace brics_oodl {
+
 LaserScannerData::LaserScannerData() {
   // Bouml preserved body begin 0001F67C
 
@@ -80,3 +82,5 @@ quantity<si::time> LaserScannerData::getTimeStamp() const {
   // Bouml preserved body end 0001F9FC
 }
 
+
+} // namespace brics_oodl

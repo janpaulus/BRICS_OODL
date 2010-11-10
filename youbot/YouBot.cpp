@@ -1,5 +1,8 @@
 
 #include "youbot/YouBot.hpp"
+
+namespace brics_oodl {
+
 YouBot* YouBot::instance = 0;
 YouBot::YouBot() {
   // Bouml preserved body begin 00041171
@@ -243,3 +246,5 @@ void YouBot::updateSensorActorValues() {
 
 std::string YouBot::ethernetDevice;
 
+
+} // namespace brics_oodl

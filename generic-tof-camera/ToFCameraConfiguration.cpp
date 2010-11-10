@@ -1,5 +1,7 @@
 
 #include "generic-tof-camera/ToFCameraConfiguration.hpp"
+namespace brics_oodl {
+
 ToFCameraConfiguration::ToFCameraConfiguration(){
   // Bouml preserved body begin 00031BF1
   // Bouml preserved body end 00031BF1
@@ -36,3 +38,5 @@ ToFCameraConfiguration & ToFCameraConfiguration::operator=(const ToFCameraConfig
   // Bouml preserved body end 00031D71
 }
 
+
+} // namespace brics_oodl

@@ -1,5 +1,5 @@
-#ifndef _LASERSCANNER_H
-#define _LASERSCANNER_H
+#ifndef BRICS_OODL_LASERSCANNER_H
+#define BRICS_OODL_LASERSCANNER_H
 
 /**
  * \file 
@@ -14,9 +14,11 @@
 #include "generic-laser-scanner/LaserScannerConfiguration.hpp"
 #include "generic-laser-scanner/LaserScannerData.hpp"
 #include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
-class Errors;
-class LaserScannerConfiguration;
-class LaserScannerData;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class LaserScannerConfiguration; } 
+namespace brics_oodl { class LaserScannerData; } 
+
+namespace brics_oodl {
 
 class LaserScanner {
   public:
@@ -33,4 +35,6 @@ class LaserScanner {
     virtual bool resetDevice(Errors& error) = 0;
 
 };
+
+} // namespace brics_oodl
 #endif

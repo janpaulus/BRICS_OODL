@@ -1,5 +1,7 @@
 
 #include "hokuyo-urg/HokuyoURG.hpp"
+namespace brics_oodl {
+
 HokuyoURG::HokuyoURG() {
   // Bouml preserved body begin 0002DBF1
   this->config = NULL;
@@ -298,3 +300,5 @@ bool HokuyoURG::resetDevice(Errors& error) {
   // Bouml preserved body end 0002E071
 }
 
+
+} // namespace brics_oodl

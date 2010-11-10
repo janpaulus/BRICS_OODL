@@ -18,6 +18,7 @@
 
 
 using namespace std;
+using namespace brics_oodl;
 
 
 void sigintHandler(int signal);

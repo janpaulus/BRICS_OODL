@@ -1,5 +1,5 @@
-#ifndef _YOUBOTJOINT_H
-#define _YOUBOTJOINT_H
+#ifndef BRICS_OODL_YOUBOTJOINT_H
+#define BRICS_OODL_YOUBOTJOINT_H
 
 
 #include <vector>
@@ -12,6 +12,8 @@
 #include "generic-joint/JointData.hpp"
 #include "generic-joint/JointConfiguration.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
+
+namespace brics_oodl {
 
 enum YouBotJointControllerMode
  {
@@ -72,4 +74,6 @@ class YouBotJoint : public Joint {
     void parseYouBotErrorFlags();
 
 };
+
+} // namespace brics_oodl
 #endif

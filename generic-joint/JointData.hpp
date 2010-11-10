@@ -1,8 +1,10 @@
-#ifndef _JOINTDATA_H
-#define _JOINTDATA_H
+#ifndef BRICS_OODL_JOINTDATA_H
+#define BRICS_OODL_JOINTDATA_H
 
 
 #include "generic/Units.hpp"
+
+namespace brics_oodl {
 
 class JointData {
 };
@@ -62,4 +64,6 @@ class JointDataRange {
     JointData JointDataLower;
 
 };
+
+} // namespace brics_oodl
 #endif

@@ -12,8 +12,7 @@
 
 
 using namespace std;
-
-
+using namespace brics_oodl;
 using namespace SickToolbox;
 
 int main(){

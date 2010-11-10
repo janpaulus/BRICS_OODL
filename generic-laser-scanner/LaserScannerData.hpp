@@ -1,9 +1,11 @@
-#ifndef _LASERSCANNERDATA_H
-#define _LASERSCANNERDATA_H
+#ifndef BRICS_OODL_LASERSCANNERDATA_H
+#define BRICS_OODL_LASERSCANNERDATA_H
 
 
 #include <vector>
 #include "generic/Units.hpp"
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -37,4 +39,6 @@ class LaserScannerData {
     quantity<si::time> timestamp;
 
 };
+
+} // namespace brics_oodl
 #endif

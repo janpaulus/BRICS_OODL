@@ -1,5 +1,5 @@
-#ifndef _SICKS300_H
-#define _SICKS300_H
+#ifndef BRICS_OODL_SICKS300_H
+#define BRICS_OODL_SICKS300_H
 
 
 #include <vector>
@@ -13,6 +13,8 @@
 #include "generic-laser-scanner/LaserScannerConfiguration.hpp"
 #include "sick-s300/ScannerSickS300.hpp"
 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -80,4 +82,6 @@ class SickS300 : public LaserScanner {
     boost::mutex mutexSickS300;
 
 };
+
+} // namespace brics_oodl
 #endif

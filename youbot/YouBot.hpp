@@ -1,5 +1,5 @@
-#ifndef _YOUBOT_H
-#define _YOUBOT_H
+#ifndef BRICS_OODL_YOUBOT_H
+#define BRICS_OODL_YOUBOT_H
 
 
 #include <vector>
@@ -15,6 +15,8 @@ extern "C"{
 #include <ethercattype.h>
 #include <ethercatmain.h>
 }
+
+namespace brics_oodl {
 
 //have to be a singleton in the system
 class YouBot {
@@ -92,4 +94,6 @@ friend class YouBotJoint;
     std::vector<inputBuffer*> ethercatinputBufferVector;
 
 };
+
+} // namespace brics_oodl
 #endif

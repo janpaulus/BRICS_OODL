@@ -5,6 +5,8 @@
  * \date
  */
 #include "sick-ld/SickLD.hpp"
+namespace brics_oodl {
+
 SickLD::SickLD() {
   // Bouml preserved body begin 00026771
   this->sickLD = NULL;
@@ -298,3 +300,5 @@ bool SickLD::resetDevice(Errors& error) {
   // Bouml preserved body end 00026BF1
 }
 
+
+} // namespace brics_oodl

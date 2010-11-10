@@ -53,6 +53,7 @@
 
 #include "sick-s300/ScannerSickS300.hpp"
 
+namespace brics_oodl {
 //-----------------------------------------------
 
 typedef unsigned char BYTE;
@@ -331,3 +332,4 @@ void ScannerSickS300::convertScanToPolar(std::vector<int> viScanRaw,
 		vecScanPolar[i].di = dIntens;
 	}
 }
+} // namespace brics_oodl

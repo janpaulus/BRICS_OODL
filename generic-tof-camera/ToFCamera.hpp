@@ -1,5 +1,5 @@
-#ifndef _TOFCAMERA_H
-#define _TOFCAMERA_H
+#ifndef BRICS_OODL_TOFCAMERA_H
+#define BRICS_OODL_TOFCAMERA_H
 
 
 #include "generic/Errors.hpp"
@@ -8,9 +8,11 @@
 #include "generic-tof-camera/ToFCamera.hpp"
 #include "generic-tof-camera/ToFCameraConfiguration.hpp"
 #include "generic-tof-camera/ToFCameraData.hpp"
-class Errors;
-class ToFCameraConfiguration;
-class ToFCameraData;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class ToFCameraConfiguration; } 
+namespace brics_oodl { class ToFCameraData; } 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -37,4 +39,6 @@ class ToFCamera {
     virtual bool resetDevice(Errors& error) = 0;
 
 };
+
+} // namespace brics_oodl
 #endif

@@ -1,9 +1,11 @@
-#ifndef _TOFCAMERADATA_H
-#define _TOFCAMERADATA_H
+#ifndef BRICS_OODL_TOFCAMERADATA_H
+#define BRICS_OODL_TOFCAMERADATA_H
 
 
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
+namespace brics_oodl {
+
 /**
  * \brief 
  *
@@ -25,4 +27,6 @@ class ToFCameraData {
     quantity<si::time> timestamp;
 
 };
+
+} // namespace brics_oodl
 #endif

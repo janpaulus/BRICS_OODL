@@ -1,5 +1,5 @@
-#ifndef _SICKLMS2XXCONFIGURATION_H
-#define _SICKLMS2XXCONFIGURATION_H
+#ifndef BRICS_OODL_SICKLMS2XXCONFIGURATION_H
+#define BRICS_OODL_SICKLMS2XXCONFIGURATION_H
 
 
 #include "generic-laser-scanner/LaserScannerConfiguration.hpp"
@@ -14,6 +14,8 @@
 #include "sicklms-1.0/SickLMS.hh"
 
 using namespace SickToolbox;
+namespace brics_oodl {
+
 class SickLMS2xxConfiguration : public LaserScannerConfiguration {
   public:
     SickLMS2xxConfiguration();
@@ -39,4 +41,6 @@ class SickLMS2xxConfiguration : public LaserScannerConfiguration {
     sick_lms_measuring_units_t measuringUnits;
 
 };
+
+} // namespace brics_oodl
 #endif

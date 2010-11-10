@@ -64,6 +64,7 @@
 
 #include "sick-s300/SerialIO.hpp"
 
+namespace brics_oodl {
 /** 
  * Driver class for the laser scanner SICK S300 Professional.
  * This driver only supports use with 500KBaud in cont. mode
@@ -196,6 +197,6 @@ private:
 							std::vector<ScanPolarType>& vecScanPolar);
 
 };
-
+} // namespace brics_oodl
 //-----------------------------------------------
 #endif

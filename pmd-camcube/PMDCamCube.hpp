@@ -1,5 +1,5 @@
-#ifndef _PMDCAMCUBE_H
-#define _PMDCAMCUBE_H
+#ifndef BRICS_OODL_PMDCAMCUBE_H
+#define BRICS_OODL_PMDCAMCUBE_H
 
 
 #include "generic/Errors.hpp"
@@ -8,9 +8,11 @@
 #include "generic-tof-camera/ToFCamera.hpp"
 #include "generic-tof-camera/ToFCameraConfiguration.hpp"
 #include "generic-tof-camera/ToFCameraData.hpp"
-class Errors;
-class ToFCameraConfiguration;
-class ToFCameraData;
+namespace brics_oodl { class Errors; } 
+namespace brics_oodl { class ToFCameraConfiguration; } 
+namespace brics_oodl { class ToFCameraData; } 
+
+namespace brics_oodl {
 
 /**
  * \brief 
@@ -49,4 +51,6 @@ class PMDCamCube : public ToFCamera {
     bool isConnected;
 
 };
+
+} // namespace brics_oodl
 #endif

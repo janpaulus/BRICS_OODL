@@ -1,5 +1,7 @@
 
 #include "pmd-camcube/PMDCamCube.hpp"
+namespace brics_oodl {
+
 PMDCamCube::PMDCamCube() {
   // Bouml preserved body begin 00031DF1
   // Bouml preserved body end 00031DF1
@@ -39,3 +41,5 @@ bool PMDCamCube::resetDevice(Errors& error) {
   // Bouml preserved body end 000320F1
 }
 
+
+} // namespace brics_oodl
