@@ -126,7 +126,7 @@ void YouBotJoint::parseYouBotErrorFlags() {
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & HALTED) {
-    LOG(error) << errorMessage << "is halted";
+ //   LOG(error) << errorMessage << "is halted";
  //   throw ExceptionOODL(errorMessage + "is halted");
   }
 

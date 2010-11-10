@@ -48,7 +48,7 @@ int main() {
     youbot4.getJoint(2).setData(setVel,NON_BLOCKING);
     youbot4.getJoint(3).setData(setVel,NON_BLOCKING);
     youbot4.getJoint(4).setData(setVel,NON_BLOCKING);
-    boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
   }
 
   }catch(std::exception e){

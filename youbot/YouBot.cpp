@@ -17,8 +17,6 @@ YouBot::YouBot() {
   newOutputDataFlagOne = false;
   newOutputDataFlagTwo = false;
 
-
-
   // Bouml preserved body end 00041171
 }
 

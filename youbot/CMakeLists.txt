@@ -32,6 +32,7 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic-joint/JointConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBot.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripper.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
 )
 
