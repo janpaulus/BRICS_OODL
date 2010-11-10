@@ -1,14 +1,21 @@
-/*class ImageFromat
+#include <string>
+#include <iostream>
+#include <unicap.h>
+
+
+class ImageFormat
 {
  public:
   ImageFormat();
   ~ImageFormat();
  private:
   std::string formatIdentifier;
+  unicap_rect_t currentResolution;
+  
 
 };
 
-*/
+
 
 /**
  * unicap_rect_t:

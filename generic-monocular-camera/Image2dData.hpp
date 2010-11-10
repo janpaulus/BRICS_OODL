@@ -1,3 +1,17 @@
+#include <iostream>
+
+class Image2dData
+{
+  public:
+  Image2dData();
+  ~Image2dData();
+ 
+ private:
+  char *buffer;
+
+};
+
+
 /*
 
 
