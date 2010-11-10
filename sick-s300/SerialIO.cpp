@@ -52,7 +52,7 @@
  ****************************************************************/
 
 //#include "stdafx.h"
-#include "SerialIO.h"
+#include "SerialIO.hpp"
 #include <math.h>
 #include <iostream>
 

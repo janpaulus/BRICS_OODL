@@ -1,5 +1,5 @@
 
-#include "generic/Errors.h"
+#include "generic/Errors.hpp"
 Errors::Errors() {
   // Bouml preserved body begin 000211F1
   iter = this->occurredErrors.begin();

@@ -2,14 +2,14 @@
 #define _HOKUYOURG_H
 
 
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic/Errors.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "hokuyo-urg/HokuyoURGConfiguration.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic/Errors.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
 
 #include "UrgCtrl.h"
 #include "RangeSensorParameter.h"

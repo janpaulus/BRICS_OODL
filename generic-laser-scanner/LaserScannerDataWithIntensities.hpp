@@ -2,9 +2,9 @@
 #define _LASERSCANNERDATAWITHINTENSITIES_H
 
 
-#include "LaserScannerData.h"
+#include "LaserScannerData.hpp"
 
-#include "generic-laser-scanner/LaserScannerData.h"
+#include "generic-laser-scanner/LaserScannerData.hpp"
 /**
  * \brief 
  *

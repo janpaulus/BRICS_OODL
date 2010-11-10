@@ -19,7 +19,7 @@
 
 
 
-#include "gnuplot_i.h"
+#include "gnuplot_i.hpp"
 #define PATH_MAXNAMESZ       4096
 
 using namespace std;

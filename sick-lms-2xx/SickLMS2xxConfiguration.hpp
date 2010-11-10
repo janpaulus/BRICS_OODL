@@ -2,9 +2,9 @@
 #define _SICKLMS2XXCONFIGURATION_H
 
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 #include "sicklms-1.0/SickLIDAR.hh"
 #include "sicklms-1.0/SickException.hh"
 #include "sicklms-1.0/SickBufferMonitor.hh"

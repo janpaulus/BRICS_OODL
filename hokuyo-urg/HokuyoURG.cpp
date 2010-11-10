@@ -1,5 +1,5 @@
 
-#include "hokuyo-urg/HokuyoURG.h"
+#include "hokuyo-urg/HokuyoURG.hpp"
 HokuyoURG::HokuyoURG() {
   // Bouml preserved body begin 0002DBF1
   this->config = NULL;

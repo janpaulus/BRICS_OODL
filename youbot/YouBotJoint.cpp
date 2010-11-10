@@ -1,6 +1,6 @@
 
-#include "youbot/YouBotJoint.h"
-#include "youbot/YouBot.h"
+#include "youbot/YouBotJoint.hpp"
+#include "youbot/YouBot.hpp"
 YouBotJoint::YouBotJoint(unsigned int jointNo) {
   // Bouml preserved body begin 000412F1
   this->jointNumber = jointNo;
@@ -105,52 +105,52 @@ void YouBotJoint::parseYouBotErrorFlags() {
 
   if (this->MessageBuffer.stctInput.errorFlags & OVER_CURRENT) {
     LOG(error) << errorMessage << "got over current";
-//    throw std::runtime_error(errorMessage + "got over current");
+//    throw ExceptionOODL(errorMessage + "got over current");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & UNDER_VOLTAGE) {
     LOG(error) << errorMessage << "got under voltage";
-//    throw std::runtime_error(errorMessage + "got under voltage");
+//    throw ExceptionOODL(errorMessage + "got under voltage");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & OVER_VOLTAGE) {
     LOG(error) << errorMessage << "got over voltage";
- //   throw std::runtime_error(errorMessage + "got over voltage");
+ //   throw ExceptionOODL(errorMessage + "got over voltage");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & OVER_TEMPERATURE) {
     LOG(error) << errorMessage << "got over temperature";
- //   throw std::runtime_error(errorMessage + "got over temperature");
+ //   throw ExceptionOODL(errorMessage + "got over temperature");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & HALTED) {
     LOG(error) << errorMessage << "is halted";
- //   throw std::runtime_error(errorMessage + "is halted");
+ //   throw ExceptionOODL(errorMessage + "is halted");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & HALL_SENSOR) {
     LOG(error) << errorMessage << "got hall sensor problem";
- //   throw std::runtime_error(errorMessage + "got hall sensor problem");
+ //   throw ExceptionOODL(errorMessage + "got hall sensor problem");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & ENCODER) {
     LOG(error) << errorMessage << "got encoder problem";
- //   throw std::runtime_error(errorMessage + "got encoder problem");
+ //   throw ExceptionOODL(errorMessage + "got encoder problem");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & MOTOR_WINDING) {
     LOG(error) << errorMessage << "got motor winding problem";
- //   throw std::runtime_error(errorMessage + "got motor winding problem");
+ //   throw ExceptionOODL(errorMessage + "got motor winding problem");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & CYCLE_TIME_VIOLATION) {
     LOG(error) << errorMessage << "the cycle time is violated";
- //   throw std::runtime_error(errorMessage + "the cycle time is violated");
+ //   throw ExceptionOODL(errorMessage + "the cycle time is violated");
   }
 
   if (this->MessageBuffer.stctInput.errorFlags & INIT_SIN_COMM) {
     LOG(error) << errorMessage << "need to initialize the sinus commutation";
- //   throw std::runtime_error(errorMessage + "need to initialize the sinus commutation");
+ //   throw ExceptionOODL(errorMessage + "need to initialize the sinus commutation");
   }
 
   // Bouml preserved body end 00044AF1

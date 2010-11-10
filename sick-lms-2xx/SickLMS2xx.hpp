@@ -4,14 +4,14 @@
 
 #include <string>
 #include <vector>
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic/Errors.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "sick-lms-2xx/SickLMS2xxConfiguration.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/Errors.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "sick-lms-2xx/SickLMS2xxConfiguration.hpp"
 
 #include "sicklms-1.0/SickLIDAR.hh"
 #include "sicklms-1.0/SickException.hh"
@@ -20,12 +20,6 @@
 #include "sicklms-1.0/SickLMSBufferMonitor.hh"
 #include "sicklms-1.0/SickLMSMessage.hh"
 #include "sicklms-1.0/SickLMS.hh"
-class Errors;
-class LaserScannerConfiguration;
-class SickLMS2xxConfiguration;
-class LaserScannerData;
-class LaserScannerDataWithIntensities;
-
 using namespace SickToolbox;
 /**
  * \brief 

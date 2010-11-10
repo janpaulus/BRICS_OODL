@@ -1,5 +1,5 @@
 
-#include "generic-tof-camera/ToFCameraConfiguration.h"
+#include "generic-tof-camera/ToFCameraConfiguration.hpp"
 ToFCameraConfiguration::ToFCameraConfiguration(){
   // Bouml preserved body begin 00031BF1
   // Bouml preserved body end 00031BF1

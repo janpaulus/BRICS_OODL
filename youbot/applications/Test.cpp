@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
 #include "boost/date_time/posix_time/posix_time.hpp"
-#include "generic-joint/JointData.h"
-#include "youbot/YouBot.h"
-#include "youbot/YouBotJoint.h"
+#include "generic-joint/JointData.hpp"
+#include "youbot/YouBot.hpp"
+#include "youbot/YouBotJoint.hpp"
 
 
 using namespace boost::posix_time;

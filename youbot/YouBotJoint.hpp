@@ -5,12 +5,13 @@
 #include <vector>
 #include <sstream>
 #include <boost/thread.hpp>
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic-joint/Joint.h"
-#include "generic-joint/JointData.h"
-#include "generic-joint/JointConfiguration.h"
-#include "youbot/YouBotSlaveMsg.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/ExceptionOODL.hpp"
+#include "generic-joint/Joint.hpp"
+#include "generic-joint/JointData.hpp"
+#include "generic-joint/JointConfiguration.hpp"
+#include "youbot/YouBotSlaveMsg.hpp"
 
 enum YouBotJointControllerMode
  {

@@ -2,9 +2,9 @@
 #define _SICKLDCONFIGURATION_H
 
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 class SickLDConfiguration : public LaserScannerConfiguration {
   public:
     SickLDConfiguration();

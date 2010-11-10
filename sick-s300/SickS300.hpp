@@ -4,19 +4,15 @@
 
 #include <vector>
 #include <boost/thread.hpp>
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic/Errors.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/Errors.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "sick-s300/ScannerSickS300.hpp"
 
-#include "ScannerSickS300.h"
-class Errors;
-class LaserScannerConfiguration;
-class LaserScannerData;
-class LaserScannerDataWithIntensities;
 
 /**
  * \brief 

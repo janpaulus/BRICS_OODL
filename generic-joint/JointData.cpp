@@ -1,2 +1,2 @@
 
-#include "generic-joint/JointData.h"
+#include "generic-joint/JointData.hpp"

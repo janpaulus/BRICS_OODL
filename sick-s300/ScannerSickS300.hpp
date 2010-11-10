@@ -62,7 +62,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "sick-s300/SerialIO.h"
+#include "sick-s300/SerialIO.hpp"
 
 /** 
  * Driver class for the laser scanner SICK S300 Professional.

@@ -1,5 +1,5 @@
 
-#include "hokuyo-urg/HokuyoURGConfiguration.h"
+#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
 HokuyoURGConfiguration::HokuyoURGConfiguration() {
   // Bouml preserved body begin 0002D9F1
   // Bouml preserved body end 0002D9F1

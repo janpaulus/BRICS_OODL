@@ -1,5 +1,5 @@
 
-#include "pmd-camcube/PMDCamCube.h"
+#include "pmd-camcube/PMDCamCube.hpp"
 PMDCamCube::PMDCamCube() {
   // Bouml preserved body begin 00031DF1
   // Bouml preserved body end 00031DF1

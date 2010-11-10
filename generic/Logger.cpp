@@ -1,4 +1,4 @@
-#include "generic/Logger.h"
+#include "generic/Logger.hpp"
 
 
 Logger& Logger::getInstance()
@@ -10,7 +10,7 @@ Logger& Logger::getInstance()
 void Logger::init(){
 #ifdef BOOST_LOG_FOUND
   // Initialize logging to std::cout
-  logging::init_log_to_console(std::cout);
+  logging::init_log_to_console(std::cout, keywords::format = "%TimeStamp%: %_%");
   // Initialize logging to the "test.log" file
   logging::init_log_to_file("log.txt");
 #endif  /* BOOST_LOG_FOUND */

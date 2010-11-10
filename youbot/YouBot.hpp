@@ -5,14 +5,12 @@
 #include <vector>
 #include <string>
 #include <boost/thread.hpp>
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic/Errors.h"
-#include "youbot/YouBotSlaveMsg.h"
-//#include "youbot/YouBotEthercatSlave.h"
-#include "youbot/ethercat-master/soem_driver.h"
-#include "youbot/ethercat-master/soem_master.h"
-#include "youbot/YouBotJoint.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/ExceptionOODL.hpp"
+#include "youbot/YouBotSlaveMsg.hpp"
+#include "youbot/EthercatMaster.hpp"
+#include "youbot/YouBotJoint.hpp"
 extern "C"{
 #include <ethercattype.h>
 #include <ethercatmain.h>
@@ -32,7 +30,7 @@ friend class YouBotJoint;
 
 
   public:
-    static YouBot& getInstance();
+    static YouBot& getInstance(std::string ethernetDeviceName = "eth0");
 
     static void destroy();
 
@@ -42,21 +40,23 @@ friend class YouBotJoint;
 
 
   private:
-    std::vector<YouBotJoint> Joints;
-
     void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
 
     YouBotSlaveMsg getMsgBuffer(unsigned int jointNumber);
 
-    bool initializeEthercat();
+    void initializeEthercat();
+
+    void initializeJoints();
 
     bool closeEthercat();
 
     void updateSensorActorValues();
 
-    soem_ethercat_drivers::SoemMaster* ethercatMaster;
+    std::vector<YouBotJoint> Joints;
 
-    std::string ethernetDeviceName;
+    EthercatMaster* ethercatMaster;
+
+    static std::string ethernetDevice;
 
     ec_mbxbuft mailboxBuffer;
 

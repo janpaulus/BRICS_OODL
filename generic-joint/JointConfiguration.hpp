@@ -3,9 +3,8 @@
 
 
 #include <vector>
-#include "generic/Units.h"
-#include "generic-joint/JointData.h"
-class JointDataRange;
+#include "generic/Units.hpp"
+#include "generic-joint/JointData.hpp"
 
 class JointConfiguration {
   public:

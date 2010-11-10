@@ -2,12 +2,12 @@
 #define _TOFCAMERA_H
 
 
-#include "generic/Errors.h"
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic-tof-camera/ToFCamera.h"
-#include "generic-tof-camera/ToFCameraConfiguration.h"
-#include "generic-tof-camera/ToFCameraData.h"
+#include "generic/Errors.hpp"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic-tof-camera/ToFCamera.hpp"
+#include "generic-tof-camera/ToFCameraConfiguration.hpp"
+#include "generic-tof-camera/ToFCameraData.hpp"
 class Errors;
 class ToFCameraConfiguration;
 class ToFCameraData;

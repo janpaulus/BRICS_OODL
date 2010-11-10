@@ -14,6 +14,7 @@ enum severity_level
     debug,
     info,
     warning,
+    oodl_exception,
     error,
     fatal
 };

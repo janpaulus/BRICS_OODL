@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic/Errors.h"
-#include "generic/Units.h"
-#include "generic/Logger.h"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic/Errors.hpp"
+#include "generic/Units.hpp"
+#include "generic/Logger.hpp"
 
 #include "UrgCtrl.h"
 

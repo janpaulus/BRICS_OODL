@@ -2,7 +2,8 @@
 #define _JOINTDATA_H
 
 
-#include "generic/Units.h"
+#include "generic/Units.hpp"
+
 class JointData {
 };
 class JointSensedData : public JointData {

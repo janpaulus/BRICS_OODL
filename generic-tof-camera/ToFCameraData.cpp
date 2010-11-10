@@ -1,5 +1,5 @@
 
-#include "generic-tof-camera/ToFCameraData.h"
+#include "generic-tof-camera/ToFCameraData.hpp"
 ToFCameraData::ToFCameraData() {
   // Bouml preserved body begin 00031771
 

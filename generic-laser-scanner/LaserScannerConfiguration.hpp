@@ -10,7 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "generic/Units.h"
+#include "generic/Units.hpp"
 enum baud_rate {
   BAUD_9600,
   BAUD_19200,

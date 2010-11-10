@@ -1,2 +1,2 @@
 
-#include "generic-joint/JointConfiguration.h"
+#include "generic-joint/JointConfiguration.hpp"

@@ -1,5 +1,5 @@
 
-#include "sick-s300/SickS300.h"
+#include "sick-s300/SickS300.hpp"
 SickS300::SickS300() {
   // Bouml preserved body begin 00020E67
 

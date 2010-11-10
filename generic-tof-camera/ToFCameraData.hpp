@@ -2,8 +2,8 @@
 #define _TOFCAMERADATA_H
 
 
-#include "generic/Logger.h"
-#include "generic/Units.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
 /**
  * \brief 
  *

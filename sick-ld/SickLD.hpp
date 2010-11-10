@@ -7,17 +7,15 @@
  * \author
  * \date
  */
-#include "LaserScanner.h"
-
 #include <vector>
-#include "generic/Logger.h"
-#include "generic/Units.h"
-#include "generic/Errors.h"
-#include "generic-laser-scanner/LaserScanner.h"
-#include "generic-laser-scanner/LaserScannerData.h"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.h"
-#include "generic-laser-scanner/LaserScannerConfiguration.h"
-#include "sick-ld/SickLDConfiguration.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/Errors.hpp"
+#include "generic-laser-scanner/LaserScanner.hpp"
+#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "sick-ld/SickLDConfiguration.hpp"
 
 #include <sickld-1.0/SickLD.hh>
 class Errors;

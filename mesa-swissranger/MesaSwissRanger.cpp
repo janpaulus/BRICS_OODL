@@ -1,5 +1,5 @@
 
-#include "mesa-swissranger/MesaSwissRanger.h"
+#include "mesa-swissranger/MesaSwissRanger.hpp"
 MesaSwissRanger::MesaSwissRanger() {
   // Bouml preserved body begin 00032171
   this->isConnected = false;

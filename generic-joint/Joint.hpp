@@ -3,10 +3,9 @@
 
 
 #include <vector>
-#include "generic/Units.h"
-class JointConfiguration;
-class JointDataSetpoint;
-class JointData;
+#include "generic/Units.hpp"
+#include "generic-joint/JointData.hpp"
+#include "generic-joint/JointConfiguration.hpp"
 
 enum SyncMode {
   BLOCKING,

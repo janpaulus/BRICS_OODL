@@ -1,5 +1,5 @@
 
-#include "youbot/YouBot.h"
+#include "youbot/YouBot.hpp"
 YouBot* YouBot::instance = 0;
 YouBot::YouBot() {
   // Bouml preserved body begin 00041171
@@ -7,7 +7,7 @@ YouBot::YouBot() {
     boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
     ethercatMaster == NULL;
   }
-  ethernetDeviceName = "eth0";
+  ethernetDevice = "eth0";
   stopThread = false;
   newDataFlagOne = false;
   newDataFlagTwo = false;
@@ -25,10 +25,11 @@ YouBot::~YouBot() {
   // Bouml preserved body end 000411F1
 }
 
-YouBot& YouBot::getInstance()
+YouBot& YouBot::getInstance(std::string ethernetDeviceName)
 {
   // Bouml preserved body begin 00042F71
   if (!instance) {
+    ethernetDevice = ethernetDeviceName;
     instance = new YouBot();
     instance->initializeEthercat();
   }
@@ -57,7 +58,7 @@ unsigned int YouBot::getNumberOfJoints() {
 YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
   // Bouml preserved body begin 000449F1
   if (jointNumber <= 0 || jointNumber > (this->Joints.size() + 1)) {
-    throw range_error("invalid Joint Number");
+    throw ExceptionOODL("Invalid Joint Number");
   }
 
   return Joints[jointNumber - 1];
@@ -113,15 +114,15 @@ YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
   // Bouml preserved body end 00041571
 }
 
-bool YouBot::initializeEthercat() {
+void YouBot::initializeEthercat() {
   // Bouml preserved body begin 000410F1
   {
     boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
-    ethercatMaster = new soem_ethercat_drivers::SoemMaster();
+    ethercatMaster = new EthercatMaster();
 
-    if (!ethercatMaster->init(ethernetDeviceName.c_str())) {
-      LOG(error) << "could not initialize Ethercat!";
-      return false;
+    if (!ethercatMaster->init(ethernetDevice.c_str())) {
+      throw ExceptionOODL("Could not initialize Ethercat at "+ethernetDevice);
+      return;
     }
 
     std::string desiredSlaveName = "TMCM-174";
@@ -130,9 +131,9 @@ bool YouBot::initializeEthercat() {
     YouBotSlaveMsg emptySlaveMsg;
 
     for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
-      printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
-              cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
-              ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+   //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
+   //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
+   //           ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
 
       actualSlaveName = ec_slave[cnt].name;
       if (actualSlaveName == desiredSlaveName && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
@@ -147,15 +148,23 @@ bool YouBot::initializeEthercat() {
 
     }
 
-    LOG(trace) << "Number of YouBot Joints found: " << nrOfSlaves;
+    if(nrOfSlaves > 0){
+      LOG(info) << "Number of YouBot Joints found: " << nrOfSlaves;
+    }else{
+      throw ExceptionOODL("No Ethercat slave could be found");
+      return;
+    }
 
     stopThread = false;
-
     threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
+  }
+  return;
+  // Bouml preserved body end 000410F1
+}
 
-
-
-    //Switch to Velocity control because of "Sinuskommutierung"
+void YouBot::initializeJoints() {
+  // Bouml preserved body begin 000464F1
+      //Switch to Velocity control because of "Sinuskommutierung"
     boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     JointVelocitySetpoint vel;
     vel.angularVelocity = 0 * radian_per_second;
@@ -170,10 +179,8 @@ bool YouBot::initializeEthercat() {
     //TODO: Auf Positionskontrolle setzen und NULLEN
 
     //TODO: Initilize Gripper
-
-
-  }
-  // Bouml preserved body end 000410F1
+    return;
+  // Bouml preserved body end 000464F1
 }
 
 bool YouBot::closeEthercat() {
@@ -233,4 +240,6 @@ void YouBot::updateSensorActorValues() {
   }
   // Bouml preserved body end 0003F771
 }
+
+std::string YouBot::ethernetDevice;
 
