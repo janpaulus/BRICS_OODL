@@ -6,7 +6,7 @@
 class ImageFormat
 {
 
- public:
+public:
 
      ImageFormat();
      ImageFormat(ImageFormat &format);
@@ -20,7 +20,11 @@ class ImageFormat
      
      bool setImageFormatColorModel(std::string &colorModel);
 
-  private:
+private:
+  
+     bool getListOfSupportedFormats();
+
+private:
      //format identifier is string describing color model/codec model, e.g. RGB, YUV, MJPEG etc
      std::string formatIdentifier;
      // fourcc(hex) representation of formatIdentifier
@@ -32,6 +36,8 @@ class ImageFormat
      //currently statically defined; will changed to dynamic array later
      unicap_rect_t listOfResolutions[40];
 
+     unicap_format_t listOfDeviceFormats[10];
+     int deviceFormatCounter;
      //number of possible image resolutions supported by the device;
      // this number and number of elements in listOfResolutions should be equal;
      //currently the latter is set statically and will be changed in the future.
@@ -51,6 +57,7 @@ class ImageFormat
      // amount of memory in bytes required by the chosen resolution and color model
      // widthxheightx(bpp/8.0)
      size_t buffer_size;
+     unicap_status_t   returnStatus;
 
 };
 

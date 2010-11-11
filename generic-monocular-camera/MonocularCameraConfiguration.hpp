@@ -22,7 +22,7 @@ public:
      bool getDeviceName(std::string &deviceId);
      bool getDeviceNodeID(std::string &deviceNodeId);
      bool getDevicePluginType(std::string &pluginName);
-     bool getDeviceFullInfoVector();
+//     bool getDeviceFullInfoVector();
 
      bool setCameraDeviceConfiguration(CameraDeviceConfiguration &cameradevconf);
      bool setColorExposureConfiguration(ColorExposureConfiguration &colorexpconf);
@@ -36,7 +36,7 @@ private:
      std::string deviceID;
      std::string deviceNodeID;
      std::string devicePluginType;
-     std::vector<std::string> deviceFullInfo;
+  //    std::vector<std::string> deviceFullInfo;
      ColorExposureConfiguration *colExpConfiguration;
      CameraDeviceConfiguration *devConfiguration;
 };

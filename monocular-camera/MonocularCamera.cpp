@@ -120,3 +120,14 @@ bool MonocularCamera::capture (Image2D &image)
   
     std::cout<<"In Monocular Camera capture"<<std::endl;
 }
+
+
+//Not a good design, a short term solution.
+//
+/*unicap_handle_t* MonocularCamera::getCameraHandle()
+{
+
+  return deviceHandle;
+
+}
+*/

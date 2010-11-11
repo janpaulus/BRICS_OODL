@@ -15,24 +15,25 @@ class ImageFormat;
 class MonocularCamera 
 {
 public:
-    MonocularCamera(int deviceNumber);
-    MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
-    MonocularCamera(MonocularCamera &camera);
-    MonocularCamera& operator= (const MonocularCamera &camera);
-    ~MonocularCamera();
+     MonocularCamera(int deviceNumber);
+     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
+     MonocularCamera(MonocularCamera &camera);
+     MonocularCamera& operator= (const MonocularCamera &camera);
+     ~MonocularCamera();
 
-    bool getConfiguration (MonocularCameraConfiguration &config);
-    bool setConfiguration (MonocularCameraConfiguration &config);
-    bool resetDevice ();
-    bool close ();
-    bool open ();
-    bool capture(Image2D &image);
+     bool getConfiguration (MonocularCameraConfiguration &config);
+//     unicap_handle_t* getCameraHandle();
+     bool setConfiguration (MonocularCameraConfiguration &config);
+     bool resetDevice ();
+     bool close ();
+     bool open ();
+     bool capture(Image2D &image);
 private:
-    MonocularCameraConfiguration *cameraConfig;
-    Image2D *image;
-    unicap_device_t *device;
-    unicap_handle_t *deviceHandle;
-    unicap_status_t isConnected;
+     MonocularCameraConfiguration *cameraConfig;
+     Image2D *image;
+     unicap_device_t *device;
+     unicap_handle_t *deviceHandle;
+     unicap_status_t isConnected;
 };
 
 
