@@ -16,7 +16,6 @@ DEPEND_ABI.ruby?=	ruby>=$(RUBY_VERSION)
 SYSTEM_SEARCH.ruby=	\
 	bin/ruby$(RUBY_VERSION) \
 	lib/ruby/$(RUBY_VERSION)/rubyunit.rb
-	
 
 SYSTEM_PKG.Linux.ruby=ruby$(RUBY_VERSION)
 
