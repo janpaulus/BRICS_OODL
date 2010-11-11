@@ -3,10 +3,9 @@
 
 namespace brics_oodl {
 
-  YouBot* YouBot::instance = 0;
-
-  YouBot::YouBot() {
-    // Bouml preserved body begin 00041171
+YouBot* YouBot::instance = 0;
+YouBot::YouBot() {
+  // Bouml preserved body begin 00041171
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
       ethercatMaster == NULL;
@@ -17,55 +16,58 @@ namespace brics_oodl {
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
 
-    // Bouml preserved body end 00041171
-  }
+  // Bouml preserved body end 00041171
+}
 
-  YouBot::~YouBot() {
-    // Bouml preserved body begin 000411F1
+YouBot::~YouBot() {
+  // Bouml preserved body begin 000411F1
     this->closeEthercat();
-    // Bouml preserved body end 000411F1
-  }
+  // Bouml preserved body end 000411F1
+}
 
-  YouBot& YouBot::getInstance(std::string ethernetDeviceName) {
-    // Bouml preserved body begin 00042F71
+YouBot& YouBot::getInstance(std::string ethernetDeviceName)
+{
+  // Bouml preserved body begin 00042F71
     if (!instance) {
       ethernetDevice = ethernetDeviceName;
       instance = new YouBot();
       instance->initializeEthercat();
+      instance->initializeJoints();
     }
     return *instance;
 
-    // Bouml preserved body end 00042F71
-  }
+  // Bouml preserved body end 00042F71
+}
 
-  void YouBot::destroy() {
-    // Bouml preserved body begin 00042FF1
+void YouBot::destroy()
+{
+  // Bouml preserved body begin 00042FF1
     if (instance) {
       delete instance;
     }
     instance = 0;
 
-    // Bouml preserved body end 00042FF1
-  }
+  // Bouml preserved body end 00042FF1
+}
 
-  unsigned int YouBot::getNumberOfJoints() {
-    // Bouml preserved body begin 00044A71
+unsigned int YouBot::getNumberOfJoints() {
+  // Bouml preserved body begin 00044A71
     return this->Joints.size();
-    // Bouml preserved body end 00044A71
-  }
+  // Bouml preserved body end 00044A71
+}
 
-  YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
-    // Bouml preserved body begin 000449F1
+YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
+  // Bouml preserved body begin 000449F1
     if (jointNumber <= 0 || jointNumber > (this->Joints.size() + 1)) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
     return Joints[jointNumber - 1];
-    // Bouml preserved body end 000449F1
-  }
+  // Bouml preserved body end 000449F1
+}
 
-  void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber) {
-    // Bouml preserved body begin 000414F1
+void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber) {
+  // Bouml preserved body begin 000414F1
 
     if (newDataFlagOne == true) {
       {
@@ -86,11 +88,11 @@ namespace brics_oodl {
       return;
     }
 
-    // Bouml preserved body end 000414F1
-  }
+  // Bouml preserved body end 000414F1
+}
 
-  YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
-    // Bouml preserved body begin 00041571
+YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
+  // Bouml preserved body begin 00041571
 
     YouBotSlaveMsg returnMsg;
 
@@ -110,11 +112,11 @@ namespace brics_oodl {
     }
 
     return returnMsg;
-    // Bouml preserved body end 00041571
-  }
+  // Bouml preserved body end 00041571
+}
 
-  void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber) {
-    // Bouml preserved body begin 00049D71
+void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber) {
+  // Bouml preserved body begin 00049D71
 
     if (newDataFlagOne == true) {
       {
@@ -135,11 +137,11 @@ namespace brics_oodl {
       return;
     }
 
-    // Bouml preserved body end 00049D71
-  }
+  // Bouml preserved body end 00049D71
+}
 
-  YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(unsigned int jointNumber) {
-    // Bouml preserved body begin 00049DF1
+YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(unsigned int jointNumber) {
+  // Bouml preserved body begin 00049DF1
 
     YouBotSlaveMailboxMsg returnMsg;
 
@@ -161,11 +163,11 @@ namespace brics_oodl {
     }
 
     return returnMsg;
-    // Bouml preserved body end 00049DF1
-  }
+  // Bouml preserved body end 00049DF1
+}
 
-  void YouBot::initializeEthercat() {
-    // Bouml preserved body begin 000410F1
+void YouBot::initializeEthercat() {
+  // Bouml preserved body begin 000410F1
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
       ethercatMaster = new EthercatMaster();
@@ -218,11 +220,24 @@ namespace brics_oodl {
       threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
     }
     return;
-    // Bouml preserved body end 000410F1
-  }
+  // Bouml preserved body end 000410F1
+}
 
-  void YouBot::initializeJoints() {
-    // Bouml preserved body begin 000464F1
+void YouBot::initializeJoints() {
+  // Bouml preserved body begin 000464F1
+
+    LOG(info) << "Initializing Joints";
+
+    //Configure Joint Parameters
+    YouBotJointConfiguration config;
+    config.setGearRatio(364.0 / 9405.0);
+    config.setEncoderTicksPerRound(4096);
+    config.setPositionReferenceToZero = true;
+
+    for (unsigned int i = 0; i < nrOfSlaves; i++) {
+      Joints[i].setConfiguration(config);
+    }
+
     //Switch to Velocity control because of "Sinuskommutierung"
     boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     JointVelocitySetpoint vel;
@@ -232,18 +247,19 @@ namespace brics_oodl {
       Joints[i].setData(vel, NON_BLOCKING);
     }
 
+    
+
 
     //TODO: Calibrate YouBot Manipulator
 
-    //TODO: Auf Positionskontrolle setzen und NULLEN
 
     //TODO: Initilize Gripper
     return;
-    // Bouml preserved body end 000464F1
-  }
+  // Bouml preserved body end 000464F1
+}
 
-  bool YouBot::closeEthercat() {
-    // Bouml preserved body begin 00041271
+bool YouBot::closeEthercat() {
+  // Bouml preserved body begin 00041271
     stopThread = true;
 
     threads.join_all();
@@ -253,11 +269,11 @@ namespace brics_oodl {
       if (ethercatMaster != NULL)
         delete ethercatMaster;
     }
-    // Bouml preserved body end 00041271
-  }
+  // Bouml preserved body end 00041271
+}
 
-  void YouBot::updateSensorActorValues() {
-    // Bouml preserved body begin 0003F771
+void YouBot::updateSensorActorValues() {
+  // Bouml preserved body begin 0003F771
 
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
@@ -352,10 +368,10 @@ namespace brics_oodl {
       }
 
     }
-    // Bouml preserved body end 0003F771
-  }
+  // Bouml preserved body end 0003F771
+}
 
-  std::string YouBot::ethernetDevice;
+std::string YouBot::ethernetDevice;
 
 
 } // namespace brics_oodl

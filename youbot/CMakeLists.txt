@@ -7,7 +7,7 @@ include_directories(
   ${CMAKE_HOME_DIRECTORY}
   ${Boost_INCLUDE_DIR}
   #for soem
-  ${CMAKE_HOME_DIRECTORY}/youbot/src
+ # ${CMAKE_HOME_DIRECTORY}/youbot/src
 )
 
 link_directories(
@@ -16,7 +16,7 @@ link_directories(
 )
 
 link_libraries(
-#  libsoem.a
+  libsoem.a
   boost_thread
   boost_date_time
   boost_system
@@ -24,7 +24,7 @@ link_libraries(
   boost_regex
   boost_log-mt
 #for soem
-pthread
+#pthread
 )
 
 SET(OODL_YOUBOT_SRC
@@ -37,6 +37,8 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripper.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematic.cpp
 )
 
 SET(SOEM_SRC
@@ -63,7 +65,7 @@ SET(OODL_YOUBOT_HEADERS
 ADD_EXECUTABLE(OODL_YOUBOT_test
   ${CMAKE_HOME_DIRECTORY}/youbot/applications/Test.cpp
   ${OODL_YOUBOT_SRC}
-${SOEM_SRC}
+# ${SOEM_SRC}
 )
 
 
