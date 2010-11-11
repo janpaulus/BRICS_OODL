@@ -1,7 +1,8 @@
+# robotpkg sydep for:		rubygems.mk
+# Created:			Michael Reckhaus 11.11.2010
+
 DEPEND_DEPTH:=   ${DEPEND_DEPTH}+
 RUBYGEMS_DEPEND_MK:= ${RUBYGEMS_DEPEND_MK}+
-
-RUBYGEMS_VERSION=1.8
 
 ifeq (+,$(DEPEND_DEPTH))
 DEPEND_PKG+=rubygems
@@ -11,12 +12,12 @@ ifeq (+,$(RUBYGEMS_DEPEND_MK))
 
 PREFER.rubygems?=	system
 DEPEND_USE+=		rubygems
-DEPEND_ABI.rubygems?=	rubygems>=$(RUBYGEMS_VERSION)
+DEPEND_ABI.rubygems?=	rubygems>=1.8
 
 SYSTEM_SEARCH.rubygems=		\
-	/bin/gem$(RUBYGEMS_VERSION)
+	/usr/bin/gem
 
-SYSTEM_PKG.Linux.rubygems=rubygems$(RUBYGEMS_VERSION)
+SYSTEM_PKG.Linux.rubygems=rubygems
 
 endif 
 
