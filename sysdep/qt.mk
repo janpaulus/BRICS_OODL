@@ -10,12 +10,12 @@ DEPEND_PKG+=		qt
 endif
 
 ifeq (+,$(QT_DEPEND_MK))
+
 PREFER.qt?=	system
 
 DEPEND_USE+=		qt
 
 DEPEND_ABI.qt?=	qt>=4.6.2
-DEPEND_DIR.qt?=	../../brics/qt
 
 SYSTEM_SEARCH.qt=\
    'include/qt4/Qt/qcoreevent.h' \
