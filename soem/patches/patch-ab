@@ -1,0 +1,104 @@
+*** src/nicdrv.c	2010-04-10 16:06:30.000000000 +0200
+--- src/nicdrv_pached.c	2010-11-11 10:41:58.248672500 +0100
+***************
+*** 65,73 ****
+   * This layer if fully transparent for the higher layers.
+   */
+  
+! #include <sys/types.h>
+! #include <sys/ioctl.h>
+! #include <net/if.h> 
+  #include <sys/socket.h> 
+  #include <unistd.h>
+  #include <sys/time.h> 
+--- 65,73 ----
+   * This layer if fully transparent for the higher layers.
+   */
+  
+! #include <sys/types.h>
+! #include <sys/ioctl.h>
+! #include <net/if.h> 
+  #include <sys/socket.h> 
+  #include <unistd.h>
+  #include <sys/time.h> 
+***************
+*** 107,113 ****
+  	int			(*rxbufstat)[EC_MAXBUF];
+  	/** received MAC source address (middle word) */
+  	int			(*rxsa)[EC_MAXBUF];
+! } ec_stackT;	
+  
+  /** primary rx buffers */
+  ec_bufT ec_rxbuf[EC_MAXBUF];
+--- 107,113 ----
+  	int			(*rxbufstat)[EC_MAXBUF];
+  	/** received MAC source address (middle word) */
+  	int			(*rxsa)[EC_MAXBUF];
+! } ec_stackT;	
+  
+  /** primary rx buffers */
+  ec_bufT ec_rxbuf[EC_MAXBUF];
+***************
+*** 319,325 ****
+   */
+  void ec_setbufstat(uint8 idx, int bufstat)
+  {
+!     ec_rxbufstat[idx] = bufstat;
+  	ec_rxbufstat2[idx] = bufstat;
+  }
+  
+--- 319,325 ----
+   */
+  void ec_setbufstat(uint8 idx, int bufstat)
+  {
+!     ec_rxbufstat[idx] = bufstat;
+  	ec_rxbufstat2[idx] = bufstat;
+  }
+  
+***************
+*** 458,478 ****
+  				}
+  				else 
+  				{
+! 					/* check if index exist? */
+  					if (idxf < EC_MAXBUF) 
+  					{
+  						rxbuf = &(*stack->rxbuf)[idxf];
+! 						/* put it in the buffer array (strip ethernet header) */
+  						memcpy(rxbuf, &(*stack->tempbuf)[ETH_HEADERSIZE], (*stack->txbuflength)[idxf] - ETH_HEADERSIZE);
+! 						/* mark as received */
+  						(*stack->rxbufstat)[idxf] = EC_BUF_RCVD;
+  						(*stack->rxsa)[idxf] = ntohs(ehp->sa1);
+  					}
+  					else 
+  					{
+! 						/* strange things happend */
+  						ec_errcnt++;
+  					}
+  				}
+  			}
+  		}
+--- 458,480 ----
+  				}
+  				else 
+  				{
+!         /*
+! 					// check if index exist? 
+  					if (idxf < EC_MAXBUF) 
+  					{
+  						rxbuf = &(*stack->rxbuf)[idxf];
+! 						// put it in the buffer array (strip ethernet header) 
+  						memcpy(rxbuf, &(*stack->tempbuf)[ETH_HEADERSIZE], (*stack->txbuflength)[idxf] - ETH_HEADERSIZE);
+! 						// mark as received 
+  						(*stack->rxbufstat)[idxf] = EC_BUF_RCVD;
+  						(*stack->rxsa)[idxf] = ntohs(ehp->sa1);
+  					}
+  					else 
+  					{
+! 						// strange things happend 
+  						ec_errcnt++;
+  					}
++         */
+  				}
+  			}
+  		}
