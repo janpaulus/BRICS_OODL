@@ -25,7 +25,7 @@ include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
 include ../../brics/cgal/depend.mk
 include ../../math/eigen2/depend.mk
-include ../../brics/xerces-c/depend.mk
+include ../../mk/sysdep/xerces-c.mk
 include ../sysdep/openscenegraph.mk
 include ../sysdep/cppunit.mk
 include ../../mk/sysdep/cmake.mk
