@@ -25,7 +25,7 @@ include ../../mk/sysdep/xerces-c.mk
 #include ../../brics/collada-dom/depend.mk
 include ../../brics/sysdep/qt.mk
 include ../../brics/coin3d/depend.mk
-include ../../brics/soqt/depend.mk
+include ../../mk/sysdep/libsoqt.mk
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
 include ../../mk/sysdep/cmake.mk
