@@ -15,7 +15,7 @@ YouBot::YouBot() {
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
-    if(!configfile.load("youbot/config/youbot-configfile.cfg"))
+    if (!configfile.load("youbot/config/youbot-configfile.cfg"))
       throw ExceptionOODL("config/youbot-configfile.cfg file no found");
 
 
@@ -36,6 +36,7 @@ YouBot& YouBot::getInstance(std::string ethernetDeviceName)
       instance = new YouBot();
       instance->initializeEthercat();
       instance->initializeJoints();
+      instance->initializeKinematic();
     }
     return *instance;
 
@@ -67,6 +68,25 @@ YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
 
     return Joints[jointNumber - 1];
   // Bouml preserved body end 000449F1
+}
+
+void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
+  // Bouml preserved body begin 0004DD71
+
+
+    std::vector<quantity<angular_velocity> > wheelVelocities;
+    JointVelocitySetpoint setVel;
+
+    YouBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+    setVel.angularVelocity = wheelVelocities[0];
+    this->getJoint(1).setData(setVel, NON_BLOCKING);
+    setVel.angularVelocity = wheelVelocities[1];
+    this->getJoint(2).setData(setVel, NON_BLOCKING);
+    setVel.angularVelocity = wheelVelocities[2];
+    this->getJoint(3).setData(setVel, NON_BLOCKING);
+    setVel.angularVelocity = wheelVelocities[3];
+    this->getJoint(4).setData(setVel, NON_BLOCKING);
+  // Bouml preserved body end 0004DD71
 }
 
 void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber) {
@@ -231,13 +251,13 @@ void YouBot::initializeJoints() {
   // Bouml preserved body begin 000464F1
 
     LOG(info) << "Initializing Joints";
-    
+
     //Configure Joint Parameters
     std::string jointName;
 
     for (unsigned int i = 0; i < nrOfSlaves; i++) {
       std::stringstream jointNameStream;
-      jointNameStream << "Joint " << i+1;
+      jointNameStream << "Joint " << i + 1;
       jointName = jointNameStream.str();
       YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
@@ -257,7 +277,7 @@ void YouBot::initializeJoints() {
       Joints[i].setData(vel, NON_BLOCKING);
     }
 
-    
+
 
 
     //TODO: Calibrate YouBot Manipulator
@@ -266,6 +286,22 @@ void YouBot::initializeJoints() {
     //TODO: Initilize Gripper
     return;
   // Bouml preserved body end 000464F1
+}
+
+void YouBot::initializeKinematic() {
+  // Bouml preserved body begin 0004DDF1
+    FourSwedishWheelOmniBaseKinematicConfiguration kinematicConfig;
+
+    //read the kinematics parameter from a config file
+    configfile.setSection("YouBotKinematic");
+    kinematicConfig.RotationRatio = configfile.getIntValue("RotationRatio");
+    kinematicConfig.SlideRatio = configfile.getIntValue("SlideRatio");
+    kinematicConfig.lengthBetweenFrontAndRearWheels = configfile.getDoubleValue("LengthBetweenFrontAndRearWheels_[meter]") * meter;
+    kinematicConfig.lengthBetweenFrontWheels = configfile.getDoubleValue("LengthBetweenFrontWheels_[meter]") * meter;
+    kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
+
+    YouBotBaseKinematic.setConfiguration(kinematicConfig);
+  // Bouml preserved body end 0004DDF1
 }
 
 bool YouBot::closeEthercat() {
@@ -310,8 +346,8 @@ void YouBot::updateSensorActorValues() {
                 mailboxBufferSend[6] = firstMailboxBufferVector[i].stctOutput.value >> 8;
                 mailboxBufferSend[7] = firstMailboxBufferVector[i].stctOutput.value & 0xff;
                 ec_mbxsend(i, &mailboxBufferSend, mailboxSendTimeout);
-                  newMailboxDataFlagOne[i] = false;
-                
+                newMailboxDataFlagOne[i] = false;
+
                 if (ec_mbxreceive(i, &mailboxBufferReceive, mailboxSendTimeout)) {
                   LOG(trace) << "received mailbox message buffer one";
                   firstMailboxBufferVector[i].stctOutput.moduleAddress = mailboxBufferReceive[0];
@@ -349,8 +385,8 @@ void YouBot::updateSensorActorValues() {
                 mailboxBufferSend[6] = secondMailboxBufferVector[i].stctOutput.value >> 8;
                 mailboxBufferSend[7] = secondMailboxBufferVector[i].stctOutput.value & 0xff;
                 ec_mbxsend(i, &mailboxBufferSend, mailboxSendTimeout);
-                  newMailboxDataFlagTwo[i] = false;
-                
+                newMailboxDataFlagTwo[i] = false;
+
 
 
                 if (ec_mbxreceive(i, &mailboxBufferReceive, mailboxSendTimeout)) {

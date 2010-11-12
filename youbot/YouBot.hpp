@@ -14,6 +14,7 @@
 #include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotJoint.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
+#include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
 
 extern "C"{
 #include <ethercattype.h>
@@ -44,6 +45,10 @@ friend class YouBotJoint;
 
     YouBotJoint& getJoint(unsigned int jointNumber);
 
+    void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
+
+    FourSwedishWheelOmniBaseKinematic YouBotBaseKinematic;
+
 
   private:
     void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
@@ -57,6 +62,8 @@ friend class YouBotJoint;
     void initializeEthercat();
 
     void initializeJoints();
+
+    void initializeKinematic();
 
     bool closeEthercat();
 

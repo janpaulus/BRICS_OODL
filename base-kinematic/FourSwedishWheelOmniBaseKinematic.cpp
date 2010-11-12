@@ -89,7 +89,6 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
     wheelVelocities[2] = -RadPerSec_FromX - RadPerSec_FromY + RadPerSec_FromTheta;
     wheelVelocities[3] = RadPerSec_FromX - RadPerSec_FromY + RadPerSec_FromTheta;
 
-    LOG(trace) << wheelVelocities[0];
 
     return;
 

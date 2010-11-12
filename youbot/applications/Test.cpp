@@ -47,29 +47,11 @@ int main() {
     YouBotJointConfiguration config;
     setangle.angle = 2.0 * M_PI *radian;
     setVel.angularVelocity = 0 * M_PI *radian_per_second;
-    FourSwedishWheelOmniBaseKinematic kinematic;
 
-
-    FourSwedishWheelOmniBaseKinematicConfiguration kinematicConfig;
-
-    //read the kinematics parameter from a config file
-    rude::Config configfile;
-    if (!configfile.load("youbot/config/youbot-configfile.cfg"))
-      throw ExceptionOODL("config/youbot-configfile.cfg file no found");
-    configfile.setSection("YouBotKinematic");
-    kinematicConfig.RotationRatio = configfile.getIntValue("RotationRatio");
-    kinematicConfig.SlideRatio = configfile.getIntValue("SlideRatio");
-    kinematicConfig.lengthBetweenFrontAndRearWheels = configfile.getDoubleValue("LengthBetweenFrontAndRearWheels_[meter]") * meter;
-    kinematicConfig.lengthBetweenFrontWheels = configfile.getDoubleValue("LengthBetweenFrontWheels_[meter]") * meter;
-    kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
-
-    kinematic.setConfiguration(kinematicConfig);
-
-    std::vector<quantity<angular_velocity> > wheelVelocities;
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
-    kinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+
 
     while (running) {
 
@@ -84,14 +66,12 @@ int main() {
                 << " Current: " << current.current
                 << std::endl;
       }
-      setVel.angularVelocity = wheelVelocities[0];
-      youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
-      setVel.angularVelocity = wheelVelocities[1];
-      youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
-      setVel.angularVelocity = wheelVelocities[2];
-      youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
-      setVel.angularVelocity = wheelVelocities[3];
-      youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+
+  //    youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
+  //    youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
+  //    youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
+  //    youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+      youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 
 
       // youbot4.getJoint(3).getConfiguration(config);
