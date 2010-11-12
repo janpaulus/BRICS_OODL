@@ -38,7 +38,7 @@ class YouBotJointConfiguration {
 
     std::string JointName;
 
-    bool setPositionReferenceToZero;
+    bool SetPositionReferenceToZero;
 
 
   private:

@@ -34,7 +34,7 @@ void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
 void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C0F1
     this->config = configuration;
-    if (config.setPositionReferenceToZero) {
+    if (config.SetPositionReferenceToZero) {
       this->MessageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
       this->MessageBuffer.stctOutput.positionOrSpeed = 0;
       YouBot::getInstance().setMsgBuffer(this->MessageBuffer, this->jointNumber);

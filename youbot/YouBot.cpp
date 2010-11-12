@@ -263,7 +263,7 @@ void YouBot::initializeJoints() {
       configfile.setSection(jointName.c_str());
       config.setGearRatio(configfile.getDoubleValue("GearRatio"));
       config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
+      config.SetPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
 
       Joints[i].setConfiguration(config);
     }

@@ -30,6 +30,7 @@ int main() {
   signal(SIGTERM, sigintHandler);
   signal(SIGSTOP, sigintHandler);
   signal(SIGTSTP, sigintHandler);
+  signal(SIGKILL, sigintHandler);
 
   try {
 
@@ -50,7 +51,7 @@ int main() {
 
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
-    quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
+    quantity<si::angular_velocity> angularVelocity = 0.2 * radian_per_second;
 
 
     while (running) {

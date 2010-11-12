@@ -20,7 +20,7 @@ YouBotJointConfiguration::YouBotJointConfiguration(const YouBotJointConfiguratio
     this->JointName = source.JointName;
     this->ValidRanges = source.ValidRanges;
     this->EncoderTicksPerRound = source.EncoderTicksPerRound;
-    this->setPositionReferenceToZero = source.setPositionReferenceToZero;
+    this->SetPositionReferenceToZero = source.SetPositionReferenceToZero;
   // Bouml preserved body end 0004B971
 }
 
@@ -30,7 +30,7 @@ YouBotJointConfiguration & YouBotJointConfiguration::operator=(const YouBotJoint
     this->JointName = source.JointName;
     this->ValidRanges = source.ValidRanges;
     this->EncoderTicksPerRound = source.EncoderTicksPerRound;
-    this->setPositionReferenceToZero = source.setPositionReferenceToZero;
+    this->SetPositionReferenceToZero = source.SetPositionReferenceToZero;
   // Bouml preserved body end 0004B9F1
 }
 
