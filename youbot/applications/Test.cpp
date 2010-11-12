@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
+#include "rude/config.h"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "generic-joint/JointData.hpp"
 #include "youbot/YouBot.hpp"
@@ -17,7 +18,7 @@ bool running = true;
 void sigintHandler(int signal) {
   running = false;
 
-   std::cout << " Interrupt!" << std::endl;
+  std::cout << " Interrupt!" << std::endl;
 
 }
 
@@ -48,13 +49,19 @@ int main() {
     setVel.angularVelocity = 0 * M_PI *radian_per_second;
     FourSwedishWheelOmniBaseKinematic kinematic;
 
+
     FourSwedishWheelOmniBaseKinematicConfiguration kinematicConfig;
 
-    kinematicConfig.RotationRatio = 1;
-    kinematicConfig.SlideRatio = 1;
-    kinematicConfig.lengthBetweenFrontAndRearWheels = 0.47 * meter;
-    kinematicConfig.lengthBetweenFrontWheels = 0.3 * meter;
-    kinematicConfig.wheelRadius = 0.0475 * meter;
+    //read the kinematics parameter from a config file
+    rude::Config configfile;
+    if (!configfile.load("youbot/config/youbot-configfile.cfg"))
+      throw ExceptionOODL("config/youbot-configfile.cfg file no found");
+    configfile.setSection("YouBotKinematic");
+    kinematicConfig.RotationRatio = configfile.getIntValue("RotationRatio");
+    kinematicConfig.SlideRatio = configfile.getIntValue("SlideRatio");
+    kinematicConfig.lengthBetweenFrontAndRearWheels = configfile.getDoubleValue("LengthBetweenFrontAndRearWheels_[meter]") * meter;
+    kinematicConfig.lengthBetweenFrontWheels = configfile.getDoubleValue("LengthBetweenFrontWheels_[meter]") * meter;
+    kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
 
     kinematic.setConfiguration(kinematicConfig);
 
@@ -62,7 +69,7 @@ int main() {
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
-    kinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity,transversalVelocity,angularVelocity, wheelVelocities);
+    kinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
 
     while (running) {
 

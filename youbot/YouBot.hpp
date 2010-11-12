@@ -3,8 +3,10 @@
 
 
 #include <vector>
+#include <sstream>
 #include <string>
 #include <boost/thread.hpp>
+#include "rude/config.h"
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
 #include "generic/ExceptionOODL.hpp"
@@ -116,6 +118,8 @@ friend class YouBotJoint;
     std::vector<bool> newMailboxInputDataFlagOne;
 
     std::vector<bool> newMailboxInputDataFlagTwo;
+
+    rude::Config configfile;
 
 };
 

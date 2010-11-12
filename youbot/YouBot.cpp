@@ -15,6 +15,9 @@ YouBot::YouBot() {
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
+    if(!configfile.load("youbot/config/youbot-configfile.cfg"))
+      throw ExceptionOODL("config/youbot-configfile.cfg file no found");
+
 
   // Bouml preserved body end 00041171
 }
@@ -168,6 +171,7 @@ YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(unsigned int jointNumber) {
 
 void YouBot::initializeEthercat() {
   // Bouml preserved body begin 000410F1
+
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
       ethercatMaster = new EthercatMaster();
@@ -227,14 +231,20 @@ void YouBot::initializeJoints() {
   // Bouml preserved body begin 000464F1
 
     LOG(info) << "Initializing Joints";
-
+    
     //Configure Joint Parameters
-    YouBotJointConfiguration config;
-    config.setGearRatio(364.0 / 9405.0);
-    config.setEncoderTicksPerRound(4096);
-    config.setPositionReferenceToZero = true;
+    std::string jointName;
 
     for (unsigned int i = 0; i < nrOfSlaves; i++) {
+      std::stringstream jointNameStream;
+      jointNameStream << "Joint " << i+1;
+      jointName = jointNameStream.str();
+      YouBotJointConfiguration config;
+      configfile.setSection(jointName.c_str());
+      config.setGearRatio(configfile.getDoubleValue("GearRatio"));
+      config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
+      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
+
       Joints[i].setConfiguration(config);
     }
 
