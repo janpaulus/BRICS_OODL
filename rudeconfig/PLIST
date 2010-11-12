@@ -1,0 +1,6 @@
+@comment Fri Nov 12 14:26:30 CET 2010
+include/rude/config.h
+lib/librudeconfig.la
+lib/librudeconfig.a
+lib/librudeconfig.so.3.2.1
+man/man3/rudeconfig.3

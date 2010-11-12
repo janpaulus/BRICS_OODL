@@ -18,7 +18,8 @@ DEPEND_ABI.rudeconfig?=	rudeconfig>=2.1
 DEPEND_DIR.rudeconfig?=	../../brics/rudeconfig
 
 SYSTEM_SEARCH.rudeconfig=\
-  include/urg/UrgCtrl.h
+  include/rude/config.h \
+  lib/librudeconfig.la
 endif
 
 DEPEND_DEPTH:=		${DEPEND_DEPTH:+=}
