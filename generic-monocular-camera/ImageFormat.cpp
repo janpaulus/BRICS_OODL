@@ -3,23 +3,24 @@
 
 ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), numberOfResolutions(0),currentResolution(NULL), 
                            currentFormat(NULL), deviceFormatCounter(0), formatIdentifier(""), bitsPerPixel(8), 
-                           fourcc(0), bufferSize(0), currentBufferType(0)
+                           fourcc(0), bufferSize(0), currentBufferType(UNICAP_BUFFER_TYPE_USER), deviceHandle(NULL)
 {
   std::cout  << "Creating ImageFormat without args"<< std::endl;
 }
 
-ImageFormat::ImageFormat(std::string formatIdentifier)
+ImageFormat::ImageFormat(std::string formatIdentifier): returnStatus(STATUS_FAILURE), numberOfResolutions(0),currentResolution(NULL), 
+                                                        currentFormat(NULL), deviceFormatCounter(0), bitsPerPixel(8), fourcc(0), 
+                                                        bufferSize(0), currentBufferType(UNICAP_BUFFER_TYPE_USER), deviceHandle(NULL)
 {
   this->formatIdentifier = formatIdentifier;
   std::cout  << "Creating ImageFormat without formatIdentifier"<< std::endl;
-
 }
 
-ImageFormat::ImageFormat(unicap_handle_t *handle)
+ImageFormat::ImageFormat(unicap_handle_t *handle): returnStatus(STATUS_FAILURE), numberOfResolutions(0),currentResolution(NULL), 
+                                                   currentFormat(NULL), deviceFormatCounter(0), formatIdentifier(""), bitsPerPixel(8), 
+                                                   fourcc(0), bufferSize(0), currentBufferType(UNICAP_BUFFER_TYPE_USER)
 {
-
   deviceHandle = handle;
-
 }
 
 

@@ -25,12 +25,12 @@ MonocularCameraConfiguration::MonocularCameraConfiguration(unicap_device_t *devi
      propertyConfig = new unicap_property_t;
 }
 
-MonocularCameraConfiguration::MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig) 
+MonocularCameraConfiguration::MonocularCameraConfiguration( MonocularCameraConfiguration &cameraConfig) 
 {
      std::cout << "Creating Copy of MonocularCameraConfiguration" << std::endl;
 }
 
-MonocularCameraConfiguration& MonocularCameraConfiguration::operator=(MonocularCameraConfiguration &cameraConfig) 
+MonocularCameraConfiguration& MonocularCameraConfiguration::operator=( MonocularCameraConfiguration &cameraConfig) 
 {
      if (&cameraConfig != this) {
           std::cout << "Assigning MonocularCameraConfiguration" << std::endl;

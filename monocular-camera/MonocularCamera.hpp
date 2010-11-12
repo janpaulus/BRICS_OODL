@@ -21,7 +21,7 @@ public:
      ~MonocularCamera();
 
      bool getConfiguration (MonocularCameraConfiguration &config);
-     bool setConfiguration (MonocularCameraConfiguration &config);
+     bool setConfiguration ( MonocularCameraConfiguration &config);
      bool getImageFormat(ImageFormat &format);
      bool setImageFormat(ImageFormat &format);
 

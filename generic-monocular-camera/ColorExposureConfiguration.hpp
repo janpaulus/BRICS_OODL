@@ -13,8 +13,8 @@ class ColorExposureConfiguration
 public:
      ColorExposureConfiguration();
      ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     ColorExposureConfiguration(const ColorExposureConfiguration &colorconfig);
-     ColorExposureConfiguration& operator=(const ColorExposureConfiguration &colorconfig);
+     ColorExposureConfiguration( ColorExposureConfiguration &colorconfig);
+     ColorExposureConfiguration& operator=( ColorExposureConfiguration &colorconfig);
      ~ColorExposureConfiguration();
   
      bool getHueValue(double &hue); 

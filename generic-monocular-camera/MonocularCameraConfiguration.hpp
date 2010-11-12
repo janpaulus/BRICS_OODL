@@ -13,8 +13,8 @@ class MonocularCameraConfiguration
 public:
      MonocularCameraConfiguration();
      MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     MonocularCameraConfiguration(const MonocularCameraConfiguration &cameraConfig);
-     MonocularCameraConfiguration& operator= (const MonocularCameraConfiguration &cameraConfig);
+     MonocularCameraConfiguration( MonocularCameraConfiguration &cameraConfig);
+     MonocularCameraConfiguration& operator= ( MonocularCameraConfiguration &cameraConfig);
      ~MonocularCameraConfiguration();
 
      bool getDeviceName(std::string &deviceId);

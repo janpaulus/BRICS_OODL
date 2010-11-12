@@ -110,7 +110,7 @@ bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config)
 
 
 //bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config, Errors &error)
-bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
+bool MonocularCamera::setConfiguration ( MonocularCameraConfiguration &config)
 {
     std::cout<<"In Monocular Camera setConfiguration"<<std::endl;
     *cameraConfig = config;

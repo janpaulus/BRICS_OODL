@@ -6,9 +6,11 @@ SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 SET(SOURCES 
     ${CMAKE_HOME_DIRECTORY}/monocular-camera/test.cpp 
 	${CMAKE_HOME_DIRECTORY}/monocular-camera/MonocularCamera.cpp
-#	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/CameraDeviceConfiguration.cpp 
-#	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/ColorExposureConfiguration.cpp
-#	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/MonocularCameraConfiguration.cpp
+	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/CameraDeviceConfiguration.cpp 
+	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/ColorExposureConfiguration.cpp
+	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/MonocularCameraConfiguration.cpp
+	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/ImageFormat.cpp
+	${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/Image2dData.cpp
 )
 
 
