@@ -44,7 +44,7 @@ void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration
 
 void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C171
-    YouBotSlaveMailboxMsg msg;
+ /*   YouBotSlaveMailboxMsg msg;
     msg.stctOutput.commandNumber = 5;
     msg.stctOutput.moduleAddress = 0;
     msg.stctOutput.motorNumber = 0;
@@ -58,7 +58,7 @@ void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
             << "moduleAddress " << msg.stctInput.moduleAddress
             << "replyAddress " << msg.stctInput.replyAddress
             << "status " << msg.stctInput.status
-            << "value " << msg.stctInput.value;
+            << "value " << msg.stctInput.value;*/
     configuration = this->config;
 
   // Bouml preserved body end 0003C171
