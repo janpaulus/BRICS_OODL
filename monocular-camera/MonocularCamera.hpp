@@ -5,32 +5,34 @@
 //#include "../generic/Logger.hpp"
 #include "../generic/Units.hpp"
 #include "../generic-monocular-camera/MonocularCameraConfiguration.hpp"
-#include "../generic-monocular-camera/Image2D.hpp"
+#include "../generic-monocular-camera/Image2dData.hpp"
+#include "../generic-monocular-camera/ImageFormat.hpp"
 #include <unicap.h>
 #include <iostream>
 
-class Image2dData;
-class ImageFormat;
 
 class MonocularCamera 
 {
 public:
      MonocularCamera(int deviceNumber);
-     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
      MonocularCamera(MonocularCamera &camera);
+     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
      MonocularCamera& operator= (const MonocularCamera &camera);
      ~MonocularCamera();
 
      bool getConfiguration (MonocularCameraConfiguration &config);
-//     unicap_handle_t* getCameraHandle();
      bool setConfiguration (MonocularCameraConfiguration &config);
-     bool resetDevice ();
-     bool close ();
+     bool getImageFormat(ImageFormat &format);
+     bool setImageFormat(ImageFormat &format);
+
+     bool capture(/*int frames*/); // adding frames here could be good, then a user does not have to bother about building capture loops.
      bool open ();
-     bool capture(Image2D &image);
+     bool close ();
+
 private:
      MonocularCameraConfiguration *cameraConfig;
-     Image2D *image;
+     Image2dData *imagedata;
+     ImageFormat *format;
      unicap_device_t *device;
      unicap_handle_t *deviceHandle;
      unicap_status_t isConnected;

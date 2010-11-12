@@ -31,6 +31,13 @@ public:
     // Constructor
 
     YouBotSlaveMsg() {
+        stctOutput.controllerMode = 0;
+        stctOutput.positionOrSpeed = 0;
+        stctInput.actualCurrent = 0;
+        stctInput.actualPosition = 0;
+        stctInput.actualVelocity = 0;
+        stctInput.driverTemperature = 0;
+        stctInput.errorFlags = 0;
     }
 
     // Copy-Constructor
@@ -58,56 +65,6 @@ public:
     }
 };
 
-class YouBotHeaderMsg {
-public:
-
-    //    struct outputbuffer; master view
-
-    struct headOutputBuffer {
-        uint8 cmd;
-        uint32 value;
-    } stctOutput;
-
-    //    struct inputbuffer; master view
-
-    struct headInputBuffer {
-        uint32 slaveCount;
-        float xPos;
-        float yPos;
-        float thetaPos;
-    } stctInput;
-
-    timeval timestamp;
-
-    // Constructor
-
-    YouBotHeaderMsg() {
-    }
-
-    // Copy-Constructor
-
-    YouBotHeaderMsg(const YouBotHeaderMsg &copy) {
-        stctOutput = copy.stctOutput;
-        stctInput = copy.stctInput;
-    }
-
-    // Destructor
-
-    ~YouBotHeaderMsg() {
-    }
-
-    // assignment operator
-
-    YouBotHeaderMsg & operator=(const YouBotHeaderMsg &copy) {
-        if (this == &copy)
-            return *this;
-
-        stctOutput = copy.stctOutput;
-        stctInput = copy.stctInput;
-
-        return *this;
-    }
-};
 
 
 #endif	/* _YOUBOT_SLAVE_MESSAGE_H */

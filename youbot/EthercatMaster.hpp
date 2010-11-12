@@ -13,7 +13,6 @@ extern "C" {
 #include <ethercattype.h>
 #include <ethercatmain.h>
 }
-
 #include <vector>
 #include "generic/ExceptionOODL.hpp"
 #include "generic/Logger.hpp"

@@ -4,9 +4,11 @@ class Image2dData
 {
   public:
   Image2dData();
+  Image2dData(int& width, int& height);
   ~Image2dData();
  
  private:
+  int bufferSize;
   char *buffer;
 
 };

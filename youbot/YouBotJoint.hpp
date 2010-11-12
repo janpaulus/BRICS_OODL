@@ -11,7 +11,9 @@
 #include "generic-joint/Joint.hpp"
 #include "generic-joint/JointData.hpp"
 #include "generic-joint/JointConfiguration.hpp"
+#include "youbot/YouBotJointConfiguration.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
+#include "youbot/YouBotSlaveMailboxMsg.hpp"
 
 namespace brics_oodl {
 
@@ -47,31 +49,37 @@ class YouBotJoint : public Joint {
 
     void getConfiguration(JointConfiguration& configuration);
 
+    void setConfiguration(const YouBotJointConfiguration& configuration);
+
+    void getConfiguration(YouBotJointConfiguration& configuration);
+
     virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode);
-
-    void setData(const JointAngleSetpoint& data, SyncMode communicationMode);
-
-    void setData(const JointVelocitySetpoint& data, SyncMode communicationMode);
 
     virtual void getData(JointData& data);
 
-    virtual void getData(JointSensedTemperature& data);
+    void setData(const JointAngleSetpoint& data, SyncMode communicationMode);
 
     virtual void getData(JointSensedAngle& data);
 
+    void setData(const JointVelocitySetpoint& data, SyncMode communicationMode);
+
     virtual void getData(JointSensedVelocity& data);
+
+    virtual void getData(JointSensedTemperature& data);
 
     virtual void getData(JointSensedCurrent& data);
 
 
   private:
+    void parseYouBotErrorFlags();
+
     unsigned int jointNumber;
 
     YouBotSlaveMsg MessageBuffer;
 
-    JointConfiguration configuration;
+    YouBotSlaveMailboxMsg MailboxMsgBuffer;
 
-    void parseYouBotErrorFlags();
+    YouBotJointConfiguration config;
 
 };
 

@@ -32,30 +32,37 @@ ENDIF(NOT DEFINED UNICAP_PATH)
 
 IF(DEFINED SOEM_PATH)
   link_directories(${SOEM_PATH}/lib)
-  include_directories(${SOEM_PATH}/include/soem)
+  include_directories(${SOEM_PATH}/include/soem/src)
   MESSAGE(STATUS "SOEM_PATH= ${SOEM_PATH}")
 ENDIF(DEFINED SOEM_PATH)
 
 IF(NOT DEFINED SOEM_PATH)
   link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem)
+  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem/src)
 ENDIF(NOT DEFINED SOEM_PATH)
 
 
+IF(DEFINED RUDECONFIG_PATH)
+  link_directories(${RUDECONFIG_PATH}/lib)
+  include_directories(${RUDECONFIG_PATH}/include)
+  MESSAGE(STATUS "RUDECONFIG_PATH= ${RUDECONFIG_PATH}")
+ENDIF(DEFINED RUDECONFIG_PATH)
+
+IF(NOT DEFINED RUDECONFIG_PATH)
+  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
+  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include)
+ENDIF(NOT DEFINED RUDECONFIG_PATH)
+
 
 IF(NOT DEFINED SELECTED_DRIVER)
-
 #  add_subdirectory(hokuyo-urg)
 #  add_subdirectory(sick-lms-2xx)
 #  add_subdirectory(sick-ld)
 #  add_subdirectory(sick-s300)
-#add_subdirectory(youbot)
- ADD_SUBDIRECTORY(monocular-camera)
-
- ADD_SUBDIRECTORY(generic-monocular-camera)
-  
- # add_subdirectory(mesaswissranger)
- # add_subdirectory(pmdcamcube)
+   add_subdirectory(youbot)
+#  add_subdirectory(monocular-camera)
+#  add_subdirectory(mesa-swissranger)
+#  add_subdirectory(pmd-camcube)
 ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 

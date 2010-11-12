@@ -5,18 +5,29 @@
 #include <vector>
 #include "generic/Units.hpp"
 #include "generic-joint/JointData.hpp"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/ExceptionOODL.hpp"
 
 namespace brics_oodl {
 
 class JointConfiguration {
   public:
-    double GearRatio;
+    JointConfiguration();
+
+    virtual ~JointConfiguration();
+
+    double getGearRatio() const;
+
+    void setGearRatio(double ratio);
 
     std::vector<JointDataRange> ValidRanges;
 
+    std::string JointName;
+
 
   private:
-    std::string JointName;
+    double GearRatio;
 
 };
 

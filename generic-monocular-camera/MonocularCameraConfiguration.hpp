@@ -13,30 +13,28 @@ class MonocularCameraConfiguration
 public:
      MonocularCameraConfiguration();
      MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-     MonocularCameraConfiguration(MonocularCameraConfiguration &cameraConfig);
-     MonocularCameraConfiguration& operator= (MonocularCameraConfiguration &cameraConfig);
+     MonocularCameraConfiguration(const MonocularCameraConfiguration &cameraConfig);
+     MonocularCameraConfiguration& operator= (const MonocularCameraConfiguration &cameraConfig);
      ~MonocularCameraConfiguration();
 
-     CameraDeviceConfiguration* getCameraDeviceConfiguration();
-     ColorExposureConfiguration* getColorExposureConfiguration();
      bool getDeviceName(std::string &deviceId);
      bool getDeviceNodeID(std::string &deviceNodeId);
      bool getDevicePluginType(std::string &pluginName);
-//     bool getDeviceFullInfoVector();
-
      bool setCameraDeviceConfiguration(CameraDeviceConfiguration &cameradevconf);
      bool setColorExposureConfiguration(ColorExposureConfiguration &colorexpconf);
+     CameraDeviceConfiguration* getCameraDeviceConfiguration();
+     ColorExposureConfiguration* getColorExposureConfiguration();
+
 
 private:
      unicap_property_t *propertyConfig;
      unicap_device_t *deviceConfig;
      unicap_handle_t *handleConfig;
-
      unicap_status_t returnStatus;
+
      std::string deviceID;
      std::string deviceNodeID;
      std::string devicePluginType;
-  //    std::vector<std::string> deviceFullInfo;
      ColorExposureConfiguration *colExpConfiguration;
      CameraDeviceConfiguration *devConfiguration;
 };

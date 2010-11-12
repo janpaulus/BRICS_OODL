@@ -8,14 +8,19 @@ MonocularCamera::MonocularCamera(int deviceNumber): isConnected(STATUS_FAILURE)
     device = new unicap_device_t;
     deviceHandle = new unicap_handle_t;
     cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
+    format = new ImageFormat(deviceHandle);
+    imagedata = new Image2dData;
 }
 
-MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format)
+MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format): isConnected(STATUS_FAILURE)
 {
     std::cout<<"Creating Monocular Camera with arguments"<<std::endl;
     device = new unicap_device_t;
     deviceHandle = new unicap_handle_t;
     cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
+    this->format = new ImageFormat(format);
+    imagedata = new Image2dData;
+
 }
 
 
@@ -43,6 +48,8 @@ MonocularCamera::~MonocularCamera()
 //this->close();
     delete device;
     delete deviceHandle;
+    delete format;
+    delete imagedata;
 //  delete cameraConfig;
 }
 
@@ -64,8 +71,10 @@ bool MonocularCamera::open ()
             isConnected = unicap_open(deviceHandle, device);
             if(SUCCESS(isConnected))
             {
-                std::cout << "Device is successfully opened" << std::endl;
-                return true;
+              std::cout << "Device is successfully opened" << std::endl;
+              //             int returnValue = getListOfFormats();
+                
+              return true;
             }
             else
             {
@@ -79,6 +88,7 @@ bool MonocularCamera::open ()
             return false;
         }
     }
+
 }
 
 
@@ -107,27 +117,21 @@ bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config)
 }
 
 
-
-//bool MonocularCamera::resetDevice (Errors &error)
-bool MonocularCamera::resetDevice ()
-{
-// unicap_stop_capture( deviceHandle[0] ); 
-    std::cout<<"In Monocular Camera resetDevice"<<std::endl;
-}
-
-bool MonocularCamera::capture (Image2D &image)
+bool MonocularCamera::capture ()
 {
   
     std::cout<<"In Monocular Camera capture"<<std::endl;
 }
 
 
-//Not a good design, a short term solution.
-//
-/*unicap_handle_t* MonocularCamera::getCameraHandle()
+bool MonocularCamera::getImageFormat(ImageFormat &format)
 {
-
-  return deviceHandle;
+    std::cout<<"In Monocular Camera getImageFormat"<<std::endl;
 
 }
-*/
+
+bool MonocularCamera::setImageFormat(ImageFormat &format)
+{
+
+    std::cout<<"In Monocular Camera setImageFormat"<<std::endl;
+}
