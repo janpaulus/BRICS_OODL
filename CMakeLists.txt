@@ -32,13 +32,13 @@ ENDIF(NOT DEFINED UNICAP_PATH)
 
 IF(DEFINED SOEM_PATH)
   link_directories(${SOEM_PATH}/lib)
-  include_directories(${SOEM_PATH}/include/soem)
+  include_directories(${SOEM_PATH}/include/soem/src)
   MESSAGE(STATUS "SOEM_PATH= ${SOEM_PATH}")
 ENDIF(DEFINED SOEM_PATH)
 
 IF(NOT DEFINED SOEM_PATH)
   link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem)
+  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem/src)
 ENDIF(NOT DEFINED SOEM_PATH)
 
 
