@@ -3,10 +3,10 @@
 
 //#include "../generic/Errors.hpp"
 //#include "../generic/Logger.hpp"
-#include "../generic/Units.hpp"
-#include "../generic-monocular-camera/MonocularCameraConfiguration.hpp"
-#include "../generic-monocular-camera/Image2dData.hpp"
-#include "../generic-monocular-camera/ImageFormat.hpp"
+//#include "../generic/Units.hpp"
+#include "./generic-monocular-camera/MonocularCameraConfiguration.hpp"
+#include "./generic-monocular-camera/Image2dData.hpp"
+#include "./generic-monocular-camera/ImageFormat.hpp"
 #include <unicap.h>
 #include <iostream>
 

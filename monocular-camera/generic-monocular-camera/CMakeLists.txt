@@ -3,12 +3,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 SET(UNICAP_LIB /usr/local/lib)
 SET(LIBNAME MonocularCameraConfiguration)
 SET(SOURCES 
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/Image2dData.cpp 
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/ImageFormat.cpp 
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/Image2D.cpp 
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/CameraDeviceConfiguration.cpp 
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/ColorExposureConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/MonocularCameraConfiguration.cpp 
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/Image2dData.cpp 
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/ImageFormat.cpp 
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/CameraDeviceConfiguration.cpp 
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/ColorExposureConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/MonocularCameraConfiguration.cpp 
 )
 
 
