@@ -14,28 +14,28 @@
 class MonocularCamera 
 {
 public:
-     MonocularCamera(int deviceNumber);
-     MonocularCamera(MonocularCamera &camera);
-     MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
-     MonocularCamera& operator= (const MonocularCamera &camera);
-     ~MonocularCamera();
+  MonocularCamera(int deviceNumber);
+  MonocularCamera(MonocularCamera &camera);
+  MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
+  MonocularCamera& operator= (const MonocularCamera &camera);
+  ~MonocularCamera();
 
-     bool getConfiguration (MonocularCameraConfiguration &config);
-     bool setConfiguration ( MonocularCameraConfiguration &config);
-     bool getImageFormat(ImageFormat &format);
-     bool setImageFormat(ImageFormat &format);
+  bool getConfiguration (MonocularCameraConfiguration &config);
+  bool setConfiguration ( MonocularCameraConfiguration &config);
+  bool getImageFormat(ImageFormat &format);
+  bool setImageFormat(ImageFormat &format);
 
-     bool capture(/*int frames*/); // adding frames here could be good, then a user does not have to bother about building capture loops.
-     bool open ();
-     bool close ();
+  bool capture(/*int frames*/); // adding frames here could be good, then a user does not have to bother about building capture loops.
+  bool open ();
+  bool close ();
 
 private:
-     MonocularCameraConfiguration *cameraConfig;
-     Image2dData *imagedata;
-     ImageFormat *format;
-     unicap_device_t *device;
-     unicap_handle_t *deviceHandle;
-     unicap_status_t isConnected;
+  MonocularCameraConfiguration *cameraConfig;
+  Image2dData *imagedata;
+  ImageFormat *format;
+  unicap_device_t *device;
+  unicap_handle_t *deviceHandle;
+  unicap_status_t isConnected;
 };
 
 
