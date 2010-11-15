@@ -30,19 +30,19 @@ class YouBotJointConfiguration {
 
 
   private:
-    double GearRatio;
+    double gearRatio;
 
 
   public:
-    std::vector<JointDataRange> ValidRanges;
+    std::vector<JointDataRange> validRanges;
 
-    std::string JointName;
+    std::string jointName;
 
-    bool SetPositionReferenceToZero;
+    bool setPositionReferenceToZero;
 
 
   private:
-    unsigned int EncoderTicksPerRound;
+    unsigned int encoderTicksPerRound;
 
 };
 

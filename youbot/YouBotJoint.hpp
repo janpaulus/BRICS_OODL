@@ -75,9 +75,9 @@ class YouBotJoint : public Joint {
 
     unsigned int jointNumber;
 
-    YouBotSlaveMsg MessageBuffer;
+    YouBotSlaveMsg messageBuffer;
 
-    YouBotSlaveMailboxMsg MailboxMsgBuffer;
+    YouBotSlaveMailboxMsg mailboxMsgBuffer;
 
     YouBotJointConfiguration config;
 

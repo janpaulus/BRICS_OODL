@@ -11,12 +11,17 @@ YouBot::YouBot() {
       ethercatMaster == NULL;
     }
     ethernetDevice = "eth0";
+    timeTillNextEthercatUpdate = 4; //msec
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
     if (!configfile.load("youbot/config/youbot-configfile.cfg"))
-      throw ExceptionOODL("config/youbot-configfile.cfg file no found");
+      throw ExceptionOODL("youbot/config/youbot-configfile.cfg file no found");
+
+    configfile.setSection("YouBot");
+    ethernetDevice = configfile.getStringValue("EthernetDevice");
+    timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
 
 
   // Bouml preserved body end 00041171
@@ -28,11 +33,10 @@ YouBot::~YouBot() {
   // Bouml preserved body end 000411F1
 }
 
-YouBot& YouBot::getInstance(std::string ethernetDeviceName)
+YouBot& YouBot::getInstance()
 {
   // Bouml preserved body begin 00042F71
     if (!instance) {
-      ethernetDevice = ethernetDeviceName;
       instance = new YouBot();
       instance->initializeEthercat();
       instance->initializeJoints();
@@ -56,17 +60,17 @@ void YouBot::destroy()
 
 unsigned int YouBot::getNumberOfJoints() {
   // Bouml preserved body begin 00044A71
-    return this->Joints.size();
+    return this->joints.size();
   // Bouml preserved body end 00044A71
 }
 
 YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
   // Bouml preserved body begin 000449F1
-    if (jointNumber <= 0 || jointNumber > (this->Joints.size() + 1)) {
+    if (jointNumber <= 0 || jointNumber > (this->joints.size() + 1)) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
-    return Joints[jointNumber - 1];
+    return joints[jointNumber - 1];
   // Bouml preserved body end 000449F1
 }
 
@@ -77,7 +81,7 @@ void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity,
     std::vector<quantity<angular_velocity> > wheelVelocities;
     JointVelocitySetpoint setVel;
 
-    YouBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+    youBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
     setVel.angularVelocity = wheelVelocities[0];
     this->getJoint(1).setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
@@ -215,7 +219,7 @@ void YouBot::initializeEthercat() {
         actualSlaveName = ec_slave[cnt].name;
         if (actualSlaveName == desiredSlaveName && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
-          Joints.push_back(YouBotJoint(nrOfSlaves));
+          joints.push_back(YouBotJoint(nrOfSlaves));
 
           firstBufferVector.push_back(emptySlaveMsg);
           secondBufferVector.push_back(emptySlaveMsg);
@@ -261,11 +265,12 @@ void YouBot::initializeJoints() {
       jointName = jointNameStream.str();
       YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
+      config.jointName = configfile.getStringValue("JointName");
       config.setGearRatio(configfile.getDoubleValue("GearRatio"));
       config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.SetPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
+      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
 
-      Joints[i].setConfiguration(config);
+      joints[i].setConfiguration(config);
     }
 
     //Switch to Velocity control because of "Sinuskommutierung"
@@ -274,7 +279,7 @@ void YouBot::initializeJoints() {
     vel.angularVelocity = 0 * radian_per_second;
 
     for (unsigned int i = 0; i < nrOfSlaves; i++) {
-      Joints[i].setData(vel, NON_BLOCKING);
+      joints[i].setData(vel, NON_BLOCKING);
     }
 
 
@@ -294,13 +299,13 @@ void YouBot::initializeKinematic() {
 
     //read the kinematics parameter from a config file
     configfile.setSection("YouBotKinematic");
-    kinematicConfig.RotationRatio = configfile.getIntValue("RotationRatio");
-    kinematicConfig.SlideRatio = configfile.getIntValue("SlideRatio");
+    kinematicConfig.rotationRatio = configfile.getIntValue("RotationRatio");
+    kinematicConfig.slideRatio = configfile.getIntValue("SlideRatio");
     kinematicConfig.lengthBetweenFrontAndRearWheels = configfile.getDoubleValue("LengthBetweenFrontAndRearWheels_[meter]") * meter;
     kinematicConfig.lengthBetweenFrontWheels = configfile.getDoubleValue("LengthBetweenFrontWheels_[meter]") * meter;
     kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
 
-    YouBotBaseKinematic.setConfiguration(kinematicConfig);
+    youBotBaseKinematic.setConfiguration(kinematicConfig);
   // Bouml preserved body end 0004DDF1
 }
 

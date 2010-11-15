@@ -27,16 +27,16 @@ class FourSwedishWheelOmniBaseKinematicConfiguration {
     quantity<si::length> lengthBetweenFrontAndRearWheels;
 
     //how far sideways in one wheel rotation compared to forward
-    double SlideRatio;
+    double slideRatio;
 
-    double RotationRatio;
+    double rotationRatio;
 
 };
 class FourSwedishWheelOmniBaseKinematic : public WheeledBaseKinematic {
   public:
     virtual void cartesianVelocityToWheelVelocities(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity, std::vector<quantity<angular_velocity> >& wheelVelocities);
 
-    virtual void WheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity);
+    virtual void wheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity);
 
     void setConfiguration(const FourSwedishWheelOmniBaseKinematicConfiguration& configuration);
 

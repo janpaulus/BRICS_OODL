@@ -37,7 +37,7 @@ friend class YouBotJoint;
 
 
   public:
-    static YouBot& getInstance(std::string ethernetDeviceName = "eth0");
+    static YouBot& getInstance();
 
     static void destroy();
 
@@ -47,7 +47,7 @@ friend class YouBotJoint;
 
     void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
 
-    FourSwedishWheelOmniBaseKinematic YouBotBaseKinematic;
+    FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
 
 
   private:
@@ -69,7 +69,7 @@ friend class YouBotJoint;
 
     void updateSensorActorValues();
 
-    std::vector<YouBotJoint> Joints;
+    std::vector<YouBotJoint> joints;
 
     EthercatMaster* ethercatMaster;
 
@@ -78,7 +78,7 @@ friend class YouBotJoint;
     ec_mbxbuft mailboxBuffer;
 
     //in milliseconds
-    static const unsigned int timeTillNextEthercatUpdate = 4;
+    unsigned int timeTillNextEthercatUpdate;
 
     boost::mutex mutexDataOne;
 
