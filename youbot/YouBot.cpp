@@ -20,8 +20,8 @@ YouBot::YouBot() {
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
-    if (!configfile.load("../youbot/config/youbot-configfile.cfg"))
-      throw ExceptionOODL("../youbot/config/youbot-configfile.cfg file no found");
+    if (!configfile.load("../config/youbot-configfile.cfg"))
+      throw ExceptionOODL("../config/youbot-configfile.cfg file no found");
 
     configfile.setSection("YouBot");
     ethernetDevice = configfile.getStringValue("EthernetDevice");
