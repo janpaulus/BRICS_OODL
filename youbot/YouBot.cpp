@@ -6,6 +6,10 @@ namespace brics_oodl {
 YouBot* YouBot::instance = 0;
 YouBot::YouBot() {
   // Bouml preserved body begin 00041171
+  
+    //Initialize the Logger
+    (Logger::getInstance()).init();
+    
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
       ethercatMaster == NULL;
@@ -201,7 +205,7 @@ void YouBot::initializeEthercat() {
       ethercatMaster = new EthercatMaster();
 
       if (!ethercatMaster->init(ethernetDevice.c_str())) {
-        throw ExceptionOODL("Could not initialize Ethercat at " + ethernetDevice);
+        throw ExceptionOODL("Could not initialize EtherCAT at " + ethernetDevice);
         return;
       }
 

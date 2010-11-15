@@ -1,12 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
-#include "rude/config.h"
 #include "boost/date_time/posix_time/posix_time.hpp"
-#include "generic-joint/JointData.hpp"
 #include "youbot/YouBot.hpp"
-#include "youbot/YouBotJoint.hpp"
-#include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
+
 
 
 using namespace boost::posix_time;
@@ -33,8 +30,6 @@ int main() {
   signal(SIGKILL, sigintHandler);
 
   try {
-
-    (Logger::getInstance()).init();
 
     YouBot& youbot4 = YouBot::getInstance();
 

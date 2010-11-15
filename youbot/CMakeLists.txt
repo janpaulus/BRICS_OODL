@@ -1,32 +1,28 @@
 
 SET( OODL_YOUBOT_VERSION 0.01 )
 
-FIND_PACKAGE( Boost REQUIRED )
+FIND_PACKAGE(Soem REQUIRED)
+IF (SOEM_FOUND)
+  INCLUDE_DIRECTORIES(${SOEM_INCLUDE_DIR})
+  LINK_DIRECTORIES(${SOEM_LIBRARY_DIR})
+  LINK_LIBRARIES(${SOEMLIB})
+	MESSAGE(STATUS "SUCCESSFUL: Soem found")
+ELSE (SOEM_FOUND)
+	MESSAGE(STATUS "ERROR: Soem not found")
+ENDIF (SOEM_FOUND)
 
-include_directories(
-  ${CMAKE_HOME_DIRECTORY}
-  ${Boost_INCLUDE_DIR}
-  #for rudeconfig
-#  ${CMAKE_HOME_DIRECTORY}/youbot/rudeconfig-5.0.5/src/
-)
 
-link_directories(
-  ${Boost_LIBRARY_DIRS}
+FIND_PACKAGE(Rudeconfig REQUIRED)
+IF (RUDECONFIG_FOUND)
+  INCLUDE_DIRECTORIES(${RUDECONFIG_INCLUDE_DIR})
+  LINK_DIRECTORIES(${RUDECONFIG_LIBRARY_DIR})
+  LINK_LIBRARIES(${RUDECONFIGLIB})
+	MESSAGE(STATUS "SUCCESSFUL: rudeconfig found")
+ELSE (RUDECONFIG_FOUND)
+	MESSAGE(STATUS "ERROR: rudeconfig not found")
+ENDIF (RUDECONFIG_FOUND)
 
-)
 
-link_libraries(
-  libsoem.a
-  boost_thread
-  boost_date_time
-  boost_system
-  boost_filesystem
-  boost_regex
-  boost_log-mt
-librudeconfig.a
-#for soem
-#pthread
-)
 
 SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
@@ -42,53 +38,17 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematic.cpp
 )
 
-SET(SOEM_SRC
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatbase.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatcoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatconfig.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatfoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatsoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatmain.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatprint.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/nicdrv.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatdc.c
-)
-
-SET(RUDECONFIG_SRC
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractData.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractOrganiser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractParser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractWriter.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Base64Encoder.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Comment.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/config.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/ConfigImpl.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/DataLine.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/File.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/KeyValue.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/ParserJuly2004.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/RealOrganiser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Section.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/WhiteSpace.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Writer.cpp
-)
-
 SET(OODL_YOUBOT_HEADERS
-
 )
 
 #ADD_LIBRARY(OODL_YOUBOT
 #  ${OODL_YOUBOT_SRC}
 #)
   
-
 ADD_EXECUTABLE(OODL_YOUBOT_test
   ${CMAKE_HOME_DIRECTORY}/youbot/applications/Test.cpp
   ${OODL_YOUBOT_SRC}
-# ${RUDECONFIG_SRC}
-# ${SOEM_SRC}
 )
-
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})

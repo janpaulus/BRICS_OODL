@@ -8,13 +8,16 @@ Logger& Logger::getInstance()
 }
 
 void Logger::init(){
-#ifdef BOOST_LOG_FOUND
+  if(this->isInitialized)
+    return;
+#if BOOST_LOG_FOUND
   // Initialize logging to std::cout
+ // std::cout << "Initializing boost::log" << std::endl;
   logging::init_log_to_console(std::cout);
   // Initialize logging to the "test.log" file
   logging::init_log_to_file("log.txt");
 #endif  /* BOOST_LOG_FOUND */
-  
+  isInitialized = true;
 }
 
 /*

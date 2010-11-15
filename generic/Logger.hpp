@@ -19,13 +19,9 @@ enum severity_level
     fatal
 };
 
-#define BOOST_LOG_FOUND
+//#define BOOST_LOG_FOUND
 
-#ifndef BOOST_LOG_FOUND
-  #define LOG(level) std::cout
-#endif  /* BOOST_LOG_FOUND */
-
-#ifdef BOOST_LOG_FOUND
+#if BOOST_LOG_FOUND
   #include <boost/log/utility/init/to_console.hpp>
   #include <boost/log/utility/init/to_file.hpp>
   #include <boost/log/utility/init/common_attributes.hpp>
@@ -44,19 +40,20 @@ enum severity_level
 
   static src::severity_logger< severity_level > severityLogger;
   #define LOG(level) BOOST_LOG_STREAM_SEV(severityLogger, level)
-
+#else
+  #define LOG(level) std::cout
 #endif  /* BOOST_LOG_FOUND */
 
 
 class Logger
 {
 private: 
-  Logger() {}
+  Logger() {isInitialized = false;}
   ~Logger() {} 
   Logger(const Logger &);             // intentionally undefined
   Logger & operator=(const Logger &); // intentionally undefined
  
- 
+  bool isInitialized;
 public:
   static Logger &getInstance();
   void init();

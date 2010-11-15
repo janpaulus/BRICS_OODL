@@ -34,7 +34,7 @@ bool EthercatMaster::init(const char *ifname) {
 
   /* initialise SOEM, bind socket to ifname */
   if (ec_init(ifname)) {
-    LOG(trace) << "Ethercat initialized successful on " << ifname;
+    LOG(trace) << "Initializing EtherCAT on " << ifname;
     /* find and auto-config slaves */
     if (ec_config(TRUE, &IOmap_) > 0)
       //if( ec_config(FALSE, &IOmap_) > 0 )
