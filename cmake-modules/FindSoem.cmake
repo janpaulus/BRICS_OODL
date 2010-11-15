@@ -6,7 +6,7 @@
 #  SOEM_LIBRARY_DIR - soem lib directory
 #
 
-SET(SOEMLIB "libsoem.a")
+SET(SOEMLIB "soem")
 
 FIND_PATH(SOEM_INCLUDE_DIR NAMES ethercatmain.h
   PATHS

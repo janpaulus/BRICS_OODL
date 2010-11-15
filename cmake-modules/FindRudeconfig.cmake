@@ -6,7 +6,7 @@
 #  RUDECONFIG_LIBRARY_DIR - rudeconfig lib directory
 #
 
-SET(RUDECONFIGLIB "librudeconfig.a")
+SET(RUDECONFIGLIB "rudeconfig")
 
 FIND_PATH(RUDECONFIG_INCLUDE_DIR NAMES rude/config.h
   PATHS
