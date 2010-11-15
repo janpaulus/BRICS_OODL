@@ -5,11 +5,13 @@ class Image2dData
   public:
   Image2dData();
   Image2dData(int& width, int& height);
+  unsigned char* getBuffer();
+  long int getBufferSize();
   ~Image2dData();
  
  private:
-  int bufferSize;
-  char *buffer;
+  size_t bufferSize;
+  unsigned char *buffer;
 
 };
 
@@ -17,7 +19,7 @@ class Image2dData
 /*
 
 
-/**
+**
  * unicap_data_buffer_t:
  * @format: a #unicap_format_t describing the layout of the data
  * buffer

@@ -16,7 +16,7 @@ class MonocularCamera
 public:
   MonocularCamera(int deviceNumber);
   MonocularCamera(MonocularCamera &camera);
-  MonocularCamera(MonocularCameraConfiguration &config, ImageFormat &format);
+  MonocularCamera(MonocularCameraConfiguration &config, std::string &format);
   MonocularCamera& operator= (const MonocularCamera &camera);
   ~MonocularCamera();
 
@@ -25,7 +25,7 @@ public:
   bool getImageFormat(ImageFormat &format);
   bool setImageFormat(ImageFormat &format);
 
-  bool capture(/*int frames*/); // adding frames here could be good, then a user does not have to bother about building capture loops.
+  bool capture(Image2dData &data); // adding frames here could be good, then a user does not have to bother about building capture loops.
   bool open ();
   bool close ();
 

@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 
 SET(UNICAP_LIB /usr/local/lib)
 SET(COMPILE_C_FLAGS_DEBUG "-Wall -g")
-SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
+SET(CMAKE_CXX_FLAGS_DEBUG  "-Wall -g")
 SET(SOURCES 
     ${CMAKE_HOME_DIRECTORY}/monocular-camera/test.cpp 
 	${CMAKE_HOME_DIRECTORY}/monocular-camera/MonocularCamera.cpp

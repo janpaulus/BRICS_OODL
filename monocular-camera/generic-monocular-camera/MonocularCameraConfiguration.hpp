@@ -112,7 +112,7 @@ private:
   }
 
 
-/* Camera Configuration  in unicap 
+* Camera Configuration  in unicap 
 
 
 * identifier:   unique textual identifier of this properties

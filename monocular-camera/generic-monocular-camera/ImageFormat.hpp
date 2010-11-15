@@ -9,8 +9,8 @@ class ImageFormat
 public:
 
   ImageFormat();
-  ImageFormat(std::string formatIdentifier);
-  ImageFormat(unicap_handle_t *handle);
+  ImageFormat(std::string &formatID);
+  ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier);  
   ImageFormat(ImageFormat &format);
   ImageFormat& operator=(ImageFormat &format);
   ~ImageFormat();
@@ -19,9 +19,12 @@ public:
   bool getImageFormatFOURCC(unsigned int &fourcc);
   bool getImageFormatResolution(int &width, int &height);
   bool getImageFormatColorModel(std::string &colorModel);
-     
+  bool getImageFormatResolutionList();
+  bool getImageFormatColorModelList();
+  bool getImageFormatSize(int &size);
+
+  bool setImageFormatResolution(int &width, int &height);
   bool setImageFormatColorModel(std::string &colorModel);
- 
 
 private:
   bool getListOfFormats();
@@ -61,6 +64,7 @@ private:
   size_t bufferSize;
   unicap_status_t  returnStatus;
   unicap_handle_t *deviceHandle;
+  unicap_device_t *formatDevice;
 
 };
 
