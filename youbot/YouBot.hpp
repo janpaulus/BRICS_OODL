@@ -41,9 +41,17 @@ friend class YouBotJoint;
 
     static void destroy();
 
-    unsigned int getNumberOfJoints();
+    unsigned int getNumberOfJoints() const;
 
-    YouBotJoint& getJoint(unsigned int jointNumber);
+    YouBotJoint& getJoint(const unsigned int jointNumber);
+
+    YouBotJoint& getJointByName(const std::string jointName);
+
+    YouBotJoint& getBaseJoint(const unsigned int baseJointNumber);
+
+    YouBotJoint& getArm1Joint(const unsigned int arm1JointNumber);
+
+    YouBotJoint& getArm2Joint(const unsigned int arm2JointNumber);
 
     void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
 
@@ -51,13 +59,13 @@ friend class YouBotJoint;
 
 
   private:
-    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
+    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
 
-    YouBotSlaveMsg getMsgBuffer(unsigned int jointNumber);
+    YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
 
-    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber);
+    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
 
-    YouBotSlaveMailboxMsg getMailboxMsgBuffer(unsigned int jointNumber);
+    YouBotSlaveMailboxMsg getMailboxMsgBuffer(const unsigned int jointNumber);
 
     void initializeEthercat();
 

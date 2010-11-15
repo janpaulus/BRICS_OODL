@@ -22,12 +22,6 @@ void sigintHandler(int signal) {
 int main() {
 
   signal(SIGINT, sigintHandler);
-  signal(SIGQUIT, sigintHandler);
-  signal(SIGABRT, sigintHandler);
-  signal(SIGTERM, sigintHandler);
-  signal(SIGSTOP, sigintHandler);
-  signal(SIGTSTP, sigintHandler);
-  signal(SIGKILL, sigintHandler);
 
   try {
 
@@ -46,7 +40,7 @@ int main() {
 
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
-    quantity<si::angular_velocity> angularVelocity = 0.2 * radian_per_second;
+    quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
 
 
     while (running) {
@@ -71,7 +65,7 @@ int main() {
 
 
       // youbot4.getJoint(3).getConfiguration(config);
-      boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+      boost::this_thread::sleep(boost::posix_time::milliseconds(1));
     }
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(500));
@@ -81,7 +75,8 @@ int main() {
     youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
     youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+
 
   } catch (std::exception& e) {
     std::cout << e.what() << std::endl;

@@ -79,9 +79,9 @@ void FourSwedishWheelOmniBaseKinematic::setConfiguration(const FourSwedishWheelO
   // Bouml preserved body end 0004C171
 }
 
-FourSwedishWheelOmniBaseKinematicConfiguration FourSwedishWheelOmniBaseKinematic::getConfiguration() const {
+void FourSwedishWheelOmniBaseKinematic::getConfiguration(FourSwedishWheelOmniBaseKinematicConfiguration& configuration) const {
   // Bouml preserved body begin 0004C1F1
-    return this->config;
+    configuration = this->config;
   // Bouml preserved body end 0004C1F1
 }
 

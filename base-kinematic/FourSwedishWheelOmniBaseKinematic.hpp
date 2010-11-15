@@ -40,7 +40,7 @@ class FourSwedishWheelOmniBaseKinematic : public WheeledBaseKinematic {
 
     void setConfiguration(const FourSwedishWheelOmniBaseKinematicConfiguration& configuration);
 
-    FourSwedishWheelOmniBaseKinematicConfiguration getConfiguration() const;
+    void getConfiguration(FourSwedishWheelOmniBaseKinematicConfiguration& configuration) const;
 
 
   private:

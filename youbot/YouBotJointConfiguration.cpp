@@ -34,7 +34,7 @@ YouBotJointConfiguration & YouBotJointConfiguration::operator=(const YouBotJoint
   // Bouml preserved body end 0004B9F1
 }
 
-void YouBotJointConfiguration::setGearRatio(double ratio) {
+void YouBotJointConfiguration::setGearRatio(const double ratio) {
   // Bouml preserved body begin 0004BC71
   if(ratio == 0){
     throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
@@ -56,7 +56,7 @@ unsigned int YouBotJointConfiguration::getEncoderTicksPerRound() const {
   // Bouml preserved body end 0004BD71
 }
 
-void YouBotJointConfiguration::setEncoderTicksPerRound(unsigned int ticksPerRound) {
+void YouBotJointConfiguration::setEncoderTicksPerRound(const unsigned int ticksPerRound) {
   // Bouml preserved body begin 0004BDF1
   this->encoderTicksPerRound = ticksPerRound;
   // Bouml preserved body end 0004BDF1

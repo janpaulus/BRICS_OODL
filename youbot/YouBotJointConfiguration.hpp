@@ -20,13 +20,13 @@ class YouBotJointConfiguration {
 
     YouBotJointConfiguration & operator=(const YouBotJointConfiguration & source);
 
-    void setGearRatio(double ratio);
+    void setGearRatio(const double ratio);
 
     double getGearRatio() const;
 
     unsigned int getEncoderTicksPerRound() const;
 
-    void setEncoderTicksPerRound(unsigned int ticksPerRound);
+    void setEncoderTicksPerRound(const unsigned int ticksPerRound);
 
 
   private:

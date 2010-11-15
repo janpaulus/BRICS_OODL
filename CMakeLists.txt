@@ -7,6 +7,10 @@ SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules")
 
+SET(LIBRARY_OUTPUT_PATH            ${CMAKE_HOME_DIRECTORY}/lib)  #static libraries 
+SET(EXECUTABLE_OUTPUT_PATH         ${CMAKE_HOME_DIRECTORY}/bin)  #executables 
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)  #dynamic libraries (plugins) 
+
 INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
 
 # find required and optional dependencies via Find<name>.cmake modules

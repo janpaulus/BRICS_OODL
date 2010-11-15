@@ -19,7 +19,7 @@ double JointConfiguration::getGearRatio() const {
   // Bouml preserved body end 0004BBF1
 }
 
-void JointConfiguration::setGearRatio(double ratio) {
+void JointConfiguration::setGearRatio(const double ratio) {
   // Bouml preserved body begin 0004BB71
     if (ratio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");

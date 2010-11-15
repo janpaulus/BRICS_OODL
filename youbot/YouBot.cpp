@@ -20,8 +20,8 @@ YouBot::YouBot() {
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
-    if (!configfile.load("youbot/config/youbot-configfile.cfg"))
-      throw ExceptionOODL("youbot/config/youbot-configfile.cfg file no found");
+    if (!configfile.load("../youbot/config/youbot-configfile.cfg"))
+      throw ExceptionOODL("../youbot/config/youbot-configfile.cfg file no found");
 
     configfile.setSection("YouBot");
     ethernetDevice = configfile.getStringValue("EthernetDevice");
@@ -62,20 +62,70 @@ void YouBot::destroy()
   // Bouml preserved body end 00042FF1
 }
 
-unsigned int YouBot::getNumberOfJoints() {
+unsigned int YouBot::getNumberOfJoints() const {
   // Bouml preserved body begin 00044A71
     return this->joints.size();
   // Bouml preserved body end 00044A71
 }
 
-YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
+YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
   // Bouml preserved body begin 000449F1
-    if (jointNumber <= 0 || jointNumber > (this->joints.size() + 1)) {
+    if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
     return joints[jointNumber - 1];
   // Bouml preserved body end 000449F1
+}
+
+YouBotJoint& YouBot::getJointByName(const std::string jointName) {
+  // Bouml preserved body begin 0004F8F1
+    int jointNumber = -1;
+    YouBotJointConfiguration config;
+
+    for (int i = 0; i < joints.size(); i++) {
+      joints[i].getConfiguration(config);
+      if(config.jointName == jointName){
+        jointNumber = i;
+        break;
+      }
+    }
+
+    if( jointNumber == -1){
+      throw ExceptionOODL("Joint Name not found");
+    }
+
+    return joints[jointNumber];
+  // Bouml preserved body end 0004F8F1
+}
+
+YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
+  // Bouml preserved body begin 0004F771
+    if (baseJointNumber <= 0 || baseJointNumber > 4 || baseJointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[baseJointNumber - 1];
+  // Bouml preserved body end 0004F771
+}
+
+YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
+  // Bouml preserved body begin 0004F7F1
+    unsigned int jointNumber = arm1JointNumber + 4;
+    if (jointNumber <= 4 || jointNumber > 9 || jointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[jointNumber - 1];
+  // Bouml preserved body end 0004F7F1
+}
+
+YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
+  // Bouml preserved body begin 0004F871
+    unsigned int jointNumber = arm2JointNumber + 4 + 5;
+    if (jointNumber <= 9 || jointNumber > 14 || jointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[jointNumber - 1];
+  // Bouml preserved body end 0004F871
 }
 
 void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
@@ -97,7 +147,7 @@ void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity,
   // Bouml preserved body end 0004DD71
 }
 
-void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber) {
+void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 000414F1
 
     if (newDataFlagOne == true) {
@@ -122,7 +172,7 @@ void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNum
   // Bouml preserved body end 000414F1
 }
 
-YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
+YouBotSlaveMsg YouBot::getMsgBuffer(const unsigned int jointNumber) {
   // Bouml preserved body begin 00041571
 
     YouBotSlaveMsg returnMsg;
@@ -146,7 +196,7 @@ YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
   // Bouml preserved body end 00041571
 }
 
-void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber) {
+void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 00049D71
 
     if (newDataFlagOne == true) {
@@ -171,7 +221,7 @@ void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigne
   // Bouml preserved body end 00049D71
 }
 
-YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(unsigned int jointNumber) {
+YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(const unsigned int jointNumber) {
   // Bouml preserved body begin 00049DF1
 
     YouBotSlaveMailboxMsg returnMsg;
@@ -263,7 +313,7 @@ void YouBot::initializeJoints() {
     //Configure Joint Parameters
     std::string jointName;
 
-    for (unsigned int i = 0; i < nrOfSlaves; i++) {
+    for (unsigned int i = 0; i < joints.size(); i++) {
       std::stringstream jointNameStream;
       jointNameStream << "Joint " << i + 1;
       jointName = jointNameStream.str();
@@ -282,7 +332,7 @@ void YouBot::initializeJoints() {
     JointVelocitySetpoint vel;
     vel.angularVelocity = 0 * radian_per_second;
 
-    for (unsigned int i = 0; i < nrOfSlaves; i++) {
+    for (unsigned int i = 0; i < joints.size(); i++) {
       joints[i].setData(vel, NON_BLOCKING);
     }
 
