@@ -14,6 +14,7 @@ YouBotJoint::~YouBotJoint() {
   // Bouml preserved body end 00041371
 }
 
+//please use a YouBotJointConfiguration
 void YouBotJoint::setConfiguration(const JointConfiguration& configuration) {
   // Bouml preserved body begin 0004BA71
     throw ExceptionOODL("Please provide a YouBotJointConfiguration");
@@ -21,6 +22,7 @@ void YouBotJoint::setConfiguration(const JointConfiguration& configuration) {
   // Bouml preserved body end 0004BA71
 }
 
+//please use a YouBotJointConfiguration
 void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
   // Bouml preserved body begin 0004BAF1
 
@@ -31,6 +33,8 @@ void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
   // Bouml preserved body end 0004BAF1
 }
 
+//sets the configuration for one joint
+//@param configuration the joint configuration
 void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C0F1
     this->config = configuration;
@@ -42,6 +46,8 @@ void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration
   // Bouml preserved body end 0003C0F1
 }
 
+//to get the configuration for one joint
+//@param configuration returns the joint configuration by reference
 void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C171
  /*   YouBotSlaveMailboxMsg msg;
@@ -76,6 +82,9 @@ void YouBotJoint::getData(JointData& data) {
   // Bouml preserved body end 00041471
 }
 
+//commands a position or angle to one joint
+//@param data the to command position
+//@param communicationMode at the moment only non blocking communication is implemented
 void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C1F1
     this->messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
@@ -87,6 +96,8 @@ void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communication
   // Bouml preserved body end 0003C1F1
 }
 
+//gets the position or angle of one joint with have been calculated for the actual encoder value 
+//@param data returns the angle by reference
 void YouBotJoint::getData(JointSensedAngle& data) {
   // Bouml preserved body begin 0003DCF1
     this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
@@ -103,6 +114,9 @@ void YouBotJoint::getData(JointSensedAngle& data) {
   // Bouml preserved body end 0003DCF1
 }
 
+//commands a velocity to one joint
+//@param data the to command velocity
+//@param communicationMode at the moment only non blocking communication is implemented
 void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C371
 
@@ -116,6 +130,8 @@ void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicat
   // Bouml preserved body end 0003C371
 }
 
+//gets the velocity of one joint with have been calculated for the actual encoder values
+//@param data returns the velocity by reference
 void YouBotJoint::getData(JointSensedVelocity& data) {
   // Bouml preserved body begin 0003DD71
     this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
@@ -130,6 +146,8 @@ void YouBotJoint::getData(JointSensedVelocity& data) {
   // Bouml preserved body end 0003DD71
 }
 
+//gets temperature of the motor which have been measured by a thermometer
+//@param data returns the actual temperature by reference
 void YouBotJoint::getData(JointSensedTemperature& data) {
   // Bouml preserved body begin 0003C271
     this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
@@ -141,6 +159,8 @@ void YouBotJoint::getData(JointSensedTemperature& data) {
   // Bouml preserved body end 0003C271
 }
 
+//gets the motor current of one joint with have been measured by a hal sensor
+//@param data returns the actual motor current by reference
 void YouBotJoint::getData(JointSensedCurrent& data) {
   // Bouml preserved body begin 0003DDF1
     this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);

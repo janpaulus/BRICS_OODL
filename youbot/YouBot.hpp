@@ -41,20 +41,36 @@ friend class YouBotJoint;
 
     static void destroy();
 
+    //return the quantity of joints
     unsigned int getNumberOfJoints() const;
 
+    //return a joint form the base, arm1 or arm2
+    //@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
     YouBotJoint& getJoint(const unsigned int jointNumber);
 
+    //return a joint form the base, arm1 or arm2
+    //@param jointName e.g. BaseLeftFront
     YouBotJoint& getJointByName(const std::string jointName);
 
+    //return a joint form the base
+    //@param jointNumber 1-4 for the base joints
     YouBotJoint& getBaseJoint(const unsigned int baseJointNumber);
 
+    //return a joint form the arm1
+    //@param jointNumber 1-5 for the arm1 joints
     YouBotJoint& getArm1Joint(const unsigned int arm1JointNumber);
 
+    //return a joint form the arm2
+    //@param jointNumber 1-5 for the arm2 joints
     YouBotJoint& getArm2Joint(const unsigned int arm2JointNumber);
 
+    //commands the base in cartesien velocities
+    //@param longitudinalVelocity is the forward or backward velocity
+    //@param transversalVelocity is the sideway velocity
+    //@param angularVelocity is the rotational velocity around the center of the YouBot
     void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
 
+    //This class represents the kinematic of the YouBot 
     FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
 
 

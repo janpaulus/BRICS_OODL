@@ -41,7 +41,7 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
     quantity<angular_velocity> RadPerSec_FromTheta;
     quantity<si::length> Perimeter;
     quantity<si::length> OneWheelRotation;
-    wheelVelocities.reserve(4);
+    wheelVelocities.assign(4, RadPerSec_FromX);
 
     if(config.wheelRadius.value() == 0||config.rotationRatio == 0|| config.slideRatio == 0){
       throw ExceptionOODL("The wheelRadius, RotationRatio and the SlideRatio are not allowed to be zero");

@@ -46,34 +46,34 @@ int main() {
     while (running) {
 
       for (unsigned int i = 1; i <= youbot4.getNumberOfJoints(); i++) {
-        youbot4.getJoint(i).getData(temp);
-        youbot4.getJoint(i).getData(angle);
-        youbot4.getJoint(i).getData(vel);
-        youbot4.getJoint(i).getData(current);
-        std::cout << "J " << i << " Temp: " << temp.temperature
+        youbot4.getBaseJoint(i).getData(temp);
+        youbot4.getBaseJoint(i).getData(angle);
+        youbot4.getBaseJoint(i).getData(vel);
+        youbot4.getBaseJoint(i).getData(current);
+        std::cout << "Joint: " << i << " Temp: " << temp.temperature
                 << " Angle: " << angle.angle
                 << " Vel: " << vel.angularVelocity
                 << " Current: " << current.current
                 << std::endl;
       }
 
-  //    youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+  //    youbot4.getJoint(1).setData(setVel);
+  //    youbot4.getJoint(2).setData(setVel);
+  //    youbot4.getJoint(3).setData(setVel);
+  //    youbot4.getJoint(4).setData(setVel);
       youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 
 
       // youbot4.getJoint(3).getConfiguration(config);
-      boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     }
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(500));
     setVel.angularVelocity = 0 * radian_per_second;
-    youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+    youbot4.getJoint(1).setData(setVel);
+    youbot4.getJoint(2).setData(setVel);
+    youbot4.getJoint(3).setData(setVel);
+    youbot4.getJoint(4).setData(setVel);
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(500));
 

@@ -62,12 +62,15 @@ void YouBot::destroy()
   // Bouml preserved body end 00042FF1
 }
 
+//return the quantity of joints
 unsigned int YouBot::getNumberOfJoints() const {
   // Bouml preserved body begin 00044A71
     return this->joints.size();
   // Bouml preserved body end 00044A71
 }
 
+//return a joint form the base, arm1 or arm2
+//@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
 YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
   // Bouml preserved body begin 000449F1
     if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
@@ -78,6 +81,8 @@ YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
   // Bouml preserved body end 000449F1
 }
 
+//return a joint form the base, arm1 or arm2
+//@param jointName e.g. BaseLeftFront
 YouBotJoint& YouBot::getJointByName(const std::string jointName) {
   // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
@@ -99,6 +104,8 @@ YouBotJoint& YouBot::getJointByName(const std::string jointName) {
   // Bouml preserved body end 0004F8F1
 }
 
+//return a joint form the base
+//@param jointNumber 1-4 for the base joints
 YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
   // Bouml preserved body begin 0004F771
     if (baseJointNumber <= 0 || baseJointNumber > 4 || baseJointNumber > getNumberOfJoints()) {
@@ -108,6 +115,8 @@ YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
   // Bouml preserved body end 0004F771
 }
 
+//return a joint form the arm1
+//@param jointNumber 1-5 for the arm1 joints
 YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
   // Bouml preserved body begin 0004F7F1
     unsigned int jointNumber = arm1JointNumber + 4;
@@ -118,6 +127,8 @@ YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
   // Bouml preserved body end 0004F7F1
 }
 
+//return a joint form the arm2
+//@param jointNumber 1-5 for the arm2 joints
 YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
   // Bouml preserved body begin 0004F871
     unsigned int jointNumber = arm2JointNumber + 4 + 5;
@@ -128,6 +139,10 @@ YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
   // Bouml preserved body end 0004F871
 }
 
+//commands the base in cartesien velocities
+//@param longitudinalVelocity is the forward or backward velocity
+//@param transversalVelocity is the sideway velocity
+//@param angularVelocity is the rotational velocity around the center of the YouBot
 void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
   // Bouml preserved body begin 0004DD71
 
@@ -136,6 +151,11 @@ void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity,
     JointVelocitySetpoint setVel;
 
     youBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+
+    if(wheelVelocities.size() < 4)
+      throw ExceptionOODL("To less wheel velocities");
+
+    
     setVel.angularVelocity = wheelVelocities[0];
     this->getJoint(1).setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
