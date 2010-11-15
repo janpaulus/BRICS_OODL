@@ -132,7 +132,7 @@ bool MonocularCamera::capture (Image2dData &data)
   unicap_start_capture(*deviceHandle); 
   
   int i = 0;
-  while (i<1000)
+  while (i<100)
   {
     unicap_queue_buffer(*deviceHandle, &tempBuffer);
 

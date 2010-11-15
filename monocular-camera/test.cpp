@@ -7,12 +7,23 @@ int main (int argc, char **argv)
 
  
   MonocularCameraConfiguration config ;
+  MonocularCameraConfiguration config1 ;
+  MonocularCameraConfiguration config2 ;
+  MonocularCameraConfiguration config3 ;
   MonocularCamera camera(1);
+  MonocularCamera camera1(2);
+  MonocularCamera camera2(1);
+  MonocularCamera camera3(1);
+
   
   std::string x ="RGB";
   std::string deviceName;
 
   ImageFormat format(x);
+  ImageFormat format1(x);
+  ImageFormat format2(x);
+  ImageFormat format3(x);
+
   camera.open(); //always open first
 
   camera.getConfiguration(config);
