@@ -32,6 +32,9 @@ int main() {
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
+    quantity<si::length> sensedLongitudinalPos;
+    quantity<si::length> sensedTransversalPos;
+    quantity<si::plane_angle> sensedAngularPos;
 
     (void) initscr(); /* initialize the curses library */
     keypad(stdscr, TRUE); /* enable keyboard mapping */

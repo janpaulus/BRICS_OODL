@@ -5,12 +5,12 @@
  * Created on September 1, 2010, 5:34 PM
  */
 
-#ifndef OODL_LOGGER_H
-#define	OODL_LOGGER_H
+#ifndef BRICS_OODL_LOGGER_HPP
+#define	BRICS_OODL_LOGGER_HPP
 
 #include <iostream>
 
-#define BOOST_LOG_FOUND
+//#define BOOST_LOG_FOUND
 #ifdef BOOST_LOG_FOUND
 #include <boost/log/utility/init/to_console.hpp>
 #include <boost/log/utility/init/to_file.hpp>
@@ -72,5 +72,5 @@ namespace brics_oodl {
 
 } // namespace brics_oodl
 
-#endif	/* OODL_LOGGER_HPP */
+#endif	/* BRICS_OODL_LOGGER_HPP */
 

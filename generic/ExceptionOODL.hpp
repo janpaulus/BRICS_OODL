@@ -1,5 +1,5 @@
-#ifndef _EXCEPTION_OODL_H
-#define _EXCEPTION_OODL_H
+#ifndef _EXCEPTION_OODL_HPP
+#define _EXCEPTION_OODL_HPP
 
 
 
@@ -25,4 +25,4 @@ namespace brics_oodl {
     };
 
 } // namespace brics_oodl
-#endif //_EXCEPTION_OODL_H
+#endif //_EXCEPTION_OODL_HPP

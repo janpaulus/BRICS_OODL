@@ -110,7 +110,7 @@ void YouBotJoint::getData(JointSensedAngle& data) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
 
-    data.angle = ((double) this->messageBuffer.stctInput.actualPosition / (config.getGearRatio() * config.getEncoderTicksPerRound())) * (2.0 * M_PI) * radian;
+    data.angle = ((double) this->messageBuffer.stctInput.actualPosition /config.getEncoderTicksPerRound()) * config.getGearRatio()* (2.0 * M_PI)  * radian;
   // Bouml preserved body end 0003DCF1
 }
 

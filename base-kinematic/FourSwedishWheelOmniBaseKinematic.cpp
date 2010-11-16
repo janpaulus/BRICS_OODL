@@ -26,7 +26,6 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
       throw ExceptionOODL("The wheelRadius, RotationRatio and the SlideRatio are not allowed to be zero");
     }
 
-
     // RadPerSec_FromX = longitudinalVelocity / config.wheelRadius;
     RadPerSec_FromX = longitudinalVelocity.value() / config.wheelRadius.value() * radian_per_second;
     RadPerSec_FromY = transversalVelocity.value() / (config.wheelRadius.value() * config.slideRatio) * radian_per_second;
@@ -50,7 +49,6 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
 void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity) {
   // Bouml preserved body begin 0004C0F1
 
-
     if (wheelVelocities.size() < 4)
       throw ExceptionOODL("To less wheel velocities");
 
@@ -66,9 +64,6 @@ void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const
     transversalVelocity = (wheelVelocities[0] + wheelVelocities[1] + wheelVelocities[2] + wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
     angularVelocity = -(wheelVelocities[0] - wheelVelocities[1] - wheelVelocities[2] + wheelVelocities[3]) * (wheel_radius_per4 / geom_factor).value();
 
-
-    //		timestamp = mappedHead->timestamp;
-
   // Bouml preserved body end 0004C0F1
 }
 
@@ -78,6 +73,10 @@ void FourSwedishWheelOmniBaseKinematic::wheelPositionsToCartesianPosition(const 
     if (wheelPositions.size() < 4)
       throw ExceptionOODL("To less wheel positions");
 
+     if (config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0) {
+      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels and the lengthBetweenFrontWheels are not allowed to be zero");
+    }
+
     if (this->lastWheelPositionInitialized == false) {
       lastWheelPositions = wheelPositions;
       longitudinalPos = 0 * meter;
@@ -86,20 +85,23 @@ void FourSwedishWheelOmniBaseKinematic::wheelPositionsToCartesianPosition(const 
       this->lastWheelPositionInitialized = true;
     }
 
+    quantity<si::length> wheel_radius_per4 = config.wheelRadius / 4.0;
+
+    quantity<si::length> geom_factor = (config.lengthBetweenFrontAndRearWheels / 2.0) + (config.lengthBetweenFrontWheels / 2.0);
+
     quantity<plane_angle> deltaPositionW1 = (wheelPositions[0] - lastWheelPositions[0]);
     quantity<plane_angle> deltaPositionW2 = (wheelPositions[1] - lastWheelPositions[1]);
     quantity<plane_angle> deltaPositionW3 = (wheelPositions[2] - lastWheelPositions[2]);
     quantity<plane_angle> deltaPositionW4 = (wheelPositions[3] - lastWheelPositions[3]);
+    lastWheelPositions[0] = wheelPositions[0];
+    lastWheelPositions[1] = wheelPositions[1];
+    lastWheelPositions[2] = wheelPositions[2];
+    lastWheelPositions[3] = wheelPositions[3];
 
-    quantity<si::length> xDelta = config.wheelRadius * (deltaPositionW4 - deltaPositionW3).value();
-    quantity<si::length> yDelta = config.wheelRadius * (deltaPositionW4 - deltaPositionW2).value();
-    quantity<plane_angle> thetaDelta = (deltaPositionW4 + deltaPositionW1) / 2.0;
+    longitudinalPos += (-deltaPositionW1 + deltaPositionW2 - deltaPositionW3 + deltaPositionW4).value() * wheel_radius_per4.value() * meter;
+    transversalPos += (deltaPositionW1 + deltaPositionW2 - deltaPositionW3 - deltaPositionW4).value() * wheel_radius_per4.value() * meter;
+    angle += (deltaPositionW1 + deltaPositionW2 + deltaPositionW3 + deltaPositionW4) * (wheel_radius_per4 / geom_factor).value();
 
-    longitudinalPos += xDelta * cos(angle) + yDelta * sin(angle);
-    transversalPos += xDelta * -sin(angle) + yDelta * cos(angle);
-    angle += thetaDelta;
-
-  //  LOG(trace) <<
 
     longitudinalPosition = longitudinalPos;
     transversalPosition = transversalPos;
