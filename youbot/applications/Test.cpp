@@ -41,6 +41,9 @@ int main() {
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
+    quantity<si::velocity> sensedLongitudinalVelocity;
+    quantity<si::velocity> sensedTransversalVelocity;
+    quantity<si::angular_velocity> sensedAngularVelocity;
 
 
     while (running) {
@@ -50,11 +53,11 @@ int main() {
         youbot4.getBaseJoint(i).getData(angle);
         youbot4.getBaseJoint(i).getData(vel);
         youbot4.getBaseJoint(i).getData(current);
-        std::cout << "Joint: " << i << " Temp: " << temp.temperature
-                << " Angle: " << angle.angle
-                << " Vel: " << vel.angularVelocity
-                << " Current: " << current.current
-                << std::endl;
+    //    std::cout << "Joint: " << i << " Temp: " << temp.temperature
+    //            << " Angle: " << angle.angle
+    //            << " Vel: " << vel.angularVelocity
+    //            << " Current: " << current.current
+     //           << std::endl;
       }
 
   //    youbot4.getJoint(1).setData(setVel);
@@ -62,6 +65,10 @@ int main() {
   //    youbot4.getJoint(3).setData(setVel);
   //    youbot4.getJoint(4).setData(setVel);
       youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+      youbot4.getBaseVelocity(sensedLongitudinalVelocity, sensedTransversalVelocity, sensedAngularVelocity);
+      std::cout << "Vel: Longi: " << sensedLongitudinalVelocity
+                << " Trans: " << sensedTransversalVelocity
+                << " Angular: " << sensedAngularVelocity << std::endl;
 
 
       // youbot4.getJoint(3).getConfiguration(config);

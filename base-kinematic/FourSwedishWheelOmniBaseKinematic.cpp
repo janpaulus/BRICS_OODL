@@ -70,6 +70,26 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
 
 void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity) {
   // Bouml preserved body begin 0004C0F1
+
+
+    if(wheelVelocities.size() < 4)
+      throw ExceptionOODL("To less wheel velocities");
+
+    if(config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0){
+      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels and the lengthBetweenFrontWheels are not allowed to be zero");
+    }
+
+    quantity<si::length> wheel_radius_per4 = config.wheelRadius / 4.0;
+
+		quantity<si::length> geom_factor = (config.lengthBetweenFrontAndRearWheels/2.0) + (config.lengthBetweenFrontWheels/2.0);
+		//now convert this to a vx,vy,vtheta
+		longitudinalVelocity = (-wheelVelocities[0] + wheelVelocities[1] - wheelVelocities[2] + wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
+		transversalVelocity = (wheelVelocities[0] + wheelVelocities[1] + wheelVelocities[2] + wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
+		angularVelocity = -(wheelVelocities[0] - wheelVelocities[1] - wheelVelocities[2] + wheelVelocities[3]) * (wheel_radius_per4 / geom_factor).value();
+
+
+//		timestamp = mappedHead->timestamp;
+
   // Bouml preserved body end 0004C0F1
 }
 

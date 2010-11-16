@@ -167,6 +167,38 @@ void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity,
   // Bouml preserved body end 0004DD71
 }
 
+//gets the cartesien base velocity
+//@param longitudinalVelocity is the forward or backward velocity
+//@param transversalVelocity is the sideway velocity
+//@param angularVelocity is the rotational velocity around the center of the YouBot
+void YouBot::getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity) {
+  // Bouml preserved body begin 00051271
+
+
+    std::vector<quantity<angular_velocity> > wheelVelocities;
+    quantity<angular_velocity> dummy;
+    JointSensedVelocity sensedVel;
+    wheelVelocities.assign(4, dummy);
+
+    this->getJoint(1).getData(sensedVel);
+    wheelVelocities[0] = sensedVel.angularVelocity;
+    this->getJoint(2).getData(sensedVel);
+    wheelVelocities[1] = sensedVel.angularVelocity;
+    this->getJoint(3).getData(sensedVel);
+    wheelVelocities[2] = sensedVel.angularVelocity;
+    this->getJoint(4).getData(sensedVel);
+    wheelVelocities[3] = sensedVel.angularVelocity;
+
+
+    youBotBaseKinematic.wheelVelocitiesToCartesianVelocity(wheelVelocities, longitudinalVelocity, transversalVelocity, angularVelocity );
+
+
+
+    
+
+  // Bouml preserved body end 00051271
+}
+
 void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 000414F1
 

@@ -70,6 +70,12 @@ friend class YouBotJoint;
     //@param angularVelocity is the rotational velocity around the center of the YouBot
     void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
 
+    //gets the cartesien base velocity
+    //@param longitudinalVelocity is the forward or backward velocity
+    //@param transversalVelocity is the sideway velocity
+    //@param angularVelocity is the rotational velocity around the center of the YouBot
+    void getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity);
+
     //This class represents the kinematic of the YouBot 
     FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
 
