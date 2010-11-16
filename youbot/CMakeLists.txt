@@ -40,13 +40,35 @@ SET(OODL_YOUBOT_SRC
 )
 
 SET(OODL_YOUBOT_HEADERS
-EthercatMaster.hpp
-YouBot.hpp
-YouBotGripper.hpp
-YouBotJoint.hpp
-YouBotJointConfiguration.hpp
-YouBotSlaveMailboxMsg.hpp
-YouBotSlaveMsg.hpp
+  EthercatMaster.hpp
+  YouBot.hpp
+  YouBotGripper.hpp
+  YouBotJoint.hpp
+  YouBotJointConfiguration.hpp
+  YouBotSlaveMailboxMsg.hpp
+  YouBotSlaveMsg.hpp
+../base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp
+../base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp
+../base-kinematic/WheeledBaseKinematic.hpp
+
+../generic/Errors.hpp
+../generic/ExceptionOODL.hpp
+../generic/Logger.hpp
+../generic/Time.hpp
+../generic/Units.hpp
+
+../generic-gripper/Gripper.hpp
+../generic-gripper/GripperConfiguration.hpp
+../generic-gripper/GripperData.hpp
+
+../generic-joint/Joint.hpp
+../generic-joint/JointConfiguration.hpp
+../generic-joint/JointData.hpp
+
+../one-dof-gripper/OneDOFGripper.hpp
+../one-dof-gripper/OneDOFGripperConfiguration.hpp
+../one-dof-gripper/OneDOFGripperData.hpp
+
 )
 
 LINK_LIBRARIES(
@@ -74,7 +96,7 @@ ADD_EXECUTABLE(YouBot_KeyboardRemoteControl
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})
     STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
-    INSTALL(FILES ${HEADER} DESTINATION include/youbot/${DIR})
+    INSTALL(FILES ${HEADER} DESTINATION include/oodl/youbot/${DIR})
   ENDFOREACH(HEADER)
 ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
 
