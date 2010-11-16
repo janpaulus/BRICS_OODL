@@ -10,7 +10,7 @@
 #include "generic-joint/JointConfiguration.hpp"
 namespace brics_oodl {
 
-class YouBotJointConfiguration {
+class YouBotJointConfiguration : public JointConfiguration {
   public:
     YouBotJointConfiguration();
 

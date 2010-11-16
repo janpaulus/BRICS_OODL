@@ -6,14 +6,16 @@
 #include <string>
 #include <time.h>
 
-struct outputBuffer {
+namespace brics_oodl {
+
+struct OutputBuffer {
     int32 positionOrSpeed;
     uint8 controllerMode;
 } __attribute__((__packed__));
 
 //    struct inputbuffer; master view
 
-struct inputBuffer {
+struct InputBuffer {
     int32 actualPosition;
     int32 actualCurrent;
     int32 actualVelocity;
@@ -26,8 +28,8 @@ class YouBotSlaveMsg {
 public:
     //    struct outputbuffer; master view
 
-    outputBuffer stctOutput;
-    inputBuffer stctInput;
+    OutputBuffer stctOutput;
+    InputBuffer stctInput;
     // Constructor
 
     YouBotSlaveMsg() {
@@ -65,6 +67,6 @@ public:
     }
 };
 
-
+} // namespace brics_oodl
 
 #endif	/* _YOUBOT_SLAVE_MESSAGE_H */

@@ -1,12 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
-#include "boost/date_time/posix_time/posix_time.hpp"
 #include "youbot/YouBot.hpp"
 
 
 
-using namespace boost::posix_time;
+
 using namespace std;
 using namespace brics_oodl;
 
@@ -41,9 +40,11 @@ int main() {
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
-    quantity<si::velocity> sensedLongitudinalVelocity;
-    quantity<si::velocity> sensedTransversalVelocity;
-    quantity<si::angular_velocity> sensedAngularVelocity;
+    quantity<si::length> sensedLongitudinalPos;
+    quantity<si::length> sensedTransversalPos;
+    quantity<si::plane_angle> sensedAngularPos;
+
+
 
 
     while (running) {
@@ -65,24 +66,25 @@ int main() {
   //    youbot4.getJoint(3).setData(setVel);
   //    youbot4.getJoint(4).setData(setVel);
       youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
-      youbot4.getBaseVelocity(sensedLongitudinalVelocity, sensedTransversalVelocity, sensedAngularVelocity);
-      std::cout << "Vel: Longi: " << sensedLongitudinalVelocity
-                << " Trans: " << sensedTransversalVelocity
-                << " Angular: " << sensedAngularVelocity << std::endl;
+      youbot4.getBasePosition(sensedLongitudinalPos, sensedTransversalPos, sensedAngularPos);
+      std::cout << "Pos: Longi: " << sensedLongitudinalPos
+                << " Trans: " << sensedTransversalPos
+                << " Angular: " << sensedAngularPos << std::endl;
 
 
       // youbot4.getJoint(3).getConfiguration(config);
-      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+      SLEEP_MILLISEC(100);
     }
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+    SLEEP_MILLISEC(500);
     setVel.angularVelocity = 0 * radian_per_second;
     youbot4.getJoint(1).setData(setVel);
     youbot4.getJoint(2).setData(setVel);
     youbot4.getJoint(3).setData(setVel);
     youbot4.getJoint(4).setData(setVel);
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+    SLEEP_MILLISEC(500);
+
 
 
   } catch (std::exception& e) {
