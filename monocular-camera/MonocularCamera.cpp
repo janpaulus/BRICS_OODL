@@ -33,9 +33,9 @@ MonocularCamera::MonocularCamera(MonocularCamera &camera)
 MonocularCamera& MonocularCamera::operator= (const MonocularCamera &camera)
 {
   if(&camera != this)
-  {
-    std::cout<<"Assigning MonocularCamera"<<std::endl;
-  }
+    {
+      std::cout<<"Assigning MonocularCamera"<<std::endl;
+    }
 
   return *this;
 }
@@ -43,14 +43,14 @@ MonocularCamera& MonocularCamera::operator= (const MonocularCamera &camera)
 MonocularCamera::~MonocularCamera()
 {
   std::cout<<"Destroying Monocular Camera"<<std::endl;
-//Maybe we need to call close on device implicitly without user being aware of it.
-//But then open should also be implicit to make things consistent.
-//this->close();
+  //Maybe we need to call close on device implicitly without user being aware of it.
+  //But then open should also be implicit to make things consistent.
+  //this->close();
   delete device;
   delete deviceHandle;
   delete format;
   delete imagedata;
-//  delete cameraConfig;
+  //  delete cameraConfig;
 }
 
 //bool MonocularCamera::open (Errors &error)
@@ -58,36 +58,36 @@ bool MonocularCamera::open ()
 {
   std::cout<<"In Monocular Camera open"<<std::endl;
   if(SUCCESS(isConnected))
-  {
-    std::cout << "Device is already open" <<std::endl;
-    return true;
-  }
+    {
+      std::cout << "Device is already open" <<std::endl;
+      return true;
+    }
   else
-  {
-    isConnected = unicap_enumerate_devices(NULL, device, 0);
-    if(SUCCESS(isConnected))
     {
-      std::cout << "Openning camera"<<std::endl;
-      isConnected = unicap_open(deviceHandle, device);
+      isConnected = unicap_enumerate_devices(NULL, device, 0);
       if(SUCCESS(isConnected))
-      {
-        std::cout << "Device is successfully opened" << std::endl;
-        //             int returnValue = getListOfFormats();
+		{
+		  std::cout << "Openning camera"<<std::endl;
+		  isConnected = unicap_open(deviceHandle, device);
+		  if(SUCCESS(isConnected))
+			{
+			  std::cout << "Device is successfully opened" << std::endl;
+			  //             int returnValue = getListOfFormats();
                 
-        return true;
-      }
+			  return true;
+			}
+		  else
+			{
+			  std::cout << "Could not open device" << std::endl;
+			  return false;
+			}
+		}
       else
-      {
-        std::cout << "Could not open device" << std::endl;
-        return false;
-      }
+		{
+		  std::cout << "Could not find devices" << std::endl;
+		  return false;
+		}
     }
-    else
-    {
-      std::cout << "Could not find devices" << std::endl;
-      return false;
-    }
-  }
 
 }
 
@@ -96,7 +96,7 @@ bool MonocularCamera::open ()
 bool MonocularCamera ::close ()
 {
   std::cout<<"In Monocular Camera close"<<std::endl;
-//  unicap_close(deviceHandle[0]);
+  //  unicap_close(deviceHandle[0]);
   return true;
 }
 
@@ -133,18 +133,18 @@ bool MonocularCamera::capture (Image2dData &data)
   
   int i = 0;
   while (i<100)
-  {
-    unicap_queue_buffer(*deviceHandle, &tempBuffer);
-
-    //this waits till buffer is filled with image data and then dequeue it   
-    if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnedBuffer ) ) )
     {
-      fprintf( stderr, "Failed to wait for buffer!\n" );
-      return false;
-    }
-    i++;
+      unicap_queue_buffer(*deviceHandle, &tempBuffer);
 
-  }
+      //this waits till buffer is filled with image data and then dequeue it   
+      if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnedBuffer ) ) )
+		{
+		  fprintf( stderr, "Failed to wait for buffer!\n" );
+		  return false;
+		}
+      i++;
+
+    }
   return true;
 }
 

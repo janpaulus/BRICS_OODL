@@ -44,6 +44,7 @@ private:
 
 #endif //~_MONOCULARCAMERACONFIGURATION_H_
 
+
 /*
 
   There are several categories for camera configuration.

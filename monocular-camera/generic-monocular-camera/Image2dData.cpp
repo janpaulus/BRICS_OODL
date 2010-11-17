@@ -1,7 +1,6 @@
 #include "Image2dData.hpp"
 
 
-
 Image2dData::Image2dData():bufferSize(0), buffer(NULL)
 {
 

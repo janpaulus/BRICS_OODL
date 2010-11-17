@@ -2,25 +2,45 @@
 #include <iostream>
 #include <unicap.h>
 
+//! This class is responsible for setting and getting information for image format.
 
+//! Format contains information on image resolution, color model (RGB, BGR, YUVCr), 
+//! fourcc id, list of camera supported formats (codecs, e.g. YUV, MJPEG).
 class ImageFormat
 {
 
 public:
-
+  //! Default constructor
   ImageFormat();
-  ImageFormat(std::string &formatID);
-  ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier);  
-  ImageFormat(ImageFormat &format);
-  ImageFormat& operator=(ImageFormat &format);
-  ~ImageFormat();
+  //! When passed format identifier, it will instantiate an image format 
+  //! with correct properties obtained from format identifier and bind it to the first 
+  //! camera identified by OS (dev/video0 or dev/raw13940).
+  //! The default image resolution will be set to minimum resoltion supported by the camera
+  //! E.g. for format Monochrom, bpp value might be set to 8 bits/px and resoltuion 160x120.
 
+  ImageFormat(std::string &formatID);
+  //! Instantiate a format object bound to a camera with the specified handle and set 
+  //! properties of obtained from the format indentifier
+  ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier);
+  //! Copy constructor
+  ImageFormat(ImageFormat &format);
+  //! Assignment operator
+  ImageFormat& operator=(ImageFormat &format);
+  //! Class destructor
+  ~ImageFormat();
+  //! Returns string value for current image format identigier (e.g. JPEG, MJPEG, YUYV )
   bool getImageFormatStringName(std::string &formatName);
+  //! Returns FOURCC value for current image format 
   bool getImageFormatFOURCC(unsigned int &fourcc);
+  //! Returns image resolution for current image format
   bool getImageFormatResolution(int &width, int &height);
+  //! Returns color model used by the format (e.g. MJPEG might be using RGB model)
   bool getImageFormatColorModel(std::string &colorModel);
+  //! Returns list of the resolutions supported by the camera
   bool getImageFormatResolutionList();
+  //! Returns color model list supported by the camera
   bool getImageFormatColorModelList();
+
   bool getImageFormatSize(int &size);
 
   bool setImageFormatResolution(int &width, int &height);

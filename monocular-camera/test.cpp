@@ -33,7 +33,7 @@ int main (int argc, char **argv)
   double hue = 0;
   (config.getColorExposureConfiguration())->getBrightnessValue(hue);
 
-// set image format and start capturing  
+  // set image format and start capturing  
   camera.getImageFormat(format) ;
   std::string formatName;
   format.getImageFormatStringName(formatName);

@@ -1,9 +1,16 @@
 #include "ImageFormat.hpp"
 
 
-ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), numberOfResolutions(0),currentResolution(NULL), 
-                           currentFormat(NULL), deviceFormatCounter(0), formatIdentifier(""), bitsPerPixel(8), 
-                           fourcc(0), bufferSize(0), currentBufferType(UNICAP_BUFFER_TYPE_USER), deviceHandle(NULL)
+ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), 
+						   numberOfResolutions(0),
+						   currentResolution(NULL), 
+                           currentFormat(NULL), 
+						   deviceFormatCounter(0), 
+						   formatIdentifier(""), 
+						   bitsPerPixel(8), 
+                           fourcc(0), bufferSize(0), 
+						   currentBufferType(UNICAP_BUFFER_TYPE_USER), 
+						   deviceHandle(NULL)
 {
 
   std::cout  << "Creating ImageFormat without args"<< std::endl;
@@ -11,16 +18,22 @@ ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), numberOfResolutions(0),
 }
 
 
-ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE), numberOfResolutions(0),currentResolution(NULL), 
-                                                      currentFormat(NULL), deviceFormatCounter(0), 
-                                                      bitsPerPixel(8), fourcc(0), bufferSize(0), 
-                                                      currentBufferType(UNICAP_BUFFER_TYPE_USER),
-                                                      deviceHandle(NULL), formatDevice(NULL)
+ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE), 
+												numberOfResolutions(0),
+												currentResolution(NULL), 
+												currentFormat(NULL), 
+												deviceFormatCounter(0), 
+												bitsPerPixel(8), 
+												fourcc(0), 
+												bufferSize(0), 
+												currentBufferType(UNICAP_BUFFER_TYPE_USER),
+												deviceHandle(NULL), formatDevice(NULL)
 {
 
   std::cout  << "Creating ImageFormat with formatID string argument"<< std::endl;
 
 }
+
 
 ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): returnStatus(STATUS_FAILURE), 
                                                                                                           numberOfResolutions(0),currentResolution(NULL), 

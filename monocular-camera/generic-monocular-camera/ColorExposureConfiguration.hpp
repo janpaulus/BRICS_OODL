@@ -8,6 +8,7 @@
 #include <iostream>
 
 
+//! This class represents a set of camera properties related to color and exposure
 class ColorExposureConfiguration
 {
 public:
