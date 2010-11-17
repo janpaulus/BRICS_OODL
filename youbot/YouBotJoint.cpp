@@ -51,7 +51,7 @@ void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration
 //@param configuration returns the joint configuration by reference
 void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C171
-    mailboxMsgBuffer->stctOutput.commandNumber = 6;
+ /*   mailboxMsgBuffer->stctOutput.commandNumber = 6;
     mailboxMsgBuffer->stctOutput.moduleAddress = 0; //0 : Drive  1 : Gripper
     mailboxMsgBuffer->stctOutput.motorNumber = 0; //(always 0)
     mailboxMsgBuffer->stctOutput.typeNumber = 4;
@@ -64,7 +64,7 @@ void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
             << " moduleAddress " << (int)mailboxMsgBuffer->stctInput.moduleAddress
             << " replyAddress " << (int)mailboxMsgBuffer->stctInput.replyAddress
             << " status " << (int)mailboxMsgBuffer->stctInput.status
-            << " value " << mailboxMsgBuffer->stctInput.value;
+            << " value " << mailboxMsgBuffer->stctInput.value; */
     configuration = this->config;
 
   // Bouml preserved body end 0003C171

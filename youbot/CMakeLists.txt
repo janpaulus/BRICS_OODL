@@ -77,6 +77,7 @@ ncurses
 
 SET(OODL_YOUBOT_CONFIG
 ${CMAKE_HOME_DIRECTORY}/config/youbot-configfile.cfg
+${CMAKE_HOME_DIRECTORY}/config/applications.cfg
 )
 
 ADD_LIBRARY(OODL_YouBot
