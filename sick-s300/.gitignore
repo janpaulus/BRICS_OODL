@@ -3,5 +3,4 @@ cmake_install.cmake
 Makefile
 .dep.inc
 CMakeFiles
-OODL_SickS300_test
-libOODL_SickS300.a
+

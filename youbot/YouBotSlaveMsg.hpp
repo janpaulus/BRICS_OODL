@@ -57,9 +57,6 @@ public:
     // assignment operator
 
     YouBotSlaveMsg & operator=(const YouBotSlaveMsg &copy) {
-        if (this == &copy)
-            return *this;
-
         stctOutput = copy.stctOutput;
         stctInput = copy.stctInput;
 

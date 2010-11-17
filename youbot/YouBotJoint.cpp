@@ -6,6 +6,7 @@ namespace brics_oodl {
 YouBotJoint::YouBotJoint(unsigned int jointNo) {
   // Bouml preserved body begin 000412F1
     this->jointNumber = jointNo;
+    mailboxMsgBuffer  = new YouBotSlaveMailboxMsg(0);
   // Bouml preserved body end 000412F1
 }
 
@@ -50,21 +51,20 @@ void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration
 //@param configuration returns the joint configuration by reference
 void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C171
- /*   YouBotSlaveMailboxMsg msg;
-    msg.stctOutput.commandNumber = 5;
-    msg.stctOutput.moduleAddress = 0;
-    msg.stctOutput.motorNumber = 0;
-    msg.stctOutput.typeNumber = 6;
-    msg.stctOutput.value = 1000;
-    YouBot::getInstance().setMailboxMsgBuffer(msg, this->jointNumber);
+ /*   mailboxMsgBuffer->stctOutput.commandNumber = 6;
+    mailboxMsgBuffer->stctOutput.moduleAddress = 0; //0 : Drive  1 : Gripper
+    mailboxMsgBuffer->stctOutput.motorNumber = 0; //(always 0)
+    mailboxMsgBuffer->stctOutput.typeNumber = 4;
+    mailboxMsgBuffer->stctOutput.value = 1000;
+    YouBot::getInstance().setMailboxMsgBuffer(*mailboxMsgBuffer, this->jointNumber);
 
 
-    msg = YouBot::getInstance().getMailboxMsgBuffer(this->jointNumber);
-    LOG(trace) << "CommandNumber " << msg.stctInput.commandNumber
-            << "moduleAddress " << msg.stctInput.moduleAddress
-            << "replyAddress " << msg.stctInput.replyAddress
-            << "status " << msg.stctInput.status
-            << "value " << msg.stctInput.value;*/
+    YouBot::getInstance().getMailboxMsgBuffer(*mailboxMsgBuffer, this->jointNumber);
+    LOG(trace) << "CommandNumber " << (int)mailboxMsgBuffer->stctInput.commandNumber
+            << " moduleAddress " << (int)mailboxMsgBuffer->stctInput.moduleAddress
+            << " replyAddress " << (int)mailboxMsgBuffer->stctInput.replyAddress
+            << " status " << (int)mailboxMsgBuffer->stctInput.status
+            << " value " << mailboxMsgBuffer->stctInput.value; */
     configuration = this->config;
 
   // Bouml preserved body end 0003C171

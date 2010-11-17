@@ -105,7 +105,7 @@ class YouBotJoint : public Joint {
 
     YouBotSlaveMsg messageBuffer;
 
-    YouBotSlaveMailboxMsg mailboxMsgBuffer;
+    YouBotSlaveMailboxMsg* mailboxMsgBuffer;
 
     YouBotJointConfiguration config;
 
