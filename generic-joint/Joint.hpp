@@ -10,7 +10,6 @@
 namespace brics_oodl {
 
 enum SyncMode {
-  BLOCKING,
   NON_BLOCKING
 
 };

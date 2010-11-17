@@ -19,15 +19,15 @@ class JointConfiguration {
 
     double getGearRatio() const;
 
-    void setGearRatio(double ratio);
+    void setGearRatio(const double ratio);
 
-    std::vector<JointDataRange> ValidRanges;
+    std::vector<JointDataRange> validRanges;
 
-    std::string JointName;
+    std::string jointName;
 
 
   private:
-    double GearRatio;
+    double gearRatio;
 
 };
 

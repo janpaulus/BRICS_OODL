@@ -9,12 +9,14 @@
 #include "rude/config.h"
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
+#include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotJoint.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
+#include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
 
 extern "C"{
 #include <ethercattype.h>
@@ -37,27 +39,63 @@ friend class YouBotJoint;
 
 
   public:
-    static YouBot& getInstance(std::string ethernetDeviceName = "eth0");
+    static YouBot& getInstance();
 
     static void destroy();
 
-    unsigned int getNumberOfJoints();
+    ///return the quantity of joints
+    unsigned int getNumberOfJoints() const;
 
-    YouBotJoint& getJoint(unsigned int jointNumber);
+    ///return a joint form the base, arm1 or arm2
+    ///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
+    YouBotJoint& getJoint(const unsigned int jointNumber);
 
+    ///return a joint form the base, arm1 or arm2
+    ///@param jointName e.g. BaseLeftFront
+    YouBotJoint& getJointByName(const std::string jointName);
+
+    ///return a joint form the base
+    ///@param jointNumber 1-4 for the base joints
+    YouBotJoint& getBaseJoint(const unsigned int baseJointNumber);
+
+    ///return a joint form the arm1
+    ///@param jointNumber 1-5 for the arm1 joints
+    YouBotJoint& getArm1Joint(const unsigned int arm1JointNumber);
+
+    ///return a joint form the arm2
+    ///@param jointNumber 1-5 for the arm2 joints
+    YouBotJoint& getArm2Joint(const unsigned int arm2JointNumber);
+
+    ///commands the base in cartesien velocities
+    ///@param longitudinalVelocity is the forward or backward velocity
+    ///@param transversalVelocity is the sideway velocity
+    ///@param angularVelocity is the rotational velocity around the center of the YouBot
     void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
 
-    FourSwedishWheelOmniBaseKinematic YouBotBaseKinematic;
+    ///gets the cartesien base velocity
+    ///@param longitudinalVelocity is the forward or backward velocity
+    ///@param transversalVelocity is the sideway velocity
+    ///@param angularVelocity is the rotational velocity around the center of the YouBot
+    void getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity);
+
+    ///gets the cartesien base position which is calculated from the odometry
+    ///@param longitudinalPosition is the forward or backward position
+    ///@param transversalPosition is the sideway position
+    ///@param orientation is the rotation around the center of the YouBot
+    void getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation);
+
+    ///This class represents the kinematic of the YouBot 
+    FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
 
 
   private:
-    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber);
+    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
 
-    YouBotSlaveMsg getMsgBuffer(unsigned int jointNumber);
+    YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
 
-    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber);
+    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
 
-    YouBotSlaveMailboxMsg getMailboxMsgBuffer(unsigned int jointNumber);
+    YouBotSlaveMailboxMsg getMailboxMsgBuffer(const unsigned int jointNumber);
 
     void initializeEthercat();
 
@@ -69,7 +107,7 @@ friend class YouBotJoint;
 
     void updateSensorActorValues();
 
-    std::vector<YouBotJoint> Joints;
+    std::vector<YouBotJoint> joints;
 
     EthercatMaster* ethercatMaster;
 
@@ -78,7 +116,7 @@ friend class YouBotJoint;
     ec_mbxbuft mailboxBuffer;
 
     //in milliseconds
-    static const unsigned int timeTillNextEthercatUpdate = 4;
+    unsigned int timeTillNextEthercatUpdate;
 
     boost::mutex mutexDataOne;
 
@@ -104,9 +142,9 @@ friend class YouBotJoint;
 
     std::vector<bool> newOutputDataFlagTwo;
 
-    std::vector<outputBuffer*> ethercatOutputBufferVector;
+    std::vector<OutputBuffer*> ethercatOutputBufferVector;
 
-    std::vector<inputBuffer*> ethercatinputBufferVector;
+    std::vector<InputBuffer*> ethercatinputBufferVector;
 
     std::vector<YouBotSlaveMailboxMsg> firstMailboxBufferVector;
 

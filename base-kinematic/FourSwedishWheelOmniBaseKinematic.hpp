@@ -8,43 +8,38 @@
 #include "generic/Units.hpp"
 #include "generic/ExceptionOODL.hpp"
 #include "base-kinematic/WheeledBaseKinematic.hpp" 
+#include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
 namespace brics_oodl {
 
-class FourSwedishWheelOmniBaseKinematicConfiguration {
-  public:
-    FourSwedishWheelOmniBaseKinematicConfiguration();
-
-    ~FourSwedishWheelOmniBaseKinematicConfiguration();
-
-    FourSwedishWheelOmniBaseKinematicConfiguration(const FourSwedishWheelOmniBaseKinematicConfiguration & source);
-
-    FourSwedishWheelOmniBaseKinematicConfiguration & operator=(const FourSwedishWheelOmniBaseKinematicConfiguration & source);
-
-    quantity<si::length> wheelRadius;
-
-    quantity<si::length> lengthBetweenFrontWheels;
-
-    quantity<si::length> lengthBetweenFrontAndRearWheels;
-
-    //how far sideways in one wheel rotation compared to forward
-    double SlideRatio;
-
-    double RotationRatio;
-
-};
 class FourSwedishWheelOmniBaseKinematic : public WheeledBaseKinematic {
   public:
+    FourSwedishWheelOmniBaseKinematic();
+
+    virtual ~FourSwedishWheelOmniBaseKinematic();
+
     virtual void cartesianVelocityToWheelVelocities(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity, std::vector<quantity<angular_velocity> >& wheelVelocities);
 
-    virtual void WheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity);
+    virtual void wheelVelocitiesToCartesianVelocity(const std::vector<quantity<angular_velocity> >& wheelVelocities, quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<angular_velocity>& angularVelocity);
+
+    virtual void wheelPositionsToCartesianPosition(const std::vector<quantity<plane_angle> >& wheelPositions, quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation);
 
     void setConfiguration(const FourSwedishWheelOmniBaseKinematicConfiguration& configuration);
 
-    FourSwedishWheelOmniBaseKinematicConfiguration getConfiguration() const;
+    void getConfiguration(FourSwedishWheelOmniBaseKinematicConfiguration& configuration) const;
 
 
   private:
     FourSwedishWheelOmniBaseKinematicConfiguration config;
+
+    std::vector<quantity<plane_angle> > lastWheelPositions;
+
+    bool lastWheelPositionInitialized;
+
+    quantity<si::length> longitudinalPos;
+
+    quantity<si::length> transversalPos;
+
+    quantity<plane_angle> angle;
 
 };
 

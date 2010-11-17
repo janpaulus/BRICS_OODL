@@ -1,5 +1,5 @@
-#ifndef BRICS_OODL_ERRORS_H
-#define BRICS_OODL_ERRORS_H
+#ifndef BRICS_OODL_ERRORS_HPP
+#define BRICS_OODL_ERRORS_HPP
 
 
 #include <map>
@@ -42,4 +42,4 @@ class Errors {
 };
 
 } // namespace brics_oodl
-#endif
+#endif //BRICS_OODL_ERRORS_HPP

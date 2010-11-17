@@ -1,22 +1,40 @@
 PROJECT(BRICS_OODL)
 
-
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 SET(CMAKE_BUILD_TYPE Debug)
 SET(CMAKE_C_FLAGS_DEBUG "-Wall -g")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules")
 
-IF(DEFINED BOOST_LOG_PATH)
-  link_directories(${BOOST_LOG_PATH}/lib)
-  include_directories(${BOOST_LOG_PATH}/include)
-  MESSAGE(STATUS "BOOST_LOG_PATH= ${BOOST_LOG_PATH}")
-ENDIF(DEFINED BOOST_LOG_PATH)
+SET(LIBRARY_OUTPUT_PATH            ${CMAKE_HOME_DIRECTORY}/lib)  #static libraries 
+SET(EXECUTABLE_OUTPUT_PATH         ${CMAKE_HOME_DIRECTORY}/bin)  #executables 
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)  #dynamic libraries (plugins) 
 
-IF(NOT DEFINED BOOST_LOG_PATH)
-  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include)
-ENDIF(NOT DEFINED BOOST_LOG_PATH)
+INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
+
+# find required and optional dependencies via Find<name>.cmake modules
+
+#SET(Boost_USE_STATIC_LIBS ON)
+SET(Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0"  "1.42" "1.42.0")
+FIND_PACKAGE(Boost REQUIRED COMPONENTS thread date_time filesystem system regex)
+IF (Boost_FOUND)
+  LINK_LIBRARIES(boost_thread boost_date_time boost_filesystem boost_system boost_regex)
+	MESSAGE(STATUS "SUCCESSFUL: Boost found")
+ELSE (Boost_FOUND) 
+	MESSAGE(STATUS "ERROR: Boost not found")
+ENDIF (Boost_FOUND)
+
+FIND_PACKAGE(BoostLog)
+IF (BOOSTLOG_FOUND)
+  INCLUDE_DIRECTORIES(${BOOSTLOG_INCLUDE_DIR})
+  LINK_DIRECTORIES(${BOOSTLOG_LIBRARY_DIR})
+  LINK_LIBRARIES(${BOOSTLOGLIB})
+  ADD_DEFINITIONS(-DBOOST_LOG_FOUND)
+	MESSAGE(STATUS "SUCCESSFUL: boost::log found at "${BOOSTLOG_LIBRARY_DIR})
+ELSE (BOOSTLOG_FOUND)
+	MESSAGE(STATUS "ERROR: boost::log not found")
+ENDIF (BOOSTLOG_FOUND)
 
 
 IF(DEFINED UNICAP_PATH)
@@ -29,29 +47,6 @@ IF(NOT DEFINED UNICAP_PATH)
   link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
   include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
 ENDIF(NOT DEFINED UNICAP_PATH)
-
-IF(DEFINED SOEM_PATH)
-  link_directories(${SOEM_PATH}/lib)
-  include_directories(${SOEM_PATH}/include/soem/src)
-  MESSAGE(STATUS "SOEM_PATH= ${SOEM_PATH}")
-ENDIF(DEFINED SOEM_PATH)
-
-IF(NOT DEFINED SOEM_PATH)
-  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/soem/src)
-ENDIF(NOT DEFINED SOEM_PATH)
-
-
-IF(DEFINED RUDECONFIG_PATH)
-  link_directories(${RUDECONFIG_PATH}/lib)
-  include_directories(${RUDECONFIG_PATH}/include)
-  MESSAGE(STATUS "RUDECONFIG_PATH= ${RUDECONFIG_PATH}")
-ENDIF(DEFINED RUDECONFIG_PATH)
-
-IF(NOT DEFINED RUDECONFIG_PATH)
-  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include)
-ENDIF(NOT DEFINED RUDECONFIG_PATH)
 
 
 IF(NOT DEFINED SELECTED_DRIVER)

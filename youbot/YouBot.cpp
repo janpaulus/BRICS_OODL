@@ -6,17 +6,26 @@ namespace brics_oodl {
 YouBot* YouBot::instance = 0;
 YouBot::YouBot() {
   // Bouml preserved body begin 00041171
+  
+    //Initialize the Logger
+    (Logger::getInstance()).init();
+    
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
       ethercatMaster == NULL;
     }
     ethernetDevice = "eth0";
+    timeTillNextEthercatUpdate = 4; //msec
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
     mailboxSendTimeout = 4000;
-    if (!configfile.load("youbot/config/youbot-configfile.cfg"))
-      throw ExceptionOODL("config/youbot-configfile.cfg file no found");
+    if (!configfile.load("../config/youbot-configfile.cfg"))
+      throw ExceptionOODL("../config/youbot-configfile.cfg file no found");
+
+    configfile.setSection("YouBot");
+    ethernetDevice = configfile.getStringValue("EthernetDevice");
+    timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
 
 
   // Bouml preserved body end 00041171
@@ -28,11 +37,10 @@ YouBot::~YouBot() {
   // Bouml preserved body end 000411F1
 }
 
-YouBot& YouBot::getInstance(std::string ethernetDeviceName)
+YouBot& YouBot::getInstance()
 {
   // Bouml preserved body begin 00042F71
     if (!instance) {
-      ethernetDevice = ethernetDeviceName;
       instance = new YouBot();
       instance->initializeEthercat();
       instance->initializeJoints();
@@ -54,30 +62,98 @@ void YouBot::destroy()
   // Bouml preserved body end 00042FF1
 }
 
-unsigned int YouBot::getNumberOfJoints() {
+///return the quantity of joints
+unsigned int YouBot::getNumberOfJoints() const {
   // Bouml preserved body begin 00044A71
-    return this->Joints.size();
+    return this->joints.size();
   // Bouml preserved body end 00044A71
 }
 
-YouBotJoint& YouBot::getJoint(unsigned int jointNumber) {
+///return a joint form the base, arm1 or arm2
+///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
+YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
   // Bouml preserved body begin 000449F1
-    if (jointNumber <= 0 || jointNumber > (this->Joints.size() + 1)) {
+    if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
-    return Joints[jointNumber - 1];
+    return joints[jointNumber - 1];
   // Bouml preserved body end 000449F1
 }
 
+///return a joint form the base, arm1 or arm2
+///@param jointName e.g. BaseLeftFront
+YouBotJoint& YouBot::getJointByName(const std::string jointName) {
+  // Bouml preserved body begin 0004F8F1
+    int jointNumber = -1;
+    YouBotJointConfiguration config;
+
+    for (int i = 0; i < joints.size(); i++) {
+      joints[i].getConfiguration(config);
+      if(config.jointName == jointName){
+        jointNumber = i;
+        break;
+      }
+    }
+
+    if( jointNumber == -1){
+      throw ExceptionOODL("Joint Name not found");
+    }
+
+    return joints[jointNumber];
+  // Bouml preserved body end 0004F8F1
+}
+
+///return a joint form the base
+///@param jointNumber 1-4 for the base joints
+YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
+  // Bouml preserved body begin 0004F771
+    if (baseJointNumber <= 0 || baseJointNumber > 4 || baseJointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[baseJointNumber - 1];
+  // Bouml preserved body end 0004F771
+}
+
+///return a joint form the arm1
+///@param jointNumber 1-5 for the arm1 joints
+YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
+  // Bouml preserved body begin 0004F7F1
+    unsigned int jointNumber = arm1JointNumber + 4;
+    if (jointNumber <= 4 || jointNumber > 9 || jointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[jointNumber - 1];
+  // Bouml preserved body end 0004F7F1
+}
+
+///return a joint form the arm2
+///@param jointNumber 1-5 for the arm2 joints
+YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
+  // Bouml preserved body begin 0004F871
+    unsigned int jointNumber = arm2JointNumber + 4 + 5;
+    if (jointNumber <= 9 || jointNumber > 14 || jointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+    return joints[jointNumber - 1];
+  // Bouml preserved body end 0004F871
+}
+
+///commands the base in cartesien velocities
+///@param longitudinalVelocity is the forward or backward velocity
+///@param transversalVelocity is the sideway velocity
+///@param angularVelocity is the rotational velocity around the center of the YouBot
 void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
   // Bouml preserved body begin 0004DD71
-
 
     std::vector<quantity<angular_velocity> > wheelVelocities;
     JointVelocitySetpoint setVel;
 
-    YouBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+    youBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
+
+    if(wheelVelocities.size() < 4)
+      throw ExceptionOODL("To less wheel velocities");
+
     setVel.angularVelocity = wheelVelocities[0];
     this->getJoint(1).setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
@@ -89,7 +165,58 @@ void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity,
   // Bouml preserved body end 0004DD71
 }
 
-void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNumber) {
+///gets the cartesien base velocity
+///@param longitudinalVelocity is the forward or backward velocity
+///@param transversalVelocity is the sideway velocity
+///@param angularVelocity is the rotational velocity around the center of the YouBot
+void YouBot::getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity) {
+  // Bouml preserved body begin 00051271
+
+    std::vector<quantity<angular_velocity> > wheelVelocities;
+    quantity<angular_velocity> dummy;
+    JointSensedVelocity sensedVel;
+    wheelVelocities.assign(4, dummy);
+
+    this->getJoint(1).getData(sensedVel);
+    wheelVelocities[0] = sensedVel.angularVelocity;
+    this->getJoint(2).getData(sensedVel);
+    wheelVelocities[1] = sensedVel.angularVelocity;
+    this->getJoint(3).getData(sensedVel);
+    wheelVelocities[2] = sensedVel.angularVelocity;
+    this->getJoint(4).getData(sensedVel);
+    wheelVelocities[3] = sensedVel.angularVelocity;
+
+    youBotBaseKinematic.wheelVelocitiesToCartesianVelocity(wheelVelocities, longitudinalVelocity, transversalVelocity, angularVelocity );
+
+  // Bouml preserved body end 00051271
+}
+
+///gets the cartesien base position which is calculated from the odometry
+///@param longitudinalPosition is the forward or backward position
+///@param transversalPosition is the sideway position
+///@param orientation is the rotation around the center of the YouBot
+void YouBot::getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation) {
+  // Bouml preserved body begin 000514F1
+
+    std::vector<quantity<plane_angle> > wheelPositions;
+    quantity<plane_angle> dummy;
+    JointSensedAngle sensedPos;
+    wheelPositions.assign(4, dummy);
+
+    this->getJoint(1).getData(sensedPos);
+    wheelPositions[0] = sensedPos.angle;
+    this->getJoint(2).getData(sensedPos);
+    wheelPositions[1] = sensedPos.angle;
+    this->getJoint(3).getData(sensedPos);
+    wheelPositions[2] = sensedPos.angle;
+    this->getJoint(4).getData(sensedPos);
+    wheelPositions[3] = sensedPos.angle;
+
+    youBotBaseKinematic.wheelPositionsToCartesianPosition(wheelPositions, longitudinalPosition, transversalPosition, orientation );
+  // Bouml preserved body end 000514F1
+}
+
+void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 000414F1
 
     if (newDataFlagOne == true) {
@@ -114,7 +241,7 @@ void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, unsigned int jointNum
   // Bouml preserved body end 000414F1
 }
 
-YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
+YouBotSlaveMsg YouBot::getMsgBuffer(const unsigned int jointNumber) {
   // Bouml preserved body begin 00041571
 
     YouBotSlaveMsg returnMsg;
@@ -138,7 +265,7 @@ YouBotSlaveMsg YouBot::getMsgBuffer(unsigned int jointNumber) {
   // Bouml preserved body end 00041571
 }
 
-void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigned int jointNumber) {
+void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 00049D71
 
     if (newDataFlagOne == true) {
@@ -163,7 +290,7 @@ void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, unsigne
   // Bouml preserved body end 00049D71
 }
 
-YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(unsigned int jointNumber) {
+YouBotSlaveMailboxMsg YouBot::getMailboxMsgBuffer(const unsigned int jointNumber) {
   // Bouml preserved body begin 00049DF1
 
     YouBotSlaveMailboxMsg returnMsg;
@@ -197,7 +324,7 @@ void YouBot::initializeEthercat() {
       ethercatMaster = new EthercatMaster();
 
       if (!ethercatMaster->init(ethernetDevice.c_str())) {
-        throw ExceptionOODL("Could not initialize Ethercat at " + ethernetDevice);
+        throw ExceptionOODL("Could not initialize EtherCAT at " + ethernetDevice);
         return;
       }
 
@@ -215,12 +342,12 @@ void YouBot::initializeEthercat() {
         actualSlaveName = ec_slave[cnt].name;
         if (actualSlaveName == desiredSlaveName && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
-          Joints.push_back(YouBotJoint(nrOfSlaves));
+          joints.push_back(YouBotJoint(nrOfSlaves));
 
           firstBufferVector.push_back(emptySlaveMsg);
           secondBufferVector.push_back(emptySlaveMsg);
-          ethercatOutputBufferVector.push_back((outputBuffer*) (ec_slave[cnt].outputs));
-          ethercatinputBufferVector.push_back((inputBuffer*) (ec_slave[cnt].inputs));
+          ethercatOutputBufferVector.push_back((OutputBuffer*) (ec_slave[cnt].outputs));
+          ethercatinputBufferVector.push_back((InputBuffer*) (ec_slave[cnt].inputs));
           firstMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
           secondMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
           newOutputDataFlagOne.push_back(false);
@@ -255,17 +382,18 @@ void YouBot::initializeJoints() {
     //Configure Joint Parameters
     std::string jointName;
 
-    for (unsigned int i = 0; i < nrOfSlaves; i++) {
+    for (unsigned int i = 0; i < joints.size(); i++) {
       std::stringstream jointNameStream;
       jointNameStream << "Joint " << i + 1;
       jointName = jointNameStream.str();
       YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
+      config.jointName = configfile.getStringValue("JointName");
       config.setGearRatio(configfile.getDoubleValue("GearRatio"));
       config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.SetPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
+      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
 
-      Joints[i].setConfiguration(config);
+      joints[i].setConfiguration(config);
     }
 
     //Switch to Velocity control because of "Sinuskommutierung"
@@ -273,8 +401,8 @@ void YouBot::initializeJoints() {
     JointVelocitySetpoint vel;
     vel.angularVelocity = 0 * radian_per_second;
 
-    for (unsigned int i = 0; i < nrOfSlaves; i++) {
-      Joints[i].setData(vel, NON_BLOCKING);
+    for (unsigned int i = 0; i < joints.size(); i++) {
+      joints[i].setData(vel, NON_BLOCKING);
     }
 
 
@@ -294,13 +422,13 @@ void YouBot::initializeKinematic() {
 
     //read the kinematics parameter from a config file
     configfile.setSection("YouBotKinematic");
-    kinematicConfig.RotationRatio = configfile.getIntValue("RotationRatio");
-    kinematicConfig.SlideRatio = configfile.getIntValue("SlideRatio");
+    kinematicConfig.rotationRatio = configfile.getIntValue("RotationRatio");
+    kinematicConfig.slideRatio = configfile.getIntValue("SlideRatio");
     kinematicConfig.lengthBetweenFrontAndRearWheels = configfile.getDoubleValue("LengthBetweenFrontAndRearWheels_[meter]") * meter;
     kinematicConfig.lengthBetweenFrontWheels = configfile.getDoubleValue("LengthBetweenFrontWheels_[meter]") * meter;
     kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
 
-    YouBotBaseKinematic.setConfiguration(kinematicConfig);
+    youBotBaseKinematic.setConfiguration(kinematicConfig);
   // Bouml preserved body end 0004DDF1
 }
 

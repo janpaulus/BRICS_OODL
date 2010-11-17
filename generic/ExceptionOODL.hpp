@@ -1,5 +1,5 @@
-#ifndef _EXCEPTION_OODL_H
-#define _EXCEPTION_OODL_H
+#ifndef _EXCEPTION_OODL_HPP
+#define _EXCEPTION_OODL_HPP
 
 
 
@@ -9,17 +9,20 @@ using namespace std;
 #include <string>
 #include "generic/Logger.hpp"
 
-class ExceptionOODL : public exception {
-    string msg;
+namespace brics_oodl {
 
-public:
-    // Takes a character string describing the error.
-    explicit ExceptionOODL(const string& __arg);
+    class ExceptionOODL : public exception {
+        string msg;
 
-    virtual ~ExceptionOODL() throw ();
+    public:
+        // Takes a character string describing the error.
+        explicit ExceptionOODL(const string& __arg);
 
-    // Returns a C-style character string describing the general cause of the current error
-    virtual const char* what() const throw ();
-};
+        virtual ~ExceptionOODL() throw ();
 
-#endif //_EXCEPTION_OODL_H
+        // Returns a C-style character string describing the general cause of the current error
+        virtual const char* what() const throw ();
+    };
+
+} // namespace brics_oodl
+#endif //_EXCEPTION_OODL_HPP

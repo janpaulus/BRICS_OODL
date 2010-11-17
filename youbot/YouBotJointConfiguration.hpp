@@ -10,7 +10,7 @@
 #include "generic-joint/JointConfiguration.hpp"
 namespace brics_oodl {
 
-class YouBotJointConfiguration {
+class YouBotJointConfiguration : public JointConfiguration {
   public:
     YouBotJointConfiguration();
 
@@ -20,29 +20,29 @@ class YouBotJointConfiguration {
 
     YouBotJointConfiguration & operator=(const YouBotJointConfiguration & source);
 
-    void setGearRatio(double ratio);
+    void setGearRatio(const double ratio);
 
     double getGearRatio() const;
 
     unsigned int getEncoderTicksPerRound() const;
 
-    void setEncoderTicksPerRound(unsigned int ticksPerRound);
+    void setEncoderTicksPerRound(const unsigned int ticksPerRound);
 
 
   private:
-    double GearRatio;
+    double gearRatio;
 
 
   public:
-    std::vector<JointDataRange> ValidRanges;
+    std::vector<JointDataRange> validRanges;
 
-    std::string JointName;
+    std::string jointName;
 
-    bool SetPositionReferenceToZero;
+    bool setPositionReferenceToZero;
 
 
   private:
-    unsigned int EncoderTicksPerRound;
+    unsigned int encoderTicksPerRound;
 
 };
 

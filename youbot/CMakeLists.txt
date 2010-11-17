@@ -1,32 +1,28 @@
 
 SET( OODL_YOUBOT_VERSION 0.01 )
 
-FIND_PACKAGE( Boost REQUIRED )
+FIND_PACKAGE(Soem REQUIRED)
+IF (SOEM_FOUND)
+  INCLUDE_DIRECTORIES(${SOEM_INCLUDE_DIR})
+  LINK_DIRECTORIES(${SOEM_LIBRARY_DIR})
+  LINK_LIBRARIES(${SOEMLIB})
+	MESSAGE(STATUS "SUCCESSFUL: Soem found at "${SOEM_LIBRARY_DIR})
+ELSE (SOEM_FOUND)
+	MESSAGE(STATUS "ERROR: Soem not found")
+ENDIF (SOEM_FOUND)
 
-include_directories(
-  ${CMAKE_HOME_DIRECTORY}
-  ${Boost_INCLUDE_DIR}
-  #for rudeconfig
-#  ${CMAKE_HOME_DIRECTORY}/youbot/rudeconfig-5.0.5/src/
-)
 
-link_directories(
-  ${Boost_LIBRARY_DIRS}
+FIND_PACKAGE(Rudeconfig REQUIRED)
+IF (RUDECONFIG_FOUND)
+  INCLUDE_DIRECTORIES(${RUDECONFIG_INCLUDE_DIR})
+  LINK_DIRECTORIES(${RUDECONFIG_LIBRARY_DIR})
+  LINK_LIBRARIES(${RUDECONFIGLIB})
+	MESSAGE(STATUS "SUCCESSFUL: rudeconfig found at "${RUDECONFIG_LIBRARY_DIR})
+ELSE (RUDECONFIG_FOUND)
+	MESSAGE(STATUS "ERROR: rudeconfig not found")
+ENDIF (RUDECONFIG_FOUND)
 
-)
 
-link_libraries(
-  libsoem.a
-  boost_thread
-  boost_date_time
-  boost_system
-  boost_filesystem
-  boost_regex
-  boost_log-mt
-librudeconfig.a
-#for soem
-#pthread
-)
 
 SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
@@ -40,63 +36,78 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematic.cpp
-)
-
-SET(SOEM_SRC
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatbase.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatcoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatconfig.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatfoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatsoe.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatmain.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatprint.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/nicdrv.c 
-  ${CMAKE_HOME_DIRECTORY}/youbot/src/ethercatdc.c
-)
-
-SET(RUDECONFIG_SRC
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractData.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractOrganiser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractParser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/AbstractWriter.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Base64Encoder.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Comment.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/config.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/ConfigImpl.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/DataLine.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/File.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/KeyValue.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/ParserJuly2004.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/RealOrganiser.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Section.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/WhiteSpace.cpp
-/home/jan/BRICS_OODL/youbot/rudeconfig-5.0.5/src/Writer.cpp
+  ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.cpp
 )
 
 SET(OODL_YOUBOT_HEADERS
+  EthercatMaster.hpp
+  YouBot.hpp
+  YouBotGripper.hpp
+  YouBotJoint.hpp
+  YouBotJointConfiguration.hpp
+  YouBotSlaveMailboxMsg.hpp
+  YouBotSlaveMsg.hpp
+../base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp
+../base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp
+../base-kinematic/WheeledBaseKinematic.hpp
+
+../generic/Errors.hpp
+../generic/ExceptionOODL.hpp
+../generic/Logger.hpp
+../generic/Time.hpp
+../generic/Units.hpp
+
+../generic-gripper/Gripper.hpp
+../generic-gripper/GripperConfiguration.hpp
+../generic-gripper/GripperData.hpp
+
+../generic-joint/Joint.hpp
+../generic-joint/JointConfiguration.hpp
+../generic-joint/JointData.hpp
+
+../one-dof-gripper/OneDOFGripper.hpp
+../one-dof-gripper/OneDOFGripperConfiguration.hpp
+../one-dof-gripper/OneDOFGripperData.hpp
 
 )
 
-#ADD_LIBRARY(OODL_YOUBOT
-#  ${OODL_YOUBOT_SRC}
-#)
-  
+LINK_LIBRARIES(
+ncurses
+)
 
-ADD_EXECUTABLE(OODL_YOUBOT_test
+SET(OODL_YOUBOT_CONFIG
+${CMAKE_HOME_DIRECTORY}/config/youbot-configfile.cfg
+)
+
+ADD_LIBRARY(OODL_YouBot
+  ${OODL_YOUBOT_SRC}
+)
+  
+ADD_EXECUTABLE(YouBot_test
   ${CMAKE_HOME_DIRECTORY}/youbot/applications/Test.cpp
   ${OODL_YOUBOT_SRC}
-# ${RUDECONFIG_SRC}
-# ${SOEM_SRC}
 )
 
+ADD_EXECUTABLE(YouBot_KeyboardRemoteControl
+  ${CMAKE_HOME_DIRECTORY}/youbot/applications/KeyboardRemoteControl.cpp
+  ${OODL_YOUBOT_SRC}
+)
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})
     STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
-    INSTALL(FILES ${HEADER} DESTINATION include/${DIR})
+    INSTALL(FILES ${HEADER} DESTINATION include/oodl/youbot/${DIR})
   ENDFOREACH(HEADER)
 ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
 
-INSTALL_HEADERS_WITH_DIRECTORY(OODL_SickS300_HEADERS)
-INSTALL(TARGETS OODL_YOUBOT_test RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+MACRO(INSTALL_CONFIG_WITH_DIRECTORY CONFIG_LIST)
+  FOREACH(CONFIG ${${CONFIG_LIST}})
+    STRING(REGEX MATCH "(.*)[/\\]" DIR ${CONFIG})
+    INSTALL(FILES ${CONFIG} DESTINATION config)
+  ENDFOREACH(CONFIG)
+ENDMACRO(INSTALL_CONFIG_WITH_DIRECTORY)
+
+INSTALL_HEADERS_WITH_DIRECTORY(OODL_YOUBOT_HEADERS)
+INSTALL_CONFIG_WITH_DIRECTORY(OODL_YOUBOT_CONFIG)
+INSTALL(TARGETS YouBot_test YouBot_KeyboardRemoteControl OODL_YouBot RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 

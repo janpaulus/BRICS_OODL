@@ -59,9 +59,9 @@ class JointTorqueSetpoint : public JointDataSetpoint {
 };
 class JointDataRange {
   public:
-    JointData JointDataUpper;
+    JointData jointDataUpper;
 
-    JointData JointDataLower;
+    JointData jointDataLower;
 
 };
 

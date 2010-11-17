@@ -1,15 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
-#include "rude/config.h"
-#include "boost/date_time/posix_time/posix_time.hpp"
-#include "generic-joint/JointData.hpp"
 #include "youbot/YouBot.hpp"
-#include "youbot/YouBotJoint.hpp"
-#include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
 
 
-using namespace boost::posix_time;
+
+
 using namespace std;
 using namespace brics_oodl;
 
@@ -25,16 +21,8 @@ void sigintHandler(int signal) {
 int main() {
 
   signal(SIGINT, sigintHandler);
-  signal(SIGQUIT, sigintHandler);
-  signal(SIGABRT, sigintHandler);
-  signal(SIGTERM, sigintHandler);
-  signal(SIGSTOP, sigintHandler);
-  signal(SIGTSTP, sigintHandler);
-  signal(SIGKILL, sigintHandler);
 
   try {
-
-    (Logger::getInstance()).init();
 
     YouBot& youbot4 = YouBot::getInstance();
 
@@ -52,41 +40,63 @@ int main() {
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0.2 * radian_per_second;
+    quantity<si::length> sensedLongitudinalPos;
+    quantity<si::length> sensedTransversalPos;
+    quantity<si::plane_angle> sensedAngularPos;
+
+    quantity<si::plane_angle> lastAngle;
 
 
-    while (running) {
+setVel.angularVelocity = 2 * radian_per_second;
 
-      for (unsigned int i = 1; i <= youbot4.getNumberOfJoints(); i++) {
-        youbot4.getJoint(i).getData(temp);
-        youbot4.getJoint(i).getData(angle);
-        youbot4.getJoint(i).getData(vel);
-        youbot4.getJoint(i).getData(current);
-        std::cout << "J " << i << " Temp: " << temp.temperature
-                << " Angle: " << angle.angle
-                << " Vel: " << vel.angularVelocity
-                << " Current: " << current.current
-                << std::endl;
-      }
+int i = 0;
+    while (i <=10) {
 
-  //    youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
-  //    youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+  //    for (unsigned int i = 1; i <= youbot4.getNumberOfJoints(); i++) {
+   //     youbot4.getBaseJoint(2).getData(temp);
+   //     youbot4.getBaseJoint(2).getData(angle);
+   //     youbot4.getBaseJoint(2).getData(vel);
+     //   youbot4.getBaseJoint(2).getData(current);
+    //    std::cout << "Joint: " << i << " Temp: " << temp.temperature
+    //            << " Angle: " << angle.angle
+    //            << " Vel: " << vel.angularVelocity
+    //            << " Current: " << current.current
+     //           << std::endl;
+    //  }
+      
+  //    youbot4.getJoint(2).setData(setVel);
+
+   //   youbot4.getBaseJoint(2).getData(angle);
+  //    youbot4.getBaseJoint(2).getData(vel);
+   //   youbot4.getJoint(2).setData(setVel);
+  //    youbot4.getJoint(2).setData(setVel);
+  //    youbot4.getJoint(3).setData(setVel);
+  //    youbot4.getJoint(4).setData(setVel);
       youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+      SLEEP_MILLISEC(1000);
+      youbot4.getBasePosition(sensedLongitudinalPos, sensedTransversalPos, sensedAngularPos);
+      std::cout << "Pos: Longi: " << sensedLongitudinalPos
+                << " Trans: " << sensedTransversalPos
+               << " Angular: " << sensedAngularPos << std::endl;
 
+   //   std::cout << " Angle: " << (angle.angle - lastAngle) << " Vel: " << vel.angularVelocity<< std::endl;
+   //   lastAngle = angle.angle;
 
+      i++;
       // youbot4.getJoint(3).getConfiguration(config);
-      boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+      
     }
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+    SLEEP_MILLISEC(500);
     setVel.angularVelocity = 0 * radian_per_second;
-    youbot4.getJoint(1).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(2).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(3).setData(setVel, NON_BLOCKING);
-    youbot4.getJoint(4).setData(setVel, NON_BLOCKING);
+    youbot4.getJoint(1).setData(setVel);
+    youbot4.getJoint(2).setData(setVel);
+    youbot4.getJoint(3).setData(setVel);
+    youbot4.getJoint(4).setData(setVel);
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+    SLEEP_MILLISEC(500);
+
+
 
   } catch (std::exception& e) {
     std::cout << e.what() << std::endl;

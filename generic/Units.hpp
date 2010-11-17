@@ -5,12 +5,12 @@
  * Created on September 1, 2010, 5:36 PM
  */
 
-#ifndef UNITS_H
-#define	UNITS_H
+#ifndef BRICS_OODL_UNITS_HPP
+#define	BRICS_OODL_UNITS_HPP
 #include <boost/units/pow.hpp>
 #include <boost/units/systems/si.hpp>
 #include <boost/units/systems/temperature/celsius.hpp>
-
+#include <boost/units/cmath.hpp>
 #include <boost/units/make_scaled_unit.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
 
@@ -31,5 +31,5 @@ BOOST_UNITS_STATIC_CONSTANT(centimeters, centimeter);
 typedef boost::units::make_scaled_unit<si::time, boost::units::scale<10, boost::units::static_rational<-3> > >::type millisecond;
 //BOOST_UNITS_STATIC_CONSTANT(millimeters, millimeter);
 
-#endif	/* UNITS_H */
+#endif	/* BRICS_OODL_UNITS_HPP */
 
