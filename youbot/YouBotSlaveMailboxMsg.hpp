@@ -16,7 +16,7 @@ namespace brics_oodl {
             uint8 commandNumber;
             uint8 typeNumber;
             uint8 motorNumber; //always zero
-            int32 value; //MSB first!
+            uint32 value; //MSB first!
         } __attribute__((__packed__));
 
         struct mailboxInputBuffer {
@@ -24,14 +24,15 @@ namespace brics_oodl {
             uint8 moduleAddress;
             uint8 status; //(e.g. 100 means “no error”)
             uint8 commandNumber;
-            int32 value; //MSB first!
+            uint32 value; //MSB first!
         } __attribute__((__packed__));
 
         mailboxOutputBuffer stctOutput;
         mailboxInputBuffer stctInput;
+        
 
         // Constructor
-        YouBotSlaveMailboxMsg() {
+        YouBotSlaveMailboxMsg(unsigned int slaveNo) {
             stctOutput.moduleAddress = 0;
             stctOutput.commandNumber = 0;
             stctOutput.typeNumber = 0;
@@ -43,12 +44,14 @@ namespace brics_oodl {
             stctInput.status = 0;
             stctInput.commandNumber = 0;
             stctInput.value = 0;
+            slaveNumber = slaveNo;
         }
 
         // Copy-Constructor
-        YouBotSlaveMailboxMsg(const YouBotSlaveMailboxMsg &copy) {
+        YouBotSlaveMailboxMsg(const YouBotSlaveMailboxMsg& copy) {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
+            slaveNumber = copy.slaveNumber;
         }
 
         // Destructor
@@ -56,15 +59,19 @@ namespace brics_oodl {
         }
 
         // assignment operator
-        YouBotSlaveMailboxMsg & operator=(const YouBotSlaveMailboxMsg &copy) {
-            if (this == &copy)
-                return *this;
-
+        YouBotSlaveMailboxMsg& operator=(const YouBotSlaveMailboxMsg& copy) {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
+            slaveNumber = copy.slaveNumber;
 
             return *this;
         }
+
+         unsigned int getSlaveNo() const {
+            return slaveNumber;
+         }
+    private:
+        unsigned int slaveNumber;
     };
 
 } // namespace brics_oodl

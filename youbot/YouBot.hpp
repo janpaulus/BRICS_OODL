@@ -89,14 +89,6 @@ friend class YouBotJoint;
 
 
   private:
-    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
-
-    YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
-
-    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
-
-    YouBotSlaveMailboxMsg getMailboxMsgBuffer(const unsigned int jointNumber);
-
     void initializeEthercat();
 
     void initializeJoints();
@@ -105,13 +97,25 @@ friend class YouBotJoint;
 
     bool closeEthercat();
 
+    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
+
+    YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
+
+    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
+
+    void getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber);
+
+    bool sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg);
+
+    bool receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg);
+
     void updateSensorActorValues();
 
     std::vector<YouBotJoint> joints;
 
     EthercatMaster* ethercatMaster;
 
-    static std::string ethernetDevice;
+    std::string ethernetDevice;
 
     ec_mbxbuft mailboxBuffer;
 
@@ -156,7 +160,7 @@ friend class YouBotJoint;
 
     ec_mbxbuft mailboxBufferSend;
 
-    unsigned int mailboxSendTimeout;
+    unsigned int mailboxTimeout;
 
     ec_mbxbuft mailboxBufferReceive;
 

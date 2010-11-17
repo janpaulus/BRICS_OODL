@@ -37,9 +37,13 @@ int main() {
     setangle.angle = 2.0 * M_PI *radian;
     setVel.angularVelocity = 0 * M_PI *radian_per_second;
 
-    quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
+    quantity<si::velocity> longitudinalVelocity = 0.2 * meter_per_second;
     quantity<si::velocity> transversalVelocity = 0 * meter_per_second;
-    quantity<si::angular_velocity> angularVelocity = 0.2 * radian_per_second;
+    quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
+
+    quantity<si::velocity> longitudinalVel = 0 * meter_per_second;
+    quantity<si::velocity> transversalVel = 0 * meter_per_second;
+    quantity<si::angular_velocity> angularVel = 0 * radian_per_second;
     quantity<si::length> sensedLongitudinalPos;
     quantity<si::length> sensedTransversalPos;
     quantity<si::plane_angle> sensedAngularPos;
@@ -47,45 +51,51 @@ int main() {
     quantity<si::plane_angle> lastAngle;
 
 
-setVel.angularVelocity = 2 * radian_per_second;
+    setVel.angularVelocity = 2 * radian_per_second;
 
-int i = 0;
-    while (i <=10) {
 
-  //    for (unsigned int i = 1; i <= youbot4.getNumberOfJoints(); i++) {
-   //     youbot4.getBaseJoint(2).getData(temp);
-   //     youbot4.getBaseJoint(2).getData(angle);
-   //     youbot4.getBaseJoint(2).getData(vel);
-     //   youbot4.getBaseJoint(2).getData(current);
-    //    std::cout << "Joint: " << i << " Temp: " << temp.temperature
-    //            << " Angle: " << angle.angle
-    //            << " Vel: " << vel.angularVelocity
-    //            << " Current: " << current.current
-     //           << std::endl;
-    //  }
-      
-  //    youbot4.getJoint(2).setData(setVel);
+ //   while (running) {
 
-   //   youbot4.getBaseJoint(2).getData(angle);
-  //    youbot4.getBaseJoint(2).getData(vel);
-   //   youbot4.getJoint(2).setData(setVel);
-  //    youbot4.getJoint(2).setData(setVel);
-  //    youbot4.getJoint(3).setData(setVel);
-  //    youbot4.getJoint(4).setData(setVel);
-      youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+      //    for (unsigned int i = 1; i <= youbot4.getNumberOfJoints(); i++) {
+      //     youbot4.getBaseJoint(2).getData(temp);
+      //     youbot4.getBaseJoint(2).getData(angle);
+      //     youbot4.getBaseJoint(2).getData(vel);
+      //   youbot4.getBaseJoint(2).getData(current);
+      //    std::cout << "Joint: " << i << " Temp: " << temp.temperature
+      //            << " Angle: " << angle.angle
+      //            << " Vel: " << vel.angularVelocity
+      //            << " Current: " << current.current
+      //           << std::endl;
+      //  }
+
+      //    youbot4.getJoint(2).setData(setVel);
+
+      //   youbot4.getBaseJoint(2).getData(angle);
+      //    youbot4.getBaseJoint(2).getData(vel);
+      //   youbot4.getJoint(2).setData(setVel);
+      //    youbot4.getJoint(2).setData(setVel);
+      //    youbot4.getJoint(3).setData(setVel);
+      //    youbot4.getJoint(4).setData(setVel);
+//      youbot4.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+//      SLEEP_MILLISEC(1000);
+//      youbot4.getBaseVelocity(longitudinalVel, transversalVel, angularVel);
+//      std::cout << "Vel: Longi: " << longitudinalVel
+//              << " Trans: " << transversalVel
+//              << " Angular: " << angularVel << std::endl;
+
+      youbot4.getJoint(2).getConfiguration(config);
       SLEEP_MILLISEC(1000);
-      youbot4.getBasePosition(sensedLongitudinalPos, sensedTransversalPos, sensedAngularPos);
-      std::cout << "Pos: Longi: " << sensedLongitudinalPos
-                << " Trans: " << sensedTransversalPos
-               << " Angular: " << sensedAngularPos << std::endl;
+      youbot4.getJoint(2).getConfiguration(config);
 
-   //   std::cout << " Angle: " << (angle.angle - lastAngle) << " Vel: " << vel.angularVelocity<< std::endl;
-   //   lastAngle = angle.angle;
+      //   std::cout << " Angle: " << (angle.angle - lastAngle) << " Vel: " << vel.angularVelocity<< std::endl;
+      //   lastAngle = angle.angle;
 
-      i++;
+
       // youbot4.getJoint(3).getConfiguration(config);
-      
-    }
+
+ //     SLEEP_MILLISEC(1000);
+
+ //   }
 
     SLEEP_MILLISEC(500);
     setVel.angularVelocity = 0 * radian_per_second;
