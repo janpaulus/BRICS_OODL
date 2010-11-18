@@ -2,15 +2,15 @@
 
 
 ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), 
-						   numberOfResolutions(0),
-						   currentResolution(NULL), 
+			   numberOfResolutions(0),
+			   currentResolution(NULL), 
                            currentFormat(NULL), 
-						   deviceFormatCounter(0), 
-						   formatIdentifier(""), 
-						   bitsPerPixel(8), 
+			   deviceFormatCounter(0), 
+			   formatIdentifier(""), 
+			   bitsPerPixel(8), 
                            fourcc(0), bufferSize(0), 
-						   currentBufferType(UNICAP_BUFFER_TYPE_USER), 
-						   deviceHandle(NULL)
+			   currentBufferType(UNICAP_BUFFER_TYPE_USER), 
+			   deviceHandle(NULL)
 {
 
   std::cout  << "Creating ImageFormat without args"<< std::endl;
@@ -19,15 +19,15 @@ ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE),
 
 
 ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE), 
-												numberOfResolutions(0),
-												currentResolution(NULL), 
-												currentFormat(NULL), 
-												deviceFormatCounter(0), 
-												bitsPerPixel(8), 
-												fourcc(0), 
-												bufferSize(0), 
-												currentBufferType(UNICAP_BUFFER_TYPE_USER),
-												deviceHandle(NULL), formatDevice(NULL)
+						numberOfResolutions(0),
+						currentResolution(NULL), 
+						currentFormat(NULL), 
+						deviceFormatCounter(0), 
+						bitsPerPixel(8), 
+						fourcc(0), 
+						bufferSize(0), 
+						currentBufferType(UNICAP_BUFFER_TYPE_USER),
+						deviceHandle(NULL), formatDevice(NULL)
 {
 
   std::cout  << "Creating ImageFormat with formatID string argument"<< std::endl;
@@ -36,11 +36,11 @@ ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE),
 
 
 ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): returnStatus(STATUS_FAILURE), 
-                                                                                                          numberOfResolutions(0),currentResolution(NULL), 
-                                                                                                          currentFormat(NULL), deviceFormatCounter(0), 
-                                                                                                          bitsPerPixel(8), fourcc(0), bufferSize(0), 
-                                                                                                          currentBufferType(UNICAP_BUFFER_TYPE_USER),
-                                                                                                          deviceHandle(handle), formatDevice(device)
+														  numberOfResolutions(0),currentResolution(NULL), 
+														  currentFormat(NULL), deviceFormatCounter(0), 
+														  bitsPerPixel(8), fourcc(0), bufferSize(0), 
+														  currentBufferType(UNICAP_BUFFER_TYPE_USER),
+														  deviceHandle(handle), formatDevice(device)
 {
   
   std::cout  << "Creating ImageFormat with all argument"<< std::endl;
@@ -63,25 +63,24 @@ ImageFormat& ImageFormat::operator=(ImageFormat &format)
   if(this !=&format)
   {
     std::cout << "Inside Format assignment operator" << std::endl;
-    this ->currentResolution = format.currentResolution;
-    this ->numberOfResolutions = format.numberOfResolutions;
-//    this->listOfResolutions[] = format.listOfResolutions;
-    this->deviceFormatCounter = format.deviceFormatCounter;
-//    this->listOfDeviceFormats = format.listOfDeviceFormats;
-    this->currentFormat = format.currentFormat;
-    this->formatIdentifier = format.formatIdentifier;
-    this->fourcc = format.fourcc;    
-    this->bitsPerPixel = format.bitsPerPixel;
-    this->flags = format.flags;
-    this->bufferTypes = format.bufferTypes; 
-    this->currentBufferType = format.currentBufferType;
-    this->bufferSize = format.bufferSize;
-    this->returnStatus = format.returnStatus;
-    this->deviceHandle = format.deviceHandle;
-    this->formatDevice = format.formatDevice;
-    return *this;
+    currentResolution = format.currentResolution;
+    numberOfResolutions = format.numberOfResolutions;
+//  listOfResolutions[] = format.listOfResolutions;
+    deviceFormatCounter = format.deviceFormatCounter;
+//  listOfDeviceFormats = format.listOfDeviceFormats;
+    currentFormat = format.currentFormat;
+    formatIdentifier = format.formatIdentifier;
+    fourcc = format.fourcc;    
+    bitsPerPixel = format.bitsPerPixel;
+    flags = format.flags;
+    bufferTypes = format.bufferTypes; 
+    currentBufferType = format.currentBufferType;
+    bufferSize = format.bufferSize;
+    returnStatus = format.returnStatus;
+    deviceHandle = format.deviceHandle;
+    formatDevice = format.formatDevice;
   }
-
+  return *this;
 }
 
 
@@ -139,7 +138,7 @@ bool ImageFormat::getImageFormatFOURCC(unsigned int &fourcc)
 bool ImageFormat::getImageFormatResolution(int &width, int &height)
 {
 
- if(SUCCESS(this->returnStatus)) //if getListOfFormats called don't call   
+  if(SUCCESS(this->returnStatus)) //if getListOfFormats called don't call   
   {
     width = currentResolution->width;
     height = currentResolution->height;
@@ -195,11 +194,15 @@ bool ImageFormat::setImageFormatResolution(int &width, int &height)
   return true;
 }
 
-bool ImageFormat::getImageFormatSize(int &size)
+bool ImageFormat::getImageFormatSize(long int &size)
 {
 
+  bufferSize = (currentResolution->width)*(currentResolution->height);
+  size = bufferSize;
   return true;
 }
+
+
 
 // the problem is that image format is sth device dependent, whether camera sensor supports some format
 // but at the same time it is property of an image.
@@ -227,7 +230,7 @@ bool ImageFormat::getListOfFormats()
       else
       {
         break;
-     }
+      }
     }
   }
   if(listOfDeviceFormats != NULL) //should change all these arrays with vectors

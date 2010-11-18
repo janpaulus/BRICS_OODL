@@ -2,8 +2,10 @@
 
 
 
-CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAILURE), deviceCameraDevConf(NULL),
-                                                        handleCameraDevConf(NULL), deviceConfPropertyCounter(0)
+CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAILURE), 
+							deviceCameraDevConf(NULL),
+                                                        handleCameraDevConf(NULL), 
+							deviceConfPropertyCounter(0)
 {
   std::cout << "Creating CameraDeviceConfiguration without arguments" << std::endl;
 
@@ -257,74 +259,74 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
 
 bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
 
-        std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
-        const std::string propertyName ="sharpness";
-        std::string charID;
+  std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
+  const std::string propertyName ="sharpness";
+  std::string charID;
 
-        //check whether listOfProperties was filled in successfully and not empty
-        if (SUCCESS(returnStatus) && (listOfProperties != NULL))
-        {
-                //here member variable deviceConfProperty is a total number of 
-                //camera properties returned by getListOfDeviceProperties
-                for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
-                {
-                        //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
-                        //there are also menu, list, flag property types
-                        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-                        {
-                                //if range then check it for correct ID
-                                charID = listOfProperties[propertyCounter].identifier;
-                                //if ID == frame rate (as defined in unicap API) then return its current value
-                                if (charID == propertyName)
-                                {
-                                        //check if the call succeeds 
-                                        int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
-                                        if( SUCCESS(returnValue) )
-                                        {
-                                                sharpness = listOfProperties[propertyCounter].value;
-                                                return true;
-                                        }
-                                }
-                        }
-                        //if property is not of type "range" go to the beginning of the loop
-                }
-        }
-        // if property list was not obtained successfully or was not filled in before through 
-        //the call to getListOfDeviceProperties, call the method 
-        else if (getListOfDeviceProperties() == true)
-        {
-                if (listOfProperties != NULL)
-                {
-                        for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
-                        {
-                                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-                                {
-                                        charID = listOfProperties[propertyCounter].identifier;
-                                        if (charID == propertyName)
-                                        {
-                                                int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
-                                                if( SUCCESS(returnValue) )
-                                                {
-                                                        sharpness = listOfProperties[propertyCounter].value;
-                                                        return true;
-                                                }
-                                        }
-                                }
-                                //if property is not of type "range" go to the beginning of the loop
-                        }
-                }
-                else
-                {
-                        std::cout << "Property list is empty"<< std::endl;
-                        return false;
-                }
-        }
-        // if neither of the above return error message
-        else 
-        {    
-                std::cout << "Can not get property"<< std::endl;
-                return false;
-        }
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+	//if range then check it for correct ID
+	charID = listOfProperties[propertyCounter].identifier;
+	//if ID == frame rate (as defined in unicap API) then return its current value
+	if (charID == propertyName)
+	{
+	  //check if the call succeeds 
+	  int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+	  if( SUCCESS(returnValue) )
+	  {
+	    sharpness = listOfProperties[propertyCounter].value;
+	    return true;
+	  }
+	}
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties != NULL)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+	{
+	  charID = listOfProperties[propertyCounter].identifier;
+	  if (charID == propertyName)
+	  {
+	    int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+	    if( SUCCESS(returnValue) )
+	    {
+	      sharpness = listOfProperties[propertyCounter].value;
+	      return true;
+	    }
+	  }
+	}
+	//if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 

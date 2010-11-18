@@ -1,26 +1,23 @@
 #include "MonocularCamera.hpp"
 
 
-
 MonocularCamera::MonocularCamera(int deviceNumber): isConnected(STATUS_FAILURE)
+													
 {
   std::cout<<"Creating Monocular Camera without arguments"<<std::endl;
   device = new unicap_device_t;
   deviceHandle = new unicap_handle_t;
   cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
   format = new ImageFormat(device, deviceHandle, "RGB");
-  imagedata = new Image2dData;
 }
 
-MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, std::string &format): isConnected(STATUS_FAILURE)
+MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, std::string &fm): isConnected(STATUS_FAILURE)
 {
   std::cout<<"Creating Monocular Camera with arguments"<<std::endl;
   device = new unicap_device_t;
   deviceHandle = new unicap_handle_t;
   cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
-  this->format = new ImageFormat(device, deviceHandle, format);
-  imagedata = new Image2dData;
-
+  format = new ImageFormat(device, deviceHandle, fm);
 }
 
 
@@ -33,9 +30,9 @@ MonocularCamera::MonocularCamera(MonocularCamera &camera)
 MonocularCamera& MonocularCamera::operator= (const MonocularCamera &camera)
 {
   if(&camera != this)
-    {
-      std::cout<<"Assigning MonocularCamera"<<std::endl;
-    }
+  {
+    std::cout<<"Assigning MonocularCamera"<<std::endl;
+  }
 
   return *this;
 }
@@ -48,8 +45,7 @@ MonocularCamera::~MonocularCamera()
   //this->close();
   delete device;
   delete deviceHandle;
-  delete format;
-  delete imagedata;
+//  delete format;
   //  delete cameraConfig;
 }
 
@@ -58,36 +54,36 @@ bool MonocularCamera::open ()
 {
   std::cout<<"In Monocular Camera open"<<std::endl;
   if(SUCCESS(isConnected))
-    {
-      std::cout << "Device is already open" <<std::endl;
-      return true;
-    }
+  {
+    std::cout << "Device is already open" <<std::endl;
+    return true;
+  }
   else
+  {
+    isConnected = unicap_enumerate_devices(NULL, device, 0);
+    if(SUCCESS(isConnected))
     {
-      isConnected = unicap_enumerate_devices(NULL, device, 0);
+      std::cout << "Openning camera"<<std::endl;
+      isConnected = unicap_open(deviceHandle, device);
       if(SUCCESS(isConnected))
-		{
-		  std::cout << "Openning camera"<<std::endl;
-		  isConnected = unicap_open(deviceHandle, device);
-		  if(SUCCESS(isConnected))
-			{
-			  std::cout << "Device is successfully opened" << std::endl;
-			  //             int returnValue = getListOfFormats();
+      {
+	std::cout << "Device is successfully opened" << std::endl;
+
                 
-			  return true;
-			}
-		  else
-			{
-			  std::cout << "Could not open device" << std::endl;
-			  return false;
-			}
-		}
+	return true;
+      }
       else
-		{
-		  std::cout << "Could not find devices" << std::endl;
-		  return false;
-		}
+      {
+	std::cout << "Could not open device" << std::endl;
+	return false;
+      }
     }
+    else
+    {
+      std::cout << "Could not find devices" << std::endl;
+      return false;
+    }
+  }
 
 }
 
@@ -120,46 +116,70 @@ bool MonocularCamera::setConfiguration ( MonocularCameraConfiguration &config)
 }
 
 
-bool MonocularCamera::capture (Image2dData &data)
+bool MonocularCamera::capture ()
 {
-  unicap_data_buffer_t tempBuffer;
-  unicap_data_buffer_t *returnedBuffer;
-
-  tempBuffer.data  = data.getBuffer();
-  tempBuffer.buffer_size = data.getBufferSize();
-  
   std::cout<<"In Monocular Camera capture"<<std::endl;
-  unicap_start_capture(*deviceHandle); 
   
-  int i = 0;
-  while (i<100)
-    {
-      unicap_queue_buffer(*deviceHandle, &tempBuffer);
+  if (SUCCESS(unicap_start_capture(*deviceHandle))) 
+  {
+    return true; 
+  }
 
-      //this waits till buffer is filled with image data and then dequeue it   
-      if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnedBuffer ) ) )
-		{
-		  fprintf( stderr, "Failed to wait for buffer!\n" );
-		  return false;
-		}
-      i++;
-
-    }
-  return true;
+  else
+  { 
+    return false;
+  }
+  
 }
 
 
-bool MonocularCamera::getImageFormat(ImageFormat &format)
+//Image2dData& MonocularCamera::getImageData()
+bool MonocularCamera::getImageData()
+{
+  std::cout << "GetImageData"<< std::endl;
+
+  // this is where pixel data sits
+  unicap_data_buffer_t tempBuffer; 
+  // this pointer to pixel data buffer, it is needed by wait_buffer. 
+  //The data obtained should be accessed through this pointer. Because it does 
+  //all the necessary checking for pixel data before returning full/correct data buffer
+  unicap_data_buffer_t *returnTempBuffer; 
+  
+  long int bufferSize = 0 ;
+//the problem lies in assignment operator, what is the difference 
+//of = to copy construction
+  format->getImageFormatSize(bufferSize);
+  tempBuffer.data = new unsigned char[bufferSize];
+  tempBuffer.buffer_size = bufferSize;
+  //Put the buffer into a queue and wait till it is filled (wait_buffer does this)
+  unicap_queue_buffer(*deviceHandle, &tempBuffer);
+  //this waits till buffer is ready, it can be then processed through 
+  //returnedTempBuffer
+  if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnTempBuffer ) ) )
+  {
+    fprintf( stderr, "Failed to wait for buffer!\n" );
+    return false;
+  }
+  else
+  {
+    
+    return true;
+  }
+
+}
+
+bool MonocularCamera::getImageFormat(ImageFormat &fm)
 {
   std::cout<<"In Monocular Camera getImageFormat"<<std::endl;
-  format = *(this->format);
+  fm = *format;
   return true;
 
 }
 
-bool MonocularCamera::setImageFormat(ImageFormat &format)
+bool MonocularCamera::setImageFormat(ImageFormat &fm)
 {
 
   std::cout<<"In Monocular Camera setImageFormat"<<std::endl;
+  format = &fm;
   return true;
 }

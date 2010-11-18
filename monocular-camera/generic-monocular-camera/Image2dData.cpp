@@ -15,14 +15,29 @@ Image2dData::Image2dData(int& width, int& height)
 
 unsigned char* Image2dData::getBuffer()
 {
-
-  return buffer;
+  if(buffer != NULL)
+  {
+    
+    return buffer;
+  }
+  else
+  {
+    std::cout << "Failed to allocate buffer" << std::endl;
+    return NULL;
+  }
 }
 
-long int Image2dData::getBufferSize()
+size_t Image2dData::getBufferSize()
 {
-
-  return bufferSize;
+  if (buffer != NULL)
+  {
+    return bufferSize;
+  }
+  else
+  {
+    std::cout << "No size available" << std::endl;
+    return 0;
+  }
 }
 
 Image2dData::  ~Image2dData()

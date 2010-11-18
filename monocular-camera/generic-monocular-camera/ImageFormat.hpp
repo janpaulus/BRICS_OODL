@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <unicap.h>
+#include <vector>
 
 //! This class is responsible for setting and getting information for image format.
 
@@ -41,7 +42,7 @@ public:
   //! Returns color model list supported by the camera
   bool getImageFormatColorModelList();
 
-  bool getImageFormatSize(int &size);
+  bool getImageFormatSize(long int &size);
 
   bool setImageFormatResolution(int &width, int &height);
   bool setImageFormatColorModel(std::string &colorModel);
@@ -58,10 +59,12 @@ private:
   // array of possible sizes/resolutions supported by a camera; 
   //currently statically defined; will changed to dynamic array later 
   unicap_rect_t listOfResolutions[40];
-
+  //  std::vector<unicap_rect_t> listOfResolutions;
+  
   int deviceFormatCounter;
   //currently staticly set to 10, should change to dynamic version.
   unicap_format_t listOfDeviceFormats[10];
+  //  std::vector<unicap_format_t> listOfDeviceFormats;
   unicap_format_t *currentFormat;
      
 

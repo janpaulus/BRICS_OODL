@@ -12,7 +12,7 @@ public:
   //! Returns pointer to image data (buffer)
   unsigned char* getBuffer();
   //! Returns image data (buffer) size
-  long int getBufferSize();
+  size_t getBufferSize();
   //! Class destructor
   ~Image2dData();
  
