@@ -51,10 +51,21 @@ int main() {
     quantity<si::plane_angle> lastAngle;
 
     setVel.angularVelocity = 2 * radian_per_second;
+    
+    double value = 0;;
+    myYouBot.getBaseJoint(4).getConfiguration(config);
+    config.getMaximumPositioningSpeed(angularVel);
+    LOG(trace) << angularVel;
+    angularVel = (angularVel.value() + 1) * radian_per_second;
+    config.setMaximumPositioningSpeed(angularVel);
+    myYouBot.getBaseJoint(4).setConfiguration(config);
+    myYouBot.getBaseJoint(4).getConfiguration(config);
+    config.getMaximumPositioningSpeed(angularVel);
+    LOG(trace) << angularVel;
 
-
+/*
     while (running) {
-
+/
       for (unsigned int i = 1; i <= myYouBot.getNumberOfJoints(); i++) {
         myYouBot.getBaseJoint(i).getData(temp);
         myYouBot.getBaseJoint(i).getData(angle);
@@ -69,7 +80,7 @@ int main() {
 
       SLEEP_MILLISEC(100);
     }
-
+*/
     SLEEP_MILLISEC(500);
     setVel.angularVelocity = 0 * radian_per_second;
     myYouBot.getJoint(1).setData(setVel);

@@ -148,7 +148,7 @@ friend class YouBotJoint;
 
     std::vector<OutputBuffer*> ethercatOutputBufferVector;
 
-    std::vector<InputBuffer*> ethercatinputBufferVector;
+    std::vector<InputBuffer*> ethercatInputBufferVector;
 
     std::vector<YouBotSlaveMailboxMsg> firstMailboxBufferVector;
 

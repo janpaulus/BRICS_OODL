@@ -8,6 +8,7 @@
 #include "one-dof-gripper/OneDOFGripper.hpp"
 #include "one-dof-gripper/OneDOFGripperData.hpp"
 #include "one-dof-gripper/OneDOFGripperConfiguration.hpp"
+#include "youbot/ProtocolDefinitions.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 
 namespace brics_oodl {

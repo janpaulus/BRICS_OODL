@@ -47,6 +47,7 @@ SET(OODL_YOUBOT_HEADERS
   YouBotJointConfiguration.hpp
   YouBotSlaveMailboxMsg.hpp
   YouBotSlaveMsg.hpp
+  ProtocolDefinitions.hpp
 ../base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp
 ../base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp
 ../base-kinematic/WheeledBaseKinematic.hpp
