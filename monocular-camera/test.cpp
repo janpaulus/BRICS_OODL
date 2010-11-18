@@ -5,15 +5,15 @@
 int main (int argc, char **argv)
 {
 
-  MonocularCameraConfiguration config ;
-  ImageFormat format;
-  MonocularCamera camera(1);
+  //MonocularCameraConfiguration config ;
+ ImageFormat format;
+ MonocularCamera camera(1);
 
 
 
   camera.open(); //always open first
 
-  camera.getConfiguration(config);
+//  camera.getConfiguration(config);
 
   // set image format and start capturing  
   camera.getImageFormat(format) ;
@@ -23,11 +23,12 @@ int main (int argc, char **argv)
   format.getImageFormatResolution(width, height);
   camera.setImageFormat(format) ;
   camera.capture();
-  
- std::cout << width << std::endl;
-  std::cout << height << std::endl;
+  int i = 0;
   while(1)
+  {
     camera.getImageData();
+    std::cout << i++ << std::endl;
+  }
   camera.close();
 
 

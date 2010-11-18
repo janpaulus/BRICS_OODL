@@ -30,8 +30,7 @@ public:
   bool setConfiguration (MonocularCameraConfiguration &config);
   bool getImageFormat(ImageFormat &fm);
   bool setImageFormat(ImageFormat &fm);
-  // Image2dData&  getImageData();
-  bool getImageData();
+  Image2dData*  getImageData();
   bool capture(); // adding frames here could be good, then a user does not have to bother about building capture loops.
   bool open ();
   bool close ();
@@ -39,6 +38,7 @@ public:
 private:
   MonocularCameraConfiguration *cameraConfig;
   ImageFormat *format;
+  Image2dData *pixels;
   unicap_device_t *device;
   unicap_handle_t *deviceHandle;
   unicap_status_t isConnected;

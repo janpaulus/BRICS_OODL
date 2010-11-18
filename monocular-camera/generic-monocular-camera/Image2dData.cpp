@@ -1,9 +1,10 @@
 #include "Image2dData.hpp"
 
 
-Image2dData::Image2dData():bufferSize(0), buffer(NULL)
+Image2dData::Image2dData(unsigned char *bufferStart = NULL, size_t length = 0)
 {
-
+  buffer = bufferStart;
+  bufferSize = length; 
 }
 
 Image2dData::Image2dData(int& width, int& height)

@@ -1,7 +1,7 @@
 #include "MonocularCamera.hpp"
 
 
-MonocularCamera::MonocularCamera(int deviceNumber): isConnected(STATUS_FAILURE)
+MonocularCamera::MonocularCamera(int deviceNumber): pixels(NULL), isConnected(STATUS_FAILURE)
 													
 {
   std::cout<<"Creating Monocular Camera without arguments"<<std::endl;
@@ -11,7 +11,7 @@ MonocularCamera::MonocularCamera(int deviceNumber): isConnected(STATUS_FAILURE)
   format = new ImageFormat(device, deviceHandle, "RGB");
 }
 
-MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, std::string &fm): isConnected(STATUS_FAILURE)
+MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, std::string &fm):pixels(NULL),isConnected(STATUS_FAILURE)
 {
   std::cout<<"Creating Monocular Camera with arguments"<<std::endl;
   device = new unicap_device_t;
@@ -42,11 +42,13 @@ MonocularCamera::~MonocularCamera()
   std::cout<<"Destroying Monocular Camera"<<std::endl;
   //Maybe we need to call close on device implicitly without user being aware of it.
   //But then open should also be implicit to make things consistent.
-  //this->close();
+
+  delete cameraConfig;
+  delete format;
   delete device;
   delete deviceHandle;
-//  delete format;
-  //  delete cameraConfig;
+  delete pixels;
+
 }
 
 //bool MonocularCamera::open (Errors &error)
@@ -107,7 +109,6 @@ bool MonocularCamera::getConfiguration (MonocularCameraConfiguration &config)
 }
 
 
-//bool MonocularCamera::setConfiguration (MonocularCameraConfiguration &config, Errors &error)
 bool MonocularCamera::setConfiguration ( MonocularCameraConfiguration &config)
 {
   std::cout<<"In Monocular Camera setConfiguration"<<std::endl;
@@ -133,8 +134,7 @@ bool MonocularCamera::capture ()
 }
 
 
-//Image2dData& MonocularCamera::getImageData()
-bool MonocularCamera::getImageData()
+Image2dData* MonocularCamera::getImageData()
 {
   std::cout << "GetImageData"<< std::endl;
 
@@ -146,24 +146,23 @@ bool MonocularCamera::getImageData()
   unicap_data_buffer_t *returnTempBuffer; 
   
   long int bufferSize = 0 ;
-//the problem lies in assignment operator, what is the difference 
-//of = to copy construction
   format->getImageFormatSize(bufferSize);
   tempBuffer.data = new unsigned char[bufferSize];
   tempBuffer.buffer_size = bufferSize;
+
   //Put the buffer into a queue and wait till it is filled (wait_buffer does this)
   unicap_queue_buffer(*deviceHandle, &tempBuffer);
-  //this waits till buffer is ready, it can be then processed through 
-  //returnedTempBuffer
+  //this waits till buffer is ready, it can be then processed through returnedTempBuffer
   if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnTempBuffer ) ) )
   {
-    fprintf( stderr, "Failed to wait for buffer!\n" );
-    return false;
+    std::cout << "Failed to wait for buffer" << std::endl;
+    return NULL;
   }
   else
   {
-    
-    return true;
+    pixels = new Image2dData ((*returnTempBuffer).data,(*returnTempBuffer).buffer_size);
+    delete[] tempBuffer.data; 
+    return pixels;
   }
 
 }
