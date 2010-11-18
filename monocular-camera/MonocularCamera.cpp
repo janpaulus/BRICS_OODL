@@ -43,11 +43,11 @@ MonocularCamera::~MonocularCamera()
   //Maybe we need to call close on device implicitly without user being aware of it.
   //But then open should also be implicit to make things consistent.
 
-  delete cameraConfig;
-  delete format;
+//  delete cameraConfig;
+//  delete format;
   delete device;
   delete deviceHandle;
-  delete pixels;
+//  delete pixels;
 
 }
 
@@ -160,8 +160,8 @@ Image2dData* MonocularCamera::getImageData()
   }
   else
   {
-    pixels = new Image2dData ((*returnTempBuffer).data,(*returnTempBuffer).buffer_size);
-    delete[] tempBuffer.data; 
+    Image2dData x = Image2dData ((*returnTempBuffer).data,(*returnTempBuffer).buffer_size);
+    pixels = &x;
     return pixels;
   }
 
