@@ -89,10 +89,12 @@ YouBotJoint& YouBot::getJointByName(const std::string jointName) {
   // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
     YouBotJointConfiguration config;
+    std::string name;
 
     for (int i = 0; i < joints.size(); i++) {
       joints[i].getConfiguration(config);
-      if (config.jointName == jointName) {
+      config.getJointName(name);
+      if (name == jointName) {
         jointNumber = i;
         break;
       }
@@ -293,10 +295,10 @@ void YouBot::initializeJoints() {
       jointName = jointNameStream.str();
       YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
-      config.jointName = configfile.getStringValue("JointName");
+      config.setJointName(configfile.getStringValue("JointName"));
       config.setGearRatio(configfile.getDoubleValue("GearRatio"));
       config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
+      config.setPositionReferenceToZero(configfile.getBoolValue("PositionReferenceToZero"));
 
       joints[i].setConfiguration(config);
     }

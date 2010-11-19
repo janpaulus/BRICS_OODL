@@ -16,7 +16,7 @@ YouBotJoint::~YouBotJoint() {
 }
 
 //please use a YouBotJointConfiguration
-void YouBotJoint::setConfiguration(const JointConfiguration& configuration) {
+void YouBotJoint::setConfiguration(JointConfiguration& configuration) {
   // Bouml preserved body begin 0004BA71
     throw ExceptionOODL("Please provide a YouBotJointConfiguration");
   // Bouml preserved body end 0004BA71
@@ -31,27 +31,43 @@ void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
 
 //sets the configuration for one joint
 //@param configuration the joint configuration
-void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration) {
+void YouBotJoint::setConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C0F1
 
+    //check which non mailbox parameters have been set by the user
+    if(configuration.encoderTicksPerRoundBeenSet){
+      this->config.encoderTicksPerRound = configuration.encoderTicksPerRound;
+    }
 
-    this->config = configuration;
+    if(configuration.gearRatioBeenSet){
+      this->config.gearRatio = configuration.gearRatio;
+    }
 
-    if (config.setPositionReferenceToZero) {
+    if(configuration.jointNameBeenSet){
+      this->config.jointName = configuration.jointName;
+    }
+
+    if (configuration.PositionReferenceToZeroBeenSet && configuration.PositionReferenceToZero) {
       this->messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
       this->messageBuffer.stctOutput.positionOrSpeed = 0;
       YouBot::getInstance().setMsgBuffer(this->messageBuffer, this->jointNumber);
+      this->config.PositionReferenceToZero = false;
+      this->config.PositionReferenceToZeroBeenSet = false;
+      configuration.PositionReferenceToZero = false;
+      configuration.PositionReferenceToZeroBeenSet = false;
     }
 
     //send all mailbox messages
     for(unsigned int i = 0; i < configuration.mailboxMsgVector.size();i++){
    //   YouBot::getInstance().setMailboxMsgBuffer(configuration.mailboxMsgVector[i], this->jointNumber);
-      setValueToMotorContoller(configuration.mailboxMsgVector[i].stctOutput.commandNumber,
-              configuration.mailboxMsgVector[i].stctOutput.typeNumber,
-              configuration.mailboxMsgVector[i].stctOutput.moduleAddress,
-              configuration.mailboxMsgVector[i].stctOutput.value);
-      LOG(trace) << configuration.mailboxMsgVector[i].stctOutput.value;
+
+      if(!setValueToMotorContoller(configuration.mailboxMsgVector[i])){
+        throw ExceptionOODL("Unable to set parameter: " +configuration.mailboxMsgVector[i].parameterName);
+      }
+      LOG(trace) << configuration.mailboxMsgVector[i].parameterName << " = " <<configuration.mailboxMsgVector[i].stctOutput.value;
     }
+    //get configuration form motor contoller to reflect configuration 
+    this->getConfiguration(configuration);
   // Bouml preserved body end 0003C0F1
 }
 
@@ -275,17 +291,14 @@ bool YouBotJoint::retrieveValueFromMotorContoller(const uint8& commandNumber, co
   // Bouml preserved body end 000549F1
 }
 
-bool YouBotJoint::setValueToMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, const uint32& value) {
+bool YouBotJoint::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg) {
   // Bouml preserved body begin 00054AF1
 
     YouBotSlaveMailboxMsg mailboxMsgBuffer;
+    mailboxMsgBuffer = mailboxMsg;
     bool unvalid = true;
     unsigned int retry = 0;
-    mailboxMsgBuffer.stctOutput.commandNumber = commandNumber;
-    mailboxMsgBuffer.stctOutput.moduleAddress = driveOrGripper; //0 : Drive  1 : Gripper
-    mailboxMsgBuffer.stctOutput.motorNumber = 0; //(always 0)
-    mailboxMsgBuffer.stctOutput.typeNumber = typeNumber;
-    mailboxMsgBuffer.stctOutput.value = value;
+
     YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
 
     SLEEP_MILLISEC(retrieveParamterTimeout);

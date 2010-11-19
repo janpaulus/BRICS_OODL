@@ -33,27 +33,39 @@ friend class YouBotJoint;
 
     void getPParameterFirstParametersPositionControl(double& PParameter);
 
+    void setPositionReferenceToZero(const bool yesOrNo);
+
+    void setJointName(const std::string jointName);
+
+    void getJointName(std::string& jointName);
+
 
   private:
+    bool findMailboxMsg(const uint8& commandNumber, const uint8& moduleAddress, const uint8& typeNumber, unsigned int& vectorIndex);
+
     double gearRatio;
 
+    bool gearRatioBeenSet;
 
-  public:
     std::vector<JointDataRange> validRanges;
 
     std::string jointName;
 
-    bool setPositionReferenceToZero;
+    bool jointNameBeenSet;
 
+    bool PositionReferenceToZero;
 
-  private:
+    bool PositionReferenceToZeroBeenSet;
+
     unsigned int encoderTicksPerRound;
+
+    bool encoderTicksPerRoundBeenSet;
 
     quantity<angular_velocity> maximumPositioningSpeed;
 
-    std::vector<YouBotSlaveMailboxMsg> mailboxMsgVector;
-
     double PParameterFirstParametersPositionControl;
+
+    std::vector<YouBotSlaveMailboxMsg> mailboxMsgVector;
 
 };
 

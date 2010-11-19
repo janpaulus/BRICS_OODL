@@ -15,7 +15,7 @@ enum SyncMode {
 };
 class Joint {
   public:
-    virtual void setConfiguration(const JointConfiguration& configuration) = 0;
+    virtual void setConfiguration(JointConfiguration& configuration) = 0;
 
     virtual void getConfiguration(JointConfiguration& configuration) = 0;
 

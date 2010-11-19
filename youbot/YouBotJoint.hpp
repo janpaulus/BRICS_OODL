@@ -29,7 +29,7 @@ class YouBotJoint : public Joint {
 
   protected:
     //please use a YouBotJointConfiguration
-    void setConfiguration(const JointConfiguration& configuration);
+    void setConfiguration(JointConfiguration& configuration);
 
     //please use a YouBotJointConfiguration
     void getConfiguration(JointConfiguration& configuration);
@@ -38,7 +38,7 @@ class YouBotJoint : public Joint {
   public:
     //sets the configuration for one joint
     //@param configuration the joint configuration
-    void setConfiguration(const YouBotJointConfiguration& configuration);
+    void setConfiguration(YouBotJointConfiguration& configuration);
 
     //to get the configuration for one joint
     //@param configuration returns the joint configuration by reference
@@ -84,7 +84,7 @@ class YouBotJoint : public Joint {
 
     bool retrieveValueFromMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, uint32& value);
 
-    bool setValueToMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, const uint32& value);
+    bool setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg);
 
     unsigned int jointNumber;
 
