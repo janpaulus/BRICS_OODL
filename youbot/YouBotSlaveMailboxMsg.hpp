@@ -29,9 +29,26 @@ namespace brics_oodl {
 
         mailboxOutputBuffer stctOutput;
         mailboxInputBuffer stctInput;
-        
 
         // Constructor
+
+        YouBotSlaveMailboxMsg() {
+            stctOutput.moduleAddress = 0;
+            stctOutput.commandNumber = 0;
+            stctOutput.typeNumber = 0;
+            stctOutput.motorNumber = 0;
+            stctOutput.value = 0;
+
+            stctInput.replyAddress = 0;
+            stctInput.moduleAddress = 0;
+            stctInput.status = 0;
+            stctInput.commandNumber = 0;
+            stctInput.value = 0;
+            slaveNumber = 1000;
+        }
+
+        // Constructor
+
         YouBotSlaveMailboxMsg(unsigned int slaveNo) {
             stctOutput.moduleAddress = 0;
             stctOutput.commandNumber = 0;
@@ -47,7 +64,10 @@ namespace brics_oodl {
             slaveNumber = slaveNo;
         }
 
+
+
         // Copy-Constructor
+
         YouBotSlaveMailboxMsg(const YouBotSlaveMailboxMsg& copy) {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
@@ -55,11 +75,13 @@ namespace brics_oodl {
         }
 
         // Destructor
+
         ~YouBotSlaveMailboxMsg() {
         }
 
         // assignment operator
-        YouBotSlaveMailboxMsg& operator=(const YouBotSlaveMailboxMsg& copy) {
+
+        YouBotSlaveMailboxMsg & operator=(const YouBotSlaveMailboxMsg& copy) {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
             slaveNumber = copy.slaveNumber;
@@ -67,9 +89,9 @@ namespace brics_oodl {
             return *this;
         }
 
-         unsigned int getSlaveNo() const {
+        unsigned int getSlaveNo() const {
             return slaveNumber;
-         }
+        }
     private:
         unsigned int slaveNumber;
     };

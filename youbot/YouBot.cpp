@@ -251,7 +251,7 @@ void YouBot::initializeEthercat() {
           firstBufferVector.push_back(emptySlaveMsg);
           secondBufferVector.push_back(emptySlaveMsg);
           ethercatOutputBufferVector.push_back((OutputBuffer*) (ec_slave[cnt].outputs));
-          ethercatinputBufferVector.push_back((InputBuffer*) (ec_slave[cnt].inputs));
+          ethercatInputBufferVector.push_back((InputBuffer*) (ec_slave[cnt].inputs));
           YouBotSlaveMailboxMsg emptyMailboxSlaveMsg(cnt);
           firstMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
           secondMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
@@ -446,9 +446,8 @@ void YouBot::getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsign
 }
 
 bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
-  // Bouml preserved body begin 00052E71
-
-  //  LOG(trace) << "send mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
+  // Bouml preserved body begin 00052F71
+    //  LOG(trace) << "send mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
     mailboxBufferSend[0] = mailboxMsg.stctOutput.moduleAddress;
     mailboxBufferSend[1] = mailboxMsg.stctOutput.commandNumber;
     mailboxBufferSend[2] = mailboxMsg.stctOutput.typeNumber;
@@ -462,13 +461,12 @@ bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
     }else{
       return false;
     }
-  // Bouml preserved body end 00052E71
+  // Bouml preserved body end 00052F71
 }
 
 bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
-  // Bouml preserved body begin 00052EF1
-
-    if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
+  // Bouml preserved body begin 00052FF1
+      if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
   //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
       mailboxMsg.stctInput.replyAddress = (int) mailboxBufferReceive[0];
       mailboxMsg.stctInput.moduleAddress = (int) mailboxBufferReceive[1];
@@ -478,7 +476,7 @@ bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
       return true;
     }
     return false;
-  // Bouml preserved body end 00052EF1
+  // Bouml preserved body end 00052FF1
 }
 
 void YouBot::updateSensorActorValues() {
@@ -501,7 +499,7 @@ void YouBot::updateSensorActorValues() {
                 *(ethercatOutputBufferVector[i]) = (firstBufferVector[i]).stctOutput;
               }
               //fill first input buffer (receive data)
-              (firstBufferVector[i]).stctInput = *(ethercatinputBufferVector[i]);
+              (firstBufferVector[i]).stctInput = *(ethercatInputBufferVector[i]);
 
               //send mailbox messages from first buffer
               if (newMailboxDataFlagOne[i]) {
@@ -527,7 +525,7 @@ void YouBot::updateSensorActorValues() {
                 *(ethercatOutputBufferVector[i]) = (secondBufferVector[i]).stctOutput;
               }
               //fill second input buffer (receive data)
-              (secondBufferVector[i]).stctInput = *(ethercatinputBufferVector[i]);
+              (secondBufferVector[i]).stctInput = *(ethercatInputBufferVector[i]);
 
               //send mailbox messages from second buffer
               if (newMailboxDataFlagTwo[i]) {

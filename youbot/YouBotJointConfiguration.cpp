@@ -14,26 +14,6 @@ YouBotJointConfiguration::~YouBotJointConfiguration() {
   // Bouml preserved body end 0004B8F1
 }
 
-YouBotJointConfiguration::YouBotJointConfiguration(const YouBotJointConfiguration & source) {
-  // Bouml preserved body begin 0004B971
-    this->gearRatio = source.gearRatio;
-    this->jointName = source.jointName;
-    this->validRanges = source.validRanges;
-    this->encoderTicksPerRound = source.encoderTicksPerRound;
-    this->setPositionReferenceToZero = source.setPositionReferenceToZero;
-  // Bouml preserved body end 0004B971
-}
-
-YouBotJointConfiguration & YouBotJointConfiguration::operator=(const YouBotJointConfiguration & source) {
-  // Bouml preserved body begin 0004B9F1
-    this->gearRatio = source.gearRatio;
-    this->jointName = source.jointName;
-    this->validRanges = source.validRanges;
-    this->encoderTicksPerRound = source.encoderTicksPerRound;
-    this->setPositionReferenceToZero = source.setPositionReferenceToZero;
-  // Bouml preserved body end 0004B9F1
-}
-
 void YouBotJointConfiguration::setGearRatio(const double ratio) {
   // Bouml preserved body begin 0004BC71
   if(ratio == 0){
@@ -60,6 +40,29 @@ void YouBotJointConfiguration::setEncoderTicksPerRound(const unsigned int ticksP
   // Bouml preserved body begin 0004BDF1
   this->encoderTicksPerRound = ticksPerRound;
   // Bouml preserved body end 0004BDF1
+}
+
+void YouBotJointConfiguration::setMaximumPositioningSpeed(const quantity<angular_velocity>& maximumPositioningSpeed) {
+  // Bouml preserved body begin 00052E71
+  YouBotSlaveMailboxMsg mailboxMsgBuffer;
+  mailboxMsgBuffer.stctOutput.commandNumber = SAP;
+  mailboxMsgBuffer.stctOutput.moduleAddress = DRIVE;
+  mailboxMsgBuffer.stctOutput.typeNumber = 4; //maximum positioning speed
+  mailboxMsgBuffer.stctOutput.value = (int)maximumPositioningSpeed.value(); //TODO do convertion in to radian_per_second
+  mailboxMsgVector.push_back(mailboxMsgBuffer);
+  // Bouml preserved body end 00052E71
+}
+
+void YouBotJointConfiguration::getMaximumPositioningSpeed(quantity<angular_velocity>& maxPositioningSpeed) {
+  // Bouml preserved body begin 00052EF1
+  maxPositioningSpeed = this->maximumPositioningSpeed;
+  // Bouml preserved body end 00052EF1
+}
+
+void YouBotJointConfiguration::getPParameterFirstParametersPositionControl(double& PParameter) {
+  // Bouml preserved body begin 00054971
+  PParameter = this->PParameterFirstParametersPositionControl;
+  // Bouml preserved body end 00054971
 }
 
 

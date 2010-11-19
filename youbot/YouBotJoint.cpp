@@ -6,7 +6,7 @@ namespace brics_oodl {
 YouBotJoint::YouBotJoint(unsigned int jointNo) {
   // Bouml preserved body begin 000412F1
     this->jointNumber = jointNo;
-    mailboxMsgBuffer  = new YouBotSlaveMailboxMsg(0);
+    retrieveParamterTimeout = YouBot::getInstance().timeTillNextEthercatUpdate * 3;
   // Bouml preserved body end 000412F1
 }
 
@@ -19,18 +19,13 @@ YouBotJoint::~YouBotJoint() {
 void YouBotJoint::setConfiguration(const JointConfiguration& configuration) {
   // Bouml preserved body begin 0004BA71
     throw ExceptionOODL("Please provide a YouBotJointConfiguration");
-
   // Bouml preserved body end 0004BA71
 }
 
 //please use a YouBotJointConfiguration
 void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
   // Bouml preserved body begin 0004BAF1
-
-    configuration.setGearRatio(this->config.getGearRatio());
-    configuration.jointName = this->config.jointName;
-    configuration.validRanges = this->config.validRanges;
-
+    throw ExceptionOODL("Please provide a YouBotJointConfiguration");
   // Bouml preserved body end 0004BAF1
 }
 
@@ -38,11 +33,24 @@ void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
 //@param configuration the joint configuration
 void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C0F1
+
+
     this->config = configuration;
+
     if (config.setPositionReferenceToZero) {
       this->messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
       this->messageBuffer.stctOutput.positionOrSpeed = 0;
       YouBot::getInstance().setMsgBuffer(this->messageBuffer, this->jointNumber);
+    }
+
+    //send all mailbox messages
+    for(unsigned int i = 0; i < configuration.mailboxMsgVector.size();i++){
+   //   YouBot::getInstance().setMailboxMsgBuffer(configuration.mailboxMsgVector[i], this->jointNumber);
+      setValueToMotorContoller(configuration.mailboxMsgVector[i].stctOutput.commandNumber,
+              configuration.mailboxMsgVector[i].stctOutput.typeNumber,
+              configuration.mailboxMsgVector[i].stctOutput.moduleAddress,
+              configuration.mailboxMsgVector[i].stctOutput.value);
+      LOG(trace) << configuration.mailboxMsgVector[i].stctOutput.value;
     }
   // Bouml preserved body end 0003C0F1
 }
@@ -51,20 +59,14 @@ void YouBotJoint::setConfiguration(const YouBotJointConfiguration& configuration
 //@param configuration returns the joint configuration by reference
 void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
   // Bouml preserved body begin 0003C171
- /*   mailboxMsgBuffer->stctOutput.commandNumber = 6;
-    mailboxMsgBuffer->stctOutput.moduleAddress = 0; //0 : Drive  1 : Gripper
-    mailboxMsgBuffer->stctOutput.motorNumber = 0; //(always 0)
-    mailboxMsgBuffer->stctOutput.typeNumber = 4;
-    mailboxMsgBuffer->stctOutput.value = 1000;
-    YouBot::getInstance().setMailboxMsgBuffer(*mailboxMsgBuffer, this->jointNumber);
+    uint32 value = 0;
+    retrieveValueFromMotorContoller(GAP, 130, DRIVE, value); //PParameterFirstParametersPositionControl
+    this->config.PParameterFirstParametersPositionControl = value;
+    value = 0;
 
+    retrieveValueFromMotorContoller(GAP, 4, DRIVE, value);  //maximumPositioningSpeed
+    this->config.maximumPositioningSpeed = value *radian_per_second; //TODO convert in to radian_per second
 
-    YouBot::getInstance().getMailboxMsgBuffer(*mailboxMsgBuffer, this->jointNumber);
-    LOG(trace) << "CommandNumber " << (int)mailboxMsgBuffer->stctInput.commandNumber
-            << " moduleAddress " << (int)mailboxMsgBuffer->stctInput.moduleAddress
-            << " replyAddress " << (int)mailboxMsgBuffer->stctInput.replyAddress
-            << " status " << (int)mailboxMsgBuffer->stctInput.status
-            << " value " << mailboxMsgBuffer->stctInput.value; */
     configuration = this->config;
 
   // Bouml preserved body end 0003C171
@@ -110,7 +112,7 @@ void YouBotJoint::getData(JointSensedAngle& data) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
 
-    data.angle = ((double) this->messageBuffer.stctInput.actualPosition /config.getEncoderTicksPerRound()) * config.getGearRatio()* (2.0 * M_PI)  * radian;
+    data.angle = ((double) this->messageBuffer.stctInput.actualPosition / config.getEncoderTicksPerRound()) * config.getGearRatio()* (2.0 * M_PI) * radian;
   // Bouml preserved body end 0003DCF1
 }
 
@@ -229,6 +231,90 @@ void YouBotJoint::parseYouBotErrorFlags() {
     }
 
   // Bouml preserved body end 00044AF1
+}
+
+bool YouBotJoint::retrieveValueFromMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, uint32& value) {
+  // Bouml preserved body begin 000549F1
+
+    YouBotSlaveMailboxMsg mailboxMsgBuffer;
+    bool unvalid = true;
+    unsigned int retry = 0;
+    mailboxMsgBuffer.stctOutput.commandNumber = commandNumber;
+    mailboxMsgBuffer.stctOutput.moduleAddress = driveOrGripper; //0 : Drive  1 : Gripper
+    mailboxMsgBuffer.stctOutput.motorNumber = 0; //(always 0)
+    mailboxMsgBuffer.stctOutput.typeNumber = typeNumber;
+    mailboxMsgBuffer.stctOutput.value = 0; //don't care
+    YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+
+    SLEEP_MILLISEC(retrieveParamterTimeout);
+
+    do {
+      YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+      LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
+              << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
+              << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
+              << " status " << (int) mailboxMsgBuffer.stctInput.status
+              << " value " << mailboxMsgBuffer.stctInput.value;
+
+      if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
+              mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
+        value = mailboxMsgBuffer.stctInput.value;
+        unvalid = false;
+      } else {
+        SLEEP_MILLISEC(retrieveParamterTimeout);
+        retry++;
+      }
+    } while (retry < 10 && unvalid);
+
+    if(unvalid){
+      return false;
+    }else{
+      return true;
+    }
+
+  // Bouml preserved body end 000549F1
+}
+
+bool YouBotJoint::setValueToMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, const uint32& value) {
+  // Bouml preserved body begin 00054AF1
+
+    YouBotSlaveMailboxMsg mailboxMsgBuffer;
+    bool unvalid = true;
+    unsigned int retry = 0;
+    mailboxMsgBuffer.stctOutput.commandNumber = commandNumber;
+    mailboxMsgBuffer.stctOutput.moduleAddress = driveOrGripper; //0 : Drive  1 : Gripper
+    mailboxMsgBuffer.stctOutput.motorNumber = 0; //(always 0)
+    mailboxMsgBuffer.stctOutput.typeNumber = typeNumber;
+    mailboxMsgBuffer.stctOutput.value = value;
+    YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+
+    SLEEP_MILLISEC(retrieveParamterTimeout);
+
+    do {
+      YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+      LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
+              << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
+              << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
+              << " status " << (int) mailboxMsgBuffer.stctInput.status
+              << " value " << mailboxMsgBuffer.stctInput.value;
+
+      if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
+              mailboxMsgBuffer.stctOutput.value == mailboxMsgBuffer.stctInput.value &&
+              mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
+        unvalid = false;
+      } else {
+        SLEEP_MILLISEC(retrieveParamterTimeout);
+        retry++;
+      }
+    } while (retry < 10 && unvalid);
+    
+    if(unvalid){
+      return false;
+    }else{
+      return true;
+    }
+
+  // Bouml preserved body end 00054AF1
 }
 
 
