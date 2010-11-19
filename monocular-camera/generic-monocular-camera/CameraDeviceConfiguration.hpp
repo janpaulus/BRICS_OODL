@@ -54,6 +54,7 @@ public:
  
 private:
   bool getListOfDeviceProperties();
+//  bool getListOfDevicePropertiesVector();
   bool unifyPropertyNames();
 
   //counter for the total number of device-lens properties provided by a camera
@@ -62,6 +63,7 @@ private:
   //array of properties; will be changed later to dynamic vector type
   unicap_property_t listOfProperties[30];//array of properties; will later be changed to dynamic vector type
 
+//  vector<unicap_property_t> propertyList;
   //current/actual property values
   unicap_property_range_t videoFrameRate; 
   unicap_property_range_t videoGammaValue; 

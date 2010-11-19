@@ -119,6 +119,41 @@ bool ColorExposureConfiguration::getListOfColorProperties()
 }
 
 
+bool ColorExposureConfiguration::getListOfColorPropertiesVector() 
+{
+  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
+
+  int returnValue = 0;
+  int propertyIndex = 0;
+  for(std::vector<unicap_property_t>::iterator i = propertyList.begin(); i <= propertyList.end() ; i++ ) 
+  {
+    returnValue = unicap_enumerate_properties( *handleColorExposureDev, NULL, &(*i), 
+					       propertyIndex);
+    if( SUCCESS(returnValue) )
+    {
+      std::cout << i->identifier<<std::endl;
+      colorConfPropertyCounter++;
+      returnStatus = STATUS_SUCCESS;
+    }
+    else
+      break;
+
+  }
+
+  if(listOfProperties != NULL )
+  {
+    std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
+    return true;
+  }
+  else
+  {
+    std::cout << "Property list is empty"<<std::endl;
+    return false;
+  }
+ 
+}
+
+
 //Issue1: 
 //harmonizes possible property name combinations
 //Like if white_u_balance, WhiteUBalance, White U Balance
