@@ -26,6 +26,11 @@ int main (int argc, char **argv)
   camera.setImageFormat(format) ;
   camera.capture();
 
+  while(1)
+    camera.getImageData()->getBuffer();
+
+
+/*
   SDL_Surface *screen;
   SDL_Surface *rgb_surface;
 //  Initialise SDL
@@ -40,6 +45,7 @@ int main (int argc, char **argv)
     SDL_Quit ();
     exit (1);
   }
+
   
 //here in the loop should include send request first and then receive, when peer is in client consumer mode
 //otherise when subscriber consumer mode it just receives.
@@ -50,8 +56,8 @@ int main (int argc, char **argv)
     SDL_Event event;
     rgb_surface = SDL_CreateRGBSurfaceFrom (
       camera.getImageData()->getBuffer(),           //  Pixel data
-      width,     //  Widtha
-      height,    //  Height
+      640,     //  Widtha
+      480,    //  Height
       16,//dest_format.bpp,            //  Depth
       1920,//dest_format.size.width * 3, //  Scanline pitch
       0, 0, 0, 0);                //  TODO RGBA mask 
@@ -69,9 +75,10 @@ int main (int argc, char **argv)
     }    
 
   }
-      
+    
   SDL_Quit();
 
+*/
 
 
   camera.close();
