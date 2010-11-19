@@ -132,6 +132,7 @@ bool ColorExposureConfiguration::getListOfColorPropertiesVector()
     if( SUCCESS(returnValue) )
     {
       std::cout << i->identifier<<std::endl;
+      propertyList.push_back(*i);
       colorConfPropertyCounter++;
       returnStatus = STATUS_SUCCESS;
     }
