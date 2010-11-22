@@ -6,7 +6,8 @@ namespace brics_oodl {
 YouBotJoint::YouBotJoint(unsigned int jointNo) {
   // Bouml preserved body begin 000412F1
     this->jointNumber = jointNo;
-    retrieveParamterTimeout = YouBot::getInstance().timeTillNextEthercatUpdate * 3;
+    timeTillNextMailboxUpdate = YouBot::getInstance().timeTillNextEthercatUpdate * 2;
+    mailboxMsgRetries = 30;
   // Bouml preserved body end 000412F1
 }
 
@@ -15,77 +16,73 @@ YouBotJoint::~YouBotJoint() {
   // Bouml preserved body end 00041371
 }
 
-//please use a YouBotJointConfiguration
-void YouBotJoint::setConfiguration(JointConfiguration& configuration) {
-  // Bouml preserved body begin 0004BA71
-    throw ExceptionOODL("Please provide a YouBotJointConfiguration");
-  // Bouml preserved body end 0004BA71
+void YouBotJoint::setConfigurationParameter(const JointParameter& parameter) {
+  // Bouml preserved body begin 0005CDF1
+  throw ExceptionOODL("Please use YouBotJointParameters");
+  // Bouml preserved body end 0005CDF1
 }
 
-//please use a YouBotJointConfiguration
-void YouBotJoint::getConfiguration(JointConfiguration& configuration) {
-  // Bouml preserved body begin 0004BAF1
-    throw ExceptionOODL("Please provide a YouBotJointConfiguration");
-  // Bouml preserved body end 0004BAF1
+void YouBotJoint::getConfigurationParameter(JointParameter& parameter) {
+  // Bouml preserved body begin 0005CE71
+  throw ExceptionOODL("Please use YouBotJointParameters");
+  // Bouml preserved body end 0005CE71
 }
 
-//sets the configuration for one joint
-//@param configuration the joint configuration
-void YouBotJoint::setConfiguration(YouBotJointConfiguration& configuration) {
-  // Bouml preserved body begin 0003C0F1
-
-    //check which non mailbox parameters have been set by the user
-    if(configuration.encoderTicksPerRoundBeenSet){
-      this->config.encoderTicksPerRound = configuration.encoderTicksPerRound;
-    }
-
-    if(configuration.gearRatioBeenSet){
-      this->config.gearRatio = configuration.gearRatio;
-    }
-
-    if(configuration.jointNameBeenSet){
-      this->config.jointName = configuration.jointName;
-    }
-
-    if (configuration.PositionReferenceToZeroBeenSet && configuration.PositionReferenceToZero) {
-      this->messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
-      this->messageBuffer.stctOutput.positionOrSpeed = 0;
-      YouBot::getInstance().setMsgBuffer(this->messageBuffer, this->jointNumber);
-      this->config.PositionReferenceToZero = false;
-      this->config.PositionReferenceToZeroBeenSet = false;
-      configuration.PositionReferenceToZero = false;
-      configuration.PositionReferenceToZeroBeenSet = false;
-    }
-
-    //send all mailbox messages
-    for(unsigned int i = 0; i < configuration.mailboxMsgVector.size();i++){
-   //   YouBot::getInstance().setMailboxMsgBuffer(configuration.mailboxMsgVector[i], this->jointNumber);
-
-      if(!setValueToMotorContoller(configuration.mailboxMsgVector[i])){
-        throw ExceptionOODL("Unable to set parameter: " +configuration.mailboxMsgVector[i].parameterName);
+void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& parameter) {
+  // Bouml preserved body begin 0005BC71
+    if (parameter.getType() == API_PARAMETER) {
+      if (parameter.getName() == "JointName") {
+        this->jointName = static_cast<const JointName&> (parameter).value;
+      } else if (parameter.getName() == "GearRatio") {
+        this->gearRatio = static_cast<const GearRatio&> (parameter).value;
+      } else if (parameter.getName() == "EncoderTicksPerRound") {
+        this->encoderTicksPerRound = static_cast<const EncoderTicksPerRound&> (parameter).value;
+      } else if (parameter.getName() == "PositionReferenceToZero") {
+        this->positionReferenceToZero = static_cast<const PositionReferenceToZero&> (parameter).value;
+        if (this->positionReferenceToZero) {
+          YouBotSlaveMsg messageBuffer;
+          messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
+          messageBuffer.stctOutput.positionOrSpeed = 0;
+          YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+          this->positionReferenceToZero = false;
+        }
       }
-      LOG(trace) << configuration.mailboxMsgVector[i].parameterName << " = " <<configuration.mailboxMsgVector[i].stctOutput.value;
+    } else if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, SET_MESSAGE);
+
+      if (!setValueToMotorContoller(message)) {
+        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
     }
-    //get configuration form motor contoller to reflect configuration 
-    this->getConfiguration(configuration);
-  // Bouml preserved body end 0003C0F1
+  // Bouml preserved body end 0005BC71
 }
 
-//to get the configuration for one joint
-//@param configuration returns the joint configuration by reference
-void YouBotJoint::getConfiguration(YouBotJointConfiguration& configuration) {
-  // Bouml preserved body begin 0003C171
-    uint32 value = 0;
-    retrieveValueFromMotorContoller(GAP, 130, DRIVE, value); //PParameterFirstParametersPositionControl
-    this->config.PParameterFirstParametersPositionControl = value;
-    value = 0;
+void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
+  // Bouml preserved body begin 0005BCF1
+    if (parameter.getType() == API_PARAMETER) {
+      if (parameter.getName() == "JointName") {
+        static_cast<JointName&> (parameter).setParameter(this->jointName);
+      } else if (parameter.getName() == "GearRatio") {
+        static_cast<GearRatio&> (parameter).setParameter(this->gearRatio);
+      } else if (parameter.getName() == "EncoderTicksPerRound") {
+        static_cast<EncoderTicksPerRound&> (parameter).setParameter(this->encoderTicksPerRound);
+      } else if (parameter.getName() == "PositionReferenceToZero") {
+        static_cast<PositionReferenceToZero&> (parameter).setParameter(this->positionReferenceToZero);
+      }
+    } else if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
-    retrieveValueFromMotorContoller(GAP, 4, DRIVE, value);  //maximumPositioningSpeed
-    this->config.maximumPositioningSpeed = value *radian_per_second; //TODO convert in to radian_per second
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
 
-    configuration = this->config;
-
-  // Bouml preserved body end 0003C171
+      if (retrieveValueFromMotorContoller(message)) {
+        parameter.setYouBotMailboxMsg(message);
+      } else {
+        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
+    }
+  // Bouml preserved body end 0005BCF1
 }
 
 void YouBotJoint::setData(const JointDataSetpoint& data, SyncMode communicationMode) {
@@ -105,12 +102,13 @@ void YouBotJoint::getData(JointData& data) {
 ///@param communicationMode at the moment only non blocking communication is implemented
 void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C1F1
-    this->messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
-    this->messageBuffer.stctOutput.positionOrSpeed = (int32) (data.angle.value() / (2.0 * M_PI) * config.getGearRatio() * config.getEncoderTicksPerRound());
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
+    messageBuffer.stctOutput.positionOrSpeed = (int32) (data.angle.value() / (2.0 * M_PI) * gearRatio * encoderTicksPerRound);
 
     //jointValue / (2 * M_PI) * (joints[jointID - 1].gearRatio * encoderSteps);
 
-    YouBot::getInstance().setMsgBuffer(this->messageBuffer, this->jointNumber);
+    YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
   // Bouml preserved body end 0003C1F1
 }
 
@@ -118,17 +116,18 @@ void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communication
 ///@param data returns the angle by reference
 void YouBotJoint::getData(JointSensedAngle& data) {
   // Bouml preserved body begin 0003DCF1
-    this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags();
 
-    if (config.getGearRatio() == 0) {
+    if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
-    if (config.getEncoderTicksPerRound() == 0) {
+    if (encoderTicksPerRound == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
 
-    data.angle = ((double) this->messageBuffer.stctInput.actualPosition / config.getEncoderTicksPerRound()) * config.getGearRatio()* (2.0 * M_PI) * radian;
+    data.angle = ((double) messageBuffer.stctInput.actualPosition / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
   // Bouml preserved body end 0003DCF1
 }
 
@@ -137,14 +136,14 @@ void YouBotJoint::getData(JointSensedAngle& data) {
 ///@param communicationMode at the moment only non blocking communication is implemented
 void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C371
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
 
-    this->messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
-
-    if (config.getGearRatio() == 0) {
+    if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
-    this->messageBuffer.stctOutput.positionOrSpeed = (data.angularVelocity.value() / (config.getGearRatio() * 2.0 * M_PI)) * 60.0;
-    YouBot::getInstance().setMsgBuffer(this->messageBuffer, this->jointNumber);
+    messageBuffer.stctOutput.positionOrSpeed = (data.angularVelocity.value() / (gearRatio * 2.0 * M_PI)) * 60.0;
+    YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
   // Bouml preserved body end 0003C371
 }
 
@@ -152,15 +151,16 @@ void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicat
 ///@param data returns the velocity by reference
 void YouBotJoint::getData(JointSensedVelocity& data) {
   // Bouml preserved body begin 0003DD71
-    this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags();
 
-    if (config.getGearRatio() == 0) {
+    if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
-    double motorRPM = this->messageBuffer.stctInput.actualVelocity;
+    double motorRPM = messageBuffer.stctInput.actualVelocity;
     //convert RPM of the motor to radian per second of the wheel/joint
-    data.angularVelocity = ((motorRPM / 60.0) * config.getGearRatio() * 2.0 * M_PI) * radian_per_second;
+    data.angularVelocity = ((motorRPM / 60.0) * gearRatio * 2.0 * M_PI) * radian_per_second;
   // Bouml preserved body end 0003DD71
 }
 
@@ -168,11 +168,12 @@ void YouBotJoint::getData(JointSensedVelocity& data) {
 ///@param data returns the actual temperature by reference
 void YouBotJoint::getData(JointSensedTemperature& data) {
   // Bouml preserved body begin 0003C271
-    this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags();
 
     //the formular is taken from the TMCM-174/841: EtherCAT Communication Protocol
-    data.temperature = (25.0 + (((this->messageBuffer.stctInput.driverTemperature - 1.43) / (3.3 * 4095)) / 0.0043)) * boost::units::celsius::degree;
+    data.temperature = (25.0 + (((messageBuffer.stctInput.driverTemperature - 1.43) / (3.3 * 4095)) / 0.0043)) * boost::units::celsius::degree;
 
   // Bouml preserved body end 0003C271
 }
@@ -181,67 +182,69 @@ void YouBotJoint::getData(JointSensedTemperature& data) {
 ///@param data returns the actual motor current by reference
 void YouBotJoint::getData(JointSensedCurrent& data) {
   // Bouml preserved body begin 0003DDF1
-    this->messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+    YouBotSlaveMsg messageBuffer;
+    messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags();
     //convert mili ampere to ampere
-    data.current = this->messageBuffer.stctInput.actualCurrent / 1000.0 * ampere;
+    data.current = messageBuffer.stctInput.actualCurrent / 1000.0 * ampere;
   // Bouml preserved body end 0003DDF1
 }
 
 void YouBotJoint::parseYouBotErrorFlags() {
   // Bouml preserved body begin 00044AF1
+    YouBotSlaveMsg messageBuffer;
     std::stringstream errorMessageStream;
     errorMessageStream << "Joint " << this->jointNumber << " ";
     std::string errorMessage;
     errorMessage = errorMessageStream.str();
 
 
-    if (this->messageBuffer.stctInput.errorFlags & OVER_CURRENT) {
+    if (messageBuffer.stctInput.errorFlags & OVER_CURRENT) {
       LOG(error) << errorMessage << "got over current";
       //    throw ExceptionOODL(errorMessage + "got over current");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & UNDER_VOLTAGE) {
+    if (messageBuffer.stctInput.errorFlags & UNDER_VOLTAGE) {
       LOG(error) << errorMessage << "got under voltage";
       //    throw ExceptionOODL(errorMessage + "got under voltage");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & OVER_VOLTAGE) {
+    if (messageBuffer.stctInput.errorFlags & OVER_VOLTAGE) {
       LOG(error) << errorMessage << "got over voltage";
       //   throw ExceptionOODL(errorMessage + "got over voltage");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & OVER_TEMPERATURE) {
+    if (messageBuffer.stctInput.errorFlags & OVER_TEMPERATURE) {
       LOG(error) << errorMessage << "got over temperature";
       //   throw ExceptionOODL(errorMessage + "got over temperature");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & HALTED) {
+    if (messageBuffer.stctInput.errorFlags & HALTED) {
       //   LOG(error) << errorMessage << "is halted";
       //   throw ExceptionOODL(errorMessage + "is halted");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & HALL_SENSOR) {
+    if (messageBuffer.stctInput.errorFlags & HALL_SENSOR) {
       LOG(error) << errorMessage << "got hall sensor problem";
       //   throw ExceptionOODL(errorMessage + "got hall sensor problem");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & ENCODER) {
+    if (messageBuffer.stctInput.errorFlags & ENCODER) {
       LOG(error) << errorMessage << "got encoder problem";
       //   throw ExceptionOODL(errorMessage + "got encoder problem");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & MOTOR_WINDING) {
+    if (messageBuffer.stctInput.errorFlags & MOTOR_WINDING) {
       LOG(error) << errorMessage << "got motor winding problem";
       //   throw ExceptionOODL(errorMessage + "got motor winding problem");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & CYCLE_TIME_VIOLATION) {
+    if (messageBuffer.stctInput.errorFlags & CYCLE_TIME_VIOLATION) {
       LOG(error) << errorMessage << "the cycle time is violated";
       //   throw ExceptionOODL(errorMessage + "the cycle time is violated");
     }
 
-    if (this->messageBuffer.stctInput.errorFlags & INIT_SIN_COMM) {
+    if (messageBuffer.stctInput.errorFlags & INIT_SIN_COMM) {
       LOG(error) << errorMessage << "need to initialize the sinus commutation";
       //   throw ExceptionOODL(errorMessage + "need to initialize the sinus commutation");
     }
@@ -249,46 +252,40 @@ void YouBotJoint::parseYouBotErrorFlags() {
   // Bouml preserved body end 00044AF1
 }
 
-bool YouBotJoint::retrieveValueFromMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, uint32& value) {
-  // Bouml preserved body begin 000549F1
+bool YouBotJoint::retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& message) {
+  // Bouml preserved body begin 0005BD71
 
-    YouBotSlaveMailboxMsg mailboxMsgBuffer;
     bool unvalid = true;
     unsigned int retry = 0;
-    mailboxMsgBuffer.stctOutput.commandNumber = commandNumber;
-    mailboxMsgBuffer.stctOutput.moduleAddress = driveOrGripper; //0 : Drive  1 : Gripper
-    mailboxMsgBuffer.stctOutput.motorNumber = 0; //(always 0)
-    mailboxMsgBuffer.stctOutput.typeNumber = typeNumber;
-    mailboxMsgBuffer.stctOutput.value = 0; //don't care
-    YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
 
-    SLEEP_MILLISEC(retrieveParamterTimeout);
+    YouBot::getInstance().setMailboxMsgBuffer(message, this->jointNumber);
+
+    SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
-      YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
-      LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
-              << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
-              << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
-              << " status " << (int) mailboxMsgBuffer.stctInput.status
-              << " value " << mailboxMsgBuffer.stctInput.value;
-
-      if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
-              mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
-        value = mailboxMsgBuffer.stctInput.value;
+      YouBot::getInstance().getMailboxMsgBuffer(message, this->jointNumber);
+   /*   LOG(trace) << "CommandNumber " << (int) message.stctInput.commandNumber
+              << " moduleAddress " << (int) message.stctInput.moduleAddress
+              << " replyAddress " << (int) message.stctInput.replyAddress
+              << " status " << (int) message.stctInput.status
+              << " value " << message.stctInput.value;
+*/
+      if (message.stctOutput.commandNumber == message.stctInput.commandNumber &&
+              message.stctInput.status == TMCL_STATUS_OK) {
         unvalid = false;
       } else {
-        SLEEP_MILLISEC(retrieveParamterTimeout);
+        SLEEP_MILLISEC(timeTillNextMailboxUpdate);
         retry++;
       }
-    } while (retry < 10 && unvalid);
+    } while (retry < mailboxMsgRetries && unvalid);
 
-    if(unvalid){
+    if (unvalid) {
       return false;
-    }else{
+    } else {
       return true;
     }
 
-  // Bouml preserved body end 000549F1
+  // Bouml preserved body end 0005BD71
 }
 
 bool YouBotJoint::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg) {
@@ -301,29 +298,29 @@ bool YouBotJoint::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxM
 
     YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
 
-    SLEEP_MILLISEC(retrieveParamterTimeout);
+    SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
       YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
-      LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
+  /*    LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
               << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
               << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
               << " status " << (int) mailboxMsgBuffer.stctInput.status
               << " value " << mailboxMsgBuffer.stctInput.value;
-
+*/
       if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
               mailboxMsgBuffer.stctOutput.value == mailboxMsgBuffer.stctInput.value &&
               mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
         unvalid = false;
       } else {
-        SLEEP_MILLISEC(retrieveParamterTimeout);
+        SLEEP_MILLISEC(timeTillNextMailboxUpdate);
         retry++;
       }
-    } while (retry < 10 && unvalid);
-    
-    if(unvalid){
+    } while (retry < mailboxMsgRetries && unvalid);
+
+    if (unvalid) {
       return false;
-    }else{
+    } else {
       return true;
     }
 

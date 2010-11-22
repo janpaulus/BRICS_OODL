@@ -28,13 +28,11 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/ExceptionOODL.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-joint/JointData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-joint/JointConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBot.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripper.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
-  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointConfiguration.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointParameter.cpp
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematic.cpp
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.cpp
 )
@@ -44,7 +42,6 @@ SET(OODL_YOUBOT_HEADERS
   YouBot.hpp
   YouBotGripper.hpp
   YouBotJoint.hpp
-  YouBotJointConfiguration.hpp
   YouBotSlaveMailboxMsg.hpp
   YouBotSlaveMsg.hpp
   ProtocolDefinitions.hpp
@@ -63,8 +60,8 @@ SET(OODL_YOUBOT_HEADERS
 ../generic-gripper/GripperData.hpp
 
 ../generic-joint/Joint.hpp
-../generic-joint/JointConfiguration.hpp
 ../generic-joint/JointData.hpp
+../generic-joint/JointParameter.hpp
 
 ../one-dof-gripper/OneDOFGripper.hpp
 ../one-dof-gripper/OneDOFGripperConfiguration.hpp

@@ -57,13 +57,6 @@ class JointTorqueSetpoint : public JointDataSetpoint {
     quantity<si::torque> torque;
 
 };
-class JointDataRange {
-  public:
-    JointData jointDataUpper;
-
-    JointData jointDataLower;
-
-};
 
 } // namespace brics_oodl
 #endif

@@ -88,12 +88,12 @@ YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
 YouBotJoint& YouBot::getJointByName(const std::string jointName) {
   // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
-    YouBotJointConfiguration config;
+    JointName jName;
     std::string name;
 
     for (int i = 0; i < joints.size(); i++) {
-      joints[i].getConfiguration(config);
-      config.getJointName(name);
+      joints[i].getConfigurationParameter(jName);
+      jName.getParameter(name);
       if (name == jointName) {
         jointNumber = i;
         break;
@@ -232,21 +232,23 @@ void YouBot::initializeEthercat() {
         return;
       }
 
-      std::string desiredSlaveName = "TMCM-174";
+      std::string baseJointControllerName = "TMCM-174";
+      std::string manipulatorJointControllerName = "TMCM-174";
       std::string actualSlaveName;
       nrOfSlaves = 0;
       YouBotSlaveMsg emptySlaveMsg;
 
-      desiredSlaveName = configfile.getStringValue("JointControllerName");
+      baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
+      manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
 
       //reserve memory for all joints
       for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
-        //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
-        //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
-        //           ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+     //      printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
+     //              cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
+     //              ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
 
         actualSlaveName = ec_slave[cnt].name;
-        if (actualSlaveName == desiredSlaveName && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
+        if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
           joints.push_back(YouBotJoint(nrOfSlaves));
 
@@ -288,19 +290,26 @@ void YouBot::initializeJoints() {
 
     //Configure Joint Parameters
     std::string jointName;
+    JointName jName;
+    GearRatio gearRatio;
+    EncoderTicksPerRound ticksPerRound;
+    PositionReferenceToZero referenceToZero;
 
     for (unsigned int i = 0; i < joints.size(); i++) {
       std::stringstream jointNameStream;
-      jointNameStream << "Joint " << i + 1;
+      jointNameStream << "Joint_" << i + 1;
       jointName = jointNameStream.str();
-      YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
-      config.setJointName(configfile.getStringValue("JointName"));
-      config.setGearRatio(configfile.getDoubleValue("GearRatio"));
-      config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.setPositionReferenceToZero(configfile.getBoolValue("PositionReferenceToZero"));
 
-      joints[i].setConfiguration(config);
+      jName.setParameter(configfile.getStringValue("JointName"));
+      gearRatio.setParameter(configfile.getDoubleValue("GearRatio"));
+      ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
+      referenceToZero.setParameter(configfile.getBoolValue("PositionReferenceToZero"));
+
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(referenceToZero);
     }
 
     //Switch to Velocity control because of "Sinuskommutierung"
@@ -311,8 +320,6 @@ void YouBot::initializeJoints() {
     for (unsigned int i = 0; i < joints.size(); i++) {
       joints[i].setData(vel, NON_BLOCKING);
     }
-
-
 
 
     //TODO: Calibrate YouBot Manipulator

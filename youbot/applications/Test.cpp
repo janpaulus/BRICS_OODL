@@ -2,6 +2,7 @@
 #include <vector>
 #include <signal.h>
 #include "youbot/YouBot.hpp"
+#include "youbot/YouBotJointParameter.hpp"
 
 
 
@@ -23,6 +24,8 @@ int main() {
   signal(SIGINT, sigintHandler);
 
   try {
+    
+
 
     YouBot& myYouBot = YouBot::getInstance();
 
@@ -33,7 +36,6 @@ int main() {
     JointSensedCurrent current;
     JointVelocitySetpoint setVel;
     JointAngleSetpoint setangle;
-    YouBotJointConfiguration config;
     setangle.angle = 2.0 * M_PI *radian;
     setVel.angularVelocity = 0 * M_PI *radian_per_second;
 
@@ -51,7 +53,26 @@ int main() {
     quantity<si::plane_angle> lastAngle;
 
     setVel.angularVelocity = 2 * radian_per_second;
-    
+
+    MaximumPositioningSpeed test;
+    JointName name;
+    std::string jname;
+    myYouBot.getBaseJoint(3).getConfigurationParameter(name);
+    name.getParameter(jname);
+    LOG(trace) << jname;
+
+    myYouBot.getBaseJoint(3).getConfigurationParameter(test);
+    test.getParameter(angularVel);
+    LOG(trace) << angularVel;
+    angularVel = (angularVel.value() + 1) * radian_per_second;
+    test.setParameter(angularVel);
+    myYouBot.getBaseJoint(3).setConfigurationParameter(test);
+    myYouBot.getBaseJoint(3).getConfigurationParameter(test);
+    test.getParameter(angularVel);
+    LOG(trace) << angularVel;
+
+
+    /*
     double value = 0;;
     myYouBot.getBaseJoint(4).getConfiguration(config);
     config.getMaximumPositioningSpeed(angularVel);
@@ -62,7 +83,7 @@ int main() {
     myYouBot.getBaseJoint(4).getConfiguration(config);
     config.getMaximumPositioningSpeed(angularVel);
     LOG(trace) << angularVel;
-
+*/
 /*
     while (running) {
 /

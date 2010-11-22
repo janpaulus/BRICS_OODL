@@ -12,9 +12,8 @@
 #include "generic/ExceptionOODL.hpp"
 #include "generic-joint/Joint.hpp"
 #include "generic-joint/JointData.hpp"
-#include "generic-joint/JointConfiguration.hpp"
 #include "youbot/ProtocolDefinitions.hpp"
-#include "youbot/YouBotJointConfiguration.hpp"
+#include "youbot/YouBotJointParameter.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 
@@ -27,22 +26,16 @@ class YouBotJoint : public Joint {
     ~YouBotJoint();
 
 
-  protected:
-    //please use a YouBotJointConfiguration
-    void setConfiguration(JointConfiguration& configuration);
+  private:
+    virtual void setConfigurationParameter(const JointParameter& parameter);
 
-    //please use a YouBotJointConfiguration
-    void getConfiguration(JointConfiguration& configuration);
+    virtual void getConfigurationParameter(JointParameter& parameter);
 
 
   public:
-    //sets the configuration for one joint
-    //@param configuration the joint configuration
-    void setConfiguration(YouBotJointConfiguration& configuration);
+    void setConfigurationParameter(const YouBotJointParameter& parameter);
 
-    //to get the configuration for one joint
-    //@param configuration returns the joint configuration by reference
-    void getConfiguration(YouBotJointConfiguration& configuration);
+    void getConfigurationParameter(YouBotJointParameter& parameter);
 
 
   protected:
@@ -82,17 +75,23 @@ class YouBotJoint : public Joint {
   private:
     void parseYouBotErrorFlags();
 
-    bool retrieveValueFromMotorContoller(const uint8& commandNumber, const uint8& typeNumber, const uint8& driveOrGripper, uint32& value);
+    bool retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& message);
 
     bool setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg);
 
+    std::string jointName;
+
     unsigned int jointNumber;
 
-    YouBotSlaveMsg messageBuffer;
+    bool positionReferenceToZero;
 
-    YouBotJointConfiguration config;
+    unsigned int encoderTicksPerRound;
 
-    unsigned int retrieveParamterTimeout;
+    double gearRatio;
+
+    unsigned int timeTillNextMailboxUpdate;
+
+    unsigned int mailboxMsgRetries;
 
 };
 

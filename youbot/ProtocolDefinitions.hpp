@@ -83,5 +83,10 @@ enum YouBotErrorFlags {
     INIT_SIN_COMM = 512
 };
 
+enum MailboxMsgType {
+    SET_MESSAGE,
+    GET_MESSAGE
+};
+
 #endif	/* PROTOCOLDEFINITIONS_HPP */
 
