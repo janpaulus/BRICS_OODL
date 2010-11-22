@@ -121,37 +121,33 @@ bool ColorExposureConfiguration::getListOfColorProperties()
 
 bool ColorExposureConfiguration::getListOfColorPropertiesVector() 
 {
-  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
+  std::cout << "Inside ColorExposureConfiguration getListOfColorPropertiesVector" << std::endl;
 
-  int returnValue = 0;
   int propertyIndex = 0;
-  for(std::vector<unicap_property_t>::iterator i = propertyList.begin(); i <= propertyList.end() ; i++ ) 
-  {
-    returnValue = unicap_enumerate_properties( *handleColorExposureDev, NULL, &(*i), 
-					       propertyIndex);
-    if( SUCCESS(returnValue) )
+//  for(std::vector<unicap_property_t>::iterator i = propertyList.begin(); i <= propertyList.end() ; i++ ) 
+
+    while(unicap_enumerate_properties( *handleColorExposureDev, NULL, &propertyList[propertyIndex], 
+						     propertyIndex))
     {
-      std::cout << i->identifier<<std::endl;
-      propertyList.push_back(*i);
-      colorConfPropertyCounter++;
-      returnStatus = STATUS_SUCCESS;
+
+	propertyList.push_back(propertyList[propertyIndex]);
+	std::cout << propertyList[propertyIndex].identifier<<std::endl;
+	colorConfPropertyCounter++;
+	returnStatus = STATUS_SUCCESS;
+      
+    }
+    
+    if(propertyList.size() != 0 )
+    {
+      std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
+      return true;
     }
     else
-      break;
-
-  }
-
-  if(listOfProperties != NULL )
-  {
-    std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
-    return true;
-  }
-  else
-  {
-    std::cout << "Property list is empty"<<std::endl;
-    return false;
-  }
- 
+    {
+      std::cout << "Property list is empty"<<std::endl;
+      return false;
+    }
+    
 }
 
 
@@ -181,26 +177,32 @@ bool ColorExposureConfiguration::getHueValue(double &hue)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+//  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (propertyList.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
-    for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+//    for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+    for (int propertyCounter = 0; propertyCounter < propertyList.size(); propertyCounter++)
     {
       //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
       //there are also menu, list, flag property types
-      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+//      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      if(propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
       {
 	//if range then check it for correct ID
-	charID = listOfProperties[propertyCounter].identifier;
+//	charID = listOfProperties[propertyCounter].identifier;
+	charID = propertyList[propertyCounter].identifier;
 	//if ID == frame rate (as defined in unicap API) then return its current value
 	if (charID == propertyName)
 	{
 	  //check if the call succeeds 
-	  int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+//	  int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+	  int returnValue = unicap_get_property( *handleColorExposureDev, &propertyList[propertyCounter]); 
 	  if( SUCCESS(returnValue) )
 	  {
-	    hue = listOfProperties[propertyCounter].value;
+//	    hue = listOfProperties[propertyCounter].value;
+	    hue = propertyList[propertyCounter].value;
 	    //   std::cout << rate << std::endl;
 	    return true;
 	  }
@@ -211,21 +213,27 @@ bool ColorExposureConfiguration::getHueValue(double &hue)
   }
   // if property list was not obtained successfully or was not filled in before through 
   //the call to getListOfDeviceProperties, call the method 
-  else if (getListOfColorProperties() == true)
+//  else if (getListOfColorProperties() == true)
+  else if (getListOfColorPropertiesVector() == true)
   {
-    if (listOfProperties != NULL)
+    //   if (listOfProperties != NULL)
+    if (propertyList.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
-	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+//	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
+	if( propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
 	{
-	  charID = listOfProperties[propertyCounter].identifier;
+//	  charID = listOfProperties[propertyCounter].identifier;
+	  charID = propertyList[propertyCounter].identifier;
 	  if (charID == propertyName)
 	  {
-	    int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+//	    int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+	    int returnValue = unicap_get_property( *handleColorExposureDev, &propertyList[propertyCounter]); 
 	    if( SUCCESS(returnValue) )
 	    {
-	      hue = listOfProperties[propertyCounter].value;
+//	      hue = listOfProperties[propertyCounter].value;
+	      hue = propertyList[propertyCounter].value;
 	      return true;
 	    }
 	  }

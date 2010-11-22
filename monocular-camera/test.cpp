@@ -7,7 +7,7 @@
 int main (int argc, char **argv)
 {
 
-  //MonocularCameraConfiguration config ;
+  MonocularCameraConfiguration config ;
   ImageFormat format;
   MonocularCamera camera(1);
 
@@ -15,7 +15,9 @@ int main (int argc, char **argv)
 
   camera.open(); //always open first
 
-//  camera.getConfiguration(config);
+  camera.getConfiguration(config);
+  double hue = 0.0;
+  config.getColorExposureConfiguration()->getHueValue(hue);
 
   // set image format and start capturing  
   camera.getImageFormat(format) ;
