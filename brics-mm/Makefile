@@ -23,7 +23,7 @@ USE_LANGUAGES=		c c++
 
 include ../../mk/sysdep/xerces-c.mk
 #include ../../brics/collada-dom/depend.mk
-include ../../brics/sysdep/qt.mk
+include ../../mk/sysdep/qt4-libs.mk
 include ../../brics/coin3d/depend.mk
 include ../../mk/sysdep/libsoqt.mk
 include ../../devel/boost-headers/depend.mk
