@@ -2,7 +2,7 @@
 # Created:			Jan Paulus on 17 Aug 2010
 #
 
-OODL_YOUBOT_VERSION=	0.01
+OODL_YOUBOT_VERSION=	0.1
 DISTNAME=		oodl-youbot-${OODL_YOUBOT_VERSION}
 PKGNAME=		oodl-youbot-${OODL_YOUBOT_VERSION}
 CATEGORIES=		hardware
@@ -18,6 +18,7 @@ USE_LANGUAGES=		c c++
 
 CMAKE_ARGS+=		-DSELECTED_DRIVER=youbot
 CMAKE_ARGS+=		-DSOEM_PATH=${PREFIX.soem}
+CMAKE_ARGS+=		-DRUDECONFIG_PATH=${PREFIX.rudeconfig}
 CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
 
 
@@ -25,6 +26,7 @@ include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
 include ../../devel/boost-log/depend.mk
 include ../../brics/soem/depend.mk
+include ../../brics/rudeconfig/depend.mk
 include ../../mk/sysdep/cmake.mk
 #include ../../mk/sysdep/doxygen.mk
 include ../../mk/robotpkg.mk
