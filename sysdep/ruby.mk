@@ -4,6 +4,8 @@
 DEPEND_DEPTH:=   ${DEPEND_DEPTH}+
 RUBY_DEPEND_MK:= ${RUBY_DEPEND_MK}+
 
+RUBY_VERSION = 1.8
+
 ifeq (+,$(DEPEND_DEPTH))
 DEPEND_PKG+=ruby
 endif
@@ -12,7 +14,7 @@ ifeq (+,$(RUBY_DEPEND_MK))
 
 PREFER.ruby?=	system
 DEPEND_USE+=		ruby
-DEPEND_ABI.ruby?=	ruby>=1.8
+DEPEND_ABI.ruby?=	ruby>=RUBY_VERSION
 
 SYSTEM_SEARCH.ruby=	\
 	bin/ruby

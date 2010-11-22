@@ -1,12 +1,10 @@
 # robotpkg sydep for:		treetop.mk
 # Created:			Michael Reckhaus 11.11.2010
 
-# TODO: search path contains version numbers from ruby!. Can this be avoided via regular expressions?
-
-
-
 DEPEND_DEPTH:=   ${DEPEND_DEPTH}+ 
 TREETOP_DEPEND_MK:= ${TREETOP_DEPEND_MK}+
+
+TREETOP_VERSION = 1.4.9
 
 ifeq (+,$(DEPEND_DEPTH))
 DEPEND_PKG+=treetop
@@ -16,14 +14,12 @@ ifeq (+,$(TREETOP_DEPEND_MK))
 
 PREFER.treetop?=	system
 DEPEND_USE+=		treetop
-DEPEND_ABI.treetop?=	treetop>=1.4.8
-
-_vregex:=^(\d+\.)?(\d+\.)?(\*|\d+)
+DEPEND_ABI.treetop?=	treetop>=${TREETOP_VERSION}
 
 SYSTEM_SEARCH.treetop=\
-	/.gem/ruby/1.8/gems/treetop-1.4.8/lib/treetop.rb 
+	.gem/ruby/${RUBY_VERSION}/gems/treetop-${TREETOP_VERSION}/lib/treetop.rb 
 
-SYSTEM_PKG.Linux-ubuntu.treetop=treetop (use gem install treetop)
+SYSTEM_PKG.Linux-ubuntu.treetop=treetop (use "gem install treetop -v ${TREETOP_VERSION}")
 
 include ../sysdep/ruby.mk
 include ../sysdep/rubygems.mk
