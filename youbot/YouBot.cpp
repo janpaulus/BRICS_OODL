@@ -301,8 +301,11 @@ void YouBot::initializeJoints() {
       jointName = jointNameStream.str();
       configfile.setSection(jointName.c_str());
 
+      
       jName.setParameter(configfile.getStringValue("JointName"));
-      gearRatio.setParameter(configfile.getDoubleValue("GearRatio"));
+      double gearRatio_numerator = configfile.getIntValue("GearRatio_numerator");
+      double gearRatio_denominator = configfile.getIntValue("GearRatio_denominator");
+      gearRatio.setParameter(gearRatio_numerator/gearRatio_denominator);
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
       referenceToZero.setParameter(configfile.getBoolValue("PositionReferenceToZero"));
 

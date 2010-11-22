@@ -55,8 +55,8 @@ int main() {
     setVel.angularVelocity = 2 * radian_per_second;
 
     MaximumPositioningSpeed test;
-    JointName name;
-    std::string jname;
+    GearRatio name;
+    double jname;
     myYouBot.getBaseJoint(3).getConfigurationParameter(name);
     name.getParameter(jname);
     LOG(trace) << jname;
