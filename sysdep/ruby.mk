@@ -15,7 +15,7 @@ DEPEND_USE+=		ruby
 DEPEND_ABI.ruby?=	ruby>=1.8
 
 SYSTEM_SEARCH.ruby=	\
-	/usr/bin/ruby
+	bin/ruby
 
 SYSTEM_PKG.Linux-ubuntu.ruby=ruby
 
