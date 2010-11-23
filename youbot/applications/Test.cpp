@@ -3,6 +3,7 @@
 #include <signal.h>
 #include "youbot/YouBot.hpp"
 #include "youbot/YouBotJointParameter.hpp"
+#include "youbot/YouBotGripper.hpp"
 
 
 
@@ -54,10 +55,35 @@ int main() {
 
     setVel.angularVelocity = 2 * radian_per_second;
 
+
+ 
+   
     MaximumPositioningSpeed test;
+
+
+    YouBotGripper gripper = myYouBot.getArm1Gripper();
+
+    
+    GripperBarSpacingSetPoint gripperSetPoint;
+
+    gripperSetPoint.barSpacing = 0.01 *meter;
+
+  //  gripper.setData(gripperSetPoint);
+
+
+    JointAngleSetpoint jAngle;
+    jAngle.angle = -10.0*M_PI/180.0 *radian;
+
+ //   SLEEP_MILLISEC(5000);
+
+    myYouBot.getArm1Joint(1).setData(jAngle);
+
+    SLEEP_MILLISEC(5000);
+
+    
     GearRatio name;
     double jname;
-    myYouBot.getBaseJoint(3).getConfigurationParameter(name);
+    myYouBot.getArm1Joint(2).getConfigurationParameter(name);
     name.getParameter(jname);
     LOG(trace) << jname;
 
@@ -86,8 +112,8 @@ int main() {
 */
 /*
     while (running) {
-/
-      for (unsigned int i = 1; i <= myYouBot.getNumberOfJoints(); i++) {
+
+      for (unsigned int i = 1; i <= 4; i++) {
         myYouBot.getBaseJoint(i).getData(temp);
         myYouBot.getBaseJoint(i).getData(angle);
         myYouBot.getBaseJoint(i).getData(vel);
@@ -101,7 +127,7 @@ int main() {
 
       SLEEP_MILLISEC(100);
     }
-*/
+
     SLEEP_MILLISEC(500);
     setVel.angularVelocity = 0 * radian_per_second;
     myYouBot.getJoint(1).setData(setVel);
@@ -110,7 +136,7 @@ int main() {
     myYouBot.getJoint(4).setData(setVel);
 
     SLEEP_MILLISEC(500);
-
+*/
 
 
   } catch (std::exception& e) {

@@ -2,22 +2,21 @@
 #define BRICS_OODL_ONEDOFGRIPPER_H
 #include "generic-gripper/Gripper.hpp"
 #include "generic-gripper/GripperData.hpp"
-#include "generic-gripper/GripperConfiguration.hpp"
+#include "generic-gripper/GripperParameter.hpp"
 #include "one-dof-gripper/OneDOFGripperData.hpp"
-#include "one-dof-gripper/OneDOFGripperConfiguration.hpp"
 
 
 namespace brics_oodl {
 
 class OneDOFGripper : public Gripper {
   public:
-    void setConfiguration(const OneDOFGripperConfiguration& configuration);
+    virtual void setConfigurationParameter(const GripperParameter& parameter) = 0;
 
-    void getConfiguration(OneDOFGripperConfiguration& configuration);
+    virtual void getConfigurationParameter(GripperParameter& parameter) = 0;
 
-    void setData(const OneDOFGripperData& data);
+    virtual void setData(const OneDOFGripperData& data) = 0;
 
-    void getData(OneDOFGripperData& data);
+    virtual void getData(OneDOFGripperData& data) = 0;
 
 };
 

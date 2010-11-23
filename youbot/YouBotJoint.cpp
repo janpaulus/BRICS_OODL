@@ -102,12 +102,16 @@ void YouBotJoint::getData(JointData& data) {
 ///@param communicationMode at the moment only non blocking communication is implemented
 void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C1F1
+
+    if (gearRatio == 0) {
+      throw ExceptionOODL("A Gear Ratio of zero is not allowed");
+    }
     YouBotSlaveMsg messageBuffer;
     messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
-    messageBuffer.stctOutput.positionOrSpeed = (int32) (data.angle.value() / (2.0 * M_PI) * gearRatio * encoderTicksPerRound);
+    messageBuffer.stctOutput.positionOrSpeed = (int32) ((data.angle.value() * ((double)encoderTicksPerRound/(2.0 * M_PI)))/ gearRatio);
 
     //jointValue / (2 * M_PI) * (joints[jointID - 1].gearRatio * encoderSteps);
-
+    LOG(trace) << "value: " << data.angle << " gear " << gearRatio<< " encoderperRound "<< encoderTicksPerRound << " encPos "<< messageBuffer.stctOutput.positionOrSpeed  << " joint " << this->jointNumber;
     YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
   // Bouml preserved body end 0003C1F1
 }
@@ -143,6 +147,7 @@ void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicat
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
     messageBuffer.stctOutput.positionOrSpeed = (data.angularVelocity.value() / (gearRatio * 2.0 * M_PI)) * 60.0;
+    LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
     YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
   // Bouml preserved body end 0003C371
 }

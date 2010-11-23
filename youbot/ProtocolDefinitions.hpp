@@ -47,9 +47,6 @@ typedef enum TMCLCommandNumber {
 #define RFS_STOP 1
 #define RFS_STATUS 2
 
-#define FALSE 0
-#define TRUE 1
-
 #define TMCL_STATUS_OK 100
 
 //Result codes for GetResult
@@ -68,6 +65,12 @@ enum YouBotJointControllerMode {
 enum TMCLModuleAddress {
     DRIVE = 0,
     GRIPPER = 1
+};
+
+enum TMCLGripperValue {
+  OPEN_GRIPPER = -10000,//0xFFFFFFFF, //0xFFFF0101
+  CLOSE_GRIPPER = 10000,//0x0FFFFFFF, //0x0FFF0000
+  STOP_GRIPPER = 0x00000000 //0x0FFF0000
 };
 
 enum YouBotErrorFlags {
