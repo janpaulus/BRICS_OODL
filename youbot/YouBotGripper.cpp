@@ -8,9 +8,10 @@ YouBotGripper::YouBotGripper(const unsigned int jointNo) {
     this->jointNumber = jointNo;
     this->mailboxMsgRetries = 30;
     this->timeTillNextMailboxUpdate = YouBot::getInstance().timeTillNextEthercatUpdate * 2;
-    this->maxBarSpacing = 0.023 * meter;
-    this->maxEncoderValue = -67000;
+    this->maxTravelDistance = 0.023 * meter;
+    this->maxEncoderValue = 67000;
     this->barSpacingOffset = 0 * meter;
+    this->lastGripperPosition = 0 * meter;
   // Bouml preserved body end 0005EFF1
 }
 
@@ -37,10 +38,15 @@ void YouBotGripper::getConfigurationParameter(YouBotGripperParameter& parameter)
 }
 
 void YouBotGripper::setConfigurationParameter(const YouBotGripperParameter& parameter) {
-  // Bouml preserved body begin 00048271
-    if (parameter.getName() == "CalibrateGripper") {
+  // Bouml preserved body begin 000617F1
+   
+  // Bouml preserved body end 000617F1
+}
 
-      if (static_cast<const CalibrateGripper&> (parameter).value) {
+void YouBotGripper::setConfigurationParameter(const CalibrateGripper& parameter) {
+  // Bouml preserved body begin 00048271
+    
+      if (parameter.value) {
         YouBotSlaveMailboxMsg message;
 
         LOG(trace) << "Calibrating Gripper";
@@ -48,7 +54,7 @@ void YouBotGripper::setConfigurationParameter(const YouBotGripperParameter& para
         message.stctOutput.commandNumber = MVP;
         message.stctOutput.typeNumber = 1; //move gripper
         message.stctOutput.motorNumber = 0; //always zero
-        message.stctOutput.value = 70000;
+        message.stctOutput.value = this->maxEncoderValue;
 
         setValueToMotorContoller(message);
         
@@ -59,20 +65,38 @@ void YouBotGripper::setConfigurationParameter(const YouBotGripperParameter& para
         messageBuffer.stctOutput.controllerMode = MOTOR_STOP;
         messageBuffer.stctOutput.positionOrSpeed = 0;
         YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+        this->lastGripperPosition = 0 * meter;
 
         //stop Gripper motor
         SLEEP_MILLISEC(timeTillNextMailboxUpdate*2);
         message.stctOutput.value = 0;
         setValueToMotorContoller(message);
       }
-    } else if (parameter.getName() == "BarSpacingOffset") {
-      this->barSpacingOffset = static_cast<const BarSpacingOffset&> (parameter).value;
-    }
+    
   // Bouml preserved body end 00048271
+}
+
+void YouBotGripper::setConfigurationParameter(const BarSpacingOffset& parameter) {
+  // Bouml preserved body begin 00061871
+      this->barSpacingOffset = parameter.value;
+  // Bouml preserved body end 00061871
+}
+
+void YouBotGripper::setConfigurationParameter(const MaxTravelDistance& parameter) {
+  // Bouml preserved body begin 00061DF1
+  this->maxTravelDistance = parameter.value;
+  // Bouml preserved body end 00061DF1
+}
+
+void YouBotGripper::setConfigurationParameter(const MaxEncoderValue& parameter) {
+  // Bouml preserved body begin 00061E71
+  this->maxEncoderValue = parameter.value;
+  // Bouml preserved body end 00061E71
 }
 
 void YouBotGripper::getData(const GripperData& data) {
   // Bouml preserved body begin 0005FB71
+    LOG(info) << "Nothing to do";
   // Bouml preserved body end 0005FB71
 }
 
@@ -84,6 +108,7 @@ void YouBotGripper::setData(const OneDOFGripperData& data) {
 
 void YouBotGripper::setData(const GripperData& data) {
   // Bouml preserved body begin 0005FAF1
+    LOG(info) << "Nothing to do";
   // Bouml preserved body end 0005FAF1
 }
 
@@ -95,13 +120,20 @@ void YouBotGripper::getData(OneDOFGripperData& data) {
 
 void YouBotGripper::setData(const GripperBarSpacingSetPoint& barSpacing) {
   // Bouml preserved body begin 0005F8F1
+
+  if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < 0 * meter){
+    std::stringstream errorMessageStream;
+    errorMessageStream << "The bar spacing is not allowd to be less than 0 m or higher than " << (maxTravelDistance + barSpacingOffset);
+    throw ExceptionOODL(errorMessageStream.str());
+  }
     YouBotSlaveMailboxMsg message;
     message.stctOutput.moduleAddress = GRIPPER;
     message.stctOutput.commandNumber = MVP;
     message.stctOutput.typeNumber = 1; //move gripper
     message.stctOutput.motorNumber = 0; //always zero
-    message.stctOutput.value = (int)((barSpacing.barSpacing+barSpacingOffset)/maxBarSpacing * maxEncoderValue);
+    message.stctOutput.value = (int)(((this->lastGripperPosition - barSpacing.barSpacing)+barSpacingOffset)/maxTravelDistance * maxEncoderValue);
 
+    this->lastGripperPosition = barSpacing.barSpacing;
     setValueToMotorContoller(message);
 
   // Bouml preserved body end 0005F8F1
@@ -109,6 +141,7 @@ void YouBotGripper::setData(const GripperBarSpacingSetPoint& barSpacing) {
 
 void YouBotGripper::getData(GripperBarSpacingSetPoint& barSpacing) {
   // Bouml preserved body begin 0005F971
+   LOG(info) << "At the moment it is not possible to get the sensed position of the gripper";
   // Bouml preserved body end 0005F971
 }
 

@@ -3,10 +3,9 @@
 
 namespace brics_oodl {
 
-  YouBot* YouBot::instance = 0;
-
-  YouBot::YouBot() {
-    // Bouml preserved body begin 00041171
+YouBot* YouBot::instance = 0;
+YouBot::YouBot() {
+  // Bouml preserved body begin 00041171
 
     //Initialize the Logger
     (Logger::getInstance()).init();
@@ -31,17 +30,18 @@ namespace brics_oodl {
     mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
 
 
-    // Bouml preserved body end 00041171
-  }
+  // Bouml preserved body end 00041171
+}
 
-  YouBot::~YouBot() {
-    // Bouml preserved body begin 000411F1
+YouBot::~YouBot() {
+  // Bouml preserved body begin 000411F1
     this->closeEthercat();
-    // Bouml preserved body end 000411F1
-  }
+  // Bouml preserved body end 000411F1
+}
 
-  YouBot& YouBot::getInstance() {
-    // Bouml preserved body begin 00042F71
+YouBot& YouBot::getInstance()
+{
+  // Bouml preserved body begin 00042F71
     if (!instance) {
       instance = new YouBot();
       instance->initializeEthercat();
@@ -50,45 +50,43 @@ namespace brics_oodl {
     }
     return *instance;
 
-    // Bouml preserved body end 00042F71
-  }
+  // Bouml preserved body end 00042F71
+}
 
-  void YouBot::destroy() {
-    // Bouml preserved body begin 00042FF1
+void YouBot::destroy()
+{
+  // Bouml preserved body begin 00042FF1
     if (instance) {
       delete instance;
     }
     instance = 0;
 
-    // Bouml preserved body end 00042FF1
-  }
+  // Bouml preserved body end 00042FF1
+}
 
-  ///return the quantity of joints
-
-  unsigned int YouBot::getNumberOfJoints() const {
-    // Bouml preserved body begin 00044A71
+///return the quantity of joints
+unsigned int YouBot::getNumberOfJoints() const {
+  // Bouml preserved body begin 00044A71
     return this->joints.size();
-    // Bouml preserved body end 00044A71
-  }
+  // Bouml preserved body end 00044A71
+}
 
-  ///return a joint form the base, arm1 or arm2
-  ///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
-
-  YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
-    // Bouml preserved body begin 000449F1
+///return a joint form the base, arm1 or arm2
+///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
+YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
+  // Bouml preserved body begin 000449F1
     if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
     return joints[jointNumber - 1];
-    // Bouml preserved body end 000449F1
-  }
+  // Bouml preserved body end 000449F1
+}
 
-  ///return a joint form the base, arm1 or arm2
-  ///@param jointName e.g. BaseLeftFront
-
-  YouBotJoint& YouBot::getJointByName(const std::string jointName) {
-    // Bouml preserved body begin 0004F8F1
+///return a joint form the base, arm1 or arm2
+///@param jointName e.g. BaseLeftFront
+YouBotJoint& YouBot::getJointByName(const std::string jointName) {
+  // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
     JointName jName;
     std::string name;
@@ -107,64 +105,60 @@ namespace brics_oodl {
     }
 
     return joints[jointNumber];
-    // Bouml preserved body end 0004F8F1
-  }
+  // Bouml preserved body end 0004F8F1
+}
 
-  ///return a joint form the base
-  ///@param jointNumber 1-4 for the base joints
-
-  YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
-    // Bouml preserved body begin 0004F771
+///return a joint form the base
+///@param jointNumber 1-4 for the base joints
+YouBotJoint& YouBot::getBaseJoint(const unsigned int baseJointNumber) {
+  // Bouml preserved body begin 0004F771
     if (baseJointNumber <= 0 || baseJointNumber > 4 || baseJointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
     return joints[baseJointNumber - 1];
-    // Bouml preserved body end 0004F771
-  }
+  // Bouml preserved body end 0004F771
+}
 
-  ///return a joint form the arm1
-  ///@param jointNumber 1-5 for the arm1 joints
-
-  YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
-    // Bouml preserved body begin 0004F7F1
+///return a joint form the arm1
+///@param jointNumber 1-5 for the arm1 joints
+YouBotJoint& YouBot::getArm1Joint(const unsigned int arm1JointNumber) {
+  // Bouml preserved body begin 0004F7F1
     unsigned int jointNumber = arm1JointNumber + 4;
     if (jointNumber <= 4 || jointNumber > 9 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
     return joints[jointNumber - 1];
-    // Bouml preserved body end 0004F7F1
-  }
+  // Bouml preserved body end 0004F7F1
+}
 
-  ///return a joint form the arm2
-  ///@param jointNumber 1-5 for the arm2 joints
-
-  YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
-    // Bouml preserved body begin 0004F871
+///return a joint form the arm2
+///@param jointNumber 1-5 for the arm2 joints
+YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
+  // Bouml preserved body begin 0004F871
     unsigned int jointNumber = arm2JointNumber + 4 + 5;
     if (jointNumber <= 9 || jointNumber > 14 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
     return joints[jointNumber - 1];
-    // Bouml preserved body end 0004F871
-  }
+  // Bouml preserved body end 0004F871
+}
 
-  YouBotGripper& YouBot::getArm1Gripper() {
-    // Bouml preserved body begin 0005F9F1
+YouBotGripper& YouBot::getArm1Gripper() {
+  // Bouml preserved body begin 0005F9F1
     if (this->gripperVector.size() >= 1) {
       return this->gripperVector[0];
     } else {
       throw ExceptionOODL("There is no Gripper");
     }
-    // Bouml preserved body end 0005F9F1
-  }
+  // Bouml preserved body end 0005F9F1
+}
 
-  ///commands the base in cartesien velocities
-  ///@param longitudinalVelocity is the forward or backward velocity
-  ///@param transversalVelocity is the sideway velocity
-  ///@param angularVelocity is the rotational velocity around the center of the YouBot
-
-  void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
-    // Bouml preserved body begin 0004DD71
+///commands the base in cartesien velocities
+///@param longitudinalVelocity is the forward or backward velocity
+///@param transversalVelocity is the sideway velocity
+///@param angularVelocity is the rotational velocity around the center of the YouBot
+void YouBot::setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity) {
+  // Bouml preserved body begin 0004DD71
 
     std::vector<quantity<angular_velocity> > wheelVelocities;
     JointVelocitySetpoint setVel;
@@ -182,16 +176,15 @@ namespace brics_oodl {
     this->getJoint(3).setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[3];
     this->getJoint(4).setData(setVel, NON_BLOCKING);
-    // Bouml preserved body end 0004DD71
-  }
+  // Bouml preserved body end 0004DD71
+}
 
-  ///gets the cartesien base velocity
-  ///@param longitudinalVelocity is the forward or backward velocity
-  ///@param transversalVelocity is the sideway velocity
-  ///@param angularVelocity is the rotational velocity around the center of the YouBot
-
-  void YouBot::getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity) {
-    // Bouml preserved body begin 00051271
+///gets the cartesien base velocity
+///@param longitudinalVelocity is the forward or backward velocity
+///@param transversalVelocity is the sideway velocity
+///@param angularVelocity is the rotational velocity around the center of the YouBot
+void YouBot::getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity) {
+  // Bouml preserved body begin 00051271
 
     std::vector<quantity<angular_velocity> > wheelVelocities;
     quantity<angular_velocity> dummy;
@@ -209,16 +202,15 @@ namespace brics_oodl {
 
     youBotBaseKinematic.wheelVelocitiesToCartesianVelocity(wheelVelocities, longitudinalVelocity, transversalVelocity, angularVelocity);
 
-    // Bouml preserved body end 00051271
-  }
+  // Bouml preserved body end 00051271
+}
 
-  ///gets the cartesien base position which is calculated from the odometry
-  ///@param longitudinalPosition is the forward or backward position
-  ///@param transversalPosition is the sideway position
-  ///@param orientation is the rotation around the center of the YouBot
-
-  void YouBot::getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation) {
-    // Bouml preserved body begin 000514F1
+///gets the cartesien base position which is calculated from the odometry
+///@param longitudinalPosition is the forward or backward position
+///@param transversalPosition is the sideway position
+///@param orientation is the rotation around the center of the YouBot
+void YouBot::getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation) {
+  // Bouml preserved body begin 000514F1
 
     std::vector<quantity<plane_angle> > wheelPositions;
     quantity<plane_angle> dummy;
@@ -235,11 +227,17 @@ namespace brics_oodl {
     wheelPositions[3] = sensedPos.angle;
 
     youBotBaseKinematic.wheelPositionsToCartesianPosition(wheelPositions, longitudinalPosition, transversalPosition, orientation);
-    // Bouml preserved body end 000514F1
-  }
+  // Bouml preserved body end 000514F1
+}
 
-  void YouBot::initializeEthercat() {
-    // Bouml preserved body begin 000410F1
+void YouBot::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
+  // Bouml preserved body begin 00061EF1
+   ethercatSlaveInfos = this->ethercatSlaveInfo;
+  // Bouml preserved body end 00061EF1
+}
+
+void YouBot::initializeEthercat() {
+  // Bouml preserved body begin 000410F1
 
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
@@ -265,6 +263,8 @@ namespace brics_oodl {
                 cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
                 ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
 
+        ethercatSlaveInfo.push_back(ec_slave[cnt]);
+        
         actualSlaveName = ec_slave[cnt].name;
         if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
@@ -298,11 +298,11 @@ namespace brics_oodl {
       threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
     }
     return;
-    // Bouml preserved body end 000410F1
-  }
+  // Bouml preserved body end 000410F1
+}
 
-  void YouBot::initializeJoints() {
-    // Bouml preserved body begin 000464F1
+void YouBot::initializeJoints() {
+  // Bouml preserved body begin 000464F1
 
     LOG(info) << "Initializing Joints";
 
@@ -333,6 +333,7 @@ namespace brics_oodl {
       joints[i].setConfigurationParameter(referenceToZero);
     }
 
+    //TODO When to calibrate the manipulator and when it is not necessary
     //Move all joints with 1 rpm to do "Sinuskommutierung"
     boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     JointVelocitySetpoint vel;
@@ -340,47 +341,53 @@ namespace brics_oodl {
     double gRatio = 1;
 
     for (unsigned int i = 0; i < joints.size(); i++) {
-      
-       joints[i].getConfigurationParameter(gearRatio);
-       gearRatio.getParameter(gRatio);
-       vel.angularVelocity = ((-1.1 /60.0 )*(gRatio * 2.0 * M_PI)) * radian_per_second;
-       joints[i].setData(vel, NON_BLOCKING);
+
+      joints[i].getConfigurationParameter(gearRatio);
+      gearRatio.getParameter(gRatio);
+      vel.angularVelocity = ((-1.1 / 60.0)*(gRatio * 2.0 * M_PI)) * radian_per_second;
+      joints[i].setData(vel, NON_BLOCKING);
     }
-    SLEEP_MILLISEC(1000); //the youbot likes it so
+    SLEEP_MILLISEC(500); //the youbot likes it so
 
 
     //stop movment and move back to zero position
     JointAngleSetpoint jAngle;
-    jAngle.angle = 0 *radian;
+    jAngle.angle = 0 * radian;
 
     for (unsigned int i = 0; i < joints.size(); i++) {
-       joints[i].setData(jAngle, NON_BLOCKING);
+      joints[i].setData(jAngle, NON_BLOCKING); //TODO do BLOCKING movment
     }
     SLEEP_MILLISEC(2000); //the youbot likes it so
 
 
-    //create Gripper
+    //Initializing Gripper
     this->gripperVector.push_back(YouBotGripper(9)); //TODO find right joint number automaticly
     BarSpacingOffset barOffest;
+    MaxTravelDistance maxDistance;
+    MaxEncoderValue maxEncoder;
 
     configfile.setSection("GripperArm_1");
     barOffest.setParameter(configfile.getDoubleValue("BarSpacingOffset_[meter]") * meter);
     gripperVector[0].setConfigurationParameter(barOffest);
+    maxDistance.setParameter(configfile.getDoubleValue("MaxTravelDistance_[meter]") * meter);
+    gripperVector[0].setConfigurationParameter(maxDistance);
+    maxEncoder.setParameter(configfile.getIntValue("MaxEncoderValue"));
+    gripperVector[0].setConfigurationParameter(maxEncoder);
 
     // Calibrating Gripper
     CalibrateGripper doCalibration;
     doCalibration.setParameter(true);
-  //  gripperVector[0].setConfigurationParameter(doCalibration);
+    gripperVector[0].setConfigurationParameter(doCalibration);
 
 
     //TODO: Calibrate YouBot Manipulator
 
     return;
-    // Bouml preserved body end 000464F1
-  }
+  // Bouml preserved body end 000464F1
+}
 
-  void YouBot::initializeKinematic() {
-    // Bouml preserved body begin 0004DDF1
+void YouBot::initializeKinematic() {
+  // Bouml preserved body begin 0004DDF1
     FourSwedishWheelOmniBaseKinematicConfiguration kinematicConfig;
 
     //read the kinematics parameter from a config file
@@ -392,11 +399,11 @@ namespace brics_oodl {
     kinematicConfig.wheelRadius = configfile.getDoubleValue("WheelRadius_[meter]") * meter;
 
     youBotBaseKinematic.setConfiguration(kinematicConfig);
-    // Bouml preserved body end 0004DDF1
-  }
+  // Bouml preserved body end 0004DDF1
+}
 
-  bool YouBot::closeEthercat() {
-    // Bouml preserved body begin 00041271
+bool YouBot::closeEthercat() {
+  // Bouml preserved body begin 00041271
     stopThread = true;
 
     threads.join_all();
@@ -406,11 +413,11 @@ namespace brics_oodl {
       if (ethercatMaster != NULL)
         delete ethercatMaster;
     }
-    // Bouml preserved body end 00041271
-  }
+  // Bouml preserved body end 00041271
+}
 
-  void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
-    // Bouml preserved body begin 000414F1
+void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
+  // Bouml preserved body begin 000414F1
 
     if (newDataFlagOne == true) {
       {
@@ -431,11 +438,11 @@ namespace brics_oodl {
       return;
     }
 
-    // Bouml preserved body end 000414F1
-  }
+  // Bouml preserved body end 000414F1
+}
 
-  YouBotSlaveMsg YouBot::getMsgBuffer(const unsigned int jointNumber) {
-    // Bouml preserved body begin 00041571
+YouBotSlaveMsg YouBot::getMsgBuffer(const unsigned int jointNumber) {
+  // Bouml preserved body begin 00041571
 
     YouBotSlaveMsg returnMsg;
 
@@ -455,11 +462,11 @@ namespace brics_oodl {
     }
 
     return returnMsg;
-    // Bouml preserved body end 00041571
-  }
+  // Bouml preserved body end 00041571
+}
 
-  void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
-    // Bouml preserved body begin 00049D71
+void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
+  // Bouml preserved body begin 00049D71
 
     if (newDataFlagOne == true) {
       {
@@ -478,11 +485,11 @@ namespace brics_oodl {
 
     }
     return;
-    // Bouml preserved body end 00049D71
-  }
+  // Bouml preserved body end 00049D71
+}
 
-  void YouBot::getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber) {
-    // Bouml preserved body begin 00049DF1
+void YouBot::getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber) {
+  // Bouml preserved body begin 00049DF1
 
 
     if (newMailboxInputDataFlagOne[jointNumber - 1] == true) {
@@ -500,11 +507,11 @@ namespace brics_oodl {
 
     }
     return;
-    // Bouml preserved body end 00049DF1
-  }
+  // Bouml preserved body end 00049DF1
+}
 
-  bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
-    // Bouml preserved body begin 00052F71
+bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
+  // Bouml preserved body begin 00052F71
     //  LOG(trace) << "send mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
     mailboxBufferSend[0] = mailboxMsg.stctOutput.moduleAddress;
     mailboxBufferSend[1] = mailboxMsg.stctOutput.commandNumber;
@@ -519,11 +526,11 @@ namespace brics_oodl {
     } else {
       return false;
     }
-    // Bouml preserved body end 00052F71
-  }
+  // Bouml preserved body end 00052F71
+}
 
-  bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
-    // Bouml preserved body begin 00052FF1
+bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
+  // Bouml preserved body begin 00052FF1
     if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
       //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
       mailboxMsg.stctInput.replyAddress = (int) mailboxBufferReceive[0];
@@ -534,11 +541,11 @@ namespace brics_oodl {
       return true;
     }
     return false;
-    // Bouml preserved body end 00052FF1
-  }
+  // Bouml preserved body end 00052FF1
+}
 
-  void YouBot::updateSensorActorValues() {
-    // Bouml preserved body begin 0003F771
+void YouBot::updateSensorActorValues() {
+  // Bouml preserved body begin 0003F771
 
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
@@ -606,8 +613,8 @@ namespace brics_oodl {
       }
 
     }
-    // Bouml preserved body end 0003F771
-  }
+  // Bouml preserved body end 0003F771
+}
 
 
 } // namespace brics_oodl

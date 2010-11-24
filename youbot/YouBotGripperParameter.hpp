@@ -72,6 +72,46 @@ friend class YouBotGripper;
     std::string name;
 
 };
+class MaxEncoderValue : public YouBotGripperParameter {
+friend class YouBotGripper;
+  public:
+    MaxEncoderValue();
+
+    virtual ~MaxEncoderValue();
+
+    void getParameter(unsigned int& parameter) const;
+
+    void setParameter(const unsigned int parameter);
+
+
+  private:
+    std::string getName() const {return this->name;};
+
+    unsigned int value;
+
+    std::string name;
+
+};
+class MaxTravelDistance : public YouBotGripperParameter {
+friend class YouBotGripper;
+  public:
+    MaxTravelDistance();
+
+    virtual ~MaxTravelDistance();
+
+    void getParameter(quantity<si::length>& parameter) const;
+
+    void setParameter(const quantity<si::length>& parameter);
+
+
+  private:
+    std::string getName() const {return this->name;};
+
+    quantity<si::length> value;
+
+    std::string name;
+
+};
 
 } // namespace brics_oodl
 #endif

@@ -61,5 +61,54 @@ void BarSpacingOffset::setParameter(const quantity<si::length>& parameter) {
   // Bouml preserved body end 0005FDF1
 }
 
+MaxEncoderValue::MaxEncoderValue() {
+  // Bouml preserved body begin 00061B71
+    this->name = "MaxEncoderValue";
+  // Bouml preserved body end 00061B71
+}
+
+MaxEncoderValue::~MaxEncoderValue() {
+  // Bouml preserved body begin 00061BF1
+  // Bouml preserved body end 00061BF1
+}
+
+void MaxEncoderValue::getParameter(unsigned int& parameter) const {
+  // Bouml preserved body begin 00061C71
+    parameter = this->value;
+  // Bouml preserved body end 00061C71
+}
+
+void MaxEncoderValue::setParameter(const unsigned int parameter) {
+  // Bouml preserved body begin 00061CF1
+    this->value = parameter;
+  // Bouml preserved body end 00061CF1
+}
+
+MaxTravelDistance::MaxTravelDistance() {
+  // Bouml preserved body begin 000618F1
+    this->name = "MaxTravelDistance";
+  // Bouml preserved body end 000618F1
+}
+
+MaxTravelDistance::~MaxTravelDistance() {
+  // Bouml preserved body begin 00061971
+  // Bouml preserved body end 00061971
+}
+
+void MaxTravelDistance::getParameter(quantity<si::length>& parameter) const {
+  // Bouml preserved body begin 000619F1
+    parameter = this->value;
+  // Bouml preserved body end 000619F1
+}
+
+void MaxTravelDistance::setParameter(const quantity<si::length>& parameter) {
+  // Bouml preserved body begin 00061A71
+  if(parameter > 1 *meter || parameter < 0 *meter){
+    throw ExceptionOODL("Wrong MaxTravelDistance parameter");
+  }
+    this->value = parameter;
+  // Bouml preserved body end 00061A71
+}
+
 
 } // namespace brics_oodl

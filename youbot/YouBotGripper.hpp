@@ -36,6 +36,14 @@ class YouBotGripper : public OneDOFGripper {
 
     void setConfigurationParameter(const YouBotGripperParameter& parameter);
 
+    void setConfigurationParameter(const CalibrateGripper& parameter);
+
+    void setConfigurationParameter(const BarSpacingOffset& parameter);
+
+    void setConfigurationParameter(const MaxTravelDistance& parameter);
+
+    void setConfigurationParameter(const MaxEncoderValue& parameter);
+
     void getData(const GripperData& data);
 
     void setData(const OneDOFGripperData& data);
@@ -60,11 +68,13 @@ class YouBotGripper : public OneDOFGripper {
 
     unsigned int jointNumber;
 
-    long maxEncoderValue;
+    unsigned int maxEncoderValue;
 
-    quantity<si::length> maxBarSpacing;
+    quantity<si::length> maxTravelDistance;
 
     quantity<si::length> barSpacingOffset;
+
+    quantity<si::length> lastGripperPosition;
 
 };
 

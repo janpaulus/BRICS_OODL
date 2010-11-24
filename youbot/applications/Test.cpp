@@ -62,13 +62,22 @@ int main() {
 
 
     YouBotGripper gripper = myYouBot.getArm1Gripper();
+    
 
     
     GripperBarSpacingSetPoint gripperSetPoint;
 
     gripperSetPoint.barSpacing = 0.01 *meter;
+    gripper.setData(gripperSetPoint);
+    SLEEP_MILLISEC(2000);
 
-  //  gripper.setData(gripperSetPoint);
+    gripperSetPoint.barSpacing = 0.024 *meter;
+    gripper.setData(gripperSetPoint);
+    SLEEP_MILLISEC(2000);
+
+    gripperSetPoint.barSpacing = 0.015 *meter;
+    gripper.setData(gripperSetPoint);
+    SLEEP_MILLISEC(2000);
 
 
     JointAngleSetpoint jAngle;
