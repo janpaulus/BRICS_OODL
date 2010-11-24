@@ -34,7 +34,7 @@ int main (int argc, char **argv)
   camera.setImageFormat(format) ;
   camera.capture();
 
-  while(1)
+//  while(1)
     camera.getImageData()->getBuffer();
 
 

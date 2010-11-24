@@ -58,8 +58,7 @@ private:
 
   //counter for the total number of device-lens properties provided by a camera
   //should be equal to array index of listOfProperties, which is currently staticly set
-  int deviceConfPropertyCounter;
-  std::vector<unicap_property_t> listOfProperties;
+  
 
   //current/actual property values
   unicap_property_range_t videoFrameRate; 
@@ -69,9 +68,11 @@ private:
   unicap_property_range_t lensZoom; 
   unicap_property_range_t lensIris; 
 
-  unicap_status_t returnStatus;
   unicap_device_t *deviceCameraDevConf;
   unicap_handle_t *handleCameraDevConf;
+  unicap_status_t returnStatus;
+  int deviceConfPropertyCounter;
+  std::vector<unicap_property_t> listOfProperties;
 
 };
 

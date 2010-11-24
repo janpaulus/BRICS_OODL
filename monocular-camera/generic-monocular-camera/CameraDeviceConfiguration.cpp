@@ -2,9 +2,9 @@
 
 
 
-CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAILURE), 
-							deviceCameraDevConf(NULL),
-                                                        handleCameraDevConf(NULL), 
+CameraDeviceConfiguration::CameraDeviceConfiguration(): deviceCameraDevConf(NULL),
+                                                        handleCameraDevConf(NULL),
+                                                        returnStatus(STATUS_FAILURE),
 							deviceConfPropertyCounter(0)
 {
   std::cout << "Creating CameraDeviceConfiguration without arguments" << std::endl;
@@ -24,9 +24,9 @@ CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAIL
 }
 
 
-CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle): returnStatus(STATUS_FAILURE), 
-                                                                                                        deviceCameraDevConf(device),
-                                                                                                        handleCameraDevConf(handle), 
+CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle): deviceCameraDevConf(device),
+                                                                                                        handleCameraDevConf(handle),
+                                                                                                        returnStatus(STATUS_FAILURE), 
                                                                                                         deviceConfPropertyCounter(0) 
 {
   std::cout << "Creating CameraDeviceConfiguration with arguments" << std::endl;
@@ -551,30 +551,35 @@ bool CameraDeviceConfiguration::setVideoFrameRate(double &rate) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoFrameRate" << std::endl;
 
+  return true;
 }
 
 bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoGammaValue" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoSharpnessValue" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensFocus(double &focus) {
 
   std::cout << "Inside CameraDeviceConfiguration setLensFocus" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensZoom(double &zoom) {
   std::cout << "Inside CameraDeviceConfiguration setLensZoom" << std::endl;
-
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensIris(double &iris) {
 
   std::cout << "Inside CameraDeviceConfiguration setLensIris" << std::endl;
+  return true;
 }
 

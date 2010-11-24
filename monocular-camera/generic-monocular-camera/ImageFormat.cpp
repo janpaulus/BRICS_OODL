@@ -1,16 +1,18 @@
 #include "ImageFormat.hpp"
 
 
-ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), 
-			   numberOfResolutions(0),
-			   currentResolution(NULL), 
-                           currentFormat(NULL), 
-			   deviceFormatCounter(0), 
-			   formatIdentifier(""), 
-			   bitsPerPixel(8), 
-                           fourcc(0), bufferSize(0), 
-			   currentBufferType(UNICAP_BUFFER_TYPE_USER), 
-			   deviceHandle(NULL)
+ImageFormat::ImageFormat(): deviceHandle(NULL),
+                            currentResolution(NULL),
+                            currentFormat(NULL),
+                            formatDevice(NULL),
+                            returnStatus(STATUS_FAILURE),
+                            numberOfResolutions(0),
+                            deviceFormatCounter(0),
+                            formatIdentifier(""),
+                            bitsPerPixel(8),
+                            fourcc(0), bufferSize(0),
+                            currentBufferType(UNICAP_BUFFER_TYPE_USER)
+			   
 {
 
   std::cout  << "Creating ImageFormat without args"<< std::endl;
@@ -18,16 +20,18 @@ ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE),
 }
 
 
-ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE), 
-						numberOfResolutions(0),
-						currentResolution(NULL), 
-						currentFormat(NULL), 
+ImageFormat::ImageFormat(std::string &formatID):currentResolution(NULL), 
+						currentFormat(NULL),
+                                                deviceHandle(NULL),
+                                                formatDevice(NULL),
+                                                returnStatus(STATUS_FAILURE),
+						numberOfResolutions(0),			
 						deviceFormatCounter(0), 
 						bitsPerPixel(8), 
 						fourcc(0), 
 						bufferSize(0), 
-						currentBufferType(UNICAP_BUFFER_TYPE_USER),
-						deviceHandle(NULL), formatDevice(NULL)
+						currentBufferType(UNICAP_BUFFER_TYPE_USER)
+						
 {
 
   std::cout  << "Creating ImageFormat with formatID string argument"<< std::endl;
@@ -35,9 +39,10 @@ ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE),
 }
 
 
-ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): returnStatus(STATUS_FAILURE), 
-														  numberOfResolutions(0),currentResolution(NULL), 
-														  currentFormat(NULL), deviceFormatCounter(0), 
+ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): currentResolution(NULL),
+														  currentFormat(NULL),
+                                                                                                                  returnStatus(STATUS_FAILURE),
+														  numberOfResolutions(0), deviceFormatCounter(0), 
 														  bitsPerPixel(8), fourcc(0), bufferSize(0), 
 														  currentBufferType(UNICAP_BUFFER_TYPE_USER),
 														  deviceHandle(handle), formatDevice(device)
