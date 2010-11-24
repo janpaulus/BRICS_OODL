@@ -69,16 +69,13 @@ private:
   //! This method is used internally to store all the properties in one call
   //! to the camera, rather then invoking it for each property, which would be expensive.
   bool getListOfColorProperties();
-  bool getListOfColorPropertiesVector();
   bool unifyPropertyNames();
 
   //counter for the total number of color-exposure properties provided by a camera
-  //should be equal to array index of listOfProperties, which is currently staticly set
+  //should be equal to vector index of listOfProperties
   int colorConfPropertyCounter;
-  //array of properties; will be changed later to dynamic vector type
-  unicap_property_t listOfProperties[30];
+  std::vector<unicap_property_t> listOfProperties;     
 
-  std::vector<unicap_property_t> propertyList;     
   //current/actual property values
   unicap_property_range_t hueValue; 
   unicap_property_range_t chromaValue;

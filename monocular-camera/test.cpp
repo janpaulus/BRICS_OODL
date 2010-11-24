@@ -16,8 +16,13 @@ int main (int argc, char **argv)
   camera.open(); //always open first
 
   camera.getConfiguration(config);
-  double hue = 0.0;
-  config.getColorExposureConfiguration()->getHueValue(hue);
+  double gain = 0.0;
+  config.getColorExposureConfiguration()->getGainControlValue(gain);
+  std::cout << gain << std::endl;
+
+  double rate = 0;
+  config.getCameraDeviceConfiguration()->getVideoFrameRate(rate);
+  std::cout << rate << std::endl;
 
   // set image format and start capturing  
   camera.getImageFormat(format) ;
@@ -25,6 +30,7 @@ int main (int argc, char **argv)
   int width(0);
   int height(0);
   format.getImageFormatResolution(width, height);
+  format.getImageFormatResolutionList();
   camera.setImageFormat(format) ;
   camera.capture();
 

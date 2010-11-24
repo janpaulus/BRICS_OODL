@@ -1,6 +1,28 @@
 #include "ColorExposureConfiguration.hpp"
 
 
+//Issue1: 
+//harmonizes possible property name combinations
+//Like if white_u_balance, WhiteUBalance, White U Balance
+// or brightness vs Brightness etc 
+
+//Issue2:
+//Normalization of values for various camera properties
+//can be done through  through access to "range" member attribute
+//of unicap_property structure. "range" is a structure which holds
+//min and max value for the given property
+
+//Issue3:
+// Maybe instead of having just an array for the name of the existing list of device properties
+//We should introduce an array of tuples/pairs for (property.id, property.value)
+//This way we can obtain proverty values in one call and save them
+// and for setting properties values one would have to write to the array of tuples
+// then the value from the respective tuple would be written to device itself.
+// This way the calls might look like "stateful", otherwise if the call to a device
+// does not succeed the value we wanted to set/get might just disappear.
+//So, one needs to find a trade-off for this design. Now it is "stateless"
+// Maybe for a device it is a good decision to have stateless though, it does not want
+// to bother itself with unsuccessful clients.
 
 
 ColorExposureConfiguration::ColorExposureConfiguration(): deviceColorExposureDev(NULL), 
@@ -85,59 +107,22 @@ ColorExposureConfiguration::~ColorExposureConfiguration()
 }
 
 
+
 bool ColorExposureConfiguration::getListOfColorProperties() 
 {
-  std::cout << "Inside ColorExposureConfiguration getListOfColorProperties" << std::endl;
-  int returnValue = 0;
-  //number of properties allocated is 30 for now, change it to const or make it dynamic
-  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
-  {
-    returnValue = unicap_enumerate_properties( *handleColorExposureDev, NULL, &listOfProperties[propertyCounter], 
-					       propertyCounter);
-    if( SUCCESS(returnValue) )
-    {
-      std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-      colorConfPropertyCounter++;
-      returnStatus = STATUS_SUCCESS;
-    }
-    else
-      break;
-
-  }
-
-  if(listOfProperties != NULL )
-  {
-    std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
-    return true;
-  }
-  else
-  {
-    std::cout << "Property list is empty"<<std::endl;
-    return false;
-  }
- 
-}
-
-
-bool ColorExposureConfiguration::getListOfColorPropertiesVector() 
-{
   std::cout << "Inside ColorExposureConfiguration getListOfColorPropertiesVector" << std::endl;
-
-  int propertyIndex = 0;
-//  for(std::vector<unicap_property_t>::iterator i = propertyList.begin(); i <= propertyList.end() ; i++ ) 
-
-    while(unicap_enumerate_properties( *handleColorExposureDev, NULL, &propertyList[propertyIndex], 
-						     propertyIndex))
+  unicap_property_t tempProperty = {0};
+  while(SUCCESS(unicap_enumerate_properties( *handleColorExposureDev, NULL, &tempProperty, colorConfPropertyCounter)))
     {
 
-	propertyList.push_back(propertyList[propertyIndex]);
-	std::cout << propertyList[propertyIndex].identifier<<std::endl;
+	listOfProperties.push_back(tempProperty);
+	std::cout << 	listOfProperties.size()<< std::endl;
+	std::cout << 	listOfProperties[colorConfPropertyCounter].identifier<<std::endl;
 	colorConfPropertyCounter++;
-	returnStatus = STATUS_SUCCESS;
-      
+	returnStatus = STATUS_SUCCESS;      
     }
     
-    if(propertyList.size() != 0 )
+    if(listOfProperties.size() != 0)
     {
       std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
       return true;
@@ -149,18 +134,6 @@ bool ColorExposureConfiguration::getListOfColorPropertiesVector()
     }
     
 }
-
-
-//Issue1: 
-//harmonizes possible property name combinations
-//Like if white_u_balance, WhiteUBalance, White U Balance
-// or brightness vs Brightness etc 
-
-//Issue2:
-//Normalization of values for various camera properties
-//can be done through  through access to "range" member attribute
-//of unicap_property structure. "range" is a structure which holds
-//min and max value for the given property
 
 bool ColorExposureConfiguration::unifyPropertyNames()
 {
@@ -176,69 +149,57 @@ bool ColorExposureConfiguration::getHueValue(double &hue)
   const std::string propertyName ="hue";
   std::string charID;
 
-  //check whether listOfProperties was filled in successfully and not empty
-//  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
-  if (SUCCESS(returnStatus) && (propertyList.size() != 0))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
-    //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
-//    for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
-    for (int propertyCounter = 0; propertyCounter < propertyList.size(); propertyCounter++)
+
+    for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
     {
-      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //check whether property of "range" type (defined in unicap API). hue value is of range type.
       //there are also menu, list, flag property types
-//      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-      if(propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      if(listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
       {
 	//if range then check it for correct ID
-//	charID = listOfProperties[propertyCounter].identifier;
-	charID = propertyList[propertyCounter].identifier;
+	charID = listOfProperties[propertyCounter].identifier;
 	//if ID == frame rate (as defined in unicap API) then return its current value
 	if (charID == propertyName)
 	{
 	  //check if the call succeeds 
-//	  int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-	  int returnValue = unicap_get_property( *handleColorExposureDev, &propertyList[propertyCounter]); 
+	  int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
 	  if( SUCCESS(returnValue) )
 	  {
-//	    hue = listOfProperties[propertyCounter].value;
-	    hue = propertyList[propertyCounter].value;
-	    //   std::cout << rate << std::endl;
+
+	    hue = listOfProperties[propertyCounter].value;
 	    return true;
 	  }
 	}
       }
-      //if property is not of type "range" go to the beginning of the loop
     }
   }
   // if property list was not obtained successfully or was not filled in before through 
   //the call to getListOfDeviceProperties, call the method 
-//  else if (getListOfColorProperties() == true)
-  else if (getListOfColorPropertiesVector() == true)
+  else if (getListOfColorProperties() == true)
   {
-    //   if (listOfProperties != NULL)
-    if (propertyList.size() != 0)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
-//	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
-	if( propertyList[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
+	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) 
 	{
-//	  charID = listOfProperties[propertyCounter].identifier;
-	  charID = propertyList[propertyCounter].identifier;
+	  charID = listOfProperties[propertyCounter].identifier;
+
 	  if (charID == propertyName)
 	  {
-//	    int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
-	    int returnValue = unicap_get_property( *handleColorExposureDev, &propertyList[propertyCounter]); 
+	    int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); 
+
 	    if( SUCCESS(returnValue) )
 	    {
-//	      hue = listOfProperties[propertyCounter].value;
-	      hue = propertyList[propertyCounter].value;
+	      hue = listOfProperties[propertyCounter].value;
+
 	      return true;
 	    }
 	  }
 	}
-	//if property is not of type "range" go to the beginning of the loop
       }
     }
     else
@@ -257,7 +218,7 @@ bool ColorExposureConfiguration::getContrastValue(double &contrast)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -289,7 +250,7 @@ bool ColorExposureConfiguration::getContrastValue(double &contrast)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -325,7 +286,7 @@ bool ColorExposureConfiguration::getSaturationValue(double &saturation)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -357,7 +318,7 @@ bool ColorExposureConfiguration::getSaturationValue(double &saturation)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -393,7 +354,7 @@ bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -425,7 +386,7 @@ bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -461,7 +422,7 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -493,7 +454,7 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -534,7 +495,7 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -566,7 +527,7 @@ bool ColorExposureConfiguration::getBrightnessValue(double &brightness)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -603,7 +564,7 @@ bool ColorExposureConfiguration::getGainControlValue(double &gain)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -635,7 +596,7 @@ bool ColorExposureConfiguration::getGainControlValue(double &gain)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -672,7 +633,7 @@ bool ColorExposureConfiguration::getShutterTime(double &sTime)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -704,7 +665,7 @@ bool ColorExposureConfiguration::getShutterTime(double &sTime)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -746,7 +707,7 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -771,14 +732,14 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp)
 	  }
 	}
       }
-      //if property is not of type "range" go to the beginning of the loop
+
     }
   }
   // if property list was not obtained successfully or was not filled in before through 
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -795,7 +756,7 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp)
 	    }
 	  }
 	}
-	//if property is not of type "range" go to the beginning of the loop
+
       }
     }
     else
@@ -807,17 +768,6 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp)
 }
 
 
-
-// Maybe instead of having just an array for the name of the existing list of device properties
-//We should introduce an array of tuples/pairs for (property.id, property.value)
-//This way we can obtain proverty values in one call and save them
-// and for setting properties values one would have to write to the array of tuples
-// then the value from the respective tuple would be written to device itself.
-// This way the calls might look like "stateful", otherwise if the call to a device
-// does not succeed the value we wanted to set/get might just disappear.
-//So, one needs to find a trade-off for this design. Now it is "stateless"
-// Maybe for a device it is a good decision to have stateless though, it does not want
-// to bother itself with unsuccessful clients.
 
 bool ColorExposureConfiguration::setHueValue(double &hue) {
 
@@ -851,7 +801,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -891,7 +841,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {
@@ -938,7 +888,7 @@ bool ColorExposureConfiguration::setGainControlValue(double &gain)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -978,7 +928,7 @@ bool ColorExposureConfiguration::setGainControlValue(double &gain)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfColorProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
       {

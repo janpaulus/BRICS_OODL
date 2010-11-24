@@ -52,19 +52,18 @@ private:
 
   //chosen or current device image resolution
   unicap_rect_t *currentResolution;
+
   //number of possible image resolutions supported by the device;
   // this number and number of elements in listOfResolutions should be equal;
   //currently the latter is set statically and will be changed in the future.
   int numberOfResolutions;
-  // array of possible sizes/resolutions supported by a camera; 
-  //currently statically defined; will changed to dynamic array later 
-  unicap_rect_t listOfResolutions[40];
-  //  std::vector<unicap_rect_t> listOfResolutions;
+
+  // array of possible sizes/resolutions supported by a camera;
+  std::vector<unicap_rect_t> listOfResolutions;
+
   
   int deviceFormatCounter;
-  //currently staticly set to 10, should change to dynamic version.
-  unicap_format_t listOfDeviceFormats[10];
-  //  std::vector<unicap_format_t> listOfDeviceFormats;
+  std::vector<unicap_format_t> listOfDeviceFormats;
   unicap_format_t *currentFormat;
      
 

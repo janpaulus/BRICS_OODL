@@ -65,9 +65,7 @@ ImageFormat& ImageFormat::operator=(ImageFormat &format)
     std::cout << "Inside Format assignment operator" << std::endl;
     currentResolution = format.currentResolution;
     numberOfResolutions = format.numberOfResolutions;
-//  listOfResolutions[] = format.listOfResolutions;
     deviceFormatCounter = format.deviceFormatCounter;
-//  listOfDeviceFormats = format.listOfDeviceFormats;
     currentFormat = format.currentFormat;
     formatIdentifier = format.formatIdentifier;
     fourcc = format.fourcc;    
@@ -79,6 +77,7 @@ ImageFormat& ImageFormat::operator=(ImageFormat &format)
     returnStatus = format.returnStatus;
     deviceHandle = format.deviceHandle;
     formatDevice = format.formatDevice;
+    //copy vector contents later
   }
   return *this;
 }
@@ -171,7 +170,10 @@ bool ImageFormat::getImageFormatColorModel(std::string &colorModel)
 
 bool ImageFormat::getImageFormatResolutionList()
 {
-
+    for(int i=0; i<currentFormat->size_count; i++)
+    {
+        std::cout << currentFormat->sizes[i].width<< "x" << currentFormat->sizes[i].height <<std::endl;
+    }
   return true;
 }
 
@@ -215,25 +217,22 @@ bool ImageFormat::getImageFormatSize(long int &size)
 bool ImageFormat::getListOfFormats()
 {
   std::cout << "Inside Monocular Camera getListOfFormats"<<std::endl;
+  unicap_format_t tempFormat = {0};
   if(deviceHandle!=NULL)
   {
     std::cout << "Device is open getting available formats" << std::endl;
-    for(int i = 0; i<10; i++)
+    while(SUCCESS(unicap_enumerate_formats(*deviceHandle, NULL, &tempFormat, deviceFormatCounter)))
     {
-      this->returnStatus = unicap_enumerate_formats(*deviceHandle, NULL, &listOfDeviceFormats[i], i);
-      if(SUCCESS(this->returnStatus))
-      {
+
+        listOfDeviceFormats.push_back(tempFormat);
+        std::cout << listOfDeviceFormats[deviceFormatCounter].identifier << std::endl;
+        std::cout << listOfDeviceFormats[deviceFormatCounter].size_count << std::endl;
+        std::cout << listOfDeviceFormats.size() << std::endl;
         deviceFormatCounter++;
-        std::cout << listOfDeviceFormats[i].identifier << std::endl; 
-    
-      }
-      else
-      {
-        break;
-      }
+      
     }
   }
-  if(listOfDeviceFormats != NULL) //should change all these arrays with vectors
+  if(listOfDeviceFormats.size() != 0) //should change all these arrays with vectors
   {
     //set the default format to the first format in the list;
     currentFormat = &listOfDeviceFormats[0];

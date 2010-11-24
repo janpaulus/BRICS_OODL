@@ -54,16 +54,13 @@ public:
  
 private:
   bool getListOfDeviceProperties();
-//  bool getListOfDevicePropertiesVector();
   bool unifyPropertyNames();
 
   //counter for the total number of device-lens properties provided by a camera
   //should be equal to array index of listOfProperties, which is currently staticly set
   int deviceConfPropertyCounter;
-  //array of properties; will be changed later to dynamic vector type
-  unicap_property_t listOfProperties[30];//array of properties; will later be changed to dynamic vector type
+  std::vector<unicap_property_t> listOfProperties;
 
-//  vector<unicap_property_t> propertyList;
   //current/actual property values
   unicap_property_range_t videoFrameRate; 
   unicap_property_range_t videoGammaValue; 

@@ -72,24 +72,22 @@ CameraDeviceConfiguration::~CameraDeviceConfiguration()
 bool CameraDeviceConfiguration::getListOfDeviceProperties() 
 {
   std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
-  int returnValue = 0;
-  //number of properties allocated is 30 for now, change it to const or make it dynamic
-  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
+  unicap_property_t tempProperty = {0};
+  
+
+  
+  while(SUCCESS(unicap_enumerate_properties( *handleCameraDevConf, NULL, &tempProperty, deviceConfPropertyCounter)))
   {
-    returnValue = unicap_enumerate_properties( *handleCameraDevConf, NULL, &listOfProperties[propertyCounter], 
-                                               propertyCounter);
-    if( SUCCESS(returnValue) )
-    {
-      std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-      deviceConfPropertyCounter++;
-      returnStatus = STATUS_SUCCESS;
-    }
-    else
-      break;
+
+    listOfProperties.push_back(tempProperty);
+    std::cout << listOfProperties.size()<< std::endl;
+    std::cout << listOfProperties[deviceConfPropertyCounter].identifier<<std::endl;
+    deviceConfPropertyCounter++;
+    returnStatus = STATUS_SUCCESS;
 
   }
 
-  if(listOfProperties != NULL )
+  if(listOfProperties.size() != 0 )
   {
     std::cout << "Number of properties " << deviceConfPropertyCounter<<std::endl;
     return true;
@@ -112,7 +110,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0 ))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -144,7 +142,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -190,7 +188,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -222,7 +220,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -264,7 +262,7 @@ bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -295,7 +293,7 @@ bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -337,7 +335,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -368,7 +366,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -410,7 +408,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -441,7 +439,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -483,7 +481,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -514,7 +512,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
