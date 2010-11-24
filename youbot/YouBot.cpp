@@ -232,7 +232,7 @@ void YouBot::getBasePosition(quantity<si::length>& longitudinalPosition, quantit
 
 void YouBot::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
   // Bouml preserved body begin 00061EF1
-   ethercatSlaveInfos = this->ethercatSlaveInfo;
+    ethercatSlaveInfos = this->ethercatSlaveInfo;
   // Bouml preserved body end 00061EF1
 }
 
@@ -264,7 +264,7 @@ void YouBot::initializeEthercat() {
                 ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
 
         ethercatSlaveInfo.push_back(ec_slave[cnt]);
-        
+
         actualSlaveName = ec_slave[cnt].name;
         if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
@@ -311,7 +311,8 @@ void YouBot::initializeJoints() {
     JointName jName;
     GearRatio gearRatio;
     EncoderTicksPerRound ticksPerRound;
-    PositionReferenceToZero referenceToZero;
+    InverseMovementDirection inverseDir;
+
 
     for (unsigned int i = 0; i < joints.size(); i++) {
       std::stringstream jointNameStream;
@@ -319,45 +320,80 @@ void YouBot::initializeJoints() {
       jointName = jointNameStream.str();
       configfile.setSection(jointName.c_str());
 
-
       jName.setParameter(configfile.getStringValue("JointName"));
       double gearRatio_numerator = configfile.getIntValue("GearRatio_numerator");
       double gearRatio_denominator = configfile.getIntValue("GearRatio_denominator");
       gearRatio.setParameter(gearRatio_numerator / gearRatio_denominator);
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
-      referenceToZero.setParameter(configfile.getBoolValue("PositionReferenceToZero"));
+      inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
 
       joints[i].setConfigurationParameter(jName);
       joints[i].setConfigurationParameter(gearRatio);
       joints[i].setConfigurationParameter(ticksPerRound);
-      joints[i].setConfigurationParameter(referenceToZero);
+      joints[i].setConfigurationParameter(inverseDir);
+
     }
 
-    //TODO When to calibrate the manipulator and when it is not necessary
-    //Move all joints with 1 rpm to do "Sinuskommutierung"
+
+    LOG(info) << "Do sinus commutation";
+    //Move all joints with 1 rpm to do sinus commutation
     boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     JointVelocitySetpoint vel;
     vel.angularVelocity = 0 * radian_per_second;
     double gRatio = 1;
 
     for (unsigned int i = 0; i < joints.size(); i++) {
-
       joints[i].getConfigurationParameter(gearRatio);
       gearRatio.getParameter(gRatio);
       vel.angularVelocity = ((-1.1 / 60.0)*(gRatio * 2.0 * M_PI)) * radian_per_second;
       joints[i].setData(vel, NON_BLOCKING);
     }
+    SLEEP_MILLISEC(500); //wait for some movement
+
+    //stop all motors
+    for (unsigned int i = 0; i < joints.size(); i++) {
+      vel.angularVelocity = 0 * radian_per_second;
+      joints[i].setData(vel, NON_BLOCKING);
+    }
+
+
+
+
+    //TODO When to calibrate the manipulator and when it is not necessary
+    //Calibrate all manipulator joints
+    std::vector<CalibrateJoint> calibrateJointVec;
+    quantity<si::current> current;
+
+    for (unsigned int i = 0; i < 5; i++) {
+
+      std::stringstream jointNameStream;
+      jointNameStream << "Joint_" << i + 5;
+      jointName = jointNameStream.str();
+      configfile.setSection(jointName.c_str());
+
+      current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
+      std::string direction = configfile.getStringValue("CalibrationDirection");
+
+      calibrateJointVec.push_back(CalibrateJoint());
+
+      if (direction == "POSITIV") {
+        calibrateJointVec[i].setCalibrationDirection(POSITIV);
+      } else if (direction == "NEGATIV") {
+        calibrateJointVec[i].setCalibrationDirection(NEGATIV);
+      } else {
+        throw ExceptionOODL("Wrong calibration direction for " + jointName);
+      }
+      calibrateJointVec[i].setMaxCurrent(current);
+      calibrateJointVec[i].setParameter(true);
+
+
+      this->getArm1Joint(i + 1).setConfigurationParameter(calibrateJointVec[i]);
+
+    }
+
     SLEEP_MILLISEC(500); //the youbot likes it so
 
 
-    //stop movment and move back to zero position
-    JointAngleSetpoint jAngle;
-    jAngle.angle = 0 * radian;
-
-    for (unsigned int i = 0; i < joints.size(); i++) {
-      joints[i].setData(jAngle, NON_BLOCKING); //TODO do BLOCKING movment
-    }
-    SLEEP_MILLISEC(2000); //the youbot likes it so
 
 
     //Initializing Gripper
@@ -380,7 +416,6 @@ void YouBot::initializeJoints() {
     gripperVector[0].setConfigurationParameter(doCalibration);
 
 
-    //TODO: Calibrate YouBot Manipulator
 
     return;
   // Bouml preserved body end 000464F1
@@ -547,6 +582,7 @@ bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
 void YouBot::updateSensorActorValues() {
   // Bouml preserved body begin 0003F771
 
+
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
 
@@ -606,6 +642,25 @@ void YouBot::updateSensorActorValues() {
           newDataFlagTwo = true;
           newDataFlagOne = false;
         }
+
+        /*
+        int timestamp = 0;
+        if (ec_slave[7].activeports & PORTM0){
+        timestamp = ec_slave[7].DCrtA;
+      }
+      if (ec_slave[7].activeports & PORTM3){
+        timestamp = ec_slave[7].DCrtD;
+      }
+      if (ec_slave[7].activeports & PORTM1){
+        timestamp = ec_slave[7].DCrtB;
+      }
+      if (ec_slave[7].activeports & PORTM2){
+        timestamp = ec_slave[7].DCrtC;
+      }
+       //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
+          printf("timestamp Joint 7:%i\n", timestamp);
+         */
+
 
         ethercatMaster->update();
 

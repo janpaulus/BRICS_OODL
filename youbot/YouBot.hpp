@@ -88,10 +88,10 @@ friend class YouBotGripper;
     ///@param orientation is the rotation around the center of the YouBot
     void getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation);
 
-    void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
-
     ///This class represents the kinematic of the YouBot 
     FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
+
+    void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
 
 
   private:

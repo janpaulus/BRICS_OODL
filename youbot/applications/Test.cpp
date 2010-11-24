@@ -64,14 +64,14 @@ int main() {
     YouBotGripper gripper = myYouBot.getArm1Gripper();
     
 
-    
+   /*
     GripperBarSpacingSetPoint gripperSetPoint;
 
     gripperSetPoint.barSpacing = 0.01 *meter;
     gripper.setData(gripperSetPoint);
     SLEEP_MILLISEC(2000);
 
-    gripperSetPoint.barSpacing = 0.024 *meter;
+    gripperSetPoint.barSpacing = 0.023 *meter;
     gripper.setData(gripperSetPoint);
     SLEEP_MILLISEC(2000);
 
@@ -82,12 +82,16 @@ int main() {
 
     JointAngleSetpoint jAngle;
     jAngle.angle = -10.0*M_PI/180.0 *radian;
-
+*/
  //   SLEEP_MILLISEC(5000);
 
-    myYouBot.getArm1Joint(1).setData(jAngle);
+ //   SLEEP_MILLISEC(5000);
+    CalibrateJoint calibJoint;
+    calibJoint.setParameter(true);
 
-    SLEEP_MILLISEC(5000);
+ //   myYouBot.getArm1Joint(5).setConfigurationParameter(calibJoint);
+
+  //  SLEEP_MILLISEC(5000);
 
     
     GearRatio name;

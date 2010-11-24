@@ -15,6 +15,11 @@
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 namespace brics_oodl {
 
+enum CalibrationDirection {
+  POSITIV,
+  NEGATIV
+
+};
 enum ParameterType {
   MOTOR_CONTOLLER_PARAMETER,
   API_PARAMETER
@@ -128,12 +133,12 @@ friend class YouBotJoint;
     ParameterType parameterType;
 
 };
-class PositionReferenceToZero : public YouBotJointParameter {
+class InverseMovementDirection : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    PositionReferenceToZero();
+    InverseMovementDirection();
 
-    virtual ~PositionReferenceToZero();
+    virtual ~InverseMovementDirection();
 
     void getParameter(bool& parameter) const;
 
@@ -218,6 +223,42 @@ friend class YouBotJoint;
     std::string name;
 
     ParameterType parameterType;
+
+};
+class CalibrateJoint : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    CalibrateJoint();
+
+    virtual ~CalibrateJoint();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+    void setCalibrationDirection(CalibrationDirection direction);
+
+    void setMaxCurrent(const quantity<si::current>& current);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+    CalibrationDirection calibrationDirection;
+
+    quantity<si::current> maxCurrent;
 
 };
 

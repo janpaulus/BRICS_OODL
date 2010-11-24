@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <sstream>
+#include <cmath>
 #include <boost/thread.hpp>
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
@@ -36,6 +37,10 @@ class YouBotJoint : public Joint {
     void setConfigurationParameter(const YouBotJointParameter& parameter);
 
     void getConfigurationParameter(YouBotJointParameter& parameter);
+
+    void setConfigurationParameter(CalibrateJoint& parameter);
+
+    void setConfigurationParameter(InverseMovementDirection& parameter);
 
 
   protected:
@@ -92,6 +97,8 @@ class YouBotJoint : public Joint {
     unsigned int timeTillNextMailboxUpdate;
 
     unsigned int mailboxMsgRetries;
+
+    bool inverseMovementDirection;
 
 };
 

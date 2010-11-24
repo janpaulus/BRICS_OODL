@@ -49,7 +49,7 @@ void YouBotGripper::setConfigurationParameter(const CalibrateGripper& parameter)
       if (parameter.value) {
         YouBotSlaveMailboxMsg message;
 
-        LOG(trace) << "Calibrating Gripper";
+        LOG(trace) << "Calibrate gripper";
         message.stctOutput.moduleAddress = GRIPPER;
         message.stctOutput.commandNumber = MVP;
         message.stctOutput.typeNumber = 1; //move gripper

@@ -90,25 +90,25 @@ void EncoderTicksPerRound::setParameter(const unsigned int parameter) {
   // Bouml preserved body end 0005C571
 }
 
-PositionReferenceToZero::PositionReferenceToZero() {
+InverseMovementDirection::InverseMovementDirection() {
   // Bouml preserved body begin 0005C6F1
-    this->name = "PositionReferenceToZero";
+    this->name = "InverseMovementDirection";
     this->parameterType = API_PARAMETER;
   // Bouml preserved body end 0005C6F1
 }
 
-PositionReferenceToZero::~PositionReferenceToZero() {
+InverseMovementDirection::~InverseMovementDirection() {
   // Bouml preserved body begin 0005C771
   // Bouml preserved body end 0005C771
 }
 
-void PositionReferenceToZero::getParameter(bool& parameter) const {
+void InverseMovementDirection::getParameter(bool& parameter) const {
   // Bouml preserved body begin 0005C7F1
     parameter = this->value;
   // Bouml preserved body end 0005C7F1
 }
 
-void PositionReferenceToZero::setParameter(const bool parameter) {
+void InverseMovementDirection::setParameter(const bool parameter) {
   // Bouml preserved body begin 0005C871
     this->value = parameter;
   // Bouml preserved body end 0005C871
@@ -224,6 +224,42 @@ void PParameterFirstParametersPositionControl::setYouBotMailboxMsg(const YouBotS
       this->value = message.stctInput.value; //TODO do convertion
     }
   // Bouml preserved body end 0005CC71
+}
+
+CalibrateJoint::CalibrateJoint() {
+  // Bouml preserved body begin 00061F71
+    this->name = "CalibrateJoint";
+    this->parameterType = API_PARAMETER;
+  // Bouml preserved body end 00061F71
+}
+
+CalibrateJoint::~CalibrateJoint() {
+  // Bouml preserved body begin 00061FF1
+  // Bouml preserved body end 00061FF1
+}
+
+void CalibrateJoint::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00062071
+    parameter = this->value;
+  // Bouml preserved body end 00062071
+}
+
+void CalibrateJoint::setParameter(const bool parameter) {
+  // Bouml preserved body begin 000620F1
+    this->value = parameter;
+  // Bouml preserved body end 000620F1
+}
+
+void CalibrateJoint::setCalibrationDirection(CalibrationDirection direction) {
+  // Bouml preserved body begin 00062471
+   this->calibrationDirection = direction;
+  // Bouml preserved body end 00062471
+}
+
+void CalibrateJoint::setMaxCurrent(const quantity<si::current>& current) {
+  // Bouml preserved body begin 00062571
+  this->maxCurrent = current;
+  // Bouml preserved body end 00062571
 }
 
 
