@@ -62,6 +62,7 @@ namespace brics_oodl {
             stctInput.commandNumber = 0;
             stctInput.value = 0;
             slaveNumber = slaveNo;
+
         }
 
 
@@ -72,6 +73,7 @@ namespace brics_oodl {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
             slaveNumber = copy.slaveNumber;
+            parameterName = copy.parameterName;
         }
 
         // Destructor
@@ -85,9 +87,12 @@ namespace brics_oodl {
             stctOutput = copy.stctOutput;
             stctInput = copy.stctInput;
             slaveNumber = copy.slaveNumber;
+            parameterName = copy.parameterName;
 
             return *this;
         }
+
+        std::string parameterName;
 
         unsigned int getSlaveNo() const {
             return slaveNumber;

@@ -11,6 +11,7 @@
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
+#include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotJoint.hpp"
@@ -28,6 +29,7 @@ namespace brics_oodl {
 //have to be a singleton in the system
 class YouBot {
 friend class YouBotJoint;
+friend class YouBotGripper;
   private:
     static YouBot* instance;
 
@@ -66,6 +68,8 @@ friend class YouBotJoint;
     ///@param jointNumber 1-5 for the arm2 joints
     YouBotJoint& getArm2Joint(const unsigned int arm2JointNumber);
 
+    YouBotGripper& getArm1Gripper();
+
     ///commands the base in cartesien velocities
     ///@param longitudinalVelocity is the forward or backward velocity
     ///@param transversalVelocity is the sideway velocity
@@ -86,6 +90,8 @@ friend class YouBotJoint;
 
     ///This class represents the kinematic of the YouBot 
     FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
+
+    void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
 
 
   private:
@@ -169,6 +175,10 @@ friend class YouBotJoint;
     std::vector<bool> newMailboxInputDataFlagTwo;
 
     rude::Config configfile;
+
+    std::vector<YouBotGripper> gripperVector;
+
+    std::vector<ec_slavet> ethercatSlaveInfo;
 
 };
 

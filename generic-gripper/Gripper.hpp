@@ -3,14 +3,14 @@
 
 
 #include "generic-gripper/GripperData.hpp"
-#include "generic-gripper/GripperConfiguration.hpp"
+#include "generic-gripper/GripperParameter.hpp"
 namespace brics_oodl {
 
 class Gripper {
   public:
-    virtual void setConfiguration(const GripperConfiguration& configuration) = 0;
+    virtual void setConfigurationParameter(const GripperParameter& parameter) = 0;
 
-    virtual void getConfiguration(const GripperConfiguration& configuration) = 0;
+    virtual void getConfigurationParameter(GripperParameter& parameter) = 0;
 
     virtual void setData(const GripperData& data) = 0;
 

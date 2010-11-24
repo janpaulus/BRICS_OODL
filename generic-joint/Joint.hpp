@@ -5,7 +5,7 @@
 #include <vector>
 #include "generic/Units.hpp"
 #include "generic-joint/JointData.hpp"
-#include "generic-joint/JointConfiguration.hpp"
+#include "generic-joint/JointParameter.hpp"
 
 namespace brics_oodl {
 
@@ -15,13 +15,13 @@ enum SyncMode {
 };
 class Joint {
   public:
-    virtual void setConfiguration(const JointConfiguration& configuration) = 0;
-
-    virtual void getConfiguration(JointConfiguration& configuration) = 0;
-
     virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode) = 0;
 
     virtual void getData(JointData& data) = 0;
+
+    virtual void setConfigurationParameter(const JointParameter& parameter) = 0;
+
+    virtual void getConfigurationParameter(JointParameter& parameter) = 0;
 
 };
 

@@ -16,7 +16,7 @@ YouBot::YouBot() {
     }
     ethernetDevice = "eth0";
     timeTillNextEthercatUpdate = 4; //msec
-    mailboxTimeout = 4000;  //micro sec
+    mailboxTimeout = 4000; //micro sec
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
@@ -88,11 +88,13 @@ YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
 YouBotJoint& YouBot::getJointByName(const std::string jointName) {
   // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
-    YouBotJointConfiguration config;
+    JointName jName;
+    std::string name;
 
     for (int i = 0; i < joints.size(); i++) {
-      joints[i].getConfiguration(config);
-      if (config.jointName == jointName) {
+      joints[i].getConfigurationParameter(jName);
+      jName.getParameter(name);
+      if (name == jointName) {
         jointNumber = i;
         break;
       }
@@ -139,6 +141,16 @@ YouBotJoint& YouBot::getArm2Joint(const unsigned int arm2JointNumber) {
     }
     return joints[jointNumber - 1];
   // Bouml preserved body end 0004F871
+}
+
+YouBotGripper& YouBot::getArm1Gripper() {
+  // Bouml preserved body begin 0005F9F1
+    if (this->gripperVector.size() >= 1) {
+      return this->gripperVector[0];
+    } else {
+      throw ExceptionOODL("There is no Gripper");
+    }
+  // Bouml preserved body end 0005F9F1
 }
 
 ///commands the base in cartesien velocities
@@ -218,6 +230,12 @@ void YouBot::getBasePosition(quantity<si::length>& longitudinalPosition, quantit
   // Bouml preserved body end 000514F1
 }
 
+void YouBot::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
+  // Bouml preserved body begin 00061EF1
+    ethercatSlaveInfos = this->ethercatSlaveInfo;
+  // Bouml preserved body end 00061EF1
+}
+
 void YouBot::initializeEthercat() {
   // Bouml preserved body begin 000410F1
 
@@ -230,21 +248,25 @@ void YouBot::initializeEthercat() {
         return;
       }
 
-      std::string desiredSlaveName = "TMCM-174";
+      std::string baseJointControllerName = "TMCM-174";
+      std::string manipulatorJointControllerName = "TMCM-174";
       std::string actualSlaveName;
       nrOfSlaves = 0;
       YouBotSlaveMsg emptySlaveMsg;
 
-      desiredSlaveName = configfile.getStringValue("JointControllerName");
+      baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
+      manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
 
       //reserve memory for all joints
       for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
-        //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
-        //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
-        //           ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+        printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
+                cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
+                ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+
+        ethercatSlaveInfo.push_back(ec_slave[cnt]);
 
         actualSlaveName = ec_slave[cnt].name;
-        if (actualSlaveName == desiredSlaveName && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
+        if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
           nrOfSlaves++;
           joints.push_back(YouBotJoint(nrOfSlaves));
 
@@ -286,37 +308,115 @@ void YouBot::initializeJoints() {
 
     //Configure Joint Parameters
     std::string jointName;
+    JointName jName;
+    GearRatio gearRatio;
+    EncoderTicksPerRound ticksPerRound;
+    InverseMovementDirection inverseDir;
+
 
     for (unsigned int i = 0; i < joints.size(); i++) {
       std::stringstream jointNameStream;
-      jointNameStream << "Joint " << i + 1;
+      jointNameStream << "Joint_" << i + 1;
       jointName = jointNameStream.str();
-      YouBotJointConfiguration config;
       configfile.setSection(jointName.c_str());
-      config.jointName = configfile.getStringValue("JointName");
-      config.setGearRatio(configfile.getDoubleValue("GearRatio"));
-      config.setEncoderTicksPerRound(configfile.getIntValue("EncoderTicksPerRound"));
-      config.setPositionReferenceToZero = configfile.getBoolValue("PositionReferenceToZero");
 
-      joints[i].setConfiguration(config);
+      jName.setParameter(configfile.getStringValue("JointName"));
+      double gearRatio_numerator = configfile.getIntValue("GearRatio_numerator");
+      double gearRatio_denominator = configfile.getIntValue("GearRatio_denominator");
+      gearRatio.setParameter(gearRatio_numerator / gearRatio_denominator);
+      ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
+      inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
+
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(inverseDir);
+
     }
 
-    //Switch to Velocity control because of "Sinuskommutierung"
+
+    LOG(info) << "Do sinus commutation";
+    //Move all joints with 1 rpm to do sinus commutation
     boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     JointVelocitySetpoint vel;
     vel.angularVelocity = 0 * radian_per_second;
+    double gRatio = 1;
 
     for (unsigned int i = 0; i < joints.size(); i++) {
+      joints[i].getConfigurationParameter(gearRatio);
+      gearRatio.getParameter(gRatio);
+      vel.angularVelocity = ((-1.1 / 60.0)*(gRatio * 2.0 * M_PI)) * radian_per_second;
+      joints[i].setData(vel, NON_BLOCKING);
+    }
+    SLEEP_MILLISEC(500); //wait for some movement
+
+    //stop all motors
+    for (unsigned int i = 0; i < joints.size(); i++) {
+      vel.angularVelocity = 0 * radian_per_second;
       joints[i].setData(vel, NON_BLOCKING);
     }
 
 
 
 
-    //TODO: Calibrate YouBot Manipulator
+    //TODO When to calibrate the manipulator and when it is not necessary
+    //Calibrate all manipulator joints
+    std::vector<CalibrateJoint> calibrateJointVec;
+    quantity<si::current> current;
+
+    for (unsigned int i = 0; i < 5; i++) {
+
+      std::stringstream jointNameStream;
+      jointNameStream << "Joint_" << i + 5;
+      jointName = jointNameStream.str();
+      configfile.setSection(jointName.c_str());
+
+      current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
+      std::string direction = configfile.getStringValue("CalibrationDirection");
+
+      calibrateJointVec.push_back(CalibrateJoint());
+
+      if (direction == "POSITIV") {
+        calibrateJointVec[i].setCalibrationDirection(POSITIV);
+      } else if (direction == "NEGATIV") {
+        calibrateJointVec[i].setCalibrationDirection(NEGATIV);
+      } else {
+        throw ExceptionOODL("Wrong calibration direction for " + jointName);
+      }
+      calibrateJointVec[i].setMaxCurrent(current);
+      calibrateJointVec[i].setParameter(true);
 
 
-    //TODO: Initilize Gripper
+      this->getArm1Joint(i + 1).setConfigurationParameter(calibrateJointVec[i]);
+
+    }
+
+    SLEEP_MILLISEC(500); //the youbot likes it so
+
+
+
+
+    //Initializing Gripper
+    this->gripperVector.push_back(YouBotGripper(9)); //TODO find right joint number automaticly
+    BarSpacingOffset barOffest;
+    MaxTravelDistance maxDistance;
+    MaxEncoderValue maxEncoder;
+
+    configfile.setSection("GripperArm_1");
+    barOffest.setParameter(configfile.getDoubleValue("BarSpacingOffset_[meter]") * meter);
+    gripperVector[0].setConfigurationParameter(barOffest);
+    maxDistance.setParameter(configfile.getDoubleValue("MaxTravelDistance_[meter]") * meter);
+    gripperVector[0].setConfigurationParameter(maxDistance);
+    maxEncoder.setParameter(configfile.getIntValue("MaxEncoderValue"));
+    gripperVector[0].setConfigurationParameter(maxEncoder);
+
+    // Calibrating Gripper
+    CalibrateGripper doCalibration;
+    doCalibration.setParameter(true);
+    gripperVector[0].setConfigurationParameter(doCalibration);
+
+
+
     return;
   // Bouml preserved body end 000464F1
 }
@@ -456,9 +556,9 @@ bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
     mailboxBufferSend[5] = mailboxMsg.stctOutput.value >> 16;
     mailboxBufferSend[6] = mailboxMsg.stctOutput.value >> 8;
     mailboxBufferSend[7] = mailboxMsg.stctOutput.value & 0xff;
-    if(ec_mbxsend(mailboxMsg.getSlaveNo(), &mailboxBufferSend, mailboxTimeout)){
+    if (ec_mbxsend(mailboxMsg.getSlaveNo(), &mailboxBufferSend, mailboxTimeout)) {
       return true;
-    }else{
+    } else {
       return false;
     }
   // Bouml preserved body end 00052F71
@@ -466,8 +566,8 @@ bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
 
 bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
   // Bouml preserved body begin 00052FF1
-      if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
-  //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
+    if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
+      //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
       mailboxMsg.stctInput.replyAddress = (int) mailboxBufferReceive[0];
       mailboxMsg.stctInput.moduleAddress = (int) mailboxBufferReceive[1];
       mailboxMsg.stctInput.status = (int) mailboxBufferReceive[2];
@@ -481,6 +581,7 @@ bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
 
 void YouBot::updateSensorActorValues() {
   // Bouml preserved body begin 0003F771
+
 
     {
       boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
@@ -541,6 +642,25 @@ void YouBot::updateSensorActorValues() {
           newDataFlagTwo = true;
           newDataFlagOne = false;
         }
+
+        /*
+        int timestamp = 0;
+        if (ec_slave[7].activeports & PORTM0){
+        timestamp = ec_slave[7].DCrtA;
+      }
+      if (ec_slave[7].activeports & PORTM3){
+        timestamp = ec_slave[7].DCrtD;
+      }
+      if (ec_slave[7].activeports & PORTM1){
+        timestamp = ec_slave[7].DCrtB;
+      }
+      if (ec_slave[7].activeports & PORTM2){
+        timestamp = ec_slave[7].DCrtC;
+      }
+       //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
+          printf("timestamp Joint 7:%i\n", timestamp);
+         */
+
 
         ethercatMaster->update();
 
