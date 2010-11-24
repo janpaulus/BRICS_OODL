@@ -30,7 +30,7 @@ public:
   bool setConfiguration (MonocularCameraConfiguration &config);
   bool getImageFormat(ImageFormat &fm);
   bool setImageFormat(ImageFormat &fm);
-  Image2dData*  getImageData();
+  Image2dData*  getImageData(int width, int height);
   bool capture(); // adding frames here could be good, then a user does not have to bother about building capture loops.
   bool open ();
   bool close ();

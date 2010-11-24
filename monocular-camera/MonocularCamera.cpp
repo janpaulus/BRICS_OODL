@@ -134,7 +134,7 @@ bool MonocularCamera::capture ()
 }
 
 
-Image2dData* MonocularCamera::getImageData()
+Image2dData* MonocularCamera::getImageData(int width = 640, int height = 480)
 {
   std::cout << "GetImageData"<< std::endl;
 
@@ -145,10 +145,12 @@ Image2dData* MonocularCamera::getImageData()
   //all the necessary checking for pixel data before returning full/correct data buffer
   unicap_data_buffer_t *returnTempBuffer; 
   
-  long int bufferSize = 0 ;
-  format->getImageFormatSize(bufferSize);
+  int bufferSize = width * height;
+  //format->getImageFormatSize(bufferSize); // some cameras do not have resolution list
+
   tempBuffer.data = new unsigned char[bufferSize];
   tempBuffer.buffer_size = bufferSize;
+  
 
   //Put the buffer into a queue and wait till it is filled (wait_buffer does this)
   unicap_queue_buffer(*deviceHandle, &tempBuffer);
