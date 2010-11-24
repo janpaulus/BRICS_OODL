@@ -242,6 +242,7 @@ bool ImageFormat::getListOfFormats()
     //set the default format to the first format in the list;
     currentFormat = &listOfDeviceFormats[0];
     currentResolution = &listOfDeviceFormats[0].size;
+    currentFormat->buffer_type = this->currentBufferType;
     int returnValue = unicap_set_format(*deviceHandle, currentFormat);
     std::cout << "Setting default format to " << currentFormat->identifier << std::endl;
     std::cout << "Setting default resolution to " << currentResolution->width << "x" <<currentResolution->height<< std::endl;

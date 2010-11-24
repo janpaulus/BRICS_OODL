@@ -1,5 +1,9 @@
 #include "MonocularCamera.hpp"
 
+//Maybe again similar to properties and formats we can receive a list of devices and save them in the vector
+// then according to provided ID chose the approapriate one
+// Or create a device manager class which observers what devices are there connected to the system
+
 
 MonocularCamera::MonocularCamera(int deviceNumber): pixels(NULL), isConnected(STATUS_FAILURE)
 													
@@ -146,12 +150,12 @@ Image2dData* MonocularCamera::getImageData(int width = 640, int height = 480)
   unicap_data_buffer_t *returnTempBuffer; 
   
   int bufferSize = width * height;
-  //format->getImageFormatSize(bufferSize); // some cameras do not have resolution list
+    //format->getImageFormatSize(bufferSize); // some cameras do not have resolution list
 
   tempBuffer.data = new unsigned char[bufferSize];
   tempBuffer.buffer_size = bufferSize;
   
-
+  
   //Put the buffer into a queue and wait till it is filled (wait_buffer does this)
   unicap_queue_buffer(*deviceHandle, &tempBuffer);
   //this waits till buffer is ready, it can be then processed through returnedTempBuffer
