@@ -5,23 +5,29 @@
 // Or create a device manager class which observers what devices are there connected to the system
 
 
-MonocularCamera::MonocularCamera(int deviceNumber): pixels(NULL), isConnected(STATUS_FAILURE)
+MonocularCamera::MonocularCamera(int deviceNumber = 0): pixels(NULL), isConnected(STATUS_FAILURE), cameraDeviceCounter(0)
 													
 {
+  if (getListOfCameras())
+  {
   std::cout<<"Creating Monocular Camera without arguments"<<std::endl;
-  device = new unicap_device_t;
+  currentDevice = &listOfCameraDevices[deviceNumber];
   deviceHandle = new unicap_handle_t;
-  cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
-  format = new ImageFormat(device, deviceHandle, "RGB");
+  cameraConfig = new MonocularCameraConfiguration(currentDevice, deviceHandle);
+  format = new ImageFormat(currentDevice, deviceHandle, "RGB");
+  }
 }
 
-MonocularCamera::MonocularCamera(MonocularCameraConfiguration &config, std::string &fm):pixels(NULL),isConnected(STATUS_FAILURE)
+MonocularCamera::MonocularCamera(int deviceNumber, MonocularCameraConfiguration &config, std::string &fm):pixels(NULL),isConnected(STATUS_FAILURE), cameraDeviceCounter(0)
 {
+  if(getListOfCameras())
+  {
   std::cout<<"Creating Monocular Camera with arguments"<<std::endl;
-  device = new unicap_device_t;
+  currentDevice = &listOfCameraDevices[deviceNumber];
   deviceHandle = new unicap_handle_t;
-  cameraConfig = new MonocularCameraConfiguration(device, deviceHandle);
-  format = new ImageFormat(device, deviceHandle, fm);
+  cameraConfig = new MonocularCameraConfiguration(currentDevice, deviceHandle);
+  format = new ImageFormat(currentDevice, deviceHandle, fm);
+  }
 }
 
 
@@ -49,7 +55,7 @@ MonocularCamera::~MonocularCamera()
 
 //  delete cameraConfig;
 //  delete format;
-  delete device;
+  delete currentDevice;
   delete deviceHandle;
 //  delete pixels;
 
@@ -61,34 +67,20 @@ bool MonocularCamera::open ()
   std::cout<<"In Monocular Camera open"<<std::endl;
   if(SUCCESS(isConnected))
   {
-    std::cout << "Device is already open" <<std::endl;
-    return true;
+    std::cout << "Device is connected" <<std::endl;
+    std::cout << "Opening device"<< currentDevice->identifier <<std::endl;
+    isOpened = unicap_open(deviceHandle, currentDevice);
+    if(SUCCESS(isOpened))
+    {
+        std::cout << "Device is successfully opened" << std::endl;
+	return true;
+    }
   }
   else
   {
-    isConnected = unicap_enumerate_devices(NULL, device, 0);
-    if(SUCCESS(isConnected))
-    {
-      std::cout << "Openning camera"<<std::endl;
-      isConnected = unicap_open(deviceHandle, device);
-      if(SUCCESS(isConnected))
-      {
-	std::cout << "Device is successfully opened" << std::endl;
-
-                
-	return true;
-      }
-      else
-      {
-	std::cout << "Could not open device" << std::endl;
-	return false;
-      }
-    }
-    else
-    {
-      std::cout << "Could not find devices" << std::endl;
-      return false;
-    }
+    std::cout << "Could not find devices" << std::endl;
+    return false;
+    
   }
 
 }
@@ -187,4 +179,24 @@ bool MonocularCamera::setImageFormat(ImageFormat &fm)
   std::cout<<"In Monocular Camera setImageFormat"<<std::endl;
   format = &fm;
   return true;
+}
+
+
+bool MonocularCamera::getListOfCameras()
+{
+    unicap_device_t tempDevice = {0};
+    
+    while(SUCCESS(unicap_enumerate_devices(NULL, &tempDevice, cameraDeviceCounter)))
+    {
+        listOfCameraDevices.push_back(tempDevice);
+        cameraDeviceCounter++;
+
+    }
+    if(listOfCameraDevices.size() != 0)
+    {
+        isConnected = STATUS_SUCCESS;
+        return true;
+    }
+    else
+        return false;
 }

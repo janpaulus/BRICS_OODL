@@ -71,6 +71,10 @@ private:
   bool getListOfColorProperties();
   bool unifyPropertyNames();
 
+  unicap_device_t *deviceColorExposureDev;
+  unicap_handle_t *handleColorExposureDev;
+  unicap_status_t returnStatus;
+
   //counter for the total number of color-exposure properties provided by a camera
   //should be equal to vector index of listOfProperties
   int colorConfPropertyCounter;
@@ -87,9 +91,7 @@ private:
   unicap_property_range_t gainControlValue;
   unicap_property_range_t shutterTime;
   unicap_property_range_t exposureTime;
-  unicap_status_t returnStatus;
-  unicap_device_t *deviceColorExposureDev;
-  unicap_handle_t *handleColorExposureDev;
+
 };
 
 #endif// ~ _COLOREXPOSURECONFIGURATION_

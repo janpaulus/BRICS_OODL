@@ -10,10 +10,11 @@ int main (int argc, char **argv)
   MonocularCameraConfiguration config ;
   ImageFormat format;
   MonocularCamera camera(1);
-
+  
 
 
   camera.open(); //always open first
+
 
   camera.getConfiguration(config);
   double gain = 0.0;

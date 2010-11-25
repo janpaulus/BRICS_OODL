@@ -27,8 +27,9 @@
 
 ColorExposureConfiguration::ColorExposureConfiguration(): deviceColorExposureDev(NULL), 
 							  handleColorExposureDev(NULL),
-                                                          colorConfPropertyCounter(0), 
-							  returnStatus(STATUS_FAILURE)
+							  returnStatus(STATUS_FAILURE),
+							  colorConfPropertyCounter(0)
+						       
 {
   std::cout << "Creating ColorExposureConfiguration without arguments" << std::endl;
   hueValue.min = 0;
@@ -56,8 +57,8 @@ ColorExposureConfiguration::ColorExposureConfiguration(): deviceColorExposureDev
 
 ColorExposureConfiguration::ColorExposureConfiguration(unicap_device_t *device, unicap_handle_t *handle): deviceColorExposureDev(device),
                                                                                                           handleColorExposureDev (handle),
-                                                                                                          colorConfPropertyCounter(0),
-                                                                                                          returnStatus(STATUS_FAILURE)
+                                                                                                          returnStatus(STATUS_FAILURE),
+													  colorConfPropertyCounter(0)
 {
   std::cout << "Creating ColorExposureConfiguration with arguments" << std::endl;
   hueValue.min = 0;
@@ -113,25 +114,25 @@ bool ColorExposureConfiguration::getListOfColorProperties()
   std::cout << "Inside ColorExposureConfiguration getListOfColorPropertiesVector" << std::endl;
   unicap_property_t tempProperty = {0};
   while(SUCCESS(unicap_enumerate_properties( *handleColorExposureDev, NULL, &tempProperty, colorConfPropertyCounter)))
-    {
+  {
 
-	listOfProperties.push_back(tempProperty);
-	std::cout << 	listOfProperties.size()<< std::endl;
-	std::cout << 	listOfProperties[colorConfPropertyCounter].identifier<<std::endl;
-	colorConfPropertyCounter++;
-	returnStatus = STATUS_SUCCESS;      
-    }
+    listOfProperties.push_back(tempProperty);
+    std::cout << 	listOfProperties.size()<< std::endl;
+    std::cout << 	listOfProperties[colorConfPropertyCounter].identifier<<std::endl;
+    colorConfPropertyCounter++;
+    returnStatus = STATUS_SUCCESS;      
+  }
     
-    if(listOfProperties.size() != 0)
-    {
-      std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
-      return true;
-    }
-    else
-    {
-      std::cout << "Property list is empty"<<std::endl;
-      return false;
-    }
+  if(listOfProperties.size() != 0)
+  {
+    std::cout << "Number of properties " << colorConfPropertyCounter<<std::endl;
+    return true;
+  }
+  else
+  {
+    std::cout << "Property list is empty"<<std::endl;
+    return false;
+  }
     
 }
 
@@ -139,6 +140,7 @@ bool ColorExposureConfiguration::unifyPropertyNames()
 {
 
 
+  return true;
 
 }
 
@@ -695,8 +697,10 @@ bool ColorExposureConfiguration::getShutterTime(double &sTime)
 
 
 
-bool ColorExposureConfiguration::getExposureTime(double &eTime) {
+bool ColorExposureConfiguration::getExposureTime(double &eTime) 
+{
 
+  return true;
 }
 
 
@@ -768,32 +772,42 @@ bool ColorExposureConfiguration::getColorTemperatureValue(double &temp)
 }
 
 
+bool ColorExposureConfiguration::setHueValue(double &hue) 
+{
 
-bool ColorExposureConfiguration::setHueValue(double &hue) {
-
+  return true;
 }
 
-bool ColorExposureConfiguration::setChromaValue(double &chroma) {
+bool ColorExposureConfiguration::setChromaValue(double &chroma) 
+{
 
+  return true;
 }
 
-bool ColorExposureConfiguration::setSaturationValue(double &saturation) {
+bool ColorExposureConfiguration::setSaturationValue(double &saturation) 
+{
 
+  return true;
 }
 
 
-bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue) {
+bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue) 
+{
 
+  return true;
 }
 
-bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue) {
+bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue) 
+{
 
+  return true;
 }
 
 
 //Temporary solution for capital and lowercase letters
 //Need to solve this cleverly
-bool ColorExposureConfiguration::setBrightnessValue(double &brightness) {
+bool ColorExposureConfiguration::setBrightnessValue(double &brightness) 
+{
 
   std::cout << "Inside ColorExposureConfiguration setBrightnessValue" << std::endl;
   char propertyName1[] ="brightness";
