@@ -232,13 +232,9 @@ friend class YouBotJoint;
 
     virtual ~CalibrateJoint();
 
-    void getParameter(bool& parameter) const;
+    void getParameter(bool& doCalibration, CalibrationDirection& calibrationDirection, quantity<si::current>& maxCurrent) const;
 
-    void setParameter(const bool parameter);
-
-    void setCalibrationDirection(CalibrationDirection direction);
-
-    void setMaxCurrent(const quantity<si::current>& current);
+    void setParameter(const bool doCalibration, CalibrationDirection calibrationDirection, const quantity<si::current>& maxCurrent);
 
 
   private:
@@ -250,7 +246,7 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    bool value;
+    bool doCalibration;
 
     std::string name;
 
@@ -259,6 +255,36 @@ friend class YouBotJoint;
     CalibrationDirection calibrationDirection;
 
     quantity<si::current> maxCurrent;
+
+};
+class JointLimits : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    JointLimits();
+
+    virtual ~JointLimits();
+
+    void getParameter(int& lowerLimit, int& upperLimit) const;
+
+    void setParameter(const int lowerLimit, const int upperLimit);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int lowerLimit;
+
+    int upperLimit;
+
+    std::string name;
+
+    ParameterType parameterType;
 
 };
 

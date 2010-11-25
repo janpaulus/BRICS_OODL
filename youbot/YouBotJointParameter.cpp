@@ -238,28 +238,48 @@ CalibrateJoint::~CalibrateJoint() {
   // Bouml preserved body end 00061FF1
 }
 
-void CalibrateJoint::getParameter(bool& parameter) const {
+void CalibrateJoint::getParameter(bool& doCalibration, CalibrationDirection& calibrationDirection, quantity<si::current>& maxCurrent) const {
   // Bouml preserved body begin 00062071
-    parameter = this->value;
+    doCalibration = this->doCalibration;
+    calibrationDirection = this->calibrationDirection;
+    maxCurrent = this->maxCurrent;
   // Bouml preserved body end 00062071
 }
 
-void CalibrateJoint::setParameter(const bool parameter) {
+void CalibrateJoint::setParameter(const bool doCalibration, CalibrationDirection calibrationDirection, const quantity<si::current>& maxCurrent) {
   // Bouml preserved body begin 000620F1
-    this->value = parameter;
+    this->doCalibration = doCalibration;
+    this->calibrationDirection = calibrationDirection;
+    this->maxCurrent = maxCurrent;
   // Bouml preserved body end 000620F1
 }
 
-void CalibrateJoint::setCalibrationDirection(CalibrationDirection direction) {
-  // Bouml preserved body begin 00062471
-   this->calibrationDirection = direction;
-  // Bouml preserved body end 00062471
+JointLimits::JointLimits() {
+  // Bouml preserved body begin 00063EF1
+    this->name = "JointLimits";
+    this->parameterType = API_PARAMETER;
+    this->lowerLimit = 0;
+    this->upperLimit = 0;
+  // Bouml preserved body end 00063EF1
 }
 
-void CalibrateJoint::setMaxCurrent(const quantity<si::current>& current) {
-  // Bouml preserved body begin 00062571
-  this->maxCurrent = current;
-  // Bouml preserved body end 00062571
+JointLimits::~JointLimits() {
+  // Bouml preserved body begin 00063F71
+  // Bouml preserved body end 00063F71
+}
+
+void JointLimits::getParameter(int& lowerLimit, int& upperLimit) const {
+  // Bouml preserved body begin 00063FF1
+    lowerLimit = this->lowerLimit;
+    upperLimit = this->upperLimit;
+  // Bouml preserved body end 00063FF1
+}
+
+void JointLimits::setParameter(const int lowerLimit, const int upperLimit) {
+  // Bouml preserved body begin 00064071
+    this->lowerLimit = lowerLimit;
+    this->upperLimit = upperLimit;
+  // Bouml preserved body end 00064071
 }
 
 

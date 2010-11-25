@@ -53,7 +53,7 @@ int main() {
 
     quantity<si::plane_angle> lastAngle;
 
-    setVel.angularVelocity = 2 * radian_per_second;
+    setVel.angularVelocity = 0 * radian_per_second;
 
 
  
@@ -76,24 +76,28 @@ int main() {
     SLEEP_MILLISEC(2000);
 
     gripperSetPoint.barSpacing = 0.015 *meter;
-    gripper.setData(gripperSetPoint);
+    gripper.setData(gripperSetPoint);*/
     SLEEP_MILLISEC(2000);
 
 
     JointAngleSetpoint jAngle;
-    jAngle.angle = -10.0*M_PI/180.0 *radian;
-*/
+    jAngle.angle = -1 *radian;
+
+  //  myYouBot.getArm1Joint(5).setData(setVel);
+    LOG(trace) << "move to pose: " << jAngle.angle;
+    myYouBot.getArm1Joint(3).setData(jAngle);
+
  //   SLEEP_MILLISEC(5000);
 
  //   SLEEP_MILLISEC(5000);
-    CalibrateJoint calibJoint;
-    calibJoint.setParameter(true);
+//    CalibrateJoint calibJoint;
+
 
  //   myYouBot.getArm1Joint(5).setConfigurationParameter(calibJoint);
 
   //  SLEEP_MILLISEC(5000);
 
-    
+    /*
     GearRatio name;
     double jname;
     myYouBot.getArm1Joint(2).getConfigurationParameter(name);
@@ -110,7 +114,7 @@ int main() {
     test.getParameter(angularVel);
     LOG(trace) << angularVel;
 
-
+*/
     /*
     double value = 0;;
     myYouBot.getBaseJoint(4).getConfiguration(config);
@@ -123,10 +127,10 @@ int main() {
     config.getMaximumPositioningSpeed(angularVel);
     LOG(trace) << angularVel;
 */
-/*
+
     while (running) {
 
-      for (unsigned int i = 1; i <= 4; i++) {
+    /*  for (unsigned int i = 1; i <= 4; i++) {
         myYouBot.getBaseJoint(i).getData(temp);
         myYouBot.getBaseJoint(i).getData(angle);
         myYouBot.getBaseJoint(i).getData(vel);
@@ -136,7 +140,12 @@ int main() {
                 << " Vel: " << vel.angularVelocity
                 << " Current: " << current.current
                 << std::endl;
-      }
+      }*/
+
+       myYouBot.getArm1Joint(3).getData(angle);
+
+        std::cout << " Angle: " << angle.angle
+                << std::endl;
 
       SLEEP_MILLISEC(100);
     }
@@ -149,7 +158,7 @@ int main() {
     myYouBot.getJoint(4).setData(setVel);
 
     SLEEP_MILLISEC(500);
-*/
+
 
 
   } catch (std::exception& e) {

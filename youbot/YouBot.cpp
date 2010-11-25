@@ -363,6 +363,7 @@ void YouBot::initializeJoints() {
     //Calibrate all manipulator joints
     std::vector<CalibrateJoint> calibrateJointVec;
     quantity<si::current> current;
+    JointLimits jLimits;
 
     for (unsigned int i = 0; i < 5; i++) {
 
@@ -371,25 +372,24 @@ void YouBot::initializeJoints() {
       jointName = jointNameStream.str();
       configfile.setSection(jointName.c_str());
 
+      jLimits.setParameter(configfile.getIntValue("LowerLimit_[encoderTicks]"), configfile.getIntValue("UpperLimit_[encoderTicks]"));
+      this->getArm1Joint(i + 1).setConfigurationParameter(jLimits);
+
       current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
       std::string direction = configfile.getStringValue("CalibrationDirection");
 
       calibrateJointVec.push_back(CalibrateJoint());
 
       if (direction == "POSITIV") {
-        calibrateJointVec[i].setCalibrationDirection(POSITIV);
+        calibrateJointVec[i].setParameter(true, POSITIV, current);
       } else if (direction == "NEGATIV") {
-        calibrateJointVec[i].setCalibrationDirection(NEGATIV);
+        calibrateJointVec[i].setParameter(true, NEGATIV, current);
       } else {
         throw ExceptionOODL("Wrong calibration direction for " + jointName);
       }
-      calibrateJointVec[i].setMaxCurrent(current);
-      calibrateJointVec[i].setParameter(true);
-
-
       this->getArm1Joint(i + 1).setConfigurationParameter(calibrateJointVec[i]);
-
     }
+ //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 
     SLEEP_MILLISEC(500); //the youbot likes it so
 
@@ -413,7 +413,9 @@ void YouBot::initializeJoints() {
     // Calibrating Gripper
     CalibrateGripper doCalibration;
     doCalibration.setParameter(true);
-    gripperVector[0].setConfigurationParameter(doCalibration);
+
+
+  //  gripperVector[0].setConfigurationParameter(doCalibration); //TODO activate calibration
 
 
 
