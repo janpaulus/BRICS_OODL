@@ -58,7 +58,6 @@ SET(OODL_YOUBOT_HEADERS
 ../generic/Units.hpp
 
 ../generic-gripper/Gripper.hpp
-../generic-gripper/GripperConfiguration.hpp
 ../generic-gripper/GripperData.hpp
 
 ../generic-joint/Joint.hpp
@@ -66,7 +65,6 @@ SET(OODL_YOUBOT_HEADERS
 ../generic-joint/JointParameter.hpp
 
 ../one-dof-gripper/OneDOFGripper.hpp
-../one-dof-gripper/OneDOFGripperConfiguration.hpp
 ../one-dof-gripper/OneDOFGripperData.hpp
 
 )

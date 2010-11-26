@@ -195,7 +195,7 @@ namespace brics_oodl {
 
     //  isBetween(A, B, C) ( ((A-B) > -ZERO) && ((A-C) < ZERO) )
 
-    if (!(((data.angle - lowLimit) > 0.0 * radian) && ((data.angle - upLimit) < 0.0 * radian))) {
+    if (!((data.angle < upLimit  ) && (data.angle > lowLimit))) {
       std::stringstream errorMessageStream;
       errorMessageStream << "The setpoint angle is out of range. The valid range is between " << lowLimit << " and " << upLimit;
       //    LOG(trace) << "abs_value: " << abs(data.angle) << " abslow " << abs(lowLimit) << " absupper " << abs(upLimit);

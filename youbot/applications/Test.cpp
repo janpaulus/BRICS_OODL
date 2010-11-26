@@ -25,8 +25,6 @@ int main() {
   signal(SIGINT, sigintHandler);
 
   try {
-    
-
 
     YouBot& myYouBot = YouBot::getInstance();
 
@@ -64,69 +62,17 @@ int main() {
     YouBotGripper gripper = myYouBot.getArm1Gripper();
     
 
-   /*
-    GripperBarSpacingSetPoint gripperSetPoint;
-
-    gripperSetPoint.barSpacing = 0.01 *meter;
-    gripper.setData(gripperSetPoint);
     SLEEP_MILLISEC(2000);
 
-    gripperSetPoint.barSpacing = 0.023 *meter;
-    gripper.setData(gripperSetPoint);
-    SLEEP_MILLISEC(2000);
-
-    gripperSetPoint.barSpacing = 0.015 *meter;
-    gripper.setData(gripperSetPoint);*/
-    SLEEP_MILLISEC(2000);
-
+    int jointNo = 5;
 
     JointAngleSetpoint jAngle;
-    jAngle.angle = -1 *radian;
+    jAngle.angle = 2 *radian;
 
   //  myYouBot.getArm1Joint(5).setData(setVel);
     LOG(trace) << "move to pose: " << jAngle.angle;
-    myYouBot.getArm1Joint(3).setData(jAngle);
+    myYouBot.getArm1Joint(jointNo).setData(jAngle);
 
- //   SLEEP_MILLISEC(5000);
-
- //   SLEEP_MILLISEC(5000);
-//    CalibrateJoint calibJoint;
-
-
- //   myYouBot.getArm1Joint(5).setConfigurationParameter(calibJoint);
-
-  //  SLEEP_MILLISEC(5000);
-
-    /*
-    GearRatio name;
-    double jname;
-    myYouBot.getArm1Joint(2).getConfigurationParameter(name);
-    name.getParameter(jname);
-    LOG(trace) << jname;
-
-    myYouBot.getBaseJoint(3).getConfigurationParameter(test);
-    test.getParameter(angularVel);
-    LOG(trace) << angularVel;
-    angularVel = (angularVel.value() + 1) * radian_per_second;
-    test.setParameter(angularVel);
-    myYouBot.getBaseJoint(3).setConfigurationParameter(test);
-    myYouBot.getBaseJoint(3).getConfigurationParameter(test);
-    test.getParameter(angularVel);
-    LOG(trace) << angularVel;
-
-*/
-    /*
-    double value = 0;;
-    myYouBot.getBaseJoint(4).getConfiguration(config);
-    config.getMaximumPositioningSpeed(angularVel);
-    LOG(trace) << angularVel;
-    angularVel = (angularVel.value() + 1) * radian_per_second;
-    config.setMaximumPositioningSpeed(angularVel);
-    myYouBot.getBaseJoint(4).setConfiguration(config);
-    myYouBot.getBaseJoint(4).getConfiguration(config);
-    config.getMaximumPositioningSpeed(angularVel);
-    LOG(trace) << angularVel;
-*/
 
     while (running) {
 
@@ -142,7 +88,7 @@ int main() {
                 << std::endl;
       }*/
 
-       myYouBot.getArm1Joint(3).getData(angle);
+       myYouBot.getArm1Joint(jointNo).getData(angle);
 
         std::cout << " Angle: " << angle.angle
                 << std::endl;
