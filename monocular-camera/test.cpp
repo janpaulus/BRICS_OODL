@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
   MonocularCameraConfiguration config ;
   ImageFormat format;
-  MonocularCamera camera(0);
+  MonocularCamera camera(2);
   
 
 
@@ -41,7 +41,7 @@ int main (int argc, char **argv)
 
   SDL_Surface *screen = NULL;
   SDL_Overlay *overlay = NULL;
-  SDL_Rect rectArea = {0,0,640,480};
+  SDL_Rect rectArea = {0,0,width,height};
   int quitSignal = 0;
 
 //  Initialise SDL
@@ -70,7 +70,8 @@ int main (int argc, char **argv)
     SDL_LockYUVOverlay(overlay);
 
     camera.getImageData(data);
-    memcpy(overlay->pixels[0], (Uint8*)(data.buffer),data.bufferSize);
+    memcpy(overlay->pixels[0], (Uint8*)(data.buffer), 2*data.bufferSize);
+
 
 
 
