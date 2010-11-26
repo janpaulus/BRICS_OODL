@@ -287,6 +287,62 @@ friend class YouBotJoint;
     ParameterType parameterType;
 
 };
+class StopJoint : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    StopJoint();
+
+    virtual ~StopJoint();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class NoMoreAction : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    NoMoreAction();
+
+    virtual ~NoMoreAction();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
 
 } // namespace brics_oodl
 #endif

@@ -125,7 +125,7 @@ namespace brics_oodl {
 
       //check if the joint has moved enough otherwise move in other direction
       if (timePast < movmentTime) {
-     //   LOG(info) << "turn in other direction ";
+        //   LOG(info) << "turn in other direction ";
         messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
         messageBuffer.stctOutput.positionOrSpeed = -calibrationVel;
         YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
@@ -207,6 +207,30 @@ namespace brics_oodl {
     // Bouml preserved body end 000642F1
   }
 
+  void YouBotJoint::setConfigurationParameter(StopJoint& parameter) {
+    // Bouml preserved body begin 00066471
+    if (parameter.value) {
+      YouBotSlaveMsg messageBuffer;
+      messageBuffer.stctOutput.controllerMode = MOTOR_STOP;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+    }
+    // Bouml preserved body end 00066471
+  }
+
+  void YouBotJoint::setConfigurationParameter(NoMoreAction& parameter) {
+    // Bouml preserved body begin 000664F1
+    if (parameter.value) {
+      YouBotSlaveMsg messageBuffer;
+      messageBuffer.stctOutput.controllerMode = NO_MORE_ACTION;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+    }
+    // Bouml preserved body end 000664F1
+  }
+
   void YouBotJoint::setData(const JointDataSetpoint& data, SyncMode communicationMode) {
     // Bouml preserved body begin 000413F1
     LOG(info) << "Nothing to do";
@@ -269,7 +293,7 @@ namespace brics_oodl {
     if (encoderTicksPerRound == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
-  //  LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
+    //  LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
     data.angle = ((double) messageBuffer.stctInput.actualPosition / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
 
     if (this->inverseMovementDirection) {

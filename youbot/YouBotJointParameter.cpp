@@ -282,5 +282,53 @@ void JointLimits::setParameter(const int lowerLimit, const int upperLimit) {
   // Bouml preserved body end 00064071
 }
 
+StopJoint::StopJoint() {
+  // Bouml preserved body begin 00065C71
+    this->name = "StopJoint";
+    this->parameterType = API_PARAMETER;
+  // Bouml preserved body end 00065C71
+}
+
+StopJoint::~StopJoint() {
+  // Bouml preserved body begin 00065CF1
+  // Bouml preserved body end 00065CF1
+}
+
+void StopJoint::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00065D71
+    parameter = this->value;
+  // Bouml preserved body end 00065D71
+}
+
+void StopJoint::setParameter(const bool parameter) {
+  // Bouml preserved body begin 00065DF1
+    this->value = parameter;
+  // Bouml preserved body end 00065DF1
+}
+
+NoMoreAction::NoMoreAction() {
+  // Bouml preserved body begin 00066071
+    this->name = "NoMoreAction";
+    this->parameterType = API_PARAMETER;
+  // Bouml preserved body end 00066071
+}
+
+NoMoreAction::~NoMoreAction() {
+  // Bouml preserved body begin 000660F1
+  // Bouml preserved body end 000660F1
+}
+
+void NoMoreAction::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00066171
+    parameter = this->value;
+  // Bouml preserved body end 00066171
+}
+
+void NoMoreAction::setParameter(const bool parameter) {
+  // Bouml preserved body begin 000661F1
+    this->value = parameter;
+  // Bouml preserved body end 000661F1
+}
+
 
 } // namespace brics_oodl
