@@ -31,10 +31,12 @@ int main (int argc, char **argv)
   format.getImageFormatResolution(width, height);
   camera.setImageFormat(format) ;
   camera.capture();
-
-  while(1)
-   camera.getImageData(width,height)->getBuffer();
-
+  
+  // while(1)
+  // {
+  // Image2dData data(width,height);
+  //  camera.getImageData(data);
+  // }
 
 
   SDL_Surface *screen = NULL;
@@ -49,7 +51,7 @@ int main (int argc, char **argv)
     exit (1);
   }
 
-  screen = SDL_SetVideoMode (640, 480, 0 , 0);
+  screen = SDL_SetVideoMode (width, height, 32 , SDL_ANYFORMAT);
 
   if (screen == NULL) 
   {
@@ -58,15 +60,19 @@ int main (int argc, char **argv)
     exit (1);
   }
 
-  overlay = SDL_CreateYUVOverlay (640, 480,SDL_YUY2_OVERLAY ,screen);  
+  overlay = SDL_CreateYUVOverlay (width, height,SDL_YUY2_OVERLAY ,screen);  
   
-/*
+
   while(!quitSignal)
   {
     SDL_Event event;
-   
+    Image2dData data(width,height);   
     SDL_LockYUVOverlay(overlay);
-    overlay->pixels[0] = ( (Uint8*)(camera.getImageData(width,height)->getBuffer()));
+
+    camera.getImageData(data);
+    memcpy(overlay->pixels[0], (Uint8*)(data.buffer),data.bufferSize);
+
+
 
     SDL_UnlockYUVOverlay(overlay);
     SDL_DisplayYUVOverlay (overlay, &rectArea);
@@ -80,8 +86,8 @@ int main (int argc, char **argv)
     }    
 
   }
-*/
-    
+
+  SDL_FreeYUVOverlay(overlay);
   SDL_Quit();
 
 

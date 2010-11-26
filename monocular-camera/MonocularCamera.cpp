@@ -90,7 +90,8 @@ bool MonocularCamera::open ()
 bool MonocularCamera ::close ()
 {
   std::cout<<"In Monocular Camera close"<<std::endl;
-  //  unicap_close(deviceHandle[0]);
+  unicap_stop_capture(*deviceHandle);
+  unicap_close(*deviceHandle);
   return true;
 }
 
@@ -130,7 +131,7 @@ bool MonocularCamera::capture ()
 }
 
 
-Image2dData* MonocularCamera::getImageData(int width = 640, int height = 480)
+void MonocularCamera::getImageData(Image2dData& data)
 {
   std::cout << "GetImageData"<< std::endl;
 
@@ -141,9 +142,10 @@ Image2dData* MonocularCamera::getImageData(int width = 640, int height = 480)
   //all the necessary checking for pixel data before returning full/correct data buffer
   unicap_data_buffer_t *returnTempBuffer; 
   
-  int bufferSize = width * height;
-    //format->getImageFormatSize(bufferSize); // some cameras do not have resolution list
-
+  int bufferSize = 0;
+  format->getImageFormatSize(bufferSize); 
+  if (bufferSize == 0)
+    bufferSize = 640 * 480; // some cameras do not have resolution list so setting is manually
   tempBuffer.data = new unsigned char[bufferSize];
   tempBuffer.buffer_size = bufferSize;
   
@@ -151,16 +153,15 @@ Image2dData* MonocularCamera::getImageData(int width = 640, int height = 480)
   //Put the buffer into a queue and wait till it is filled (wait_buffer does this)
   unicap_queue_buffer(*deviceHandle, &tempBuffer);
   //this waits till buffer is ready, it can be then processed through returnedTempBuffer
-  if( !SUCCESS( unicap_wait_buffer( *deviceHandle, &returnTempBuffer ) ) )
+  if(SUCCESS( unicap_wait_buffer( *deviceHandle, &returnTempBuffer ) ) )
   {
-    std::cout << "Failed to wait for buffer" << std::endl;
-    return NULL;
+    data.bufferSize = returnTempBuffer->buffer_size;
+    memcpy(data.buffer, returnTempBuffer->data, returnTempBuffer->buffer_size);
+    delete []tempBuffer.data;
   }
   else
   {
-    Image2dData x = Image2dData ((*returnTempBuffer).data,(*returnTempBuffer).buffer_size);
-    pixels = &x;
-    return pixels;
+    std::cout << "Failed to wait for buffer" << std::endl;
   }
 
 }

@@ -10,6 +10,8 @@
 #include <unicap.h>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <cstring>
 
 //! This class represents a physical camera attached. 
 //! It can be instantiated to create camera objects.
@@ -34,7 +36,7 @@ public:
   bool capture(); 
   bool open ();
   bool close ();
-  Image2dData*  getImageData(int width, int height);
+  void getImageData(Image2dData& data);
   
 private:
  

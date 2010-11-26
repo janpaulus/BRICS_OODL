@@ -7,6 +7,12 @@ Image2dData::Image2dData(unsigned char *bufferStart = NULL, size_t length = 0)
   bufferSize = length; 
 }
 
+Image2dData::Image2dData()
+{
+  buffer = NULL;
+  bufferSize = 0; 
+}
+
 Image2dData::Image2dData(int& width, int& height)
 {
   bufferSize = width * height;
@@ -14,11 +20,11 @@ Image2dData::Image2dData(int& width, int& height)
 
 }
 
-Image2dData& Image2dData::operator=(Image2dData&)
+Image2dData& Image2dData::operator=(Image2dData& data)
 {
-  if(&Image2dData != this)
+  if(&data != this)
   {
-    std::cout << in the assignment operator << std::endl;
+    std::cout << "In the assignment operator" << std::endl;
   }
   return *this;
 }

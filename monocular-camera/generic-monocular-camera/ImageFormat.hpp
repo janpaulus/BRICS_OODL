@@ -42,7 +42,7 @@ public:
   //! Returns color model list supported by the camera
   bool getImageFormatColorModelList();
 
-  bool getImageFormatSize(long int &size);
+  bool getImageFormatSize(int &size);
 
   bool setImageFormatResolution(int &width, int &height);
   bool setImageFormatColorModel(std::string &colorModel);

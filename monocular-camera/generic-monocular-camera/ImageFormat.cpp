@@ -201,7 +201,7 @@ bool ImageFormat::setImageFormatResolution(int &width, int &height)
   return true;
 }
 
-bool ImageFormat::getImageFormatSize(long int &size)
+bool ImageFormat::getImageFormatSize(int &size)
 {
 
   bufferSize = (currentResolution->width)*(currentResolution->height);
