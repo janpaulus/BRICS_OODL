@@ -14,6 +14,15 @@ Image2dData::Image2dData(int& width, int& height)
 
 }
 
+Image2dData& Image2dData::operator=(Image2dData&)
+{
+  if(&Image2dData != this)
+  {
+    std::cout << in the assignment operator << std::endl;
+  }
+  return *this;
+}
+
 unsigned char* Image2dData::getBuffer()
 {
   if(buffer != NULL)
