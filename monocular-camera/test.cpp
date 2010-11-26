@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
   MonocularCameraConfiguration config ;
   ImageFormat format;
-  MonocularCamera camera(1);
+  MonocularCamera camera(0);
   
 
 
