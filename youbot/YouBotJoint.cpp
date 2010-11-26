@@ -82,57 +82,109 @@ namespace brics_oodl {
     if (parameter.doCalibration) {
       LOG(info) << "Calibrate Joint: " << this->jointName;
 
+      int calibrationVel = 0; //rpm
       YouBotSlaveMsg messageBuffer;
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
       if (parameter.calibrationDirection == POSITIV) {
-        messageBuffer.stctOutput.positionOrSpeed = 1;
+        calibrationVel = 1;
       } else if (parameter.calibrationDirection == NEGATIV) {
-        messageBuffer.stctOutput.positionOrSpeed = -1;
+        calibrationVel = -1;
       } else {
         throw ExceptionOODL("No calibration direction for joint: " + this->jointName);
       }
 
       if (this->inverseMovementDirection == true) {
-        messageBuffer.stctOutput.positionOrSpeed *= -1;
+        calibrationVel *= -1;
       }
-      int backwardVel = -messageBuffer.stctOutput.positionOrSpeed;
-
-      //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
-      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
 
+      //we need some movements in velocity control to do sinus commutation
+      //    LOG(info) << "Do sinus commutation for joint: " << this->jointName;
+
+      unsigned int movmentTime = 1000; //ms
+      unsigned int timePast = 0;
       int32 current = 0; //mA
 
+      //turn in calibration direction
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+      while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+        SLEEP_MILLISEC(timeTillNextMailboxUpdate);
+        timePast = timePast + timeTillNextMailboxUpdate;
+        messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+        current = messageBuffer.stctInput.actualCurrent;
+        //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+      }
+
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+      SLEEP_MILLISEC(500);
+
+      //check if the joint has moved enough otherwise move in other direction
+      if (timePast < movmentTime) {
+        LOG(info) << "turn in other direction ";
+        messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+        messageBuffer.stctOutput.positionOrSpeed = -calibrationVel;
+        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+        timePast = 0;
+        current = 0;
+        while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+          SLEEP_MILLISEC(timeTillNextMailboxUpdate);
+          timePast = timePast + timeTillNextMailboxUpdate;
+          messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+          current = messageBuffer.stctInput.actualCurrent;
+          //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+        }
+
+        messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+        messageBuffer.stctOutput.positionOrSpeed = 0;
+        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+        SLEEP_MILLISEC(500);
+      }
+      if (timePast < movmentTime) {
+        throw ExceptionOODL("Unable to do sinus commutation for joint: " + this->jointName);
+      }
+
+
+      //   LOG(info) << "Sinus commutation finished for joint: " << this->jointName;
+
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+      current = 0;
       //turn till a max current is reached
-      while (abs(current) < (parameter.maxCurrent.value() *1000)) {
+      while (abs(current) < (abs(parameter.maxCurrent.value()) *1000)) {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
         messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
         current = messageBuffer.stctInput.actualCurrent;
         //    LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
       }
 
+      //stop movement
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
       messageBuffer.stctOutput.positionOrSpeed = 0;
       //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
+      //set encoder reference position
       SLEEP_MILLISEC(500);
       messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
       messageBuffer.stctOutput.positionOrSpeed = 0;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-
-      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
-      messageBuffer.stctOutput.positionOrSpeed = backwardVel;
+      //switch to position controll
+      SLEEP_MILLISEC(100);
+      messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
       //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
-      SLEEP_MILLISEC(500);
-      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
-      messageBuffer.stctOutput.positionOrSpeed = 0;
-      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-
-
+      //     LOG(info) << "Calibration finished for joint: " << this->jointName;
     }
 
     // Bouml preserved body end 000623F1
@@ -195,7 +247,7 @@ namespace brics_oodl {
 
     //  isBetween(A, B, C) ( ((A-B) > -ZERO) && ((A-C) < ZERO) )
 
-    if (!((data.angle < upLimit  ) && (data.angle > lowLimit))) {
+    if (!((data.angle < upLimit) && (data.angle > lowLimit))) {
       std::stringstream errorMessageStream;
       errorMessageStream << "The setpoint angle is out of range. The valid range is between " << lowLimit << " and " << upLimit;
       //    LOG(trace) << "abs_value: " << abs(data.angle) << " abslow " << abs(lowLimit) << " absupper " << abs(upLimit);

@@ -335,30 +335,6 @@ void YouBot::initializeJoints() {
     }
 
 
-    LOG(info) << "Do sinus commutation";
-    //Move all joints with 1 rpm to do sinus commutation
-    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
-    JointVelocitySetpoint vel;
-    vel.angularVelocity = 0 * radian_per_second;
-    double gRatio = 1;
-
-    for (unsigned int i = 0; i < joints.size(); i++) {
-      joints[i].getConfigurationParameter(gearRatio);
-      gearRatio.getParameter(gRatio);
-      vel.angularVelocity = ((-1.1 / 60.0)*(gRatio * 2.0 * M_PI)) * radian_per_second;
-      joints[i].setData(vel, NON_BLOCKING);
-    }
-    SLEEP_MILLISEC(500); //wait for some movement
-
-    //stop all motors
-    for (unsigned int i = 0; i < joints.size(); i++) {
-      vel.angularVelocity = 0 * radian_per_second;
-      joints[i].setData(vel, NON_BLOCKING);
-    }
-
-
-
-
     //TODO When to calibrate the manipulator and when it is not necessary
     //Calibrate all manipulator joints
     std::vector<CalibrateJoint> calibrateJointVec;
@@ -392,8 +368,6 @@ void YouBot::initializeJoints() {
  //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 
     SLEEP_MILLISEC(500); //the youbot likes it so
-
-
 
 
     //Initializing Gripper

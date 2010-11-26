@@ -53,8 +53,6 @@ int main() {
 
     setVel.angularVelocity = 0 * radian_per_second;
 
-
- 
    
     MaximumPositioningSpeed test;
 
@@ -64,10 +62,10 @@ int main() {
 
     SLEEP_MILLISEC(2000);
 
-    int jointNo = 5;
+    int jointNo = 4;
 
     JointAngleSetpoint jAngle;
-    jAngle.angle = 2 *radian;
+    jAngle.angle = 0.5 *radian;
 
   //  myYouBot.getArm1Joint(5).setData(setVel);
     LOG(trace) << "move to pose: " << jAngle.angle;
@@ -90,8 +88,7 @@ int main() {
 
        myYouBot.getArm1Joint(jointNo).getData(angle);
 
-        std::cout << " Angle: " << angle.angle
-                << std::endl;
+       std::cout << " Angle: " << angle.angle << std::endl;
 
       SLEEP_MILLISEC(100);
     }
