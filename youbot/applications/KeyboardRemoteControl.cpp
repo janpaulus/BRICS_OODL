@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <ncurses.h>
 
-#include "youbot/YouBot.hpp"
+#include "youbot/YouBotBase.hpp"
 
 
 using namespace std;
@@ -34,7 +34,7 @@ int main() {
     linearVel = configfile.getDoubleValue("TanslationalVelocity_[meter_per_second]");
     angularVel = configfile.getDoubleValue("RotationalVelocity_[radian_per_second]");
 
-    YouBot& myYouBot = YouBot::getInstance();
+    YouBotBase myYouBotBase("youbot-base");
 
     JointVelocitySetpoint setVel;
     quantity<si::velocity> longitudinalVelocity = 0 * meter_per_second;
@@ -118,17 +118,17 @@ int main() {
       }
 
 
-      myYouBot.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+      myYouBotBase.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 
       refresh();
       SLEEP_MILLISEC(100);
     }
 
     setVel.angularVelocity = 0 * radian_per_second;
-    myYouBot.getJoint(1).setData(setVel);
-    myYouBot.getJoint(2).setData(setVel);
-    myYouBot.getJoint(3).setData(setVel);
-    myYouBot.getJoint(4).setData(setVel);
+    myYouBotBase.getBaseJoint(1).setData(setVel);
+    myYouBotBase.getBaseJoint(2).setData(setVel);
+    myYouBotBase.getBaseJoint(3).setData(setVel);
+    myYouBotBase.getBaseJoint(4).setData(setVel);
 
     endwin();
     SLEEP_MILLISEC(500);

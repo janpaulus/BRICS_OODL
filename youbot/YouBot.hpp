@@ -56,50 +56,11 @@ friend class YouBotGripper;
     ///@param jointName e.g. BaseLeftFront
     YouBotJoint& getJointByName(const std::string jointName);
 
-    ///return a joint form the base
-    ///@param jointNumber 1-4 for the base joints
-    YouBotJoint& getBaseJoint(const unsigned int baseJointNumber);
-
-    ///return a joint form the arm1
-    ///@param jointNumber 1-5 for the arm1 joints
-    YouBotJoint& getArm1Joint(const unsigned int arm1JointNumber);
-
-    ///return a joint form the arm2
-    ///@param jointNumber 1-5 for the arm2 joints
-    YouBotJoint& getArm2Joint(const unsigned int arm2JointNumber);
-
-    YouBotGripper& getArm1Gripper();
-
-    ///commands the base in cartesien velocities
-    ///@param longitudinalVelocity is the forward or backward velocity
-    ///@param transversalVelocity is the sideway velocity
-    ///@param angularVelocity is the rotational velocity around the center of the YouBot
-    void setBaseVelocity(const quantity<si::velocity>& longitudinalVelocity, const quantity<si::velocity>& transversalVelocity, const quantity<si::angular_velocity>& angularVelocity);
-
-    ///gets the cartesien base velocity
-    ///@param longitudinalVelocity is the forward or backward velocity
-    ///@param transversalVelocity is the sideway velocity
-    ///@param angularVelocity is the rotational velocity around the center of the YouBot
-    void getBaseVelocity(quantity<si::velocity>& longitudinalVelocity, quantity<si::velocity>& transversalVelocity, quantity<si::angular_velocity>& angularVelocity);
-
-    ///gets the cartesien base position which is calculated from the odometry
-    ///@param longitudinalPosition is the forward or backward position
-    ///@param transversalPosition is the sideway position
-    ///@param orientation is the rotation around the center of the YouBot
-    void getBasePosition(quantity<si::length>& longitudinalPosition, quantity<si::length>& transversalPosition, quantity<plane_angle>& orientation);
-
-    ///This class represents the kinematic of the YouBot 
-    FourSwedishWheelOmniBaseKinematic youBotBaseKinematic;
-
     void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
 
 
   private:
     void initializeEthercat();
-
-    void initializeJoints();
-
-    void initializeKinematic();
 
     bool closeEthercat();
 
@@ -175,8 +136,6 @@ friend class YouBotGripper;
     std::vector<bool> newMailboxInputDataFlagTwo;
 
     rude::Config configfile;
-
-    std::vector<YouBotGripper> gripperVector;
 
     std::vector<ec_slavet> ethercatSlaveInfo;
 
