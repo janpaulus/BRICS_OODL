@@ -340,6 +340,7 @@ void YouBot::initializeJoints() {
     std::vector<CalibrateJoint> calibrateJointVec;
     quantity<si::current> current;
     JointLimits jLimits;
+    bool doCalibration = true;
 
     for (unsigned int i = 0; i < 5; i++) {
 
@@ -347,6 +348,8 @@ void YouBot::initializeJoints() {
       jointNameStream << "Joint_" << i + 5;
       jointName = jointNameStream.str();
       configfile.setSection(jointName.c_str());
+
+      doCalibration = configfile.getBoolValue("DoCalibration");
 
       jLimits.setParameter(configfile.getIntValue("LowerLimit_[encoderTicks]"), configfile.getIntValue("UpperLimit_[encoderTicks]"));
       this->getArm1Joint(i + 1).setConfigurationParameter(jLimits);
@@ -357,9 +360,9 @@ void YouBot::initializeJoints() {
       calibrateJointVec.push_back(CalibrateJoint());
 
       if (direction == "POSITIV") {
-        calibrateJointVec[i].setParameter(true, POSITIV, current);
+        calibrateJointVec[i].setParameter(doCalibration, POSITIV, current);
       } else if (direction == "NEGATIV") {
-        calibrateJointVec[i].setParameter(true, NEGATIV, current);
+        calibrateJointVec[i].setParameter(doCalibration, NEGATIV, current);
       } else {
         throw ExceptionOODL("Wrong calibration direction for " + jointName);
       }
@@ -377,6 +380,7 @@ void YouBot::initializeJoints() {
     MaxEncoderValue maxEncoder;
 
     configfile.setSection("GripperArm_1");
+    doCalibration = configfile.getBoolValue("DoCalibration");
     barOffest.setParameter(configfile.getDoubleValue("BarSpacingOffset_[meter]") * meter);
     gripperVector[0].setConfigurationParameter(barOffest);
     maxDistance.setParameter(configfile.getDoubleValue("MaxTravelDistance_[meter]") * meter);
@@ -385,13 +389,9 @@ void YouBot::initializeJoints() {
     gripperVector[0].setConfigurationParameter(maxEncoder);
 
     // Calibrating Gripper
-    CalibrateGripper doCalibration;
-    doCalibration.setParameter(true);
-
-
-  //  gripperVector[0].setConfigurationParameter(doCalibration); //TODO activate calibration
-
-
+    CalibrateGripper calibrate;
+    calibrate.setParameter(doCalibration);
+    gripperVector[0].setConfigurationParameter(calibrate);
 
     return;
   // Bouml preserved body end 000464F1

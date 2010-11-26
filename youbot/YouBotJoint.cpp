@@ -125,7 +125,7 @@ namespace brics_oodl {
 
       //check if the joint has moved enough otherwise move in other direction
       if (timePast < movmentTime) {
-        LOG(info) << "turn in other direction ";
+     //   LOG(info) << "turn in other direction ";
         messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
         messageBuffer.stctOutput.positionOrSpeed = -calibrationVel;
         YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
@@ -229,23 +229,10 @@ namespace brics_oodl {
     if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
-    /*
-        quantity<plane_angle> setPose;
-        if (this->inverseMovementDirection) {
-          setPose = -data.angle;
-        }else{
-          setPose = data.angle;
-        }*/
+
 
     quantity<plane_angle> lowLimit = ((double) this->lowerLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
     quantity<plane_angle> upLimit = ((double) this->upperLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
-
-    // if (this->inverseMovementDirection) {
-    //    lowLimit = -lowLimit;
-    //     upLimit = -upLimit;
-    //   }
-
-    //  isBetween(A, B, C) ( ((A-B) > -ZERO) && ((A-C) < ZERO) )
 
     if (!((data.angle < upLimit) && (data.angle > lowLimit))) {
       std::stringstream errorMessageStream;
@@ -253,9 +240,6 @@ namespace brics_oodl {
       //    LOG(trace) << "abs_value: " << abs(data.angle) << " abslow " << abs(lowLimit) << " absupper " << abs(upLimit);
       throw ExceptionOODL(errorMessageStream.str());
     }
-
-
-
 
     YouBotSlaveMsg messageBuffer;
     messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
@@ -265,9 +249,6 @@ namespace brics_oodl {
     if (this->inverseMovementDirection) {
       messageBuffer.stctOutput.positionOrSpeed *= -1;
     }
-
-    //   LOG(trace) << "encoderSet: "<< messageBuffer.stctOutput.positionOrSpeed;
-    //jointValue / (2 * M_PI) * (joints[jointID - 1].gearRatio * encoderSteps);
     //   LOG(trace) << "value: " << data.angle << " gear " << gearRatio << " encoderperRound " << encoderTicksPerRound << " encPos " << messageBuffer.stctOutput.positionOrSpeed << " joint " << this->jointNumber;
     YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
     // Bouml preserved body end 0003C1F1
@@ -288,7 +269,7 @@ namespace brics_oodl {
     if (encoderTicksPerRound == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
-    LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
+  //  LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
     data.angle = ((double) messageBuffer.stctInput.actualPosition / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
 
     if (this->inverseMovementDirection) {
