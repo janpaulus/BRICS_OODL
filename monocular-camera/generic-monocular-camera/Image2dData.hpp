@@ -6,9 +6,11 @@ class Image2dData
 {
 public:
   //! Default constructor
+  Image2dData();
   Image2dData(unsigned char* bufferStart, size_t length);
   //! Instantiate an image data with given resolution (width x height)
   Image2dData(int& width, int& height);
+  Image2dData& operator=(Image2dData& data);
   //! Returns pointer to image data (buffer)
   unsigned char* getBuffer();
   //! Returns image data (buffer) size
@@ -16,7 +18,7 @@ public:
   //! Class destructor
   ~Image2dData();
  
-private:
+
   
   size_t bufferSize;
   unsigned char *buffer;
