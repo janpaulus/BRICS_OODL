@@ -73,6 +73,18 @@ int main() {
     LOG(trace) << "move to pose: " << jAngle.angle;
     myYouBotManipulator.getArmJoint(jointNo).setData(jAngle);
 
+    EncoderResolution encRes;
+
+    MotorContollerGearRatio gearRatio;
+
+    myYouBotManipulator.getArmJoint(1).getConfigurationParameter(encRes);
+    myYouBotManipulator.getArmJoint(1).getConfigurationParameter(gearRatio);
+    unsigned int enc;
+    unsigned int gear;
+    encRes.getParameter(enc);
+    gearRatio.getParameter(gear);
+    LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
+
 
     while (running) {
 

@@ -1,0 +1,21 @@
+class MotorPoles
+!!!465393.cpp!!!	MotorPoles()
+    this->name = "MotorPoles";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+!!!465649.cpp!!!	getParameter(out parameter : uint) : void
+    parameter = this->value;
+!!!465777.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+
+    if (msgType == SET_MESSAGE) {
+      message.stctOutput.commandNumber = SAP;
+    } else if (msgType == GET_MESSAGE) {
+      message.stctOutput.commandNumber = GAP;
+    }
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 253; //MotorPoles
+    message.stctOutput.value = value; //TODO do convertion
+
+!!!468081.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
+      this->value = message.stctInput.value; //TODO do convertion
+    }

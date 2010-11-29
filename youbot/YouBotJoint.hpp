@@ -48,6 +48,8 @@ class YouBotJoint : public Joint {
 
     void setConfigurationParameter(NoMoreAction& parameter);
 
+    void getConfigurationParameter(YouBotJointParameterReadOnly& parameter);
+
 
   protected:
     virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode = NON_BLOCKING);

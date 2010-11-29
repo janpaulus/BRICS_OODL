@@ -1,0 +1,21 @@
+class ArePIDcontrollersActive
+!!!458993.cpp!!!	ArePIDcontrollersActive()
+    this->name = "ArePIDcontrollersActive";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+!!!459249.cpp!!!	getParameter(out parameter : bool) : void
+    parameter = this->value;
+!!!459505.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+
+    if (msgType == SET_MESSAGE) {
+      message.stctOutput.commandNumber = SAP;
+    } else if (msgType == GET_MESSAGE) {
+      message.stctOutput.commandNumber = GAP;
+    }
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 147; //ArePIDcontrollersActive
+    message.stctOutput.value = value; //TODO do convertion
+
+!!!459633.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
+      this->value = message.stctInput.value; //TODO do convertion
+    }

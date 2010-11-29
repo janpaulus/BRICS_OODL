@@ -1,12 +1,12 @@
-class PParameterFirstParametersPositionControl
-!!!379377.cpp!!!	PParameterFirstParametersPositionControl()
-    this->name = "PParameterFirstParametersPositionControl";
+class MaximumMotorCurrent
+!!!435697.cpp!!!	MaximumMotorCurrent()
+    this->name = "MaximumMotorCurrent";
     this->lowerLimit = 0;
     this->upperLimit = 5000;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
-!!!379633.cpp!!!	getParameter(out parameter : uint) : void
+!!!435953.cpp!!!	getParameter(out parameter : uint) : void
     parameter = this->value;
-!!!379761.cpp!!!	setParameter(in parameter : uint) : void
+!!!436081.cpp!!!	setParameter(in parameter : uint) : void
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
     }
@@ -15,7 +15,7 @@ class PParameterFirstParametersPositionControl
     }
 
     this->value = parameter;
-!!!379889.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+!!!436209.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
 
     if (msgType == SET_MESSAGE) {
       message.stctOutput.commandNumber = SAP;
@@ -23,10 +23,10 @@ class PParameterFirstParametersPositionControl
       message.stctOutput.commandNumber = GAP;
     }
     message.stctOutput.moduleAddress = DRIVE;
-    message.stctOutput.typeNumber = 130; //PParameterFirstParametersPositionControl
+    message.stctOutput.typeNumber = 6; //MaximumMotorCurrent
     message.stctOutput.value = value; //TODO do convertion
 
-!!!380017.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+!!!436337.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
     if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
       this->value = message.stctInput.value; //TODO do convertion
     }

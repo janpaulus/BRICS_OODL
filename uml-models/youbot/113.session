@@ -1,10 +1,29 @@
-window_sizes 1680 975 342 1332 894 0
+window_sizes 1680 975 482 1192 894 0
 diagrams
-  active  classdiagram_ref 167793 // YouBot
-    1332 894 100 2 0 0
+  active  classdiagram_ref 141681 // JointParameter
+    1192 894 100 1 36 0
 end
 show_stereotypes
-selected classview_ref 160881 // YouBot
+selected operation_ref 468337 // setYouBotMailboxMsg
 open
+  classview_ref 134641 // Joint
+  class_ref 238321 // Parameter
+  class_ref 296049 // YouBotJointParameterReadOnly
+  classrelation_ref 262001 // <generalisation>
+  attribute_ref 438769 // parameterType
+  class_ref 296177 // ArePIDcontrollersActive
+  operation_ref 467185 // setYouBotMailboxMsg
+  classrelation_ref 262385 // <generalisation>
+  class_ref 296433 // PWMSchemeBlockCommutation
+  operation_ref 467441 // setYouBotMailboxMsg
+  classrelation_ref 262641 // <generalisation>
+  classrelation_ref 262769 // <generalisation>
+  classrelation_ref 262897 // <generalisation>
+  class_ref 296945 // EncoderResolution
+  operation_ref 467953 // setYouBotMailboxMsg
+  operation_ref 468081 // setYouBotMailboxMsg
+  classrelation_ref 263281 // <generalisation>
+  class_ref 297329 // HallSensorPolarityReversal
+  deploymentview_ref 161137 // Deployment
 end
 end

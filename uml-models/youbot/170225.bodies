@@ -71,21 +71,23 @@ class YouBotJoint
       //we need some movements in velocity control to do sinus commutation
       //    LOG(info) << "Do sinus commutation for joint: " << this->jointName;
 
-      unsigned int movmentTime = 2000; //ms
-      unsigned int timePast = 0;
-      int32 current = 0; //mA
+      JointSensedAngle sensedAngle;
+      JointSensedCurrent sensedCurrent;
+      quantity<plane_angle> maxAngle;
+      quantity<plane_angle> difAngle;
+      JointSensedAngle startAngle;
 
+      maxAngle = 5.0 * M_PI / 180.0 * radian;
+      this->getData(startAngle);
       //turn in calibration direction
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
       messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-      while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+      while ((abs(sensedCurrent.current) < abs(parameter.maxCurrent)) && (abs(sensedAngle.angle - startAngle.angle) < abs(maxAngle))) {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
-        timePast = timePast + timeTillNextMailboxUpdate;
-        messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
-        current = messageBuffer.stctInput.actualCurrent;
-        //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+        this->getData(sensedAngle);
+        this->getData(sensedCurrent);
       }
 
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
@@ -94,20 +96,18 @@ class YouBotJoint
       SLEEP_MILLISEC(500);
 
       //check if the joint has moved enough otherwise move in other direction
-      if (timePast < movmentTime) {
+      if (abs(sensedAngle.angle - startAngle.angle) < abs(maxAngle)) {
         //   LOG(info) << "turn in other direction ";
+        this->getData(startAngle);
         messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
         messageBuffer.stctOutput.positionOrSpeed = -calibrationVel;
         YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-        timePast = 0;
-        current = 0;
-        while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+        sensedCurrent.current = 0;
+        while ((abs(sensedCurrent.current) < abs(parameter.maxCurrent)) && (abs(sensedAngle.angle - startAngle.angle) < abs(maxAngle))) {
           SLEEP_MILLISEC(timeTillNextMailboxUpdate);
-          timePast = timePast + timeTillNextMailboxUpdate;
-          messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
-          current = messageBuffer.stctInput.actualCurrent;
-          //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+          this->getData(sensedAngle);
+          this->getData(sensedCurrent);
         }
 
         messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
@@ -115,7 +115,7 @@ class YouBotJoint
         YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
         SLEEP_MILLISEC(500);
       }
-      if (timePast < movmentTime) {
+      if (abs(sensedAngle.angle - startAngle.angle) < abs(maxAngle)) {
         throw ExceptionOODL("Unable to do sinus commutation for joint: " + this->jointName);
       }
 
@@ -126,13 +126,11 @@ class YouBotJoint
       messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-      current = 0;
+      sensedCurrent.current = 0;
       //turn till a max current is reached
-      while (abs(current) < (abs(parameter.maxCurrent.value()) *1000)) {
+      while (abs(sensedCurrent.current) < abs(parameter.maxCurrent)) {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
-        messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
-        current = messageBuffer.stctInput.actualCurrent;
-        //    LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+        this->getData(sensedCurrent);
       }
 
       //stop movement
@@ -181,6 +179,19 @@ class YouBotJoint
       messageBuffer.stctOutput.positionOrSpeed = 0;
 
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+    }
+!!!466929.cpp!!!	getConfigurationParameter(out parameter : YouBotJointParameterReadOnly) : void
+
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
+
+      if (retrieveValueFromMotorContoller(message)) {
+        parameter.setYouBotMailboxMsg(message);
+      } else {
+        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
     }
 !!!267249.cpp!!!	setData(in data : JointDataSetpoint, in communicationMode : SyncMode = NON_BLOCKING) : void
     LOG(info) << "Nothing to do";
