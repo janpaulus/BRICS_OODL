@@ -58,6 +58,9 @@ void YouBotManipulator::initializeJoints() {
     joints[3] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
     joints[4] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
 
+
+    SLEEP_MILLISEC(1000); //the youbot likes it so
+
     //Configure Joint Parameters
     std::string jointName;
     JointName jName;
