@@ -1,16 +1,18 @@
 #include "ImageFormat.hpp"
 
 
-ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE), 
-						   numberOfResolutions(0),
-						   currentResolution(NULL), 
-                           currentFormat(NULL), 
-						   deviceFormatCounter(0), 
-						   formatIdentifier(""), 
-						   bitsPerPixel(8), 
-                           fourcc(0), bufferSize(0), 
-						   currentBufferType(UNICAP_BUFFER_TYPE_USER), 
-						   deviceHandle(NULL)
+ImageFormat::ImageFormat(): deviceHandle(NULL),
+                            currentResolution(NULL),
+                            currentFormat(NULL),
+                            formatDevice(NULL),
+                            returnStatus(STATUS_FAILURE),
+                            numberOfResolutions(0),
+                            deviceFormatCounter(0),
+                            formatIdentifier(""),
+                            bitsPerPixel(8),
+                            fourcc(0), bufferSize(0),
+                            currentBufferType(UNICAP_BUFFER_TYPE_USER)
+			   
 {
 
   std::cout  << "Creating ImageFormat without args"<< std::endl;
@@ -18,16 +20,18 @@ ImageFormat::ImageFormat():returnStatus(STATUS_FAILURE),
 }
 
 
-ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE), 
-												numberOfResolutions(0),
-												currentResolution(NULL), 
-												currentFormat(NULL), 
-												deviceFormatCounter(0), 
-												bitsPerPixel(8), 
-												fourcc(0), 
-												bufferSize(0), 
-												currentBufferType(UNICAP_BUFFER_TYPE_USER),
-												deviceHandle(NULL), formatDevice(NULL)
+ImageFormat::ImageFormat(std::string &formatID):currentResolution(NULL), 
+						currentFormat(NULL),
+                                                deviceHandle(NULL),
+                                                formatDevice(NULL),
+                                                returnStatus(STATUS_FAILURE),
+						numberOfResolutions(0),			
+						deviceFormatCounter(0), 
+						bitsPerPixel(8), 
+						fourcc(0), 
+						bufferSize(0), 
+						currentBufferType(UNICAP_BUFFER_TYPE_USER)
+						
 {
 
   std::cout  << "Creating ImageFormat with formatID string argument"<< std::endl;
@@ -35,12 +39,13 @@ ImageFormat::ImageFormat(std::string &formatID):returnStatus(STATUS_FAILURE),
 }
 
 
-ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): returnStatus(STATUS_FAILURE), 
-                                                                                                          numberOfResolutions(0),currentResolution(NULL), 
-                                                                                                          currentFormat(NULL), deviceFormatCounter(0), 
-                                                                                                          bitsPerPixel(8), fourcc(0), bufferSize(0), 
-                                                                                                          currentBufferType(UNICAP_BUFFER_TYPE_USER),
-                                                                                                          deviceHandle(handle), formatDevice(device)
+ImageFormat::ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier = "RGB"): currentResolution(NULL),
+														  currentFormat(NULL),
+                                                                                                                  returnStatus(STATUS_FAILURE),
+														  numberOfResolutions(0), deviceFormatCounter(0), 
+														  bitsPerPixel(8), fourcc(0), bufferSize(0), 
+														  currentBufferType(UNICAP_BUFFER_TYPE_USER),
+														  deviceHandle(handle), formatDevice(device)
 {
   
   std::cout  << "Creating ImageFormat with all argument"<< std::endl;
@@ -63,25 +68,23 @@ ImageFormat& ImageFormat::operator=(ImageFormat &format)
   if(this !=&format)
   {
     std::cout << "Inside Format assignment operator" << std::endl;
-    this ->currentResolution = format.currentResolution;
-    this ->numberOfResolutions = format.numberOfResolutions;
-//    this->listOfResolutions[] = format.listOfResolutions;
-    this->deviceFormatCounter = format.deviceFormatCounter;
-//    this->listOfDeviceFormats = format.listOfDeviceFormats;
-    this->currentFormat = format.currentFormat;
-    this->formatIdentifier = format.formatIdentifier;
-    this->fourcc = format.fourcc;    
-    this->bitsPerPixel = format.bitsPerPixel;
-    this->flags = format.flags;
-    this->bufferTypes = format.bufferTypes; 
-    this->currentBufferType = format.currentBufferType;
-    this->bufferSize = format.bufferSize;
-    this->returnStatus = format.returnStatus;
-    this->deviceHandle = format.deviceHandle;
-    this->formatDevice = format.formatDevice;
-    return *this;
+    currentResolution = format.currentResolution;
+    numberOfResolutions = format.numberOfResolutions;
+    deviceFormatCounter = format.deviceFormatCounter;
+    currentFormat = format.currentFormat;
+    formatIdentifier = format.formatIdentifier;
+    fourcc = format.fourcc;    
+    bitsPerPixel = format.bitsPerPixel;
+    flags = format.flags;
+    bufferTypes = format.bufferTypes; 
+    currentBufferType = format.currentBufferType;
+    bufferSize = format.bufferSize;
+    returnStatus = format.returnStatus;
+    deviceHandle = format.deviceHandle;
+    formatDevice = format.formatDevice;
+    //copy vector contents later
   }
-
+  return *this;
 }
 
 
@@ -139,7 +142,7 @@ bool ImageFormat::getImageFormatFOURCC(unsigned int &fourcc)
 bool ImageFormat::getImageFormatResolution(int &width, int &height)
 {
 
- if(SUCCESS(this->returnStatus)) //if getListOfFormats called don't call   
+  if(SUCCESS(this->returnStatus)) //if getListOfFormats called don't call   
   {
     width = currentResolution->width;
     height = currentResolution->height;
@@ -172,7 +175,10 @@ bool ImageFormat::getImageFormatColorModel(std::string &colorModel)
 
 bool ImageFormat::getImageFormatResolutionList()
 {
-
+    for(int i=0; i<currentFormat->size_count; i++)
+    {
+        std::cout << currentFormat->sizes[i].width<< "x" << currentFormat->sizes[i].height <<std::endl;
+    }
   return true;
 }
 
@@ -198,8 +204,12 @@ bool ImageFormat::setImageFormatResolution(int &width, int &height)
 bool ImageFormat::getImageFormatSize(int &size)
 {
 
+  bufferSize = (currentResolution->width)*(currentResolution->height);
+  size = bufferSize;
   return true;
 }
+
+
 
 // the problem is that image format is sth device dependent, whether camera sensor supports some format
 // but at the same time it is property of an image.
@@ -212,29 +222,27 @@ bool ImageFormat::getImageFormatSize(int &size)
 bool ImageFormat::getListOfFormats()
 {
   std::cout << "Inside Monocular Camera getListOfFormats"<<std::endl;
+  unicap_format_t tempFormat = {0};
   if(deviceHandle!=NULL)
   {
     std::cout << "Device is open getting available formats" << std::endl;
-    for(int i = 0; i<10; i++)
+    while(SUCCESS(unicap_enumerate_formats(*deviceHandle, NULL, &tempFormat, deviceFormatCounter)))
     {
-      this->returnStatus = unicap_enumerate_formats(*deviceHandle, NULL, &listOfDeviceFormats[i], i);
-      if(SUCCESS(this->returnStatus))
-      {
+
+        listOfDeviceFormats.push_back(tempFormat);
+        std::cout << listOfDeviceFormats[deviceFormatCounter].identifier << std::endl;
+        std::cout << listOfDeviceFormats[deviceFormatCounter].size_count << std::endl;
+        std::cout << listOfDeviceFormats.size() << std::endl;
         deviceFormatCounter++;
-        std::cout << listOfDeviceFormats[i].identifier << std::endl; 
-    
-      }
-      else
-      {
-        break;
-     }
+      
     }
   }
-  if(listOfDeviceFormats != NULL) //should change all these arrays with vectors
+  if(listOfDeviceFormats.size() != 0) //should change all these arrays with vectors
   {
     //set the default format to the first format in the list;
     currentFormat = &listOfDeviceFormats[0];
-    currentResolution = &listOfDeviceFormats[0].min_size;
+    currentResolution = &listOfDeviceFormats[0].size;
+    currentFormat->buffer_type = this->currentBufferType;
     int returnValue = unicap_set_format(*deviceHandle, currentFormat);
     std::cout << "Setting default format to " << currentFormat->identifier << std::endl;
     std::cout << "Setting default resolution to " << currentResolution->width << "x" <<currentResolution->height<< std::endl;

@@ -118,20 +118,14 @@ bool MonocularCameraConfiguration::getDevicePluginType(std::string &pluginName)
 
 }
 
-/* bool MonocularCameraConfiguration::getDeviceFullInfoVector() {
-   std::cout << "In MonocularCameraConfiguration calling getDeviceFullInfoVector" << std::endl;
-
-   returnStatus = unicap_enumerate_devices(NULL, deviceConfig, 0);
-
-   }*/
 
 MonocularCameraConfiguration::~MonocularCameraConfiguration() {
   std::cout << "Destroying MonocularCameraConfiguration" << std::endl;
-
+  
   delete colExpConfiguration;
   delete devConfiguration;
   delete propertyConfig;
-
+  
 }
 
 

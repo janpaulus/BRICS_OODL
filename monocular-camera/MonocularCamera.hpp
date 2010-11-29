@@ -9,6 +9,9 @@
 #include "./generic-monocular-camera/ImageFormat.hpp"
 #include <unicap.h>
 #include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <cstring>
 
 //! This class represents a physical camera attached. 
 //! It can be instantiated to create camera objects.
@@ -16,32 +19,37 @@ class MonocularCamera
 {
 public:
 
-	//!Class constructor takes device ID as a parameter and instantiates a camera
-	MonocularCamera(int deviceNumber);
-	//!Class copy constructor
-	MonocularCamera(MonocularCamera &camera);
-	//!Class constructor takes camera configuration and image format and instantiates a camera
-	MonocularCamera(MonocularCameraConfiguration &config, std::string &format);
-	//!Assignment operator creates an exact copy during an assignment of object instances
-	MonocularCamera& operator= (const MonocularCamera &camera);
-	~MonocularCamera();
+  //!Class constructor takes device ID as a parameter and instantiates a camera
+  MonocularCamera(int deviceNumber);
+  //!Class copy constructor
+  MonocularCamera(MonocularCamera &camera);
+  //!Class constructor takes camera configuration and image format and instantiates a camera
+  MonocularCamera(int deviceNumber, MonocularCameraConfiguration &config, std::string &fm);
+  //!Assignment operator creates an exact copy during an assignment of object instances
+  MonocularCamera& operator= (const MonocularCamera &camera);
+  ~MonocularCamera();
 
-	bool getConfiguration (MonocularCameraConfiguration &config);
-	bool setConfiguration ( MonocularCameraConfiguration &config);
-	bool getImageFormat(ImageFormat &format);
-	bool setImageFormat(ImageFormat &format);
-
-	bool capture(Image2dData &data); // adding frames here could be good, then a user does not have to bother about building capture loops.
-	bool open ();
-	bool close ();
-
+  bool getConfiguration (MonocularCameraConfiguration &config);
+  bool setConfiguration (MonocularCameraConfiguration &config);
+  bool getImageFormat(ImageFormat &fm);
+  bool setImageFormat(ImageFormat &fm);
+  bool capture(); 
+  bool open ();
+  bool close ();
+  void getImageData(Image2dData& data);
+  
 private:
-	MonocularCameraConfiguration *cameraConfig;
-	Image2dData *imagedata;
-	ImageFormat *format;
-	unicap_device_t *device;
-	unicap_handle_t *deviceHandle;
-	unicap_status_t isConnected;
+ 
+  bool getListOfCameras();
+  MonocularCameraConfiguration *cameraConfig;
+  ImageFormat *format;
+  Image2dData *pixels;
+  unicap_device_t *currentDevice;
+  unicap_handle_t *deviceHandle;
+  unicap_status_t isConnected;
+  unicap_status_t isOpened;
+  int cameraDeviceCounter;
+  std::vector<unicap_device_t> listOfCameraDevices;
 };
 
 

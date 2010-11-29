@@ -113,38 +113,38 @@ private:
   }
 
 
-* Camera Configuration  in unicap 
+  * Camera Configuration  in unicap 
 
 
-* identifier:   unique textual identifier of this properties
-* category:     a category for this property, for example: 'Lens Control' for zoom and focus properties
-* unit:         optional unit, for example: 's' for Exposure
-* denoting the Exposure time in seconds
-* relations:    properties that might their state or value when
-* changing this property
-* relations_count: size of the relations array
-* value:           for UNICAP_PROPERTY_TYPE_RANGE and
-* UNICAP_PROPERTY_TYPE_VALUE_LIST properties: current value
-* menu_item:       for UNICAP_PROPERTY_TYPE_MENU properties: selected menu entry
-* range:           for UNICAP_PROPERTY_TYPE_RANGE properties: valid range for value
-* value_list:      for UNICAP_PROPERTY_TYPE_VALUE_LIST properties: list
-* of valid values
-* menu:            for UNICAP_PROPERTY_TYPE_MENU properties: menu
-* stepping:        for UNICAP_PROPERTY_TYPE_RANGE properties: stepping 
-* type: 
-* flags: when enumerated, this field contains the 
-* flags_mask:
-* property_data:
-* property_data_size:
-*  </programlisting>
-* </informalexample>
-* 
-*
-struct unicap_property_t
-{
-char identifier[128]; //mandatory
-char category[128];
-char unit[128]; // 
+  * identifier:   unique textual identifier of this properties
+  * category:     a category for this property, for example: 'Lens Control' for zoom and focus properties
+  * unit:         optional unit, for example: 's' for Exposure
+  * denoting the Exposure time in seconds
+  * relations:    properties that might their state or value when
+  * changing this property
+  * relations_count: size of the relations array
+  * value:           for UNICAP_PROPERTY_TYPE_RANGE and
+  * UNICAP_PROPERTY_TYPE_VALUE_LIST properties: current value
+  * menu_item:       for UNICAP_PROPERTY_TYPE_MENU properties: selected menu entry
+  * range:           for UNICAP_PROPERTY_TYPE_RANGE properties: valid range for value
+  * value_list:      for UNICAP_PROPERTY_TYPE_VALUE_LIST properties: list
+  * of valid values
+  * menu:            for UNICAP_PROPERTY_TYPE_MENU properties: menu
+  * stepping:        for UNICAP_PROPERTY_TYPE_RANGE properties: stepping 
+  * type: 
+  * flags: when enumerated, this field contains the 
+  * flags_mask:
+  * property_data:
+  * property_data_size:
+  *  </programlisting>
+  * </informalexample>
+  * 
+  *
+  struct unicap_property_t
+  {
+  char identifier[128]; //mandatory
+  char category[128];
+  char unit[128]; // 
       
 // list of properties identifier which value / behaviour may change if this property changes
 char **relations;

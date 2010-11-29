@@ -2,8 +2,10 @@
 
 
 
-CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAILURE), deviceCameraDevConf(NULL),
-                                                        handleCameraDevConf(NULL), deviceConfPropertyCounter(0)
+CameraDeviceConfiguration::CameraDeviceConfiguration(): deviceCameraDevConf(NULL),
+                                                        handleCameraDevConf(NULL),
+                                                        returnStatus(STATUS_FAILURE),
+							deviceConfPropertyCounter(0)
 {
   std::cout << "Creating CameraDeviceConfiguration without arguments" << std::endl;
 
@@ -22,9 +24,9 @@ CameraDeviceConfiguration::CameraDeviceConfiguration(): returnStatus(STATUS_FAIL
 }
 
 
-CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle): returnStatus(STATUS_FAILURE), 
-                                                                                                        deviceCameraDevConf(device),
-                                                                                                        handleCameraDevConf(handle), 
+CameraDeviceConfiguration::CameraDeviceConfiguration(unicap_device_t *device, unicap_handle_t *handle): deviceCameraDevConf(device),
+                                                                                                        handleCameraDevConf(handle),
+                                                                                                        returnStatus(STATUS_FAILURE), 
                                                                                                         deviceConfPropertyCounter(0) 
 {
   std::cout << "Creating CameraDeviceConfiguration with arguments" << std::endl;
@@ -70,24 +72,22 @@ CameraDeviceConfiguration::~CameraDeviceConfiguration()
 bool CameraDeviceConfiguration::getListOfDeviceProperties() 
 {
   std::cout << "Inside CameraDeviceConfiguration getListOfDeviceProperties" << std::endl;
-  int returnValue = 0;
-  //number of properties allocated is 30 for now, change it to const or make it dynamic
-  for( int propertyCounter = 0; propertyCounter < 30 ; propertyCounter++ ) 
+  unicap_property_t tempProperty = {0};
+  
+
+  
+  while(SUCCESS(unicap_enumerate_properties( *handleCameraDevConf, NULL, &tempProperty, deviceConfPropertyCounter)))
   {
-    returnValue = unicap_enumerate_properties( *handleCameraDevConf, NULL, &listOfProperties[propertyCounter], 
-                                               propertyCounter);
-    if( SUCCESS(returnValue) )
-    {
-      std::cout << listOfProperties[propertyCounter].identifier<<std::endl;
-      deviceConfPropertyCounter++;
-      returnStatus = STATUS_SUCCESS;
-    }
-    else
-      break;
+
+    listOfProperties.push_back(tempProperty);
+    std::cout << listOfProperties.size()<< std::endl;
+    std::cout << listOfProperties[deviceConfPropertyCounter].identifier<<std::endl;
+    deviceConfPropertyCounter++;
+    returnStatus = STATUS_SUCCESS;
 
   }
 
-  if(listOfProperties != NULL )
+  if(listOfProperties.size() != 0 )
   {
     std::cout << "Number of properties " << deviceConfPropertyCounter<<std::endl;
     return true;
@@ -110,7 +110,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0 ))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -142,7 +142,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -188,7 +188,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -220,7 +220,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -257,74 +257,74 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
 
 bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness) {
 
-        std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
-        const std::string propertyName ="sharpness";
-        std::string charID;
+  std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
+  const std::string propertyName ="sharpness";
+  std::string charID;
 
-        //check whether listOfProperties was filled in successfully and not empty
-        if (SUCCESS(returnStatus) && (listOfProperties != NULL))
-        {
-                //here member variable deviceConfProperty is a total number of 
-                //camera properties returned by getListOfDeviceProperties
-                for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
-                {
-                        //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
-                        //there are also menu, list, flag property types
-                        if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-                        {
-                                //if range then check it for correct ID
-                                charID = listOfProperties[propertyCounter].identifier;
-                                //if ID == frame rate (as defined in unicap API) then return its current value
-                                if (charID == propertyName)
-                                {
-                                        //check if the call succeeds 
-                                        int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
-                                        if( SUCCESS(returnValue) )
-                                        {
-                                                sharpness = listOfProperties[propertyCounter].value;
-                                                return true;
-                                        }
-                                }
-                        }
-                        //if property is not of type "range" go to the beginning of the loop
-                }
-        }
-        // if property list was not obtained successfully or was not filled in before through 
-        //the call to getListOfDeviceProperties, call the method 
-        else if (getListOfDeviceProperties() == true)
-        {
-                if (listOfProperties != NULL)
-                {
-                        for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
-                        {
-                                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
-                                {
-                                        charID = listOfProperties[propertyCounter].identifier;
-                                        if (charID == propertyName)
-                                        {
-                                                int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
-                                                if( SUCCESS(returnValue) )
-                                                {
-                                                        sharpness = listOfProperties[propertyCounter].value;
-                                                        return true;
-                                                }
-                                        }
-                                }
-                                //if property is not of type "range" go to the beginning of the loop
-                        }
-                }
-                else
-                {
-                        std::cout << "Property list is empty"<< std::endl;
-                        return false;
-                }
-        }
-        // if neither of the above return error message
-        else 
-        {    
-                std::cout << "Can not get property"<< std::endl;
-                return false;
-        }
+  //check whether listOfProperties was filled in successfully and not empty
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
+  {
+    //here member variable deviceConfProperty is a total number of 
+    //camera properties returned by getListOfDeviceProperties
+    for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+    {
+      //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+      //there are also menu, list, flag property types
+      if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+      {
+	//if range then check it for correct ID
+	charID = listOfProperties[propertyCounter].identifier;
+	//if ID == frame rate (as defined in unicap API) then return its current value
+	if (charID == propertyName)
+	{
+	  //check if the call succeeds 
+	  int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+	  if( SUCCESS(returnValue) )
+	  {
+	    sharpness = listOfProperties[propertyCounter].value;
+	    return true;
+	  }
+	}
+      }
+      //if property is not of type "range" go to the beginning of the loop
+    }
+  }
+  // if property list was not obtained successfully or was not filled in before through 
+  //the call to getListOfDeviceProperties, call the method 
+  else if (getListOfDeviceProperties() == true)
+  {
+    if (listOfProperties.size() != 0)
+    {
+      for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+      {
+	if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+	{
+	  charID = listOfProperties[propertyCounter].identifier;
+	  if (charID == propertyName)
+	  {
+	    int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+	    if( SUCCESS(returnValue) )
+	    {
+	      sharpness = listOfProperties[propertyCounter].value;
+	      return true;
+	    }
+	  }
+	}
+	//if property is not of type "range" go to the beginning of the loop
+      }
+    }
+    else
+    {
+      std::cout << "Property list is empty"<< std::endl;
+      return false;
+    }
+  }
+  // if neither of the above return error message
+  else 
+  {    
+    std::cout << "Can not get property"<< std::endl;
+    return false;
+  }
 
 }
 
@@ -335,7 +335,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -366,7 +366,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -408,7 +408,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -439,7 +439,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -481,7 +481,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris) {
   std::string charID;
 
   //check whether listOfProperties was filled in successfully and not empty
-  if (SUCCESS(returnStatus) && (listOfProperties != NULL))
+  if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
   {
     //here member variable deviceConfProperty is a total number of 
     //camera properties returned by getListOfDeviceProperties
@@ -512,7 +512,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris) {
   //the call to getListOfDeviceProperties, call the method 
   else if (getListOfDeviceProperties() == true)
   {
-    if (listOfProperties != NULL)
+    if (listOfProperties.size() != 0)
     {
       for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
       {
@@ -551,30 +551,35 @@ bool CameraDeviceConfiguration::setVideoFrameRate(double &rate) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoFrameRate" << std::endl;
 
+  return true;
 }
 
 bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoGammaValue" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness) {
 
   std::cout << "Inside CameraDeviceConfiguration setVideoSharpnessValue" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensFocus(double &focus) {
 
   std::cout << "Inside CameraDeviceConfiguration setLensFocus" << std::endl;
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensZoom(double &zoom) {
   std::cout << "Inside CameraDeviceConfiguration setLensZoom" << std::endl;
-
+  return true;
 }
 
 bool CameraDeviceConfiguration::setLensIris(double &iris) {
 
   std::cout << "Inside CameraDeviceConfiguration setLensIris" << std::endl;
+  return true;
 }
 

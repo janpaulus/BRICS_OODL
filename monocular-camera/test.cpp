@@ -1,58 +1,98 @@
 #include "MonocularCamera.hpp"
 #include <iostream>
-
+#include <SDL/SDL.h>
+#include <cstdlib>
+#include <cstdio>
 
 int main (int argc, char **argv)
 {
 
- 
   MonocularCameraConfiguration config ;
-  MonocularCameraConfiguration config1 ;
-  MonocularCameraConfiguration config2 ;
-  MonocularCameraConfiguration config3 ;
-  MonocularCamera camera(1);
-  MonocularCamera camera1(2);
-  MonocularCamera camera2(1);
-  MonocularCamera camera3(1);
-
+  ImageFormat format;
+  MonocularCamera camera(2);
   
-  std::string x ="RGB";
-  std::string deviceName;
 
-  ImageFormat format(x);
-  ImageFormat format1(x);
-  ImageFormat format2(x);
-  ImageFormat format3(x);
 
   camera.open(); //always open first
-
   camera.getConfiguration(config);
-  config.getDeviceName(deviceName);
-  std::cout << deviceName<<std::endl;
+//  double gain = 0.0;
+//  config.getColorExposureConfiguration()->getGainControlValue(gain);
+//  std::cout << gain << std::endl;
 
-  double hue = 0;
-  (config.getColorExposureConfiguration())->getBrightnessValue(hue);
+//  double rate = 0;
+//  config.getCameraDeviceConfiguration()->getVideoFrameRate(rate);
+//  std::cout << rate << std::endl;
 
   // set image format and start capturing  
   camera.getImageFormat(format) ;
-  std::string formatName;
-  format.getImageFormatStringName(formatName);
-  std::cout << formatName << std::endl;
-
-  unsigned int fourcc = 0;
-  format.getImageFormatFOURCC(fourcc);
 
   int width(0);
   int height(0);
   format.getImageFormatResolution(width, height);
-  std::cout << width << std::endl;
-  std::cout << height << std::endl;
+  camera.setImageFormat(format) ;
+  camera.capture();
+  
+  // while(1)
+  // {
+  // Image2dData data(width,height);
+  //  camera.getImageData(data);
+  // }
 
-  format.getImageFormatColorModel(formatName);
-  std::cout << formatName << std::endl;
 
-  Image2dData data(width, height);
-  camera.capture(data);
+  SDL_Surface *screen = NULL;
+  SDL_Overlay *overlay = NULL;
+  SDL_Rect rectArea = {0,0,width,height};
+  int quitSignal = 0;
+
+//  Initialise SDL
+  if (SDL_Init (SDL_INIT_VIDEO) < 0) 
+  {
+    fprintf (stderr, "Failed to initialize SDL:  %s\n", SDL_GetError());
+    exit (1);
+  }
+
+  screen = SDL_SetVideoMode (width, height, 32 , SDL_ANYFORMAT);
+
+  if (screen == NULL) 
+  {
+    fprintf (stderr, "Unable to set video mode: %s\n", SDL_GetError ());
+    SDL_Quit ();
+    exit (1);
+  }
+
+  overlay = SDL_CreateYUVOverlay (width, height,SDL_YUY2_OVERLAY ,screen);  
+  
+
+  while(!quitSignal)
+  {
+    SDL_Event event;
+    Image2dData data(width,height);   
+    SDL_LockYUVOverlay(overlay);
+
+    camera.getImageData(data);
+    memcpy(overlay->pixels[0], (Uint8*)(data.buffer), 2*data.bufferSize);
+
+
+
+
+    SDL_UnlockYUVOverlay(overlay);
+    SDL_DisplayYUVOverlay (overlay, &rectArea);
+
+
+    
+    while (SDL_PollEvent (&event))
+    {
+      if (event.type == SDL_QUIT)
+	quitSignal = 1;
+    }    
+
+  }
+
+  SDL_FreeYUVOverlay(overlay);
+  SDL_Quit();
+
+
+
   camera.close();
 
 
