@@ -9,6 +9,8 @@ YouBotJoint::YouBotJoint(unsigned int jointNo) {
     timeTillNextMailboxUpdate = YouBot::getInstance().timeTillNextEthercatUpdate * 2;
     mailboxMsgRetries = 30;
     this->inverseMovementDirection = false;
+    this->lowerLimit = 0;
+    this->upperLimit = 0;
   // Bouml preserved body end 000412F1
 }
 
@@ -77,47 +79,112 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
 
 void YouBotJoint::setConfigurationParameter(CalibrateJoint& parameter) {
   // Bouml preserved body begin 000623F1
-    if (parameter.value) {
+    if (parameter.doCalibration) {
       LOG(info) << "Calibrate Joint: " << this->jointName;
 
+      int calibrationVel = 0; //rpm
       YouBotSlaveMsg messageBuffer;
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
       if (parameter.calibrationDirection == POSITIV) {
-        messageBuffer.stctOutput.positionOrSpeed = 1;
+        calibrationVel = 1;
       } else if (parameter.calibrationDirection == NEGATIV) {
-        messageBuffer.stctOutput.positionOrSpeed = -1;
+        calibrationVel = -1;
       } else {
         throw ExceptionOODL("No calibration direction for joint: " + this->jointName);
       }
 
       if (this->inverseMovementDirection == true) {
-        messageBuffer.stctOutput.positionOrSpeed *= -1;
+        calibrationVel *= -1;
       }
-      //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
-      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
 
+      //we need some movements in velocity control to do sinus commutation
+      //    LOG(info) << "Do sinus commutation for joint: " << this->jointName;
+
+      unsigned int movmentTime = 2000; //ms
+      unsigned int timePast = 0;
       int32 current = 0; //mA
 
+      //turn in calibration direction
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+      while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+        SLEEP_MILLISEC(timeTillNextMailboxUpdate);
+        timePast = timePast + timeTillNextMailboxUpdate;
+        messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+        current = messageBuffer.stctInput.actualCurrent;
+        //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+      }
+
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+      SLEEP_MILLISEC(500);
+
+      //check if the joint has moved enough otherwise move in other direction
+      if (timePast < movmentTime) {
+        //   LOG(info) << "turn in other direction ";
+        messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+        messageBuffer.stctOutput.positionOrSpeed = -calibrationVel;
+        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+        timePast = 0;
+        current = 0;
+        while ((abs(current) < (abs(parameter.maxCurrent.value()) *1000)) && (timePast < movmentTime)) {
+          SLEEP_MILLISEC(timeTillNextMailboxUpdate);
+          timePast = timePast + timeTillNextMailboxUpdate;
+          messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
+          current = messageBuffer.stctInput.actualCurrent;
+          //  LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+        }
+
+        messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+        messageBuffer.stctOutput.positionOrSpeed = 0;
+        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+        SLEEP_MILLISEC(500);
+      }
+      if (timePast < movmentTime) {
+        throw ExceptionOODL("Unable to do sinus commutation for joint: " + this->jointName);
+      }
+
+
+      //   LOG(info) << "Sinus commutation finished for joint: " << this->jointName;
+
+      messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = calibrationVel;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+
+      current = 0;
       //turn till a max current is reached
-      while (abs(current) <  (parameter.maxCurrent.value() *1000) ){
+      while (abs(current) < (abs(parameter.maxCurrent.value()) *1000)) {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
         messageBuffer = YouBot::getInstance().getMsgBuffer(this->jointNumber);
         current = messageBuffer.stctInput.actualCurrent;
-    //    LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
+        //    LOG(info) << "current: " << current << " maxcurrent " << parameter.maxCurrent;
       }
 
+      //stop movement
       messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
       messageBuffer.stctOutput.positionOrSpeed = 0;
       //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
-      SLEEP_MILLISEC(100);
+      //set encoder reference position
+      SLEEP_MILLISEC(500);
       messageBuffer.stctOutput.controllerMode = SET_POSITION_TO_REFERENCE;
       messageBuffer.stctOutput.positionOrSpeed = 0;
       YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
+      //switch to position controll
+      SLEEP_MILLISEC(100);
+      messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+      //   LOG(trace) << "vel [rpm] " << messageBuffer.stctOutput.positionOrSpeed << " rad_sec " << data.angularVelocity;
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
 
+      //     LOG(info) << "Calibration finished for joint: " << this->jointName;
     }
 
   // Bouml preserved body end 000623F1
@@ -129,6 +196,39 @@ void YouBotJoint::setConfigurationParameter(InverseMovementDirection& parameter)
     this->inverseMovementDirection = parameter.value;
 
   // Bouml preserved body end 000624F1
+}
+
+void YouBotJoint::setConfigurationParameter(JointLimits& parameter) {
+  // Bouml preserved body begin 000642F1
+
+    this->lowerLimit = parameter.lowerLimit;
+    this->upperLimit = parameter.upperLimit;
+
+  // Bouml preserved body end 000642F1
+}
+
+void YouBotJoint::setConfigurationParameter(StopJoint& parameter) {
+  // Bouml preserved body begin 00066471
+    if (parameter.value) {
+      YouBotSlaveMsg messageBuffer;
+      messageBuffer.stctOutput.controllerMode = MOTOR_STOP;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+    }
+  // Bouml preserved body end 00066471
+}
+
+void YouBotJoint::setConfigurationParameter(NoMoreAction& parameter) {
+  // Bouml preserved body begin 000664F1
+    if (parameter.value) {
+      YouBotSlaveMsg messageBuffer;
+      messageBuffer.stctOutput.controllerMode = NO_MORE_ACTION;
+      messageBuffer.stctOutput.positionOrSpeed = 0;
+
+      YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+    }
+  // Bouml preserved body end 000664F1
 }
 
 void YouBotJoint::setData(const JointDataSetpoint& data, SyncMode communicationMode) {
@@ -152,11 +252,26 @@ void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communication
     if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
+
+
+    quantity<plane_angle> lowLimit = ((double) this->lowerLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
+    quantity<plane_angle> upLimit = ((double) this->upperLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
+
+    if (!((data.angle < upLimit) && (data.angle > lowLimit))) {
+      std::stringstream errorMessageStream;
+      errorMessageStream << "The setpoint angle is out of range. The valid range is between " << lowLimit << " and " << upLimit;
+      //    LOG(trace) << "abs_value: " << abs(data.angle) << " abslow " << abs(lowLimit) << " absupper " << abs(upLimit);
+      throw ExceptionOODL(errorMessageStream.str());
+    }
+
     YouBotSlaveMsg messageBuffer;
     messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
-    messageBuffer.stctOutput.positionOrSpeed = (int32) ((data.angle.value() * ((double) encoderTicksPerRound / (2.0 * M_PI))) / gearRatio);
+    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angle.value() * ((double) encoderTicksPerRound / (2.0 * M_PI))) / gearRatio);
 
-    //jointValue / (2 * M_PI) * (joints[jointID - 1].gearRatio * encoderSteps);
+
+    if (this->inverseMovementDirection) {
+      messageBuffer.stctOutput.positionOrSpeed *= -1;
+    }
     //   LOG(trace) << "value: " << data.angle << " gear " << gearRatio << " encoderperRound " << encoderTicksPerRound << " encPos " << messageBuffer.stctOutput.positionOrSpeed << " joint " << this->jointNumber;
     YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
   // Bouml preserved body end 0003C1F1
@@ -176,8 +291,12 @@ void YouBotJoint::getData(JointSensedAngle& data) {
     if (encoderTicksPerRound == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
-
+    //  LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
     data.angle = ((double) messageBuffer.stctInput.actualPosition / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
+
+    if (this->inverseMovementDirection) {
+      data.angle = -data.angle;
+    }
   // Bouml preserved body end 0003DCF1
 }
 
@@ -193,7 +312,7 @@ void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicat
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
 
-    messageBuffer.stctOutput.positionOrSpeed = (data.angularVelocity.value() / (gearRatio * 2.0 * M_PI)) * 60.0;
+    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angularVelocity.value() / (gearRatio * 2.0 * M_PI)) * 60.0);
     if (this->inverseMovementDirection) {
       messageBuffer.stctOutput.positionOrSpeed *= -1;
     }

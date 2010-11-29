@@ -42,6 +42,12 @@ class YouBotJoint : public Joint {
 
     void setConfigurationParameter(InverseMovementDirection& parameter);
 
+    void setConfigurationParameter(JointLimits& parameter);
+
+    void setConfigurationParameter(StopJoint& parameter);
+
+    void setConfigurationParameter(NoMoreAction& parameter);
+
 
   protected:
     virtual void setData(const JointDataSetpoint& data, SyncMode communicationMode = NON_BLOCKING);
@@ -99,6 +105,10 @@ class YouBotJoint : public Joint {
     unsigned int mailboxMsgRetries;
 
     bool inverseMovementDirection;
+
+    int upperLimit;
+
+    int lowerLimit;
 
 };
 

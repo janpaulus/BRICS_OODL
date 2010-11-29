@@ -30,6 +30,8 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBot.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotBase.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotManipulator.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripper.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripperParameter.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
@@ -43,6 +45,8 @@ SET(OODL_YOUBOT_HEADERS
   YouBot.hpp
   YouBotGripper.hpp
   YouBotGripperParameter.hpp
+  YouBotBase.hpp
+  YouBotManipulator.hpp
   YouBotJoint.hpp
   YouBotSlaveMailboxMsg.hpp
   YouBotSlaveMsg.hpp
@@ -58,7 +62,6 @@ SET(OODL_YOUBOT_HEADERS
 ../generic/Units.hpp
 
 ../generic-gripper/Gripper.hpp
-../generic-gripper/GripperConfiguration.hpp
 ../generic-gripper/GripperData.hpp
 
 ../generic-joint/Joint.hpp
@@ -66,7 +69,6 @@ SET(OODL_YOUBOT_HEADERS
 ../generic-joint/JointParameter.hpp
 
 ../one-dof-gripper/OneDOFGripper.hpp
-../one-dof-gripper/OneDOFGripperConfiguration.hpp
 ../one-dof-gripper/OneDOFGripperData.hpp
 
 )
@@ -77,6 +79,8 @@ ncurses
 
 SET(OODL_YOUBOT_CONFIG
 ${CMAKE_HOME_DIRECTORY}/config/youbot-configfile.cfg
+${CMAKE_HOME_DIRECTORY}/config/youbot-base.cfg
+${CMAKE_HOME_DIRECTORY}/config/youbot-manipulator.cfg
 ${CMAKE_HOME_DIRECTORY}/config/applications.cfg
 )
 

@@ -150,11 +150,11 @@ void MaximumPositioningSpeed::setParameter(const quantity<angular_velocity>& par
 void MaximumPositioningSpeed::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0005A0F1
 
-  if(msgType == SET_MESSAGE){
-    message.stctOutput.commandNumber = SAP;
-  }else if(msgType == GET_MESSAGE){
-    message.stctOutput.commandNumber = GAP;
-  }
+    if (msgType == SET_MESSAGE) {
+      message.stctOutput.commandNumber = SAP;
+    } else if (msgType == GET_MESSAGE) {
+      message.stctOutput.commandNumber = GAP;
+    }
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 4; //maximum positioning speed
     message.stctOutput.value = (int) value.value(); //TODO do convertion in to radian_per_second
@@ -174,7 +174,7 @@ PParameterFirstParametersPositionControl::PParameterFirstParametersPositionContr
   // Bouml preserved body begin 0005C9F1
     this->name = "MaximumPositioningSpeed";
     this->lowerLimit = 0;
-    this->upperLimit = 5000 ;
+    this->upperLimit = 5000;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0005C9F1
 }
@@ -206,11 +206,11 @@ void PParameterFirstParametersPositionControl::setParameter(const unsigned int p
 void PParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0005CBF1
 
-  if(msgType == SET_MESSAGE){
-    message.stctOutput.commandNumber = SAP;
-  }else if(msgType == GET_MESSAGE){
-    message.stctOutput.commandNumber = GAP;
-  }
+    if (msgType == SET_MESSAGE) {
+      message.stctOutput.commandNumber = SAP;
+    } else if (msgType == GET_MESSAGE) {
+      message.stctOutput.commandNumber = GAP;
+    }
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 130; //PParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -238,28 +238,99 @@ CalibrateJoint::~CalibrateJoint() {
   // Bouml preserved body end 00061FF1
 }
 
-void CalibrateJoint::getParameter(bool& parameter) const {
+void CalibrateJoint::getParameter(bool& doCalibration, CalibrationDirection& calibrationDirection, quantity<si::current>& maxCurrent) const {
   // Bouml preserved body begin 00062071
-    parameter = this->value;
+    doCalibration = this->doCalibration;
+    calibrationDirection = this->calibrationDirection;
+    maxCurrent = this->maxCurrent;
   // Bouml preserved body end 00062071
 }
 
-void CalibrateJoint::setParameter(const bool parameter) {
+void CalibrateJoint::setParameter(const bool doCalibration, CalibrationDirection calibrationDirection, const quantity<si::current>& maxCurrent) {
   // Bouml preserved body begin 000620F1
-    this->value = parameter;
+    this->doCalibration = doCalibration;
+    this->calibrationDirection = calibrationDirection;
+    this->maxCurrent = maxCurrent;
   // Bouml preserved body end 000620F1
 }
 
-void CalibrateJoint::setCalibrationDirection(CalibrationDirection direction) {
-  // Bouml preserved body begin 00062471
-   this->calibrationDirection = direction;
-  // Bouml preserved body end 00062471
+JointLimits::JointLimits() {
+  // Bouml preserved body begin 00063EF1
+    this->name = "JointLimits";
+    this->parameterType = API_PARAMETER;
+    this->lowerLimit = 0;
+    this->upperLimit = 0;
+  // Bouml preserved body end 00063EF1
 }
 
-void CalibrateJoint::setMaxCurrent(const quantity<si::current>& current) {
-  // Bouml preserved body begin 00062571
-  this->maxCurrent = current;
-  // Bouml preserved body end 00062571
+JointLimits::~JointLimits() {
+  // Bouml preserved body begin 00063F71
+  // Bouml preserved body end 00063F71
+}
+
+void JointLimits::getParameter(int& lowerLimit, int& upperLimit) const {
+  // Bouml preserved body begin 00063FF1
+    lowerLimit = this->lowerLimit;
+    upperLimit = this->upperLimit;
+  // Bouml preserved body end 00063FF1
+}
+
+void JointLimits::setParameter(const int lowerLimit, const int upperLimit) {
+  // Bouml preserved body begin 00064071
+    if (lowerLimit > upperLimit) {
+      throw ExceptionOODL("The lower joint limit it not allowed to be bigger than the upper limit");
+    }
+    this->lowerLimit = lowerLimit;
+    this->upperLimit = upperLimit;
+  // Bouml preserved body end 00064071
+}
+
+StopJoint::StopJoint() {
+  // Bouml preserved body begin 00065C71
+    this->name = "StopJoint";
+    this->parameterType = API_PARAMETER;
+  // Bouml preserved body end 00065C71
+}
+
+StopJoint::~StopJoint() {
+  // Bouml preserved body begin 00065CF1
+  // Bouml preserved body end 00065CF1
+}
+
+void StopJoint::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00065D71
+    parameter = this->value;
+  // Bouml preserved body end 00065D71
+}
+
+void StopJoint::setParameter(const bool parameter) {
+  // Bouml preserved body begin 00065DF1
+    this->value = parameter;
+  // Bouml preserved body end 00065DF1
+}
+
+NoMoreAction::NoMoreAction() {
+  // Bouml preserved body begin 00066071
+    this->name = "NoMoreAction";
+    this->parameterType = API_PARAMETER;
+  // Bouml preserved body end 00066071
+}
+
+NoMoreAction::~NoMoreAction() {
+  // Bouml preserved body begin 000660F1
+  // Bouml preserved body end 000660F1
+}
+
+void NoMoreAction::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00066171
+    parameter = this->value;
+  // Bouml preserved body end 00066171
+}
+
+void NoMoreAction::setParameter(const bool parameter) {
+  // Bouml preserved body begin 000661F1
+    this->value = parameter;
+  // Bouml preserved body end 000661F1
 }
 
 

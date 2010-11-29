@@ -1,0 +1,333 @@
+class YouBot
+!!!266609.cpp!!!	YouBot()
+
+    //Initialize the Logger
+    (Logger::getInstance()).init();
+
+    {
+      boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
+      ethercatMaster == NULL;
+    }
+    ethernetDevice = "eth0";
+    timeTillNextEthercatUpdate = 4; //msec
+    mailboxTimeout = 4000; //micro sec
+    stopThread = false;
+    newDataFlagOne = false;
+    newDataFlagTwo = false;
+
+    if (!configfile.load("../config/youbot-configfile.cfg"))
+      throw ExceptionOODL("../config/youbot-configfile.cfg file no found");
+
+    configfile.setSection("YouBot");
+    ethernetDevice = configfile.getStringValue("EthernetDevice");
+    timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
+    mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
+
+
+!!!266737.cpp!!!	~YouBot()
+    this->closeEthercat();
+!!!274289.cpp!!!	getInstance() : YouBot&
+    if (!instance) {
+      instance = new YouBot();
+      instance->initializeEthercat();
+    }
+    return *instance;
+
+!!!274417.cpp!!!	destroy() : void
+    if (instance) {
+      delete instance;
+    }
+    instance = 0;
+
+!!!281201.cpp!!!	getNumberOfJoints() : unsigned int
+    return this->joints.size();
+!!!281073.cpp!!!	getJoint(in jointNumber : uint) : YouBotJoint&
+    if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
+      throw ExceptionOODL("Invalid Joint Number");
+    }
+
+    return joints[jointNumber - 1];
+!!!325873.cpp!!!	getJointByName(in jointName : string) : YouBotJoint&
+    int jointNumber = -1;
+    JointName jName;
+    std::string name;
+
+    for (int i = 0; i < joints.size(); i++) {
+      joints[i].getConfigurationParameter(jName);
+      jName.getParameter(name);
+      if (name == jointName) {
+        jointNumber = i;
+        break;
+      }
+    }
+
+    if (jointNumber == -1) {
+      throw ExceptionOODL("Joint Name not found");
+    }
+
+    return joints[jointNumber];
+!!!401137.cpp!!!	getEthercatDiagnosticInformation(out ethercatSlaveInfos : std::vector<ec_slavet>) : void
+    ethercatSlaveInfos = this->ethercatSlaveInfo;
+!!!266481.cpp!!!	initializeEthercat() : void
+
+    {
+      boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
+      ethercatMaster = new EthercatMaster();
+
+      if (!ethercatMaster->init(ethernetDevice.c_str())) {
+        throw ExceptionOODL("Could not initialize EtherCAT at " + ethernetDevice);
+        return;
+      }
+
+      std::string baseJointControllerName = "TMCM-174";
+      std::string manipulatorJointControllerName = "TMCM-174";
+      std::string actualSlaveName;
+      nrOfSlaves = 0;
+      YouBotSlaveMsg emptySlaveMsg;
+
+      baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
+      manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
+
+      //reserve memory for all joints
+      for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
+        printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
+                cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
+                ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+
+        ethercatSlaveInfo.push_back(ec_slave[cnt]);
+
+        actualSlaveName = ec_slave[cnt].name;
+        if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
+          nrOfSlaves++;
+          joints.push_back(YouBotJoint(nrOfSlaves));
+
+          firstBufferVector.push_back(emptySlaveMsg);
+          secondBufferVector.push_back(emptySlaveMsg);
+          ethercatOutputBufferVector.push_back((OutputBuffer*) (ec_slave[cnt].outputs));
+          ethercatInputBufferVector.push_back((InputBuffer*) (ec_slave[cnt].inputs));
+          YouBotSlaveMailboxMsg emptyMailboxSlaveMsg(cnt);
+          firstMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
+          secondMailboxBufferVector.push_back(emptyMailboxSlaveMsg);
+          newOutputDataFlagOne.push_back(false);
+          newOutputDataFlagTwo.push_back(false);
+          newMailboxDataFlagOne.push_back(false);
+          newMailboxDataFlagTwo.push_back(false);
+          newMailboxInputDataFlagOne.push_back(false);
+          newMailboxInputDataFlagTwo.push_back(false);
+        }
+
+      }
+
+      if (nrOfSlaves > 0) {
+        LOG(info) << "Number of YouBot Joints found: " << nrOfSlaves;
+      } else {
+        throw ExceptionOODL("No Ethercat slave could be found");
+        return;
+      }
+
+      stopThread = false;
+      threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
+    }
+    return;
+!!!266865.cpp!!!	closeEthercat() : bool
+    stopThread = true;
+
+    threads.join_all();
+
+    {
+      boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
+      if (ethercatMaster != NULL)
+        delete ethercatMaster;
+    }
+!!!267505.cpp!!!	setMsgBuffer(in msgBuffer : YouBotSlaveMsg, in jointNumber : uint) : void
+
+    if (newDataFlagOne == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        firstBufferVector[jointNumber - 1].stctOutput = msgBuffer.stctOutput;
+        newOutputDataFlagOne[jointNumber - 1] = true;
+        newOutputDataFlagTwo[jointNumber - 1] = false;
+      }
+    } else if (newDataFlagTwo == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        secondBufferVector[jointNumber - 1].stctOutput = msgBuffer.stctOutput;
+        newOutputDataFlagOne[jointNumber - 1] = false;
+        newOutputDataFlagTwo[jointNumber - 1] = true;
+      }
+
+    } else {
+      return;
+    }
+
+!!!267633.cpp!!!	getMsgBuffer(in jointNumber : uint) : YouBotSlaveMsg
+
+    YouBotSlaveMsg returnMsg;
+
+    if (newDataFlagOne == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        returnMsg = firstBufferVector[jointNumber - 1];
+      }
+    } else if (newDataFlagTwo == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        returnMsg = secondBufferVector[jointNumber - 1];
+      }
+
+    } else {
+      return returnMsg;
+    }
+
+    return returnMsg;
+!!!302449.cpp!!!	setMailboxMsgBuffer(in msgBuffer : YouBotSlaveMailboxMsg, in jointNumber : uint) : void
+
+    if (newDataFlagOne == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        firstMailboxBufferVector[jointNumber - 1].stctOutput = msgBuffer.stctOutput;
+        newMailboxDataFlagOne[jointNumber - 1] = true;
+        newMailboxDataFlagTwo[jointNumber - 1] = false;
+      }
+    } else if (newDataFlagTwo == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        secondMailboxBufferVector[jointNumber - 1].stctOutput = msgBuffer.stctOutput;
+        newMailboxDataFlagOne[jointNumber - 1] = false;
+        newMailboxDataFlagTwo[jointNumber - 1] = true;
+      }
+
+    }
+    return;
+!!!302577.cpp!!!	getMailboxMsgBuffer(out mailboxMsg : YouBotSlaveMailboxMsg, in jointNumber : uint) : void
+
+
+    if (newMailboxInputDataFlagOne[jointNumber - 1] == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        mailboxMsg = firstMailboxBufferVector[jointNumber - 1];
+        newMailboxInputDataFlagOne[jointNumber - 1] = false;
+      }
+    } else if (newMailboxInputDataFlagTwo[jointNumber - 1] == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        mailboxMsg = secondMailboxBufferVector[jointNumber - 1];
+        newMailboxInputDataFlagTwo[jointNumber - 1] = false;
+      }
+
+    }
+    return;
+!!!339825.cpp!!!	sendMailboxMessage(in mailboxMsg : YouBotSlaveMailboxMsg) : bool
+    //  LOG(trace) << "send mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
+    mailboxBufferSend[0] = mailboxMsg.stctOutput.moduleAddress;
+    mailboxBufferSend[1] = mailboxMsg.stctOutput.commandNumber;
+    mailboxBufferSend[2] = mailboxMsg.stctOutput.typeNumber;
+    mailboxBufferSend[3] = mailboxMsg.stctOutput.motorNumber;
+    mailboxBufferSend[4] = mailboxMsg.stctOutput.value >> 24;
+    mailboxBufferSend[5] = mailboxMsg.stctOutput.value >> 16;
+    mailboxBufferSend[6] = mailboxMsg.stctOutput.value >> 8;
+    mailboxBufferSend[7] = mailboxMsg.stctOutput.value & 0xff;
+    if (ec_mbxsend(mailboxMsg.getSlaveNo(), &mailboxBufferSend, mailboxTimeout)) {
+      return true;
+    } else {
+      return false;
+    }
+!!!339953.cpp!!!	receiveMailboxMessage(out mailboxMsg : YouBotSlaveMailboxMsg) : bool
+    if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
+      //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
+      mailboxMsg.stctInput.replyAddress = (int) mailboxBufferReceive[0];
+      mailboxMsg.stctInput.moduleAddress = (int) mailboxBufferReceive[1];
+      mailboxMsg.stctInput.status = (int) mailboxBufferReceive[2];
+      mailboxMsg.stctInput.commandNumber = (int) mailboxBufferReceive[3];
+      mailboxMsg.stctInput.value = (mailboxBufferReceive[4] << 24 | mailboxBufferReceive[5] << 16 | mailboxBufferReceive[6] << 8 | mailboxBufferReceive[7]);
+      return true;
+    }
+    return false;
+!!!259953.cpp!!!	updateSensorActorValues() : void
+
+
+    {
+      boost::mutex::scoped_lock lock_it(mutexEthercatMaster);
+
+      while (!stopThread) {
+
+        if (ec_iserror())
+          LOG(info) << "there is an error in the soem driver";
+
+        if (newDataFlagOne == false) {
+          {
+            boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+            for (unsigned int i = 0; i < joints.size(); i++) {
+              //fill first output buffer (send data)
+              if (newOutputDataFlagOne[i]) {
+                *(ethercatOutputBufferVector[i]) = (firstBufferVector[i]).stctOutput;
+              }
+              //fill first input buffer (receive data)
+              (firstBufferVector[i]).stctInput = *(ethercatInputBufferVector[i]);
+
+              //send mailbox messages from first buffer
+              if (newMailboxDataFlagOne[i]) {
+                sendMailboxMessage(firstMailboxBufferVector[i]);
+                newMailboxDataFlagOne[i] = false;
+              }
+              //receive mailbox messages to first buffer
+              if (receiveMailboxMessage(firstMailboxBufferVector[i])) {
+                newMailboxInputDataFlagOne[i] = true;
+              }
+            }
+
+          }
+          newDataFlagOne = true;
+          newDataFlagTwo = false;
+
+        } else if (newDataFlagTwo == false) {
+          {
+            boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+            for (unsigned int i = 0; i < joints.size(); i++) {
+              //fill second output buffer (send data)
+              if (newOutputDataFlagTwo[i]) {
+                *(ethercatOutputBufferVector[i]) = (secondBufferVector[i]).stctOutput;
+              }
+              //fill second input buffer (receive data)
+              (secondBufferVector[i]).stctInput = *(ethercatInputBufferVector[i]);
+
+              //send mailbox messages from second buffer
+              if (newMailboxDataFlagTwo[i]) {
+                sendMailboxMessage(secondMailboxBufferVector[i]);
+                newMailboxDataFlagTwo[i] = false;
+              }
+              //receive mailbox messages to second buffer
+              if (receiveMailboxMessage(secondMailboxBufferVector[i])) {
+                newMailboxInputDataFlagTwo[i] = true;
+              }
+            }
+          }
+          newDataFlagTwo = true;
+          newDataFlagOne = false;
+        }
+
+        /*
+        int timestamp = 0;
+        if (ec_slave[7].activeports & PORTM0){
+        timestamp = ec_slave[7].DCrtA;
+      }
+      if (ec_slave[7].activeports & PORTM3){
+        timestamp = ec_slave[7].DCrtD;
+      }
+      if (ec_slave[7].activeports & PORTM1){
+        timestamp = ec_slave[7].DCrtB;
+      }
+      if (ec_slave[7].activeports & PORTM2){
+        timestamp = ec_slave[7].DCrtC;
+      }
+       //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
+          printf("timestamp Joint 7:%i\n", timestamp);
+         */
+
+
+        ethercatMaster->update();
+
+        boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));
+      }
+
+    }
