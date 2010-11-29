@@ -1,0 +1,32 @@
+class MaximumPositioningSpeed
+!!!369009.cpp!!!	MaximumPositioningSpeed()
+    this->name = "MaximumPositioningSpeed";
+    this->lowerLimit = 0 * radian_per_second;
+    this->upperLimit = 500 * radian_per_second;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+!!!367857.cpp!!!	getParameter(out parameter : quantity<angular_velocity>) : void
+    parameter = this->value;
+!!!367729.cpp!!!	setParameter(in parameter : quantity<angular_velocity>) : void
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+!!!368881.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+
+    if (msgType == SET_MESSAGE) {
+      message.stctOutput.commandNumber = SAP;
+    } else if (msgType == GET_MESSAGE) {
+      message.stctOutput.commandNumber = GAP;
+    }
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 4; //maximum positioning speed
+    message.stctOutput.value = (int) value.value(); //TODO do convertion in to radian_per_second
+
+!!!368753.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
+      this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second
+    }
