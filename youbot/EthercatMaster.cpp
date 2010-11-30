@@ -206,6 +206,8 @@ void EthercatMaster::initializeEthercat() {
     stopThread = false;
     threads.create_thread(boost::bind(&EthercatMaster::updateSensorActorValues, this));
 
+    SLEEP_MILLISEC(500); //needed to start up thread and ethercat communication
+
     return;
   // Bouml preserved body end 000410F1
 }

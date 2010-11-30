@@ -20,50 +20,37 @@ YouBotJoint::~YouBotJoint() {
 }
 
 void YouBotJoint::setConfigurationParameter(const JointParameter& parameter) {
-  // Bouml preserved body begin 0005CDF1
-    throw ExceptionOODL("Please use YouBotJointParameters");
-  // Bouml preserved body end 0005CDF1
+  // Bouml preserved body begin 00074271
+  throw ExceptionOODL("Please use YouBotJointParameters");
+  // Bouml preserved body end 00074271
 }
 
 void YouBotJoint::getConfigurationParameter(JointParameter& parameter) {
   // Bouml preserved body begin 0005CE71
-    throw ExceptionOODL("Please use YouBotJointParameters");
+  throw ExceptionOODL("Please use YouBotJointParameters");
   // Bouml preserved body end 0005CE71
 }
 
-void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& parameter) {
-  // Bouml preserved body begin 0005BC71
-    if (parameter.getType() == API_PARAMETER) {
-      if (parameter.getName() == "JointName") {
-        this->jointName = static_cast<const JointName&> (parameter).value;
-      } else if (parameter.getName() == "GearRatio") {
-        this->gearRatio = static_cast<const GearRatio&> (parameter).value;
-      } else if (parameter.getName() == "EncoderTicksPerRound") {
-        this->encoderTicksPerRound = static_cast<const EncoderTicksPerRound&> (parameter).value;
-      }
-    } else if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+void YouBotJoint::getConfigurationParameter(YouBotJointParameterReadOnly& parameter) {
+  // Bouml preserved body begin 00071FF1
+
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, SET_MESSAGE);
+      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
 
-      if (!setValueToMotorContoller(message)) {
-        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      if (retrieveValueFromMotorContoller(message)) {
+        parameter.setYouBotMailboxMsg(message);
+      } else {
+        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
     }
-  // Bouml preserved body end 0005BC71
+  // Bouml preserved body end 00071FF1
 }
 
 void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
   // Bouml preserved body begin 0005BCF1
-    if (parameter.getType() == API_PARAMETER) {
-      if (parameter.getName() == "JointName") {
-        static_cast<JointName&> (parameter).setParameter(this->jointName);
-      } else if (parameter.getName() == "GearRatio") {
-        static_cast<GearRatio&> (parameter).setParameter(this->gearRatio);
-      } else if (parameter.getName() == "EncoderTicksPerRound") {
-        static_cast<EncoderTicksPerRound&> (parameter).setParameter(this->encoderTicksPerRound);
-      }
-    } else if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
       parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
@@ -77,7 +64,63 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
   // Bouml preserved body end 0005BCF1
 }
 
-void YouBotJoint::setConfigurationParameter(CalibrateJoint& parameter) {
+void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& parameter) {
+  // Bouml preserved body begin 0005BC71
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, SET_MESSAGE);
+
+      if (!setValueToMotorContoller(message)) {
+        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
+    }
+  // Bouml preserved body end 0005BC71
+}
+
+void YouBotJoint::getConfigurationParameter(JointName& parameter) {
+  // Bouml preserved body begin 000740F1
+    parameter.value = this->jointName;
+  // Bouml preserved body end 000740F1
+}
+
+void YouBotJoint::setConfigurationParameter(const JointName& parameter) {
+  // Bouml preserved body begin 0005CDF1
+    this->jointName = parameter.value;
+  // Bouml preserved body end 0005CDF1
+}
+
+void YouBotJoint::getConfigurationParameter(GearRatio& parameter) {
+  // Bouml preserved body begin 00074171
+    parameter.value = this->gearRatio;
+  // Bouml preserved body end 00074171
+}
+
+void YouBotJoint::setConfigurationParameter(const GearRatio& parameter) {
+  // Bouml preserved body begin 00073FF1
+    if (parameter.value == 0) {
+      throw ExceptionOODL("A Gear Ratio of zero is not allowed");
+    }
+    this->gearRatio = parameter.value;
+  // Bouml preserved body end 00073FF1
+}
+
+void YouBotJoint::getConfigurationParameter(EncoderTicksPerRound& parameter) {
+  // Bouml preserved body begin 000741F1
+    parameter.value = this->encoderTicksPerRound;
+  // Bouml preserved body end 000741F1
+}
+
+void YouBotJoint::setConfigurationParameter(const EncoderTicksPerRound& parameter) {
+  // Bouml preserved body begin 00074071
+    if (parameter.value == 0) {
+      throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
+    }
+    this->encoderTicksPerRound = parameter.value;
+  // Bouml preserved body end 00074071
+}
+
+void YouBotJoint::setConfigurationParameter(const CalibrateJoint& parameter) {
   // Bouml preserved body begin 000623F1
     if (parameter.doCalibration) {
       LOG(info) << "Calibrate Joint: " << this->jointName;
@@ -188,7 +231,7 @@ void YouBotJoint::setConfigurationParameter(CalibrateJoint& parameter) {
   // Bouml preserved body end 000623F1
 }
 
-void YouBotJoint::setConfigurationParameter(InverseMovementDirection& parameter) {
+void YouBotJoint::setConfigurationParameter(const InverseMovementDirection& parameter) {
   // Bouml preserved body begin 000624F1
 
     this->inverseMovementDirection = parameter.value;
@@ -196,7 +239,7 @@ void YouBotJoint::setConfigurationParameter(InverseMovementDirection& parameter)
   // Bouml preserved body end 000624F1
 }
 
-void YouBotJoint::setConfigurationParameter(JointLimits& parameter) {
+void YouBotJoint::setConfigurationParameter(const JointLimits& parameter) {
   // Bouml preserved body begin 000642F1
 
     this->lowerLimit = parameter.lowerLimit;
@@ -205,7 +248,7 @@ void YouBotJoint::setConfigurationParameter(JointLimits& parameter) {
   // Bouml preserved body end 000642F1
 }
 
-void YouBotJoint::setConfigurationParameter(StopJoint& parameter) {
+void YouBotJoint::setConfigurationParameter(const StopJoint& parameter) {
   // Bouml preserved body begin 00066471
     if (parameter.value) {
       YouBotSlaveMsg messageBuffer;
@@ -217,7 +260,7 @@ void YouBotJoint::setConfigurationParameter(StopJoint& parameter) {
   // Bouml preserved body end 00066471
 }
 
-void YouBotJoint::setConfigurationParameter(NoMoreAction& parameter) {
+void YouBotJoint::setConfigurationParameter(const NoMoreAction& parameter) {
   // Bouml preserved body begin 000664F1
     if (parameter.value) {
       YouBotSlaveMsg messageBuffer;
@@ -227,23 +270,6 @@ void YouBotJoint::setConfigurationParameter(NoMoreAction& parameter) {
       EthercatMaster::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
     }
   // Bouml preserved body end 000664F1
-}
-
-void YouBotJoint::getConfigurationParameter(YouBotJointParameterReadOnly& parameter) {
-  // Bouml preserved body begin 00071FF1
-
-    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
-
-      YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
-
-      if (retrieveValueFromMotorContoller(message)) {
-        parameter.setYouBotMailboxMsg(message);
-      } else {
-        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
-      }
-    }
-  // Bouml preserved body end 00071FF1
 }
 
 void YouBotJoint::setData(const JointDataSetpoint& data, SyncMode communicationMode) {

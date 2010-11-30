@@ -55,6 +55,7 @@ void YouBotManipulator::initializeJoints() {
     //get number of slaves
     unsigned int noSlaves = EthercatMaster::getInstance().getNumberOfSlaves();
 
+
     if(noSlaves < 5){
       throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
     }
@@ -98,7 +99,7 @@ void YouBotManipulator::initializeJoints() {
 
 
 
-    SLEEP_MILLISEC(1000); //the youbot likes it so
+    
 
     //Configure Joint Parameters
     std::string jointName;
@@ -125,7 +126,6 @@ void YouBotManipulator::initializeJoints() {
       joints[i].setConfigurationParameter(gearRatio);
       joints[i].setConfigurationParameter(ticksPerRound);
       joints[i].setConfigurationParameter(inverseDir);
-
     }
 
 
@@ -162,9 +162,7 @@ void YouBotManipulator::initializeJoints() {
       }
       joints[i].setConfigurationParameter(calibrateJointVec[i]);
     }
- //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 
-    SLEEP_MILLISEC(500); //the youbot likes it so
 
 
     //Initializing Gripper

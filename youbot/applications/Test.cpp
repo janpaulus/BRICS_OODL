@@ -80,9 +80,9 @@ int main() {
     myYouBotManipulator.getArmJoint(1).getConfigurationParameter(gearRatio);
     unsigned int enc;
     unsigned int gear;
-    encRes.getParameter(enc);
-    gearRatio.getParameter(gear);
-    LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
+ //   encRes.getParameter(enc);
+ //   gearRatio.getParameter(gear);
+ //   LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
 
 
     while (running) {

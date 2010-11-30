@@ -181,7 +181,6 @@ void YouBotBase::initializeJoints() {
       joints[i].setConfigurationParameter(gearRatio);
       joints[i].setConfigurationParameter(ticksPerRound);
       joints[i].setConfigurationParameter(inverseDir);
-
     }
 
     return;
