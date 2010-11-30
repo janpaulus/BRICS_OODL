@@ -5,6 +5,9 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <cstdio>
+#include <stdexcept>
+#include <iostream>
 #include <boost/thread.hpp>
 #include "rude/config.h"
 #include "generic/Logger.hpp"
@@ -13,11 +16,12 @@
 #include "generic/ExceptionOODL.hpp"
 #include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
-#include "youbot/EthercatMaster.hpp"
+//#include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotJoint.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
+
 
 extern "C"{
 #include <ethercattype.h>
@@ -80,8 +84,6 @@ friend class YouBotGripper;
 
     std::vector<YouBotJoint> joints;
 
-    EthercatMaster* ethercatMaster;
-
     std::string ethernetDevice;
 
     ec_mbxbuft mailboxBuffer;
@@ -96,8 +98,6 @@ friend class YouBotGripper;
     boost::thread_group threads;
 
     volatile bool stopThread;
-
-    boost::mutex mutexEthercatMaster;
 
     std::vector<YouBotSlaveMsg> firstBufferVector;
 
@@ -138,6 +138,10 @@ friend class YouBotGripper;
     rude::Config configfile;
 
     std::vector<ec_slavet> ethercatSlaveInfo;
+
+    int nr_slaves_;
+
+    char IOmap_[4096];
 
 };
 

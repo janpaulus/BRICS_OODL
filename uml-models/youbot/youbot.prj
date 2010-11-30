@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 101
+  revision 102
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9511,16 +9511,6 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 289137 "ethercatMaster"
-	private explicit_type "EthercatMaster*"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       attribute 289265 "ethernetDevice"
 	private explicit_type "std::string"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -9584,16 +9574,6 @@ ${inlines}
 
       attribute 290289 "stopThread"
 	private explicit_type "volatile bool"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 290417 "mutexEthercatMaster"
-	private explicit_type "boost::mutex"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -9795,6 +9775,27 @@ ${inlines}
       attribute 396401 "ethercatSlaveInfo"
 	private explicit_type "std::vector<ec_slavet>"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 451953 "nr_slaves_"
+	private explicit_type "int"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 452081 "IOmap_"
+	private explicit_type "char"
+	multiplicity "4096"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
 "
 	java_decl ""
 	php_decl ""

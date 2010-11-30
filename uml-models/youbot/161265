@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 22
+  revision 23
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -80,6 +80,9 @@ ${description}
 #include <vector>
 #include <sstream>
 #include <string>
+#include <cstdio>
+#include <stdexcept>
+#include <iostream>
 #include <boost/thread.hpp>
 #include \"rude/config.h\"
 #include \"generic/Logger.hpp\"
@@ -88,11 +91,12 @@ ${description}
 #include \"generic/ExceptionOODL.hpp\"
 #include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
-#include \"youbot/EthercatMaster.hpp\"
+//#include \"youbot/EthercatMaster.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp\"
+
 
 extern \"C\"{
 #include <ethercattype.h>
@@ -105,6 +109,16 @@ ${namespace_end}
 #endif
 "
       cpp_src "${description}
+extern \"C\" {
+#include \"ethercattype.h\"
+#include \"nicdrv.h\"
+#include \"ethercatbase.h\"
+#include \"ethercatmain.h\"
+#include \"ethercatconfig.h\"
+#include \"ethercatcoe.h\"
+#include \"ethercatdc.h\"
+#include \"ethercatprint.h\"
+}
 #include \"youbot/YouBot.hpp\"
 
 ${namespace_start}
