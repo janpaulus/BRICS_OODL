@@ -9,14 +9,13 @@ extern "C" {
 #include "ethercatdc.h"
 #include "ethercatprint.h"
 }
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 
 namespace brics_oodl {
 
-  YouBot* YouBot::instance = 0;
-
-  YouBot::YouBot() {
-    // Bouml preserved body begin 00041171
+EthercatMaster* EthercatMaster::instance = 0;
+EthercatMaster::EthercatMaster() {
+  // Bouml preserved body begin 00041171
 
     //Initialize the Logger
     (Logger::getInstance()).init();
@@ -37,62 +36,61 @@ namespace brics_oodl {
     mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
 
 
-    // Bouml preserved body end 00041171
-  }
+  // Bouml preserved body end 00041171
+}
 
-  YouBot::~YouBot() {
-    // Bouml preserved body begin 000411F1
+EthercatMaster::~EthercatMaster() {
+  // Bouml preserved body begin 000411F1
     this->closeEthercat();
-    // Bouml preserved body end 000411F1
-  }
+  // Bouml preserved body end 000411F1
+}
 
-  YouBot& YouBot::getInstance() {
-    // Bouml preserved body begin 00042F71
+EthercatMaster& EthercatMaster::getInstance()
+{
+  // Bouml preserved body begin 00042F71
     if (!instance) {
-      instance = new YouBot();
+      instance = new EthercatMaster();
       instance->initializeEthercat();
     }
     return *instance;
 
-    // Bouml preserved body end 00042F71
-  }
+  // Bouml preserved body end 00042F71
+}
 
-  void YouBot::destroy() {
-    // Bouml preserved body begin 00042FF1
+void EthercatMaster::destroy()
+{
+  // Bouml preserved body begin 00042FF1
     if (instance) {
       delete instance;
     }
     instance = 0;
 
-    // Bouml preserved body end 00042FF1
-  }
+  // Bouml preserved body end 00042FF1
+}
 
-  ///return the quantity of joints
-
-  unsigned int YouBot::getNumberOfJoints() const {
-    // Bouml preserved body begin 00044A71
+///return the quantity of joints
+unsigned int EthercatMaster::getNumberOfJoints() const {
+  // Bouml preserved body begin 00044A71
     return this->joints.size();
-    // Bouml preserved body end 00044A71
-  }
+  // Bouml preserved body end 00044A71
+}
 
-  ///return a joint form the base, arm1 or arm2
-  ///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
-
-  YouBotJoint& YouBot::getJoint(const unsigned int jointNumber) {
-    // Bouml preserved body begin 000449F1
+///return a joint form the base, arm1 or arm2
+///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
+YouBotJoint& EthercatMaster::getJoint(const unsigned int jointNumber) {
+  // Bouml preserved body begin 000449F1
     if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
       throw ExceptionOODL("Invalid Joint Number");
     }
 
     return joints[jointNumber - 1];
-    // Bouml preserved body end 000449F1
-  }
+  // Bouml preserved body end 000449F1
+}
 
-  ///return a joint form the base, arm1 or arm2
-  ///@param jointName e.g. BaseLeftFront
-
-  YouBotJoint& YouBot::getJointByName(const std::string jointName) {
-    // Bouml preserved body begin 0004F8F1
+///return a joint form the base, arm1 or arm2
+///@param jointName e.g. BaseLeftFront
+YouBotJoint& EthercatMaster::getJointByName(const std::string jointName) {
+  // Bouml preserved body begin 0004F8F1
     int jointNumber = -1;
     JointName jName;
     std::string name;
@@ -111,17 +109,17 @@ namespace brics_oodl {
     }
 
     return joints[jointNumber];
-    // Bouml preserved body end 0004F8F1
-  }
+  // Bouml preserved body end 0004F8F1
+}
 
-  void YouBot::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
-    // Bouml preserved body begin 00061EF1
+void EthercatMaster::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
+  // Bouml preserved body begin 00061EF1
     ethercatSlaveInfos = this->ethercatSlaveInfo;
-    // Bouml preserved body end 00061EF1
-  }
+  // Bouml preserved body end 00061EF1
+}
 
-  void YouBot::initializeEthercat() {
-    // Bouml preserved body begin 000410F1
+void EthercatMaster::initializeEthercat() {
+  // Bouml preserved body begin 000410F1
 
     /* initialise SOEM, bind socket to ifname */
     if (ec_init(ethernetDevice.c_str())) {
@@ -246,14 +244,14 @@ namespace brics_oodl {
     }
 
     stopThread = false;
-    threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
+    threads.create_thread(boost::bind(&EthercatMaster::updateSensorActorValues, this));
 
     return;
-    // Bouml preserved body end 000410F1
-  }
+  // Bouml preserved body end 000410F1
+}
 
-  bool YouBot::closeEthercat() {
-    // Bouml preserved body begin 00041271
+bool EthercatMaster::closeEthercat() {
+  // Bouml preserved body begin 00041271
     stopThread = true;
 
     threads.join_all();
@@ -261,11 +259,11 @@ namespace brics_oodl {
     //stop SOEM, close socket
     ec_close();
 
-    // Bouml preserved body end 00041271
-  }
+  // Bouml preserved body end 00041271
+}
 
-  void YouBot::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
-    // Bouml preserved body begin 000414F1
+void EthercatMaster::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
+  // Bouml preserved body begin 000414F1
 
     if (newDataFlagOne == true) {
       {
@@ -286,11 +284,11 @@ namespace brics_oodl {
       return;
     }
 
-    // Bouml preserved body end 000414F1
-  }
+  // Bouml preserved body end 000414F1
+}
 
-  YouBotSlaveMsg YouBot::getMsgBuffer(const unsigned int jointNumber) {
-    // Bouml preserved body begin 00041571
+YouBotSlaveMsg EthercatMaster::getMsgBuffer(const unsigned int jointNumber) {
+  // Bouml preserved body begin 00041571
 
     YouBotSlaveMsg returnMsg;
 
@@ -310,11 +308,11 @@ namespace brics_oodl {
     }
 
     return returnMsg;
-    // Bouml preserved body end 00041571
-  }
+  // Bouml preserved body end 00041571
+}
 
-  void YouBot::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
-    // Bouml preserved body begin 00049D71
+void EthercatMaster::setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber) {
+  // Bouml preserved body begin 00049D71
 
     if (newDataFlagOne == true) {
       {
@@ -333,11 +331,11 @@ namespace brics_oodl {
 
     }
     return;
-    // Bouml preserved body end 00049D71
-  }
+  // Bouml preserved body end 00049D71
+}
 
-  void YouBot::getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber) {
-    // Bouml preserved body begin 00049DF1
+void EthercatMaster::getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber) {
+  // Bouml preserved body begin 00049DF1
 
 
     if (newMailboxInputDataFlagOne[jointNumber - 1] == true) {
@@ -355,11 +353,11 @@ namespace brics_oodl {
 
     }
     return;
-    // Bouml preserved body end 00049DF1
-  }
+  // Bouml preserved body end 00049DF1
+}
 
-  bool YouBot::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
-    // Bouml preserved body begin 00052F71
+bool EthercatMaster::sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg) {
+  // Bouml preserved body begin 00052F71
     //  LOG(trace) << "send mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
     mailboxBufferSend[0] = mailboxMsg.stctOutput.moduleAddress;
     mailboxBufferSend[1] = mailboxMsg.stctOutput.commandNumber;
@@ -374,11 +372,11 @@ namespace brics_oodl {
     } else {
       return false;
     }
-    // Bouml preserved body end 00052F71
-  }
+  // Bouml preserved body end 00052F71
+}
 
-  bool YouBot::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
-    // Bouml preserved body begin 00052FF1
+bool EthercatMaster::receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg) {
+  // Bouml preserved body begin 00052FF1
     if (ec_mbxreceive(mailboxMsg.getSlaveNo(), &mailboxBufferReceive, mailboxTimeout)) {
       //    LOG(trace) << "received mailbox message (buffer two) slave " << mailboxMsg.getSlaveNo();
       mailboxMsg.stctInput.replyAddress = (int) mailboxBufferReceive[0];
@@ -389,11 +387,11 @@ namespace brics_oodl {
       return true;
     }
     return false;
-    // Bouml preserved body end 00052FF1
-  }
+  // Bouml preserved body end 00052FF1
+}
 
-  void YouBot::updateSensorActorValues() {
-    // Bouml preserved body begin 0003F771
+void EthercatMaster::updateSensorActorValues() {
+  // Bouml preserved body begin 0003F771
 
     while (!stopThread) {
 
@@ -479,7 +477,8 @@ namespace brics_oodl {
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));
     }
-    // Bouml preserved body end 0003F771
-  }
+  // Bouml preserved body end 0003F771
+}
+
 
 } // namespace brics_oodl

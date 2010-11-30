@@ -1,5 +1,5 @@
-class YouBot
-!!!266609.cpp!!!	YouBot()
+class EthercatMaster
+!!!266609.cpp!!!	EthercatMaster()
 
     //Initialize the Logger
     (Logger::getInstance()).init();
@@ -20,11 +20,11 @@ class YouBot
     mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
 
 
-!!!266737.cpp!!!	~YouBot()
+!!!266737.cpp!!!	~EthercatMaster()
     this->closeEthercat();
-!!!274289.cpp!!!	getInstance() : YouBot&
+!!!274289.cpp!!!	getInstance() : EthercatMaster&
     if (!instance) {
-      instance = new YouBot();
+      instance = new EthercatMaster();
       instance->initializeEthercat();
     }
     return *instance;
@@ -189,7 +189,7 @@ class YouBot
     }
 
     stopThread = false;
-    threads.create_thread(boost::bind(&YouBot::updateSensorActorValues, this));
+    threads.create_thread(boost::bind(&EthercatMaster::updateSensorActorValues, this));
 
     return;
 !!!266865.cpp!!!	closeEthercat() : bool

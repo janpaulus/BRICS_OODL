@@ -1,5 +1,5 @@
-#ifndef BRICS_OODL_YOUBOT_H
-#define BRICS_OODL_YOUBOT_H
+#ifndef BRICS_OODL_ETHERCATMASTER_H
+#define BRICS_OODL_ETHERCATMASTER_H
 
 
 #include <vector>
@@ -31,21 +31,21 @@ extern "C"{
 namespace brics_oodl {
 
 //have to be a singleton in the system
-class YouBot {
+class EthercatMaster {
 friend class YouBotJoint;
 friend class YouBotGripper;
   private:
-    static YouBot* instance;
+    static EthercatMaster* instance;
 
-    YouBot();
+    EthercatMaster();
 
-    YouBot(const YouBot& ) {};
+    EthercatMaster(const EthercatMaster& ) {};
 
-    ~YouBot();
+    ~EthercatMaster();
 
 
   public:
-    static YouBot& getInstance();
+    static EthercatMaster& getInstance();
 
     static void destroy();
 

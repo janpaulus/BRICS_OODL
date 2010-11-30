@@ -122,10 +122,10 @@ void YouBotBase::initializeJoints() {
     LOG(info) << "Initializing Joints";
 
     configfile.setSection("JointTopology");
-    joints[0] = &(YouBot::getInstance().getJoint(configfile.getIntValue("BaseLeftFront")));
-    joints[1] = &(YouBot::getInstance().getJoint(configfile.getIntValue("BaseRightFront")));
-    joints[2] = &(YouBot::getInstance().getJoint(configfile.getIntValue("BaseLeftBack")));
-    joints[3] = &(YouBot::getInstance().getJoint(configfile.getIntValue("BaseRightBack")));
+    joints[0] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseLeftFront")));
+    joints[1] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseRightFront")));
+    joints[2] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseLeftBack")));
+    joints[3] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseRightBack")));
 
     //Configure Joint Parameters
     std::string jointName;

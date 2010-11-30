@@ -29,11 +29,11 @@ class YouBotManipulator
     LOG(info) << "Initializing Joints";
 
     configfile.setSection("JointTopology");
-    joints[0] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint1")));
-    joints[1] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint2")));
-    joints[2] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint3")));
-    joints[3] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
-    joints[4] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
+    joints[0] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint1")));
+    joints[1] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint2")));
+    joints[2] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint3")));
+    joints[3] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
+    joints[4] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
 
 
     SLEEP_MILLISEC(1000); //the youbot likes it so

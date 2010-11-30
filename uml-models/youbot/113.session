@@ -1,23 +1,26 @@
 window_sizes 1680 975 482 1192 894 0
+diagrams
+  classdiagram_ref 141681 // JointParameter
+    953 715 100 1 0 127
+  classdiagram_ref 141553 // JointData
+    953 715 100 2 0 157
+  classdiagram_ref 141425 // JointInterface
+    953 715 100 1 72 0
+  active  classdiagram_ref 167793 // YouBot
+    1192 894 100 2 96 0
+  classdiagram_ref 154737 // Gripper
+    953 715 100 4 108 0
+end
 show_stereotypes
-selected class_ref 296049 // YouBotJointParameterReadOnly
+selected artifact_ref 215537 // YouBotBase
 open
   classview_ref 134641 // Joint
+  classview_ref 154225 // JointData
   class_ref 238321 // Parameter
-  attribute_ref 438769 // parameterType
-  class_ref 296177 // ArePIDcontrollersActive
-  operation_ref 467185 // setYouBotMailboxMsg
-  classrelation_ref 262385 // <generalisation>
-  class_ref 296433 // PWMSchemeBlockCommutation
-  operation_ref 467441 // setYouBotMailboxMsg
-  classrelation_ref 262641 // <generalisation>
-  classrelation_ref 262769 // <generalisation>
-  classrelation_ref 262897 // <generalisation>
-  class_ref 296945 // EncoderResolution
-  operation_ref 467953 // setYouBotMailboxMsg
-  operation_ref 468081 // setYouBotMailboxMsg
-  classrelation_ref 263281 // <generalisation>
-  class_ref 297329 // HallSensorPolarityReversal
+  class_ref 190577 // EthercatMaster
+  classview_ref 147697 // BaseKinematic
+  classview_ref 141169 // Gripper
+  classview_ref 161009 // GripperParameter
   deploymentview_ref 161137 // Deployment
 end
 end

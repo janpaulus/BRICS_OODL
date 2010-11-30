@@ -11,7 +11,7 @@
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
 #include "youbot/YouBotJoint.hpp"
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
 namespace brics_oodl {

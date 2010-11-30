@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
-#include "youbot/YouBot.hpp"
 #include "youbot/YouBotJointParameter.hpp"
 #include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotBase.hpp"

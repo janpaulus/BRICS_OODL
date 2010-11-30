@@ -10,7 +10,7 @@
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotJoint.hpp"
 namespace brics_oodl {

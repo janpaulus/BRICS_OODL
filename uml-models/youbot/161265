@@ -62,7 +62,7 @@ ${namespace_end}
 "
       cpp_src "${description}
 #include \"youbot/YouBotJoint.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 ${namespace_start}
 ${members}
 ${namespace_end}"
@@ -71,7 +71,7 @@ ${namespace_end}"
       end
     end
 
-    artifact 175345 "YouBot"
+    artifact 175345 "EthercatMaster"
       stereotype "source"
       cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
 #define ${NAMESPACE}_${NAME}_H
@@ -119,14 +119,14 @@ extern \"C\" {
 #include \"ethercatdc.h\"
 #include \"ethercatprint.h\"
 }
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 
 ${namespace_start}
-YouBot* YouBot::instance = 0;
+EthercatMaster* EthercatMaster::instance = 0;
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 190577 // YouBot
+	class_ref 190577 // EthercatMaster
       end
     end
 
@@ -161,7 +161,7 @@ ${namespace_end}
 "
       cpp_src "${description}
 #include \"youbot/YouBotGripper.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 ${namespace_start}
 ${members}
 ${namespace_end}"
@@ -332,7 +332,7 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 #include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
 ${namespace_start}
@@ -365,7 +365,7 @@ ${description}
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp\"
 ${namespace_start}

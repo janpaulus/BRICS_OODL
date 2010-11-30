@@ -9209,7 +9209,7 @@ ${inlines}
       size A2
     end
 
-    class 190577 "YouBot"
+    class 190577 "EthercatMaster"
       visibility package 
       cpp_decl "${description}${template}class ${name}${inherit} {
 friend class YouBotJoint;
@@ -9225,7 +9225,7 @@ ${inlines}
       
       comment "//have to be a singleton in the system"
       attribute 297969 "instance"
-	private explicit_type "static YouBot*"
+	private explicit_type "static EthercatMaster*"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -9234,7 +9234,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      operation 266609 "YouBot"
+      operation 266609 "EthercatMaster"
 	preserve_cpp_body_indent private explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${description}${inline}${name}${(}${)}${volatile}${throw};
@@ -9248,10 +9248,10 @@ ${inlines}
 	
       end
 
-      operation 274161 "YouBot"
+      operation 274161 "EthercatMaster"
 	preserve_cpp_body_indent private explicit_return_type ""
 	nparams 1
-	  param in name "" type class_ref 190577 // YouBot
+	  param in name "" type class_ref 190577 // EthercatMaster
 	cpp_decl "    ${description}${inline}${name}${(}const ${t0}& ${p0}${v0}${)}${volatile}${throw} {};
 "
 	preserve_java_body_indent 
@@ -9260,7 +9260,7 @@ ${inlines}
 	
       end
 
-      operation 266737 "~YouBot"
+      operation 266737 "~EthercatMaster"
 	preserve_cpp_body_indent private explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${description}${inline}${virtual}${name}${(}${)}${volatile}${throw};
@@ -9275,7 +9275,7 @@ ${inlines}
       end
 
       operation 274289 "getInstance"
-	class_operation preserve_cpp_body_indent public explicit_return_type "YouBot&"
+	class_operation preserve_cpp_body_indent public explicit_return_type "EthercatMaster&"
 	nparams 0
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
