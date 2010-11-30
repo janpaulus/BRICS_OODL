@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 23
+  revision 24
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -89,14 +89,8 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
-#include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
-//#include \"youbot/EthercatMaster.hpp\"
-#include \"youbot/YouBotJoint.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
-#include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"
-#include \"base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp\"
-
 
 extern \"C\"{
 #include <ethercattype.h>

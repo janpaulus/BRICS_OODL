@@ -14,14 +14,8 @@
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
-#include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
-//#include "youbot/EthercatMaster.hpp"
-#include "youbot/YouBotJoint.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
-#include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
-#include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
-
 
 extern "C"{
 #include <ethercattype.h>
@@ -50,15 +44,7 @@ friend class YouBotGripper;
     static void destroy();
 
     ///return the quantity of joints
-    unsigned int getNumberOfJoints() const;
-
-    ///return a joint form the base, arm1 or arm2
-    ///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
-    YouBotJoint& getJoint(const unsigned int jointNumber);
-
-    ///return a joint form the base, arm1 or arm2
-    ///@param jointName e.g. BaseLeftFront
-    YouBotJoint& getJointByName(const std::string jointName);
+    unsigned int getNumberOfSlaves() const;
 
     void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
 
@@ -81,8 +67,6 @@ friend class YouBotGripper;
     bool receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg);
 
     void updateSensorActorValues();
-
-    std::vector<YouBotJoint> joints;
 
     std::string ethernetDevice;
 
@@ -138,8 +122,6 @@ friend class YouBotGripper;
     rude::Config configfile;
 
     std::vector<ec_slavet> ethercatSlaveInfo;
-
-    int nr_slaves_;
 
     char IOmap_[4096];
 

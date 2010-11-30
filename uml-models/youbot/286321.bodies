@@ -17,7 +17,7 @@ class YouBotManipulator
     if (armJointNumber <= 0 || armJointNumber > 5) {
       throw ExceptionOODL("Invalid Joint Number");
     }
-    return *joints[armJointNumber - 1];
+    return joints[armJointNumber - 1];
 !!!391665.cpp!!!	getArmGripper() : YouBotGripper&
     if (this->gripperVector.size() >= 1) {
       return this->gripperVector[0];
@@ -28,12 +28,51 @@ class YouBotManipulator
 
     LOG(info) << "Initializing Joints";
 
+
+    //get number of slaves
+    unsigned int noSlaves = EthercatMaster::getInstance().getNumberOfSlaves();
+
+    if(noSlaves < 5){
+      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+    }
+
     configfile.setSection("JointTopology");
-    joints[0] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint1")));
-    joints[1] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint2")));
-    joints[2] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint3")));
-    joints[3] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
-    joints[4] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
+
+    unsigned int slaveNumber = configfile.getIntValue("ManipulatorJoint1");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint2");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint3");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint4");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint5");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
 
 
     SLEEP_MILLISEC(1000); //the youbot likes it so
@@ -59,10 +98,10 @@ class YouBotManipulator
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
       inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
 
-      joints[i]->setConfigurationParameter(jName);
-      joints[i]->setConfigurationParameter(gearRatio);
-      joints[i]->setConfigurationParameter(ticksPerRound);
-      joints[i]->setConfigurationParameter(inverseDir);
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(inverseDir);
 
     }
 
@@ -84,7 +123,7 @@ class YouBotManipulator
       doCalibration = configfile.getBoolValue("DoCalibration");
 
       jLimits.setParameter(configfile.getIntValue("LowerLimit_[encoderTicks]"), configfile.getIntValue("UpperLimit_[encoderTicks]"));
-      joints[i]->setConfigurationParameter(jLimits);
+      joints[i].setConfigurationParameter(jLimits);
 
       current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
       std::string direction = configfile.getStringValue("CalibrationDirection");
@@ -98,7 +137,7 @@ class YouBotManipulator
       } else {
         throw ExceptionOODL("Wrong calibration direction for " + jointName);
       }
-      joints[i]->setConfigurationParameter(calibrateJointVec[i]);
+      joints[i].setConfigurationParameter(calibrateJointVec[i]);
     }
  //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 

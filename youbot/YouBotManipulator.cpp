@@ -32,7 +32,7 @@ YouBotJoint& YouBotManipulator::getArmJoint(const unsigned int armJointNumber) {
     if (armJointNumber <= 0 || armJointNumber > 5) {
       throw ExceptionOODL("Invalid Joint Number");
     }
-    return *joints[armJointNumber - 1];
+    return joints[armJointNumber - 1];
   // Bouml preserved body end 0004F7F1
 }
 
@@ -51,12 +51,51 @@ void YouBotManipulator::initializeJoints() {
 
     LOG(info) << "Initializing Joints";
 
+
+    //get number of slaves
+    unsigned int noSlaves = EthercatMaster::getInstance().getNumberOfSlaves();
+
+    if(noSlaves < 5){
+      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+    }
+
     configfile.setSection("JointTopology");
-    joints[0] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint1")));
-    joints[1] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint2")));
-    joints[2] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint3")));
-    joints[3] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
-    joints[4] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
+
+    unsigned int slaveNumber = configfile.getIntValue("ManipulatorJoint1");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint2");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint3");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint4");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint5");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
 
 
     SLEEP_MILLISEC(1000); //the youbot likes it so
@@ -82,10 +121,10 @@ void YouBotManipulator::initializeJoints() {
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
       inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
 
-      joints[i]->setConfigurationParameter(jName);
-      joints[i]->setConfigurationParameter(gearRatio);
-      joints[i]->setConfigurationParameter(ticksPerRound);
-      joints[i]->setConfigurationParameter(inverseDir);
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(inverseDir);
 
     }
 
@@ -107,7 +146,7 @@ void YouBotManipulator::initializeJoints() {
       doCalibration = configfile.getBoolValue("DoCalibration");
 
       jLimits.setParameter(configfile.getIntValue("LowerLimit_[encoderTicks]"), configfile.getIntValue("UpperLimit_[encoderTicks]"));
-      joints[i]->setConfigurationParameter(jLimits);
+      joints[i].setConfigurationParameter(jLimits);
 
       current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
       std::string direction = configfile.getStringValue("CalibrationDirection");
@@ -121,7 +160,7 @@ void YouBotManipulator::initializeJoints() {
       } else {
         throw ExceptionOODL("Wrong calibration direction for " + jointName);
       }
-      joints[i]->setConfigurationParameter(calibrateJointVec[i]);
+      joints[i].setConfigurationParameter(calibrateJointVec[i]);
     }
  //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 

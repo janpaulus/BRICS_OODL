@@ -33,7 +33,7 @@ class YouBotManipulator {
 
     rude::Config configfile;
 
-    YouBotJoint* joints[5];
+    std::vector<YouBotJoint> joints;
 
     std::vector<YouBotGripper> gripperVector;
 

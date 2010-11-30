@@ -55,7 +55,7 @@ class YouBotBase {
 
     rude::Config configfile;
 
-    YouBotJoint* joints[4];
+    std::vector<YouBotJoint> joints;
 
 };
 

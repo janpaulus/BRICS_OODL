@@ -9,9 +9,6 @@ class YouBotBase
   if(!configfile.load(configFilename.c_str()))
       throw ExceptionOODL(configFilename + " file no found");
 
-
-  
-
   this->initializeJoints();
 
   this->initializeKinematic();
@@ -20,7 +17,7 @@ class YouBotBase
     if (baseJointNumber <= 0 || baseJointNumber > 4 ) {
       throw ExceptionOODL("Invalid Joint Number");
     }
-    return *joints[baseJointNumber - 1];
+    return joints[baseJointNumber - 1];
 !!!333041.cpp!!!	getBasePosition(out longitudinalPosition : quantity<si::length>, out transversalPosition : quantity<si::length>, out orientation : quantity<plane_angle>) : void
 
     std::vector<quantity<plane_angle> > wheelPositions;
@@ -28,13 +25,13 @@ class YouBotBase
     JointSensedAngle sensedPos;
     wheelPositions.assign(4, dummy);
 
-    joints[0]->getData(sensedPos);
+    joints[0].getData(sensedPos);
     wheelPositions[0] = sensedPos.angle;
-    joints[1]->getData(sensedPos);
+    joints[1].getData(sensedPos);
     wheelPositions[1] = sensedPos.angle;
-    joints[2]->getData(sensedPos);
+    joints[2].getData(sensedPos);
     wheelPositions[2] = sensedPos.angle;
-    joints[3]->getData(sensedPos);
+    joints[3].getData(sensedPos);
     wheelPositions[3] = sensedPos.angle;
 
     youBotBaseKinematic.wheelPositionsToCartesianPosition(wheelPositions, longitudinalPosition, transversalPosition, orientation);
@@ -45,13 +42,13 @@ class YouBotBase
     JointSensedVelocity sensedVel;
     wheelVelocities.assign(4, dummy);
 
-    joints[0]->getData(sensedVel);
+    joints[0].getData(sensedVel);
     wheelVelocities[0] = sensedVel.angularVelocity;
-    joints[1]->getData(sensedVel);
+    joints[1].getData(sensedVel);
     wheelVelocities[1] = sensedVel.angularVelocity;
-    joints[2]->getData(sensedVel);
+    joints[2].getData(sensedVel);
     wheelVelocities[2] = sensedVel.angularVelocity;
-    joints[3]->getData(sensedVel);
+    joints[3].getData(sensedVel);
     wheelVelocities[3] = sensedVel.angularVelocity;
 
     youBotBaseKinematic.wheelVelocitiesToCartesianVelocity(wheelVelocities, longitudinalVelocity, transversalVelocity, angularVelocity);
@@ -67,22 +64,54 @@ class YouBotBase
       throw ExceptionOODL("To less wheel velocities");
 
     setVel.angularVelocity = wheelVelocities[0];
-    joints[0]->setData(setVel, NON_BLOCKING);
+    joints[0].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
-    joints[1]->setData(setVel, NON_BLOCKING);
+    joints[1].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[2];
-    joints[2]->setData(setVel, NON_BLOCKING);
+    joints[2].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[3];
-    joints[3]->setData(setVel, NON_BLOCKING);
+    joints[3].setData(setVel, NON_BLOCKING);
 !!!287985.cpp!!!	initializeJoints() : void
 
     LOG(info) << "Initializing Joints";
 
+    //get number of slaves
+    unsigned int noSlaves = EthercatMaster::getInstance().getNumberOfSlaves();
+
+    if(noSlaves < 4){
+      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+    }
+
     configfile.setSection("JointTopology");
-    joints[0] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseLeftFront")));
-    joints[1] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseRightFront")));
-    joints[2] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseLeftBack")));
-    joints[3] = &(EthercatMaster::getInstance().getJoint(configfile.getIntValue("BaseRightBack")));
+
+    unsigned int slaveNumber = configfile.getIntValue("BaseLeftFront");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("BaseRightFront");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("BaseLeftBack");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("BaseRightBack");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
 
     //Configure Joint Parameters
     std::string jointName;
@@ -105,10 +134,10 @@ class YouBotBase
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
       inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
 
-      joints[i]->setConfigurationParameter(jName);
-      joints[i]->setConfigurationParameter(gearRatio);
-      joints[i]->setConfigurationParameter(ticksPerRound);
-      joints[i]->setConfigurationParameter(inverseDir);
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(inverseDir);
 
     }
 

@@ -12,12 +12,14 @@ diagrams
     953 715 100 4 108 0
 end
 show_stereotypes
-selected artifact_ref 215537 // YouBotBase
+selected artifact_ref 175345 // EthercatMaster
 open
   classview_ref 134641 // Joint
   classview_ref 154225 // JointData
   class_ref 238321 // Parameter
   class_ref 190577 // EthercatMaster
+  class_ref 286321 // YouBotManipulator
+  class_ref 286193 // YouBotBase
   classview_ref 147697 // BaseKinematic
   classview_ref 141169 // Gripper
   classview_ref 161009 // GripperParameter

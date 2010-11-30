@@ -35,33 +35,8 @@ class EthercatMaster
     }
     instance = 0;
 
-!!!281201.cpp!!!	getNumberOfJoints() : unsigned int
-    return this->joints.size();
-!!!281073.cpp!!!	getJoint(in jointNumber : uint) : YouBotJoint&
-    if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
-      throw ExceptionOODL("Invalid Joint Number");
-    }
-
-    return joints[jointNumber - 1];
-!!!325873.cpp!!!	getJointByName(in jointName : string) : YouBotJoint&
-    int jointNumber = -1;
-    JointName jName;
-    std::string name;
-
-    for (int i = 0; i < joints.size(); i++) {
-      joints[i].getConfigurationParameter(jName);
-      jName.getParameter(name);
-      if (name == jointName) {
-        jointNumber = i;
-        break;
-      }
-    }
-
-    if (jointNumber == -1) {
-      throw ExceptionOODL("Joint Name not found");
-    }
-
-    return joints[jointNumber];
+!!!281201.cpp!!!	getNumberOfSlaves() : unsigned int
+    return this->nrOfSlaves;
 !!!401137.cpp!!!	getEthercatDiagnosticInformation(out ethercatSlaveInfos : std::vector<ec_slavet>) : void
     ethercatSlaveInfos = this->ethercatSlaveInfo;
 !!!266481.cpp!!!	initializeEthercat() : void
@@ -72,9 +47,6 @@ class EthercatMaster
       /* find and auto-config slaves */
       if (ec_config(TRUE, &IOmap_) > 0) {
 
-
-        //copy nr of slaves to class variable
-        nr_slaves_ = ec_slavecount;
         LOG(trace) << ec_slavecount << " slaves found and configured.";
 
         /* wait for all slaves to reach Pre OP state */
@@ -151,7 +123,7 @@ class EthercatMaster
     baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
     manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
 
-    //reserve memory for all joints
+    //reserve memory for all slave with have a input/output buffer
     for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
       //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
       //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
@@ -162,7 +134,7 @@ class EthercatMaster
       actualSlaveName = ec_slave[cnt].name;
       if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
         nrOfSlaves++;
-        joints.push_back(YouBotJoint(nrOfSlaves));
+     //   joints.push_back(YouBotJoint(nrOfSlaves));
 
         firstBufferVector.push_back(emptySlaveMsg);
         secondBufferVector.push_back(emptySlaveMsg);
@@ -182,7 +154,7 @@ class EthercatMaster
     }
 
     if (nrOfSlaves > 0) {
-      LOG(info) << "Number of YouBot Joints found: " << nrOfSlaves;
+      LOG(info) << "Number of slaves with IO found: " << nrOfSlaves;
     } else {
       throw ExceptionOODL("No Ethercat slave could be found");
       return;
@@ -314,7 +286,7 @@ class EthercatMaster
       if (newDataFlagOne == false) {
         {
           boost::mutex::scoped_lock dataMutex1(mutexDataOne);
-          for (unsigned int i = 0; i < joints.size(); i++) {
+          for (unsigned int i = 0; i < firstBufferVector.size(); i++) {
             //fill first output buffer (send data)
             if (newOutputDataFlagOne[i]) {
               *(ethercatOutputBufferVector[i]) = (firstBufferVector[i]).stctOutput;
@@ -340,7 +312,7 @@ class EthercatMaster
       } else if (newDataFlagTwo == false) {
         {
           boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
-          for (unsigned int i = 0; i < joints.size(); i++) {
+          for (unsigned int i = 0; i < secondBufferVector.size(); i++) {
             //fill second output buffer (send data)
             if (newOutputDataFlagTwo[i]) {
               *(ethercatOutputBufferVector[i]) = (secondBufferVector[i]).stctOutput;

@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 102
+  revision 103
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9302,7 +9302,7 @@ ${inlines}
 	
       end
 
-      operation 281201 "getNumberOfJoints"
+      operation 281201 "getNumberOfSlaves"
 	preserve_cpp_body_indent const public explicit_return_type "unsigned int"
 	nparams 0
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -9315,40 +9315,6 @@ ${inlines}
 	preserve_python_body_indent 
 	
 	comment "///return the quantity of joints"
-      end
-
-      operation 281073 "getJoint"
-	preserve_cpp_body_indent public explicit_return_type "YouBotJoint&"
-	nparams 1
-	  param in name "jointNumber" explicit_type "uint"
-	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	preserve_java_body_indent 
-	preserve_php_body_indent 
-	preserve_python_body_indent 
-	
-	comment "///return a joint form the base, arm1 or arm2
-///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints"
-      end
-
-      operation 325873 "getJointByName"
-	preserve_cpp_body_indent public explicit_return_type "YouBotJoint&"
-	nparams 1
-	  param in name "jointName" explicit_type "string"
-	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	preserve_java_body_indent 
-	preserve_php_body_indent 
-	preserve_python_body_indent 
-	
-	comment "///return a joint form the base, arm1 or arm2
-///@param jointName e.g. BaseLeftFront"
       end
 
       operation 401137 "getEthercatDiagnosticInformation"
@@ -9499,16 +9465,6 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-      end
-
-      attribute 274289 "joints"
-	private explicit_type "std::vector<YouBotJoint>"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
 
       attribute 289265 "ethernetDevice"
@@ -9782,16 +9738,6 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 451953 "nr_slaves_"
-	private explicit_type "int"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       attribute 452081 "IOmap_"
 	private explicit_type "char"
 	multiplicity "4096"
@@ -9901,9 +9847,8 @@ ${inlines}
       end
 
       attribute 419185 "joints"
-	private explicit_type "YouBotJoint*"
-	multiplicity "5"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+	private explicit_type "std::vector<YouBotJoint>"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
 	php_decl ""
@@ -10093,9 +10038,8 @@ ${inlines}
       end
 
       attribute 419057 "joints"
-	private explicit_type "YouBotJoint*"
-	multiplicity "4"
-	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+	private explicit_type "std::vector<YouBotJoint>"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
 	php_decl ""

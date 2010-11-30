@@ -69,47 +69,10 @@ void EthercatMaster::destroy()
 }
 
 ///return the quantity of joints
-unsigned int EthercatMaster::getNumberOfJoints() const {
+unsigned int EthercatMaster::getNumberOfSlaves() const {
   // Bouml preserved body begin 00044A71
-    return this->joints.size();
+    return this->nrOfSlaves;
   // Bouml preserved body end 00044A71
-}
-
-///return a joint form the base, arm1 or arm2
-///@param jointNumber 1-4 are the base joints, 5-9 are the arm1 joints, 9-14 are the arm2 joints
-YouBotJoint& EthercatMaster::getJoint(const unsigned int jointNumber) {
-  // Bouml preserved body begin 000449F1
-    if (jointNumber <= 0 || jointNumber > getNumberOfJoints()) {
-      throw ExceptionOODL("Invalid Joint Number");
-    }
-
-    return joints[jointNumber - 1];
-  // Bouml preserved body end 000449F1
-}
-
-///return a joint form the base, arm1 or arm2
-///@param jointName e.g. BaseLeftFront
-YouBotJoint& EthercatMaster::getJointByName(const std::string jointName) {
-  // Bouml preserved body begin 0004F8F1
-    int jointNumber = -1;
-    JointName jName;
-    std::string name;
-
-    for (int i = 0; i < joints.size(); i++) {
-      joints[i].getConfigurationParameter(jName);
-      jName.getParameter(name);
-      if (name == jointName) {
-        jointNumber = i;
-        break;
-      }
-    }
-
-    if (jointNumber == -1) {
-      throw ExceptionOODL("Joint Name not found");
-    }
-
-    return joints[jointNumber];
-  // Bouml preserved body end 0004F8F1
 }
 
 void EthercatMaster::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
@@ -127,9 +90,6 @@ void EthercatMaster::initializeEthercat() {
       /* find and auto-config slaves */
       if (ec_config(TRUE, &IOmap_) > 0) {
 
-
-        //copy nr of slaves to class variable
-        nr_slaves_ = ec_slavecount;
         LOG(trace) << ec_slavecount << " slaves found and configured.";
 
         /* wait for all slaves to reach Pre OP state */
@@ -206,7 +166,7 @@ void EthercatMaster::initializeEthercat() {
     baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
     manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
 
-    //reserve memory for all joints
+    //reserve memory for all slave with have a input/output buffer
     for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
       //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
       //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
@@ -217,7 +177,7 @@ void EthercatMaster::initializeEthercat() {
       actualSlaveName = ec_slave[cnt].name;
       if ((actualSlaveName == baseJointControllerName || actualSlaveName == manipulatorJointControllerName) && ec_slave[cnt].Obits > 0 && ec_slave[cnt].Ibits > 0) {
         nrOfSlaves++;
-        joints.push_back(YouBotJoint(nrOfSlaves));
+     //   joints.push_back(YouBotJoint(nrOfSlaves));
 
         firstBufferVector.push_back(emptySlaveMsg);
         secondBufferVector.push_back(emptySlaveMsg);
@@ -237,7 +197,7 @@ void EthercatMaster::initializeEthercat() {
     }
 
     if (nrOfSlaves > 0) {
-      LOG(info) << "Number of YouBot Joints found: " << nrOfSlaves;
+      LOG(info) << "Number of slaves with IO found: " << nrOfSlaves;
     } else {
       throw ExceptionOODL("No Ethercat slave could be found");
       return;
@@ -401,7 +361,7 @@ void EthercatMaster::updateSensorActorValues() {
       if (newDataFlagOne == false) {
         {
           boost::mutex::scoped_lock dataMutex1(mutexDataOne);
-          for (unsigned int i = 0; i < joints.size(); i++) {
+          for (unsigned int i = 0; i < firstBufferVector.size(); i++) {
             //fill first output buffer (send data)
             if (newOutputDataFlagOne[i]) {
               *(ethercatOutputBufferVector[i]) = (firstBufferVector[i]).stctOutput;
@@ -427,7 +387,7 @@ void EthercatMaster::updateSensorActorValues() {
       } else if (newDataFlagTwo == false) {
         {
           boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
-          for (unsigned int i = 0; i < joints.size(); i++) {
+          for (unsigned int i = 0; i < secondBufferVector.size(); i++) {
             //fill second output buffer (send data)
             if (newOutputDataFlagTwo[i]) {
               *(ethercatOutputBufferVector[i]) = (secondBufferVector[i]).stctOutput;
