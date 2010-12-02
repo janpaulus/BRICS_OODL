@@ -48,6 +48,10 @@ IF(NOT DEFINED UNICAP_PATH)
   include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
 ENDIF(NOT DEFINED UNICAP_PATH)
 
+SET(DOXYFILE_LATEX "NO")
+SET(DOXYFILE_OUTPUT_DIR ${CMAKE_HOME_DIRECTORY}/doc)
+include(UseDoxygen)
+
 
 IF(NOT DEFINED SELECTED_DRIVER)
 # add_subdirectory(hokuyo-urg)

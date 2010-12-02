@@ -80,7 +80,7 @@ ncurses
 )
 
 SET(OODL_YOUBOT_CONFIG
-${CMAKE_HOME_DIRECTORY}/config/youbot-configfile.cfg
+${CMAKE_HOME_DIRECTORY}/config/youbot-ethercat.cfg
 ${CMAKE_HOME_DIRECTORY}/config/youbot-base.cfg
 ${CMAKE_HOME_DIRECTORY}/config/youbot-manipulator.cfg
 ${CMAKE_HOME_DIRECTORY}/config/applications.cfg
