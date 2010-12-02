@@ -30,14 +30,10 @@ void ArePIDcontrollersActive::getParameter(bool& parameter) const {
   // Bouml preserved body end 000701F1
 }
 
-void ArePIDcontrollersActive::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void ArePIDcontrollersActive::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 000702F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 147; //ArePIDcontrollersActive
     message.stctOutput.value = value; //TODO do convertion
@@ -71,14 +67,10 @@ void CommutationMode::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 000705F1
 }
 
-void CommutationMode::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void CommutationMode::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00070671
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 159; //CommutationMode
     message.stctOutput.value = value; //TODO do convertion
@@ -112,14 +104,10 @@ void PWMSchemeBlockCommutation::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 000708F1
 }
 
-void PWMSchemeBlockCommutation::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void PWMSchemeBlockCommutation::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00070971
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 167; //PWMSchemeBlockCommutation
     message.stctOutput.value = value; //TODO do convertion
@@ -153,14 +141,10 @@ void MotorContollerGearRatio::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 00070BF1
 }
 
-void MotorContollerGearRatio::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void MotorContollerGearRatio::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00070C71
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 211; //MotorContollerGearRatio
     message.stctOutput.value = value; //TODO do convertion
@@ -194,14 +178,10 @@ void MotorCoilResistance::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 00070EF1
 }
 
-void MotorCoilResistance::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void MotorCoilResistance::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00070F71
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 240; //MotorCoilResistance
     message.stctOutput.value = value; //TODO do convertion
@@ -235,14 +215,10 @@ void InitializationMode::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 000711F1
 }
 
-void InitializationMode::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void InitializationMode::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00071271
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 249; //InitializationMode
     message.stctOutput.value = value; //TODO do convertion
@@ -276,14 +252,10 @@ void EncoderResolution::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 000714F1
 }
 
-void EncoderResolution::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void EncoderResolution::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00071571
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 250; //EncoderResolution
     message.stctOutput.value = value; //TODO do convertion
@@ -317,14 +289,10 @@ void ReversingEncoderDirection::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 000717F1
 }
 
-void ReversingEncoderDirection::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void ReversingEncoderDirection::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00071871
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 251; //ReversingEncoderDirection
     message.stctOutput.value = value; //TODO do convertion
@@ -358,14 +326,9 @@ void MotorPoles::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 00071AF1
 }
 
-void MotorPoles::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void MotorPoles::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00071B71
-
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 253; //MotorPoles
     message.stctOutput.value = value; //TODO do convertion
@@ -399,14 +362,10 @@ void HallSensorPolarityReversal::getParameter(unsigned int& parameter) const {
   // Bouml preserved body end 00071DF1
 }
 
-void HallSensorPolarityReversal::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
+void HallSensorPolarityReversal::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {
   // Bouml preserved body begin 00071E71
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 254; //RampGeneratorSpeedAndPositionControl
     message.stctOutput.value = value; //TODO do convertion

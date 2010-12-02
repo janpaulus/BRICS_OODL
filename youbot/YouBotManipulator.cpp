@@ -2,16 +2,19 @@
 #include "youbot/YouBotManipulator.hpp"
 namespace brics_oodl {
 
-YouBotManipulator::YouBotManipulator(const std::string name) {
+YouBotManipulator::YouBotManipulator(const std::string name, const std::string configFilePath) {
   // Bouml preserved body begin 00067F71
 
-  string configFilename;
-  configFilename = "../config/";
-  configFilename.append(name);
-  configFilename.append(".cfg");
+  string filename;
+  filename = configFilePath;
+  filename.append(name);
+  filename.append(".cfg");
 
-  if(!configfile.load(configFilename.c_str()))
-      throw ExceptionOODL(configFilename + " file no found");
+  this->configFilePath = configFilePath;
+  this->ethercatConfigFileName = "youbot-ethercat.cfg";
+
+  if(!configfile.load(filename.c_str()))
+      throw ExceptionOODL(filename + " file no found");
 
 
   this->initializeJoints();
@@ -53,7 +56,7 @@ void YouBotManipulator::initializeJoints() {
 
 
     //get number of slaves
-    unsigned int noSlaves = EthercatMaster::getInstance().getNumberOfSlaves();
+    unsigned int noSlaves = EthercatMaster::getInstance(this->ethercatConfigFileName, this->configFilePath).getNumberOfSlaves();
 
 
     if(noSlaves < 5){

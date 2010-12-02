@@ -6,11 +6,7 @@ class MotorCoilResistance
     parameter = this->value;
 !!!462705.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 240; //MotorCoilResistance
     message.stctOutput.value = value; //TODO do convertion

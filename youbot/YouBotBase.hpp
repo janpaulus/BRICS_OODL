@@ -18,7 +18,7 @@ namespace brics_oodl {
 
 class YouBotBase {
   public:
-    YouBotBase(const std::string name);
+    YouBotBase(const std::string name, const std::string configFilePath = "../config/");
 
     virtual ~YouBotBase();
 
@@ -56,6 +56,10 @@ class YouBotBase {
     rude::Config configfile;
 
     std::vector<YouBotJoint> joints;
+
+    std::string configFilePath;
+
+    std::string ethercatConfigFileName;
 
 };
 

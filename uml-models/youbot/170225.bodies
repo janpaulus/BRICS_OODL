@@ -10,21 +10,12 @@ class YouBotJoint
   throw ExceptionOODL("Please use YouBotJointParameters");
 !!!380529.cpp!!!	getConfigurationParameter(out parameter : JointParameter) : void
   throw ExceptionOODL("Please use YouBotJointParameters");
-!!!375921.cpp!!!	setConfigurationParameter(in parameter : YouBotJointParameter) : void
+!!!466929.cpp!!!	getConfigurationParameter(out parameter : YouBotJointParameterReadOnly) : void
+
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, SET_MESSAGE);
-
-      if (!setValueToMotorContoller(message)) {
-        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
-      }
-    }
-!!!376049.cpp!!!	getConfigurationParameter(out parameter : YouBotJointParameter) : void
-    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
-
-      YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
+      parameter.getYouBotMailboxMsg(message, GAP);
 
       if (retrieveValueFromMotorContoller(message)) {
         parameter.setYouBotMailboxMsg(message);
@@ -32,6 +23,46 @@ class YouBotJoint
         throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
     }
+!!!376049.cpp!!!	getConfigurationParameter(out parameter : YouBotJointParameter) : void
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, GAP);
+
+      if (retrieveValueFromMotorContoller(message)) {
+        parameter.setYouBotMailboxMsg(message);
+      } else {
+        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
+    }
+!!!375921.cpp!!!	setConfigurationParameter(in parameter : YouBotJointParameter) : void
+    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
+
+      YouBotSlaveMailboxMsg message;
+      parameter.getYouBotMailboxMsg(message, SAP);
+
+      if (!setValueToMotorContoller(message)) {
+        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
+      }
+    }
+!!!475377.cpp!!!	getConfigurationParameter(out parameter : JointName) : void
+    parameter.value = this->jointName;
+!!!380401.cpp!!!	setConfigurationParameter(in parameter : JointName) : void
+    this->jointName = parameter.value;
+!!!475505.cpp!!!	getConfigurationParameter(out parameter : GearRatio) : void
+    parameter.value = this->gearRatio;
+!!!475121.cpp!!!	setConfigurationParameter(in parameter : GearRatio) : void
+    if (parameter.value == 0) {
+      throw ExceptionOODL("A Gear Ratio of zero is not allowed");
+    }
+    this->gearRatio = parameter.value;
+!!!475633.cpp!!!	getConfigurationParameter(out parameter : EncoderTicksPerRound) : void
+    parameter.value = this->encoderTicksPerRound;
+!!!475249.cpp!!!	setConfigurationParameter(in parameter : EncoderTicksPerRound) : void
+    if (parameter.value == 0) {
+      throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
+    }
+    this->encoderTicksPerRound = parameter.value;
 !!!402417.cpp!!!	setConfigurationParameter(in parameter : CalibrateJoint) : void
     if (parameter.doCalibration) {
       LOG(info) << "Calibrate Joint: " << this->jointName;
@@ -164,37 +195,6 @@ class YouBotJoint
 
       EthercatMaster::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
     }
-!!!466929.cpp!!!	getConfigurationParameter(out parameter : YouBotJointParameterReadOnly) : void
-
-    if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
-
-      YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
-
-      if (retrieveValueFromMotorContoller(message)) {
-        parameter.setYouBotMailboxMsg(message);
-      } else {
-        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
-      }
-    }
-!!!380401.cpp!!!	setConfigurationParameter(in parameter : JointName) : void
-    this->jointName = parameter.value;
-!!!475121.cpp!!!	setConfigurationParameter(in parameter : GearRatio) : void
-    if (parameter.value == 0) {
-      throw ExceptionOODL("A Gear Ratio of zero is not allowed");
-    }
-    this->gearRatio = parameter.value;
-!!!475249.cpp!!!	setConfigurationParameter(in parameter : EncoderTicksPerRound) : void
-    if (parameter.value == 0) {
-      throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
-    }
-    this->encoderTicksPerRound = parameter.value;
-!!!475377.cpp!!!	getConfigurationParameter(out parameter : JointName) : void
-    parameter.value = this->jointName;
-!!!475505.cpp!!!	getConfigurationParameter(out parameter : GearRatio) : void
-    parameter.value = this->gearRatio;
-!!!475633.cpp!!!	getConfigurationParameter(out parameter : EncoderTicksPerRound) : void
-    parameter.value = this->encoderTicksPerRound;
 !!!267249.cpp!!!	setData(in data : JointDataSetpoint, in communicationMode : SyncMode = NON_BLOCKING) : void
     LOG(info) << "Nothing to do";
 !!!267377.cpp!!!	getData(out data : JointData) : void

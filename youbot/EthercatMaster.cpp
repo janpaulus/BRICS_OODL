@@ -23,16 +23,19 @@ EthercatMaster::EthercatMaster() {
     ethernetDevice = "eth0";
     timeTillNextEthercatUpdate = 4; //msec
     mailboxTimeout = 4000; //micro sec
+    ethercatTimeout = 500; //micro sec
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
 
-    if (!configfile.load("../config/youbot-configfile.cfg"))
-      throw ExceptionOODL("../config/youbot-configfile.cfg file no found");
+    if (!configfile.load(this->configFileName.c_str())){
+      throw ExceptionOODL(this->configFileName + " file no found");
+    }
 
-    configfile.setSection("YouBot");
+    configfile.setSection("EtherCAT");
     ethernetDevice = configfile.getStringValue("EthernetDevice");
     timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
+    ethercatTimeout = configfile.getIntValue("EtherCATTimeout_[usec]");
     mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
 
 
@@ -45,12 +48,14 @@ EthercatMaster::~EthercatMaster() {
   // Bouml preserved body end 000411F1
 }
 
-EthercatMaster& EthercatMaster::getInstance()
+EthercatMaster& EthercatMaster::getInstance(const std::string configFile, const std::string configFilePath)
 {
   // Bouml preserved body begin 00042F71
     if (!instance) {
+      configFileName = configFilePath + configFile;
       instance = new EthercatMaster();
       instance->initializeEthercat();
+
     }
     return *instance;
 
@@ -434,13 +439,15 @@ void EthercatMaster::updateSensorActorValues() {
       //send and receive data from ethercat
       if (ec_send_processdata() == 0)
         throw ExceptionOODL("Sending process data failed");
-      if (ec_receive_processdata(EC_TIMEOUTRET) == 0)
+      if (ec_receive_processdata(this->ethercatTimeout) == 0)
         throw ExceptionOODL("Receiving data failed");
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));
     }
   // Bouml preserved body end 0003F771
 }
+
+std::string EthercatMaster::configFileName;
 
 
 } // namespace brics_oodl

@@ -7,25 +7,30 @@ class EthercatMaster
     ethernetDevice = "eth0";
     timeTillNextEthercatUpdate = 4; //msec
     mailboxTimeout = 4000; //micro sec
+    ethercatTimeout = 500; //micro sec
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
 
-    if (!configfile.load("../config/youbot-configfile.cfg"))
-      throw ExceptionOODL("../config/youbot-configfile.cfg file no found");
+    if (!configfile.load(this->configFileName.c_str())){
+      throw ExceptionOODL(this->configFileName + " file no found");
+    }
 
-    configfile.setSection("YouBot");
+    configfile.setSection("EtherCAT");
     ethernetDevice = configfile.getStringValue("EthernetDevice");
     timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
+    ethercatTimeout = configfile.getIntValue("EtherCATTimeout_[usec]");
     mailboxTimeout = configfile.getIntValue("MailboxTimeout_[usec]");
 
 
 !!!266737.cpp!!!	~EthercatMaster()
     this->closeEthercat();
-!!!274289.cpp!!!	getInstance() : EthercatMaster&
+!!!274289.cpp!!!	getInstance(in configFile : string = "youbot-ethercat.cfg", in configFilePath : string = "../config/") : EthercatMaster&
     if (!instance) {
+      configFileName = configFilePath + configFile;
       instance = new EthercatMaster();
       instance->initializeEthercat();
+
     }
     return *instance;
 
@@ -359,7 +364,7 @@ class EthercatMaster
       //send and receive data from ethercat
       if (ec_send_processdata() == 0)
         throw ExceptionOODL("Sending process data failed");
-      if (ec_receive_processdata(EC_TIMEOUTRET) == 0)
+      if (ec_receive_processdata(this->ethercatTimeout) == 0)
         throw ExceptionOODL("Receiving data failed");
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));

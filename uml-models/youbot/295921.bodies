@@ -17,16 +17,10 @@ class PositionControlSwitchingThreshold
     this->value = parameter;
 !!!457713.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 12; //PositionControlSwitchingThreshold
     message.stctOutput.value = value; //TODO do convertion
 
 !!!457841.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion

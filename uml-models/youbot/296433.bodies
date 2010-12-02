@@ -6,11 +6,7 @@ class PWMSchemeBlockCommutation
     parameter = this->value;
 !!!461169.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 167; //PWMSchemeBlockCommutation
     message.stctOutput.value = value; //TODO do convertion

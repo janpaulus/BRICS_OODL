@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 105
+  revision 106
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9366,10 +9366,14 @@ ${inlines}
 
       operation 274289 "getInstance"
 	class_operation preserve_cpp_body_indent public explicit_return_type "EthercatMaster&"
-	nparams 0
-	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 2
+	  param in name "configFile" explicit_type "string"
+	    defaultvalue "\"youbot-ethercat.cfg\""
+	  param in name "configFilePath" explicit_type "string"
+	    defaultvalue "\"../config/\""
+	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}, const ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${description}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}, const ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	preserve_java_body_indent 
@@ -9838,6 +9842,26 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      attribute 458609 "ethercatTimeout"
+	private explicit_type "uint"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 458737 "configFileName"
+	class_attribute private explicit_type "string"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
     end
 
     class 286321 "YouBotManipulator"
@@ -9854,11 +9878,13 @@ ${inlines}
       
       operation 425841 "YouBotManipulator"
 	preserve_cpp_body_indent public explicit_return_type ""
-	nparams 1
+	nparams 2
 	  param in name "name" explicit_type "string"
-	cpp_decl "    ${description}${inline}${name}${(}const ${t0} ${p0}${)}${volatile}${throw};
+	  param in name "configFilePath" explicit_type "string"
+	    defaultvalue "\"../config/\""
+	cpp_decl "    ${description}${inline}${name}${(}const ${t0} ${p0}${v0}, const ${t1} ${p1}${v1}${)}${volatile}${throw};
 "
-	cpp_def "${description}${inline}${class}::${name}${(}const ${t0} ${p0}${)}${volatile}${throw} {
+	cpp_def "${description}${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} ${p1}${)}${volatile}${throw} {
   ${body}}
 "
 	preserve_java_body_indent 
@@ -9955,6 +9981,26 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      attribute 459121 "configFilePath"
+	private explicit_type "string"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 459249 "ethercatConfigFileName"
+	private explicit_type "string"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
     end
 
     class 286193 "YouBotBase"
@@ -9971,11 +10017,13 @@ ${inlines}
       
       operation 425585 "YouBotBase"
 	preserve_cpp_body_indent public explicit_return_type ""
-	nparams 1
+	nparams 2
 	  param in name "name" explicit_type "string"
-	cpp_decl "    ${description}${inline}${name}${(}const ${t0} ${p0}${)}${volatile}${throw};
+	  param in name "configFilePath" explicit_type "string"
+	    defaultvalue "\"../config/\""
+	cpp_decl "    ${description}${inline}${name}${(}const ${t0} ${p0}${v0}, const ${t1} ${p1}${v1}${)}${volatile}${throw};
 "
-	cpp_def "${description}${inline}${class}::${name}${(}const ${t0} ${p0}${)}${volatile}${throw} {
+	cpp_def "${description}${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} ${p1}${)}${volatile}${throw} {
   ${body}}
 "
 	preserve_java_body_indent 
@@ -10129,6 +10177,26 @@ ${inlines}
 
       attribute 419057 "joints"
 	private explicit_type "std::vector<YouBotJoint>"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 458865 "configFilePath"
+	private explicit_type "string"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 458993 "ethercatConfigFileName"
+	private explicit_type "string"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""

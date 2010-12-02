@@ -39,7 +39,7 @@ friend class YouBotGripper;
 
 
   public:
-    static EthercatMaster& getInstance();
+    static EthercatMaster& getInstance(const std::string configFile = "youbot-ethercat.cfg", const std::string configFilePath = "../config/");
 
     static void destroy();
 
@@ -124,6 +124,10 @@ friend class YouBotGripper;
     std::vector<ec_slavet> ethercatSlaveInfo;
 
     char IOmap_[4096];
+
+    unsigned int ethercatTimeout;
+
+    static std::string configFileName;
 
 };
 

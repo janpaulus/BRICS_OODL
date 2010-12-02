@@ -32,7 +32,7 @@ friend class YouBotJoint;
 
 
   protected:
-    virtual void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const = 0;
+    virtual void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const = 0;
 
     virtual void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) = 0;
 
@@ -58,7 +58,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -86,7 +86,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -114,7 +114,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -142,7 +142,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -170,7 +170,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -202,7 +202,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -232,7 +232,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -260,7 +260,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {};
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const {};
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {};
 
@@ -288,7 +288,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -321,7 +321,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -354,7 +354,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -387,7 +387,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -420,7 +420,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -452,7 +452,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -484,7 +484,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -516,7 +516,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -549,7 +549,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -581,7 +581,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -613,7 +613,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -645,7 +645,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -677,7 +677,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -709,7 +709,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -742,7 +742,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -771,7 +771,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -799,7 +799,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -831,7 +831,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -863,7 +863,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -895,7 +895,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -927,7 +927,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -959,7 +959,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -991,7 +991,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -1023,7 +1023,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -1056,7 +1056,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -1089,7 +1089,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 
@@ -1122,7 +1122,7 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
 
     void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
 

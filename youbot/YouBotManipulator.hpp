@@ -17,7 +17,7 @@ namespace brics_oodl {
 
 class YouBotManipulator {
   public:
-    YouBotManipulator(const std::string name);
+    YouBotManipulator(const std::string name, const std::string configFilePath = "../config/");
 
     virtual ~YouBotManipulator();
 
@@ -36,6 +36,10 @@ class YouBotManipulator {
     std::vector<YouBotJoint> joints;
 
     std::vector<YouBotGripper> gripperVector;
+
+    std::string configFilePath;
+
+    std::string ethercatConfigFileName;
 
 };
 
