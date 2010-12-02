@@ -271,9 +271,7 @@ void MaximumPositioningSpeed::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message
 
 void MaximumPositioningSpeed::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0005A071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second
-    }
+    this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second
   // Bouml preserved body end 0005A071
 }
 
@@ -327,9 +325,7 @@ void MaximumMotorCurrent::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, Ma
 
 void MaximumMotorCurrent::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006A871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006A871
 }
 
@@ -383,9 +379,7 @@ void SpeedControlSwitchingThreshold::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& 
 
 void SpeedControlSwitchingThreshold::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006A471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006A471
 }
 
@@ -439,9 +433,7 @@ void MotorAcceleration::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, Mail
 
 void MotorAcceleration::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006AC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006AC71
 }
 
@@ -495,9 +487,7 @@ void PositionControlSwitchingThreshold::getYouBotMailboxMsg(YouBotSlaveMailboxMs
 
 void PositionControlSwitchingThreshold::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006FC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006FC71
 }
 
@@ -551,9 +541,7 @@ void PParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMa
 
 void PParameterFirstParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0005CC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0005CC71
 }
 
@@ -607,9 +595,7 @@ void IParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMa
 
 void IParameterFirstParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 00069C71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 00069C71
 }
 
@@ -663,9 +649,7 @@ void DParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMa
 
 void DParameterFirstParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006A071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006A071
 }
 
@@ -719,9 +703,7 @@ void PIDControlTime::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, Mailbox
 
 void PIDControlTime::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006B071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006B071
 }
 
@@ -775,9 +757,7 @@ void IClippingParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBo
 
 void IClippingParameterFirstParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006B471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006B471
 }
 
@@ -831,9 +811,7 @@ void PParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailb
 
 void PParameterFirstParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006B871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006B871
 }
 
@@ -887,9 +865,7 @@ void IParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailb
 
 void IParameterFirstParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006BC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006BC71
 }
 
@@ -943,9 +919,7 @@ void DParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailb
 
 void DParameterFirstParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006C071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006C071
 }
 
@@ -999,9 +973,7 @@ void IClippingParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSl
 
 void IClippingParameterFirstParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006C471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006C471
 }
 
@@ -1046,9 +1018,7 @@ void RampGeneratorSpeedAndPositionControl::getYouBotMailboxMsg(YouBotSlaveMailbo
 
 void RampGeneratorSpeedAndPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006C871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006C871
 }
 
@@ -1093,9 +1063,7 @@ void ReinitializationSinusoidalCommutation::getYouBotMailboxMsg(YouBotSlaveMailb
 
 void ReinitializationSinusoidalCommutation::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006CC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006CC71
 }
 
@@ -1149,9 +1117,7 @@ void PParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveM
 
 void PParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006D071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006D071
 }
 
@@ -1205,9 +1171,7 @@ void IParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveM
 
 void IParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006D471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006D471
 }
 
@@ -1261,9 +1225,7 @@ void DParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveM
 
 void DParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006D871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006D871
 }
 
@@ -1317,9 +1279,7 @@ void IClippingParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouB
 
 void IClippingParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006DC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006DC71
 }
 
@@ -1373,9 +1333,7 @@ void PParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMail
 
 void PParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006E071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006E071
 }
 
@@ -1429,9 +1387,7 @@ void IParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMail
 
 void IParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006E471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006E471
 }
 
@@ -1485,9 +1441,7 @@ void DParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMail
 
 void DParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006E871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006E871
 }
 
@@ -1541,9 +1495,7 @@ void IClippingParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotS
 
 void IClippingParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006EC71
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006EC71
 }
 
@@ -1597,9 +1549,7 @@ void BlockCommutationMaximumSpeed::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& me
 
 void BlockCommutationMaximumSpeed::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006F071
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second
-    }
+    this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second
   // Bouml preserved body end 0006F071
 }
 
@@ -1653,9 +1603,7 @@ void CommutationCompensationClockwise::getYouBotMailboxMsg(YouBotSlaveMailboxMsg
 
 void CommutationCompensationClockwise::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006F471
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006F471
 }
 
@@ -1709,9 +1657,7 @@ void CommutationCompensationCounterClockwise::getYouBotMailboxMsg(YouBotSlaveMai
 
 void CommutationCompensationCounterClockwise::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) {
   // Bouml preserved body begin 0006F871
-    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
-      this->value = message.stctInput.value; //TODO do convertion
-    }
+    this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006F871
 }
 
