@@ -257,11 +257,7 @@ void MaximumPositioningSpeed::setParameter(const quantity<angular_velocity>& par
 void MaximumPositioningSpeed::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0005A0F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 4; //maximum positioning speed
     message.stctOutput.value = (int) value.value(); //TODO do convertion in to radian_per_second
@@ -311,11 +307,7 @@ void MaximumMotorCurrent::setParameter(const unsigned int parameter) {
 void MaximumMotorCurrent::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006A7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 6; //MaximumMotorCurrent
     message.stctOutput.value = value; //TODO do convertion
@@ -365,11 +357,7 @@ void SpeedControlSwitchingThreshold::setParameter(const unsigned int parameter) 
 void SpeedControlSwitchingThreshold::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006A3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 8; //SpeedControlSwitchingThreshold
     message.stctOutput.value = value; //TODO do convertion
@@ -419,11 +407,7 @@ void MotorAcceleration::setParameter(const unsigned int parameter) {
 void MotorAcceleration::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006ABF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 11; //MotorAcceleration
     message.stctOutput.value = value; //TODO do convertion
@@ -473,11 +457,7 @@ void PositionControlSwitchingThreshold::setParameter(const unsigned int paramete
 void PositionControlSwitchingThreshold::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006FBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 12; //PositionControlSwitchingThreshold
     message.stctOutput.value = value; //TODO do convertion
@@ -527,11 +507,7 @@ void PParameterFirstParametersPositionControl::setParameter(const unsigned int p
 void PParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0005CBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 130; //PParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -581,11 +557,7 @@ void IParameterFirstParametersPositionControl::setParameter(const unsigned int p
 void IParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 00069BF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 131; //IParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -635,11 +607,7 @@ void DParameterFirstParametersPositionControl::setParameter(const unsigned int p
 void DParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 00069FF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 132; //PParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -689,11 +657,7 @@ void PIDControlTime::setParameter(const unsigned int parameter) {
 void PIDControlTime::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006AFF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 133; //PIDControlTime
     message.stctOutput.value = value; //TODO do convertion
@@ -743,11 +707,7 @@ void IClippingParameterFirstParametersPositionControl::setParameter(const unsign
 void IClippingParameterFirstParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006B3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 135; //IClippingParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -797,11 +757,7 @@ void PParameterFirstParametersSpeedControl::setParameter(const unsigned int para
 void PParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006B7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 140; //PParameterFirstParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -851,11 +807,7 @@ void IParameterFirstParametersSpeedControl::setParameter(const unsigned int para
 void IParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006BBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 141; //IParameterFirstParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -905,11 +857,7 @@ void DParameterFirstParametersSpeedControl::setParameter(const unsigned int para
 void DParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006BFF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 142; //DParameterFirstParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -959,11 +907,7 @@ void IClippingParameterFirstParametersSpeedControl::setParameter(const unsigned 
 void IClippingParameterFirstParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006C3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 143; //IClippingParameterFirstParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1004,11 +948,7 @@ void RampGeneratorSpeedAndPositionControl::setParameter(const bool parameter) {
 void RampGeneratorSpeedAndPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006C7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 146; //RampGeneratorSpeedAndPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1049,11 +989,7 @@ void ReinitializationSinusoidalCommutation::setParameter(const bool parameter) {
 void ReinitializationSinusoidalCommutation::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006CBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 160; //ReinitializationSinusoidalCommutation
     message.stctOutput.value = value; //TODO do convertion
@@ -1103,11 +1039,7 @@ void PParameterSecondParametersPositionControl::setParameter(const unsigned int 
 void PParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006CFF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 230; //PParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1157,11 +1089,7 @@ void IParameterSecondParametersPositionControl::setParameter(const unsigned int 
 void IParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006D3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 231; //IParameterSecondParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1211,11 +1139,7 @@ void DParameterSecondParametersPositionControl::setParameter(const unsigned int 
 void DParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006D7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 232; //DParameterSecondParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1265,11 +1189,7 @@ void IClippingParameterSecondParametersPositionControl::setParameter(const unsig
 void IClippingParameterSecondParametersPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006DBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 233; //IClippingParameterSecondParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1319,11 +1239,7 @@ void PParameterSecondParametersSpeedControl::setParameter(const unsigned int par
 void PParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006DFF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 234; //PParameterSecondParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1373,11 +1289,7 @@ void IParameterSecondParametersSpeedControl::setParameter(const unsigned int par
 void IParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006E3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 235; //IParameterFirstParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1427,11 +1339,7 @@ void DParameterSecondParametersSpeedControl::setParameter(const unsigned int par
 void DParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006E7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 236; //DParameterSecondParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1481,11 +1389,7 @@ void IClippingParameterSecondParametersSpeedControl::setParameter(const unsigned
 void IClippingParameterSecondParametersSpeedControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006EBF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 237; //IClippingParameterSecondParametersSpeedControl
     message.stctOutput.value = value; //TODO do convertion
@@ -1535,11 +1439,7 @@ void BlockCommutationMaximumSpeed::setParameter(const quantity<angular_velocity>
 void BlockCommutationMaximumSpeed::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006EFF1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 241; //BlockCommutationMaximumSpeed
     message.stctOutput.value = (int) value.value(); //TODO do convertion in to radian_per_second
@@ -1589,11 +1489,7 @@ void CommutationCompensationClockwise::setParameter(const unsigned int parameter
 void CommutationCompensationClockwise::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006F3F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 242; //CommutationCompensationClockwise
     message.stctOutput.value = value; //TODO do convertion
@@ -1643,11 +1539,7 @@ void CommutationCompensationCounterClockwise::setParameter(const unsigned int pa
 void CommutationCompensationCounterClockwise::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, MailboxMsgType msgType) const {
   // Bouml preserved body begin 0006F7F1
 
-    if (msgType == SET_MESSAGE) {
-      message.stctOutput.commandNumber = SAP;
-    } else if (msgType == GET_MESSAGE) {
-      message.stctOutput.commandNumber = GAP;
-    }
+    message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 243; //CommutationCompensationCounterClockwise
     message.stctOutput.value = value; //TODO do convertion

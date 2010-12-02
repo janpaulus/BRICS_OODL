@@ -37,7 +37,7 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameterReadOnly& parame
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
+      parameter.getYouBotMailboxMsg(message, GAP);
 
       if (retrieveValueFromMotorContoller(message)) {
         parameter.setYouBotMailboxMsg(message);
@@ -53,7 +53,7 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GET_MESSAGE);
+      parameter.getYouBotMailboxMsg(message, GAP);
 
       if (retrieveValueFromMotorContoller(message)) {
         parameter.setYouBotMailboxMsg(message);
@@ -69,7 +69,7 @@ void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& paramete
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, SET_MESSAGE);
+      parameter.getYouBotMailboxMsg(message, SAP);
 
       if (!setValueToMotorContoller(message)) {
         throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
