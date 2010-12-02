@@ -28,18 +28,29 @@ public:
   //!Assignment operator creates an exact copy during an assignment of object instances
   MonocularCamera& operator= (const MonocularCamera &camera);
   ~MonocularCamera();
-
+  //!Returns camera configuration object which allows access to camera lens and color configurations
   bool getConfiguration (MonocularCameraConfiguration &config);
+  //!Sets camera configuration to `config'
   bool setConfiguration (MonocularCameraConfiguration &config);
+  //!Returns current image capture format
   bool getImageFormat(ImageFormat &fm);
+  //!Set image capture format to particular `format' value
   bool setImageFormat(ImageFormat &fm);
-  bool capture(); 
+  //!Prepares camera for a capture process
+  bool capture();
+  //!Opens camera device and prepares for format and properties to be configured
   bool open ();
+  //!Stops capture process and closes the device
   bool close ();
+  //!Returns captured image in Image2dData data structure
+  /*!
+   * \param data contains captured image
+   * \sa Image2dData()
+   */
   void getImageData(Image2dData& data);
   
 private:
- 
+ //!Checks system for the connected cameras and packs them into a vector
   bool getListOfCameras();
   MonocularCameraConfiguration *cameraConfig;
   ImageFormat *format;

@@ -7,8 +7,17 @@ class Image2dData
 public:
   //! Default constructor
   Image2dData();
+  //!Instantiates an image data object to a buffer with given lenght and pointing at bufferStart
+  /*!
+   * \param `bufferStart' pointer to the buffer given to instantiate imagedata
+   * \param `length' is the lenght of th provided buffer
+   */
   Image2dData(unsigned char* bufferStart, size_t length);
   //! Instantiate an image data with given resolution (width x height)
+  /*!
+   * \param 'width' is image width in pixels
+   * \param 'height' is image height in pixels
+   */
   Image2dData(int& width, int& height);
   Image2dData& operator=(Image2dData& data);
   //! Returns pointer to image data (buffer)

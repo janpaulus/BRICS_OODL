@@ -204,8 +204,9 @@ bool ImageFormat::setImageFormatResolution(int &width, int &height)
 bool ImageFormat::getImageFormatSize(int &size)
 {
 
-  bufferSize = (currentResolution->width)*(currentResolution->height);
-  size = bufferSize;
+//  bufferSize = (currentResolution->width)*(currentResolution->height);
+//  size = bufferSize;
+  size = currentFormat->buffer_size;
   return true;
 }
 
@@ -242,6 +243,8 @@ bool ImageFormat::getListOfFormats()
     //set the default format to the first format in the list;
     currentFormat = &listOfDeviceFormats[0];
     currentResolution = &listOfDeviceFormats[0].size;
+    currentFormat->buffer_size = (currentResolution->width*currentResolution->height)*currentFormat->bpp/8; //calculate buffer size for the given format.
+                                                                                                            //Here "8" represents 8 bits and bpp (bitsperpixel)
     currentFormat->buffer_type = this->currentBufferType;
     int returnValue = unicap_set_format(*deviceHandle, currentFormat);
     std::cout << "Setting default format to " << currentFormat->identifier << std::endl;

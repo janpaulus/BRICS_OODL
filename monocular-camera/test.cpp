@@ -9,16 +9,19 @@ int main (int argc, char **argv)
 
   MonocularCameraConfiguration config ;
   ImageFormat format;
-  MonocularCamera camera(2);
+  MonocularCamera camera(0);
   
 
 
   camera.open(); //always open first
   camera.getConfiguration(config);
-//  double gain = 0.0;
-//  config.getColorExposureConfiguration()->getGainControlValue(gain);
-//  std::cout << gain << std::endl;
+  double gain = 0.0;
+  config.getColorExposureConfiguration()->getBrightnessValue(gain);
+  std::cout << gain << std::endl;
 
+  gain = 0;
+  config.getColorExposureConfiguration()->setBrightnessValue(gain);
+//  std::cout << gain << std::endl;
 //  double rate = 0;
 //  config.getCameraDeviceConfiguration()->getVideoFrameRate(rate);
 //  std::cout << rate << std::endl;
@@ -31,13 +34,13 @@ int main (int argc, char **argv)
   format.getImageFormatResolution(width, height);
   camera.setImageFormat(format) ;
   camera.capture();
-  
-  // while(1)
-  // {
-  // Image2dData data(width,height);
-  //  camera.getImageData(data);
-  // }
-
+/*  
+   while(1)
+   {
+   Image2dData data(width,height);
+    camera.getImageData(data);
+   }
+*/
 
   SDL_Surface *screen = NULL;
   SDL_Overlay *overlay = NULL;
@@ -67,10 +70,10 @@ int main (int argc, char **argv)
   {
     SDL_Event event;
     Image2dData data(width,height);   
-    SDL_LockYUVOverlay(overlay);
+      SDL_LockYUVOverlay(overlay);
 
     camera.getImageData(data);
-    memcpy(overlay->pixels[0], (Uint8*)(data.buffer), 2*data.bufferSize);
+    memcpy(overlay->pixels[0], (Uint8*)(data.buffer), data.bufferSize);
 
 
 
@@ -88,7 +91,7 @@ int main (int argc, char **argv)
 
   }
 
-  SDL_FreeYUVOverlay(overlay);
+   SDL_FreeYUVOverlay(overlay);
   SDL_Quit();
 
 

@@ -18,10 +18,17 @@ public:
   //! camera identified by OS (dev/video0 or dev/raw13940).
   //! The default image resolution will be set to minimum resoltion supported by the camera
   //! E.g. for format Monochrom, bpp value might be set to 8 bits/px and resoltuion 160x120.
-
+  /*!
+   * \param formatID is a string representation of the desired image format. It can be YUV, RGB, YUYV etc
+   */
   ImageFormat(std::string &formatID);
   //! Instantiate a format object bound to a camera with the specified handle and set 
   //! properties of obtained from the format indentifier
+  /*!
+   * \param device is a structure which describes a camera (name, path to device node, plugin type etc)
+   * \param handle is a handle to the given camera device
+   * \param formatIdentifier is a string representation of the desired image format. It can be YUV, RGB, YUYV etc
+   */
   ImageFormat(unicap_device_t* device, unicap_handle_t *handle, std::string formatIdentifier);
   //! Copy constructor
   ImageFormat(ImageFormat &format);
@@ -30,10 +37,20 @@ public:
   //! Class destructor
   ~ImageFormat();
   //! Returns string value for current image format identigier (e.g. JPEG, MJPEG, YUYV )
+  /*!
+   * \param formatName is a string representation of the desired image format. It can be YUV, RGB, YUYV etc
+   */
   bool getImageFormatStringName(std::string &formatName);
-  //! Returns FOURCC value for current image format 
+  //! Returns FOURCC value for current image format
+  /*!
+   * \param fourcc is four character code
+   */
   bool getImageFormatFOURCC(unsigned int &fourcc);
   //! Returns image resolution for current image format
+  /*!
+   * \param width is an image width for the current resolution supported by the current format
+   * \param height is an image height for the current resolution supported by the current format
+   */
   bool getImageFormatResolution(int &width, int &height);
   //! Returns color model used by the format (e.g. MJPEG might be using RGB model)
   bool getImageFormatColorModel(std::string &colorModel);
@@ -41,24 +58,34 @@ public:
   bool getImageFormatResolutionList();
   //! Returns color model list supported by the camera
   bool getImageFormatColorModelList();
-
+  //! Returns buffer size in bytes for the current format and resolution
+  /*!
+   * \param size is the amount of memory allocated for the current format and resolution
+   */
   bool getImageFormatSize(int &size);
-
+  //! Sets the image resolution
+  /*!
+   * \param width is a wanted image width for the resolution
+   * \param height is a wanted image height for the resolution
+   */
   bool setImageFormatResolution(int &width, int &height);
+  
   bool setImageFormatColorModel(std::string &colorModel);
 
 private:
+  //!Returns the list of the available formats for the given camera in a vector
   bool getListOfFormats();
 
-  //chosen or current device image resolution
+  //!chosen or current device image resolution
   unicap_rect_t *currentResolution;
 
-  //number of possible image resolutions supported by the device;
-  // this number and number of elements in listOfResolutions should be equal;
-  //currently the latter is set statically and will be changed in the future.
+  /*!Number of possible image resolutions supported by the device;
+   *this number and number of elements in listOfResolutions should be equal;
+   *currently the latter is set statically and will be changed in the future.
+   */
   int numberOfResolutions;
 
-  // array of possible sizes/resolutions supported by a camera;
+  //!Array of possible sizes/resolutions supported by a camera;
   std::vector<unicap_rect_t> listOfResolutions;
 
   
@@ -67,22 +94,22 @@ private:
   unicap_format_t *currentFormat;
      
 
-  //format identifier is string describing color model/codec model, e.g. RGB, YUV, MJPEG etc
+  //!Format identifier is string describing color model/codec model, e.g. RGB, YUV, MJPEG etc
   std::string formatIdentifier;
-  // fourcc(hex) representation of formatIdentifier
+  //!Fourcc(hex) representation of formatIdentifier
   unsigned int fourcc;    
   int bitsPerPixel;
-  //defines what portion of bits is significant in pixel data
+  //!Defines what portion of bits is significant in pixel data
   unicap_format_flags_t flags;
 
-  // available/supported buffer types for the given device
+  //!Available/supported buffer types for the given device
   unsigned int bufferTypes; 
   
-  // current/chosen memory buffer to which image is read/write
-  // there are two types user and system buffers
+  //!Current/chosen memory buffer to which image is read/write
+  //!There are two types user and system buffers
   unicap_buffer_type_t currentBufferType;
-  // amount of memory in bytes required by the chosen resolution and color model
-  // widthxheightx(bpp/8.0)
+  //!Amount of memory in bytes required by the chosen resolution and color model
+  //!widthxheightx(bpp/8.0)
   size_t bufferSize;
   unicap_status_t  returnStatus;
   unicap_handle_t *deviceHandle;
