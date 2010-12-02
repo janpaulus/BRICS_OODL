@@ -1333,7 +1333,7 @@ ${inlines}
 	abstract preserve_cpp_body_indent const cpp_virtual protected explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	preserve_java_body_indent 
@@ -1450,7 +1450,7 @@ ${inlines}
 	abstract preserve_cpp_body_indent const cpp_virtual protected explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	preserve_java_body_indent 
@@ -1597,7 +1597,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -1754,7 +1754,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -1911,7 +1911,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2068,7 +2068,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2300,7 +2300,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2479,7 +2479,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2646,7 +2646,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2803,7 +2803,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
 "
 	preserve_java_body_indent 
@@ -2960,7 +2960,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -3144,7 +3144,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -3328,7 +3328,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -3512,7 +3512,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -3696,7 +3696,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -3879,7 +3879,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4062,7 +4062,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4245,7 +4245,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4429,7 +4429,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4612,7 +4612,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4795,7 +4795,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -4978,7 +4978,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -5161,7 +5161,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -5344,7 +5344,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -5528,7 +5528,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -5692,7 +5692,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -5855,7 +5855,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6038,7 +6038,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6221,7 +6221,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6404,7 +6404,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6587,7 +6587,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6770,7 +6770,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -6953,7 +6953,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7136,7 +7136,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7320,7 +7320,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7504,7 +7504,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7688,7 +7688,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7849,7 +7849,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -7997,7 +7997,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8146,7 +8146,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8295,7 +8295,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8444,7 +8444,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8593,7 +8593,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8742,7 +8742,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -8891,7 +8891,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -9040,7 +9040,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
@@ -9189,7 +9189,7 @@ ${inlines}
 	preserve_cpp_body_indent const private explicit_return_type "void"
 	nparams 2
 	  param out name "message" explicit_type "YouBotSlaveMailboxMsg"
-	  param in name "msgType" explicit_type "MailboxMsgType"
+	  param in name "msgType" explicit_type "TMCLCommandNumber"
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{

@@ -12,11 +12,12 @@ diagrams
     953 715 100 4 108 0
 end
 show_stereotypes
-selected class_ref 266481 // CalibrationDirection
+selected operation_ref 435185 // getYouBotMailboxMsg
 open
   classview_ref 134641 // Joint
   class_ref 210929 // ParameterType
   class_ref 238321 // Parameter
+  class_ref 293105 // SpeedControlSwitchingThreshold
   class_ref 190577 // EthercatMaster
   class_ref 286321 // YouBotManipulator
   class_ref 286193 // YouBotBase
