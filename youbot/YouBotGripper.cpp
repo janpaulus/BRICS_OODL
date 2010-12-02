@@ -1,13 +1,13 @@
 
 #include "youbot/YouBotGripper.hpp"
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 namespace brics_oodl {
 
 YouBotGripper::YouBotGripper(const unsigned int jointNo) {
   // Bouml preserved body begin 0005EFF1
     this->jointNumber = jointNo;
     this->mailboxMsgRetries = 30;
-    this->timeTillNextMailboxUpdate = YouBot::getInstance().timeTillNextEthercatUpdate * 2;
+    this->timeTillNextMailboxUpdate = EthercatMaster::getInstance().timeTillNextEthercatUpdate * 2;
     this->maxTravelDistance = 0.023 * meter;
     this->maxEncoderValue = 67000;
     this->barSpacingOffset = 0 * meter;
@@ -64,7 +64,7 @@ void YouBotGripper::setConfigurationParameter(const CalibrateGripper& parameter)
         YouBotSlaveMsg messageBuffer;
         messageBuffer.stctOutput.controllerMode = MOTOR_STOP;
         messageBuffer.stctOutput.positionOrSpeed = 0;
-        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+        EthercatMaster::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
         this->lastGripperPosition = 0 * meter;
 
         //stop Gripper motor
@@ -153,12 +153,12 @@ bool YouBotGripper::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailbo
     bool unvalid = true;
     unsigned int retry = 0;
 
-    YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+    EthercatMaster::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
 
     SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
-      YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+      EthercatMaster::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
       /*    LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
                   << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
                   << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
@@ -189,12 +189,12 @@ bool YouBotGripper::retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& messa
     bool unvalid = true;
     unsigned int retry = 0;
 
-    YouBot::getInstance().setMailboxMsgBuffer(message, this->jointNumber);
+    EthercatMaster::getInstance().setMailboxMsgBuffer(message, this->jointNumber);
 
     SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
-      YouBot::getInstance().getMailboxMsgBuffer(message, this->jointNumber);
+      EthercatMaster::getInstance().getMailboxMsgBuffer(message, this->jointNumber);
       /*   LOG(trace) << "CommandNumber " << (int) message.stctInput.commandNumber
                  << " moduleAddress " << (int) message.stctInput.moduleAddress
                  << " replyAddress " << (int) message.stctInput.replyAddress

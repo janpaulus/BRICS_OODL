@@ -28,26 +28,28 @@ SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/ExceptionOODL.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
-  ${CMAKE_HOME_DIRECTORY}/youbot/YouBot.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotBase.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotManipulator.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripper.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotGripperParameter.cpp
-  ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
+  
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointParameter.cpp
+  ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJointParameterReadOnly.cpp
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematic.cpp
   ${CMAKE_HOME_DIRECTORY}/base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.cpp
 )
 
 SET(OODL_YOUBOT_HEADERS
   EthercatMaster.hpp
-  YouBot.hpp
   YouBotGripper.hpp
   YouBotGripperParameter.hpp
   YouBotBase.hpp
   YouBotManipulator.hpp
   YouBotJoint.hpp
+  YouBotJointParameterReadOnly.hpp
+  YouBotJointParameter.hpp
   YouBotSlaveMailboxMsg.hpp
   YouBotSlaveMsg.hpp
   ProtocolDefinitions.hpp

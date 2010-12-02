@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 21
+  revision 24
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -62,7 +62,7 @@ ${namespace_end}
 "
       cpp_src "${description}
 #include \"youbot/YouBotJoint.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 ${namespace_start}
 ${members}
 ${namespace_end}"
@@ -71,7 +71,7 @@ ${namespace_end}"
       end
     end
 
-    artifact 175345 "YouBot"
+    artifact 175345 "EthercatMaster"
       stereotype "source"
       cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
 #define ${NAMESPACE}_${NAME}_H
@@ -80,19 +80,17 @@ ${description}
 #include <vector>
 #include <sstream>
 #include <string>
+#include <cstdio>
+#include <stdexcept>
+#include <iostream>
 #include <boost/thread.hpp>
 #include \"rude/config.h\"
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
-#include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
-#include \"youbot/EthercatMaster.hpp\"
-#include \"youbot/YouBotJoint.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
-#include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"
-#include \"base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp\"
 
 extern \"C\"{
 #include <ethercattype.h>
@@ -105,14 +103,24 @@ ${namespace_end}
 #endif
 "
       cpp_src "${description}
-#include \"youbot/YouBot.hpp\"
+extern \"C\" {
+#include \"ethercattype.h\"
+#include \"nicdrv.h\"
+#include \"ethercatbase.h\"
+#include \"ethercatmain.h\"
+#include \"ethercatconfig.h\"
+#include \"ethercatcoe.h\"
+#include \"ethercatdc.h\"
+#include \"ethercatprint.h\"
+}
+#include \"youbot/EthercatMaster.hpp\"
 
 ${namespace_start}
-YouBot* YouBot::instance = 0;
+EthercatMaster* EthercatMaster::instance = 0;
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 190577 // YouBot
+	class_ref 190577 // EthercatMaster
       end
     end
 
@@ -147,7 +155,7 @@ ${namespace_end}
 "
       cpp_src "${description}
 #include \"youbot/YouBotGripper.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 ${namespace_start}
 ${members}
 ${namespace_end}"
@@ -193,6 +201,48 @@ ${namespace_end}"
       end
     end
 
+    artifact 222065 "YouBotJointParameterReadOnly"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${description}
+#include <vector>
+#include <sstream>
+#include \"generic/Logger.hpp\"
+#include \"generic/Units.hpp\"
+#include \"generic/Time.hpp\"
+#include \"generic/ExceptionOODL.hpp\"
+#include \"generic-joint/JointParameter.hpp\"
+#include \"youbot/ProtocolDefinitions.hpp\"
+#include \"youbot/YouBotSlaveMsg.hpp\"
+#include \"youbot/YouBotSlaveMailboxMsg.hpp\"
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${description}
+#include \"youbot/YouBotJointParameterReadOnly.hpp\"
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 210929 // ParameterType
+	class_ref 296049 // YouBotJointParameterReadOnly
+	class_ref 296177 // ArePIDcontrollersActive
+	class_ref 296305 // CommutationMode
+	class_ref 296433 // PWMSchemeBlockCommutation
+	class_ref 296561 // MotorContollerGearRatio
+	class_ref 296689 // MotorCoilResistance
+	class_ref 296817 // InitializationMode
+	class_ref 296945 // EncoderResolution
+	class_ref 297073 // ReversingEncoderDirection
+	class_ref 297201 // MotorPoles
+	class_ref 297329 // HallSensorPolarityReversal
+      end
+    end
+
     artifact 208881 "YouBotJointParameter"
       stereotype "source"
       cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
@@ -207,6 +257,7 @@ ${description}
 #include \"rude/config.h\"
 #include \"generic/ExceptionOODL.hpp\"
 #include \"generic-joint/JointParameter.hpp\"
+#include \"youbot/YouBotJointParameterReadOnly.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
@@ -222,18 +273,42 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 266481 // CalibrationDirection
-	class_ref 210929 // ParameterType
 	class_ref 238577 // YouBotJointParameter
 	class_ref 251889 // JointName
 	class_ref 251761 // GearRatio
 	class_ref 252017 // EncoderTicksPerRound
 	class_ref 252145 // InverseMovementDirection
-	class_ref 245105 // MaximumPositioningSpeed
-	class_ref 252273 // PParameterFirstParametersPositionControl
 	class_ref 266353 // CalibrateJoint
 	class_ref 273009 // JointLimits
 	class_ref 279537 // StopJoint
 	class_ref 279665 // NoMoreAction
+	class_ref 245105 // MaximumPositioningSpeed
+	class_ref 293233 // MaximumMotorCurrent
+	class_ref 293105 // SpeedControlSwitchingThreshold
+	class_ref 293361 // MotorAcceleration
+	class_ref 295921 // PositionControlSwitchingThreshold
+	class_ref 252273 // PParameterFirstParametersPositionControl
+	class_ref 292849 // IParameterFirstParametersPositionControl
+	class_ref 292977 // DParameterFirstParametersPositionControl
+	class_ref 293489 // PIDControlTime
+	class_ref 293617 // IClippingParameterFirstParametersPositionControl
+	class_ref 293745 // PParameterFirstParametersSpeedControl
+	class_ref 293873 // IParameterFirstParametersSpeedControl
+	class_ref 294001 // DParameterFirstParametersSpeedControl
+	class_ref 294129 // IClippingParameterFirstParametersSpeedControl
+	class_ref 294257 // RampGeneratorSpeedAndPositionControl
+	class_ref 294385 // ReinitializationSinusoidalCommutation
+	class_ref 294513 // PParameterSecondParametersPositionControl
+	class_ref 294641 // IParameterSecondParametersPositionControl
+	class_ref 294769 // DParameterSecondParametersPositionControl
+	class_ref 294897 // IClippingParameterSecondParametersPositionControl
+	class_ref 295025 // PParameterSecondParametersSpeedControl
+	class_ref 295153 // IParameterSecondParametersSpeedControl
+	class_ref 295281 // DParameterSecondParametersSpeedControl
+	class_ref 295409 // IClippingParameterSecondParametersSpeedControl
+	class_ref 295537 // BlockCommutationMaximumSpeed
+	class_ref 295665 // CommutationCompensationClockwise
+	class_ref 295793 // CommutationCompensationCounterClockwise
       end
     end
 
@@ -251,7 +326,7 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 #include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
 ${namespace_start}
@@ -284,7 +359,7 @@ ${description}
 #include \"generic/Time.hpp\"
 #include \"generic/ExceptionOODL.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
-#include \"youbot/YouBot.hpp\"
+#include \"youbot/EthercatMaster.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp\"
 ${namespace_start}

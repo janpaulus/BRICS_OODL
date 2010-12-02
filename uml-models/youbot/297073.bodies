@@ -1,0 +1,17 @@
+class ReversingEncoderDirection
+!!!464625.cpp!!!	ReversingEncoderDirection()
+    this->name = "ReversingEncoderDirection";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+!!!464881.cpp!!!	getParameter(out parameter : uint) : void
+    parameter = this->value;
+!!!465009.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 251; //ReversingEncoderDirection
+    message.stctOutput.value = value; //TODO do convertion
+
+!!!467953.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+    if (message.stctOutput.commandNumber == message.stctInput.commandNumber && message.stctInput.status == TMCL_STATUS_OK) {
+      this->value = message.stctInput.value; //TODO do convertion
+    }

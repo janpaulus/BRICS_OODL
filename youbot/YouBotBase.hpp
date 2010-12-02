@@ -11,14 +11,14 @@
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
 #include "youbot/YouBotJoint.hpp"
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematicConfiguration.hpp"
 namespace brics_oodl {
 
 class YouBotBase {
   public:
-    YouBotBase(const std::string name);
+    YouBotBase(const std::string name, const std::string configFilePath = "../config/");
 
     virtual ~YouBotBase();
 
@@ -55,7 +55,11 @@ class YouBotBase {
 
     rude::Config configfile;
 
-    YouBotJoint* joints[4];
+    std::vector<YouBotJoint> joints;
+
+    std::string configFilePath;
+
+    std::string ethercatConfigFileName;
 
 };
 

@@ -27,26 +27,40 @@ class YouBotJoint : public Joint {
     ~YouBotJoint();
 
 
-  private:
+  protected:
     virtual void setConfigurationParameter(const JointParameter& parameter);
 
     virtual void getConfigurationParameter(JointParameter& parameter);
 
 
   public:
-    void setConfigurationParameter(const YouBotJointParameter& parameter);
+    void getConfigurationParameter(YouBotJointParameterReadOnly& parameter);
 
     void getConfigurationParameter(YouBotJointParameter& parameter);
 
-    void setConfigurationParameter(CalibrateJoint& parameter);
+    void setConfigurationParameter(const YouBotJointParameter& parameter);
 
-    void setConfigurationParameter(InverseMovementDirection& parameter);
+    void getConfigurationParameter(JointName& parameter);
 
-    void setConfigurationParameter(JointLimits& parameter);
+    void setConfigurationParameter(const JointName& parameter);
 
-    void setConfigurationParameter(StopJoint& parameter);
+    void getConfigurationParameter(GearRatio& parameter);
 
-    void setConfigurationParameter(NoMoreAction& parameter);
+    void setConfigurationParameter(const GearRatio& parameter);
+
+    void getConfigurationParameter(EncoderTicksPerRound& parameter);
+
+    void setConfigurationParameter(const EncoderTicksPerRound& parameter);
+
+    void setConfigurationParameter(const CalibrateJoint& parameter);
+
+    void setConfigurationParameter(const InverseMovementDirection& parameter);
+
+    void setConfigurationParameter(const JointLimits& parameter);
+
+    void setConfigurationParameter(const StopJoint& parameter);
+
+    void setConfigurationParameter(const NoMoreAction& parameter);
 
 
   protected:

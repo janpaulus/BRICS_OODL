@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <signal.h>
-#include "youbot/YouBot.hpp"
 #include "youbot/YouBotJointParameter.hpp"
 #include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotBase.hpp"
@@ -72,6 +71,18 @@ int main() {
   //  myYouBot.getArm1Joint(5).setData(setVel);
     LOG(trace) << "move to pose: " << jAngle.angle;
     myYouBotManipulator.getArmJoint(jointNo).setData(jAngle);
+
+    EncoderResolution encRes;
+
+    MotorContollerGearRatio gearRatio;
+
+    myYouBotManipulator.getArmJoint(1).getConfigurationParameter(encRes);
+    myYouBotManipulator.getArmJoint(1).getConfigurationParameter(gearRatio);
+    unsigned int enc;
+    unsigned int gear;
+ //   encRes.getParameter(enc);
+ //   gearRatio.getParameter(gear);
+ //   LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
 
 
     while (running) {

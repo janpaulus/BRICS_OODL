@@ -2,7 +2,7 @@ class YouBotGripper
 !!!389105.cpp!!!	YouBotGripper(in jointNo : uint)
     this->jointNumber = jointNo;
     this->mailboxMsgRetries = 30;
-    this->timeTillNextMailboxUpdate = YouBot::getInstance().timeTillNextEthercatUpdate * 2;
+    this->timeTillNextMailboxUpdate = EthercatMaster::getInstance().timeTillNextEthercatUpdate * 2;
     this->maxTravelDistance = 0.023 * meter;
     this->maxEncoderValue = 67000;
     this->barSpacingOffset = 0 * meter;
@@ -33,7 +33,7 @@ class YouBotGripper
         YouBotSlaveMsg messageBuffer;
         messageBuffer.stctOutput.controllerMode = MOTOR_STOP;
         messageBuffer.stctOutput.positionOrSpeed = 0;
-        YouBot::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
+        EthercatMaster::getInstance().setMsgBuffer(messageBuffer, this->jointNumber);
         this->lastGripperPosition = 0 * meter;
 
         //stop Gripper motor
@@ -82,12 +82,12 @@ class YouBotGripper
     bool unvalid = true;
     unsigned int retry = 0;
 
-    YouBot::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+    EthercatMaster::getInstance().setMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
 
     SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
-      YouBot::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
+      EthercatMaster::getInstance().getMailboxMsgBuffer(mailboxMsgBuffer, this->jointNumber);
       /*    LOG(trace) << "CommandNumber " << (int) mailboxMsgBuffer.stctInput.commandNumber
                   << " moduleAddress " << (int) mailboxMsgBuffer.stctInput.moduleAddress
                   << " replyAddress " << (int) mailboxMsgBuffer.stctInput.replyAddress
@@ -114,12 +114,12 @@ class YouBotGripper
     bool unvalid = true;
     unsigned int retry = 0;
 
-    YouBot::getInstance().setMailboxMsgBuffer(message, this->jointNumber);
+    EthercatMaster::getInstance().setMailboxMsgBuffer(message, this->jointNumber);
 
     SLEEP_MILLISEC(timeTillNextMailboxUpdate);
 
     do {
-      YouBot::getInstance().getMailboxMsgBuffer(message, this->jointNumber);
+      EthercatMaster::getInstance().getMailboxMsgBuffer(message, this->jointNumber);
       /*   LOG(trace) << "CommandNumber " << (int) message.stctInput.commandNumber
                  << " moduleAddress " << (int) message.stctInput.moduleAddress
                  << " replyAddress " << (int) message.stctInput.replyAddress

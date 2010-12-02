@@ -2,16 +2,19 @@
 #include "youbot/YouBotManipulator.hpp"
 namespace brics_oodl {
 
-YouBotManipulator::YouBotManipulator(const std::string name) {
+YouBotManipulator::YouBotManipulator(const std::string name, const std::string configFilePath) {
   // Bouml preserved body begin 00067F71
 
-  string configFilename;
-  configFilename = "../config/";
-  configFilename.append(name);
-  configFilename.append(".cfg");
+  string filename;
+  filename = configFilePath;
+  filename.append(name);
+  filename.append(".cfg");
 
-  if(!configfile.load(configFilename.c_str()))
-      throw ExceptionOODL(configFilename + " file no found");
+  this->configFilePath = configFilePath;
+  this->ethercatConfigFileName = "youbot-ethercat.cfg";
+
+  if(!configfile.load(filename.c_str()))
+      throw ExceptionOODL(filename + " file no found");
 
 
   this->initializeJoints();
@@ -32,7 +35,7 @@ YouBotJoint& YouBotManipulator::getArmJoint(const unsigned int armJointNumber) {
     if (armJointNumber <= 0 || armJointNumber > 5) {
       throw ExceptionOODL("Invalid Joint Number");
     }
-    return *joints[armJointNumber - 1];
+    return joints[armJointNumber - 1];
   // Bouml preserved body end 0004F7F1
 }
 
@@ -51,12 +54,55 @@ void YouBotManipulator::initializeJoints() {
 
     LOG(info) << "Initializing Joints";
 
+
+    //get number of slaves
+    unsigned int noSlaves = EthercatMaster::getInstance(this->ethercatConfigFileName, this->configFilePath).getNumberOfSlaves();
+
+
+    if(noSlaves < 5){
+      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+    }
+
     configfile.setSection("JointTopology");
-    joints[0] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint1")));
-    joints[1] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint2")));
-    joints[2] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint3")));
-    joints[3] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint4")));
-    joints[4] = &(YouBot::getInstance().getJoint(configfile.getIntValue("ManipulatorJoint5")));
+
+    unsigned int slaveNumber = configfile.getIntValue("ManipulatorJoint1");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint2");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint3");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint4");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+    slaveNumber = configfile.getIntValue("ManipulatorJoint5");
+    if(slaveNumber  <= noSlaves){
+      joints.push_back(YouBotJoint(slaveNumber));
+    }else{
+      throw ExceptionOODL("The ethercat slave number is not available!");
+    }
+
+
+
+    
 
     //Configure Joint Parameters
     std::string jointName;
@@ -79,11 +125,10 @@ void YouBotManipulator::initializeJoints() {
       ticksPerRound.setParameter(configfile.getIntValue("EncoderTicksPerRound"));
       inverseDir.setParameter(configfile.getBoolValue("InverseMovementDirection"));
 
-      joints[i]->setConfigurationParameter(jName);
-      joints[i]->setConfigurationParameter(gearRatio);
-      joints[i]->setConfigurationParameter(ticksPerRound);
-      joints[i]->setConfigurationParameter(inverseDir);
-
+      joints[i].setConfigurationParameter(jName);
+      joints[i].setConfigurationParameter(gearRatio);
+      joints[i].setConfigurationParameter(ticksPerRound);
+      joints[i].setConfigurationParameter(inverseDir);
     }
 
 
@@ -104,7 +149,7 @@ void YouBotManipulator::initializeJoints() {
       doCalibration = configfile.getBoolValue("DoCalibration");
 
       jLimits.setParameter(configfile.getIntValue("LowerLimit_[encoderTicks]"), configfile.getIntValue("UpperLimit_[encoderTicks]"));
-      joints[i]->setConfigurationParameter(jLimits);
+      joints[i].setConfigurationParameter(jLimits);
 
       current = configfile.getDoubleValue("CalibrationMaxCurrent_[ampere]") * ampere;
       std::string direction = configfile.getStringValue("CalibrationDirection");
@@ -118,11 +163,9 @@ void YouBotManipulator::initializeJoints() {
       } else {
         throw ExceptionOODL("Wrong calibration direction for " + jointName);
       }
-      joints[i]->setConfigurationParameter(calibrateJointVec[i]);
+      joints[i].setConfigurationParameter(calibrateJointVec[i]);
     }
- //   this->getArm1Joint(2).setConfigurationParameter(calibrateJointVec[1]);
 
-    SLEEP_MILLISEC(500); //the youbot likes it so
 
 
     //Initializing Gripper

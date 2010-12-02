@@ -1,55 +1,135 @@
-/*
- * This is the Ethercat master class based on the SOEM package
- *
- * @author: Koen Buys, Ruben Smits, Jan Paulus
- *
- *
- *
- */
-#ifndef ETHERCAT_MASTER_H
-#define ETHERCAT_MASTER_H
+#ifndef BRICS_OODL_ETHERCATMASTER_H
+#define BRICS_OODL_ETHERCATMASTER_H
 
-extern "C" {
+
+#include <vector>
+#include <sstream>
+#include <string>
+#include <cstdio>
+#include <stdexcept>
+#include <iostream>
+#include <boost/thread.hpp>
+#include "rude/config.h"
+#include "generic/Logger.hpp"
+#include "generic/Units.hpp"
+#include "generic/Time.hpp"
+#include "generic/ExceptionOODL.hpp"
+#include "youbot/YouBotSlaveMsg.hpp"
+#include "youbot/YouBotSlaveMailboxMsg.hpp"
+
+extern "C"{
 #include <ethercattype.h>
 #include <ethercatmain.h>
 }
-#include <vector>
-#include "generic/ExceptionOODL.hpp"
-#include "generic/Logger.hpp"
 
 namespace brics_oodl {
 
-    class EthercatMaster {
-        int nr_slaves_; //contains the number of found slave on the EC bus
-        char IOmap_[4096];
+//have to be a singleton in the system
+class EthercatMaster {
+friend class YouBotJoint;
+friend class YouBotGripper;
+  private:
+    static EthercatMaster* instance;
 
-    public:
+    EthercatMaster();
 
-        EthercatMaster();
-        ~EthercatMaster();
-        /**
-         * Initialise the master and bind the socket to ifname
-         *
-         * @param ifname ethernet interface used to connect to ethercat slaves
-         *
-         * @return error code
-         */
-        bool init(const char *ifname);
-        /**
-         * send updated data from all drivers to the slaves
-         *
-         */
-        bool send();
-        /**
-         * receive data from slaves and update drivers data
-         *
-         * @param waiting_time maximal time to wait for data
-         */
-        void receive();
-        void update();
-        void close();
+    EthercatMaster(const EthercatMaster& ) {};
 
-    };
+    ~EthercatMaster();
+
+
+  public:
+    static EthercatMaster& getInstance(const std::string configFile = "youbot-ethercat.cfg", const std::string configFilePath = "../config/");
+
+    static void destroy();
+
+    ///return the quantity of joints
+    unsigned int getNumberOfSlaves() const;
+
+    void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
+
+
+  private:
+    void initializeEthercat();
+
+    bool closeEthercat();
+
+    void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
+
+    YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
+
+    void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
+
+    void getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber);
+
+    bool sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg);
+
+    bool receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg);
+
+    void updateSensorActorValues();
+
+    std::string ethernetDevice;
+
+    ec_mbxbuft mailboxBuffer;
+
+    //in milliseconds
+    unsigned int timeTillNextEthercatUpdate;
+
+    boost::mutex mutexDataOne;
+
+    boost::mutex mutexDataTwo;
+
+    boost::thread_group threads;
+
+    volatile bool stopThread;
+
+    std::vector<YouBotSlaveMsg> firstBufferVector;
+
+    std::vector<YouBotSlaveMsg> secondBufferVector;
+
+    unsigned int nrOfSlaves;
+
+    volatile bool newDataFlagOne;
+
+    volatile bool newDataFlagTwo;
+
+    std::vector<bool> newOutputDataFlagOne;
+
+    std::vector<bool> newOutputDataFlagTwo;
+
+    std::vector<OutputBuffer*> ethercatOutputBufferVector;
+
+    std::vector<InputBuffer*> ethercatInputBufferVector;
+
+    std::vector<YouBotSlaveMailboxMsg> firstMailboxBufferVector;
+
+    std::vector<YouBotSlaveMailboxMsg> secondMailboxBufferVector;
+
+    std::vector<bool> newMailboxDataFlagOne;
+
+    std::vector<bool> newMailboxDataFlagTwo;
+
+    ec_mbxbuft mailboxBufferSend;
+
+    unsigned int mailboxTimeout;
+
+    ec_mbxbuft mailboxBufferReceive;
+
+    std::vector<bool> newMailboxInputDataFlagOne;
+
+    std::vector<bool> newMailboxInputDataFlagTwo;
+
+    rude::Config configfile;
+
+    std::vector<ec_slavet> ethercatSlaveInfo;
+
+    char IOmap_[4096];
+
+    unsigned int ethercatTimeout;
+
+    static std::string configFileName;
+
+};
 
 } // namespace brics_oodl
 #endif

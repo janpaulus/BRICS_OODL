@@ -10,14 +10,14 @@
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
 #include "generic/ExceptionOODL.hpp"
-#include "youbot/YouBot.hpp"
+#include "youbot/EthercatMaster.hpp"
 #include "youbot/YouBotGripper.hpp"
 #include "youbot/YouBotJoint.hpp"
 namespace brics_oodl {
 
 class YouBotManipulator {
   public:
-    YouBotManipulator(const std::string name);
+    YouBotManipulator(const std::string name, const std::string configFilePath = "../config/");
 
     virtual ~YouBotManipulator();
 
@@ -33,9 +33,13 @@ class YouBotManipulator {
 
     rude::Config configfile;
 
-    YouBotJoint* joints[5];
+    std::vector<YouBotJoint> joints;
 
     std::vector<YouBotGripper> gripperVector;
+
+    std::string configFilePath;
+
+    std::string ethercatConfigFileName;
 
 };
 
