@@ -15,9 +15,11 @@ DEPEND_USE+=		rubygems
 DEPEND_ABI.rubygems?=	rubygems>=1.8
 
 SYSTEM_SEARCH.rubygems=		\
-	/usr/bin/gem
+	/bin/gem
 
 SYSTEM_PKG.Linux.rubygems=rubygems
+
+include ../sysdep/ruby.mk
 
 endif 
 
