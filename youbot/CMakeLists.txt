@@ -2,6 +2,7 @@
 SET( OODL_YOUBOT_VERSION 0.01 )
 
 add_subdirectory(applications)
+add_subdirectory(testing)
 
 FIND_PACKAGE(Soem REQUIRED)
 IF (SOEM_FOUND)
