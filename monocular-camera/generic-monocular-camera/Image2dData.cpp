@@ -1,16 +1,20 @@
 #include "Image2dData.hpp"
 
 
-Image2dData::Image2dData(unsigned char *bufferStart = NULL, size_t length = 0)
-{
-  buffer = bufferStart;
-  bufferSize = length; 
-}
+//buffer size is not only dependent on image resolution but also color depths (bpp)
+// so need to think over how this should be done
 
 Image2dData::Image2dData()
 {
   buffer = NULL;
-  bufferSize = 0; 
+  bufferSize = 0;
+}
+
+
+Image2dData::Image2dData(unsigned char *bufferStart = NULL, size_t length = 0)
+{
+  buffer = bufferStart;
+  bufferSize = length;
 }
 
 Image2dData::Image2dData(int& width, int& height)
@@ -33,7 +37,7 @@ unsigned char* Image2dData::getBuffer()
 {
   if(buffer != NULL)
   {
-    
+
     return buffer;
   }
   else
