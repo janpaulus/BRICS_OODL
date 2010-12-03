@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" href="$_you_bot_gripper_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripper.hpp" alt="" coords="116,237,436,267"/>
+<area shape="rect" href="$_gripper_8hpp.html" title="/home/jan/BRICS_OODL/generic&#45;gripper/Gripper.hpp" alt="" coords="27,83,349,112"/>
+<area shape="rect" href="$_one_d_o_f_gripper_8hpp.html" title="/home/jan/BRICS_OODL/one&#45;dof&#45;gripper/OneDOFGripper.hpp" alt="" coords="201,160,577,189"/>
+<area shape="rect" href="$_one_d_o_f_gripper_data_8hpp.html" title="/home/jan/BRICS_OODL/one&#45;dof&#45;gripper/OneDOFGripperData.hpp" alt="" coords="424,83,827,112"/>
+<area shape="rect" href="$_test_8cpp.html" title="/home/jan/BRICS_OODL/youbot/applications/Test.cpp" alt="" coords="5,392,341,421"/>
+<area shape="rect" href="$_you_bot_gripper_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripper.cpp" alt="" coords="116,315,436,344"/>
+<area shape="rect" href="$_you_bot_manipulator_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotManipulator.hpp" alt="" coords="460,315,807,344"/>
+<area shape="rect" href="$_you_bot_manipulator_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotManipulator.cpp" alt="" coords="460,392,807,421"/>
+</map>

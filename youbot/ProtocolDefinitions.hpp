@@ -1,21 +1,39 @@
-/* 
- * File:   ProtocolDefinitions.hpp
- * Author: jan
- *
- * Created on November 18, 2010, 4:10 PM
- */
+
 
 /*! \mainpage BRICS OODL youBot API
  *
  * \section intro_sec Introduction
  *
- * This is the introduction.
+ * The youBot API give you complite joint level access to the youBot joints. Every youBot joint is represented as a brics_oodl::YouBotJoint class in the API.
+ * At this stage we make no difference if it is a base joint which powers a wheel or a manipulator joint.
+ *
+ * By the classes brics_oodl::YouBotBase and brics_oodl::YouBotManipulator it is possible to get access to a brics_oodl::YouBotJoint instance for a particular joint.
+ *
+ * To set and setpoint or read some sensors form the joints you have to use the brics_oodl::JointData classes.
+ * Which could be for instance brics_oodl::JointVelocitySetpoint or brics_oodl::JointSensedCurrent.
+ *
+ * To configure parameters of a joint you have to use the JointParameter classes.
+ * Which could be for instance brics_oodl::MaximumPositioningSpeed.
+ *
  *
  * \section install_sec Installation
+ * System requirements:
+ *  - Linux
+ *  - Ethernet adapter
+ *  - Root access to the ethernet adapter
+ * 
+ * These libaries are required by the BRICS OODL youBot API:
+ * - Simple Open EtherCAT master http://soem.berlios.de
+ * - RudeConfig Open Source C++ Config File Library http://rudeserver.com/config/api.html
+ * - C++ logging library being proposed to the Boost library http://sourceforge.net/projects/boost-log
+ * - Boost C++ Libraries http://www.boost.org
  *
- * \subsection step1 Step 1: Opening the box
+ * You can fetch, compile and install these libary by hand or you can use robotpkg a software packaging tool to do this automaticly.
+ * On this site you can find an instruction how to use robopkg: https://github.com/janpaulus/BRICS_Packages/wiki
+ * 
  *
- * etc...
+ *
+ *
  */
 
 

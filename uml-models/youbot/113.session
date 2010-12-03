@@ -1,11 +1,11 @@
-window_sizes 1672 972 482 1184 889 0
+window_sizes 1680 975 482 1192 892 0
 diagrams
   classdiagram_ref 141681 // JointParameter
     953 715 100 1 0 127
   classdiagram_ref 141553 // JointData
     953 715 100 2 0 157
   active  classdiagram_ref 141425 // JointInterface
-    1184 889 100 1 252 0
+    1192 892 100 1 252 0
   classdiagram_ref 167793 // YouBot
     1192 894 100 2 96 0
   classdiagram_ref 154737 // Gripper

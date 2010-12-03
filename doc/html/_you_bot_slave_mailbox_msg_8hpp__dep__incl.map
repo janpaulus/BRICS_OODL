@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" href="$_ethercat_master_8hpp.html" title="/home/jan/BRICS_OODL/youbot/EthercatMaster.hpp" alt="" coords="359,237,684,267"/>
+<area shape="rect" href="$_you_bot_gripper_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripper.hpp" alt="" coords="1440,237,1760,267"/>
+<area shape="rect" href="$_you_bot_gripper_parameter_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripperParameter.hpp" alt="" coords="1717,160,2096,189"/>
+<area shape="rect" href="$_you_bot_joint_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJoint.hpp" alt="" coords="708,237,1015,267"/>
+<area shape="rect" href="$_you_bot_joint_parameter_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJointParameter.hpp" alt="" coords="829,160,1195,189"/>
+<area shape="rect" href="$_you_bot_joint_parameter_read_only_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJointParameterReadOnly.hpp" alt="" coords="1049,83,1473,112"/>
+<area shape="rect" href="$_ethercat_master_8cpp.html" title="/home/jan/BRICS_OODL/youbot/EthercatMaster.cpp" alt="" coords="5,315,331,344"/>
+<area shape="rect" href="$_you_bot_base_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotBase.hpp" alt="" coords="685,315,995,344"/>
+<area shape="rect" href="$_you_bot_gripper_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripper.cpp" alt="" coords="1389,315,1709,344"/>
+<area shape="rect" href="$_you_bot_joint_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJoint.cpp" alt="" coords="355,315,661,344"/>
+<area shape="rect" href="$_you_bot_manipulator_8hpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotManipulator.hpp" alt="" coords="1019,315,1365,344"/>
+<area shape="rect" href="$_keyboard_remote_control_8cpp.html" title="/home/jan/BRICS_OODL/youbot/applications/KeyboardRemoteControl.cpp" alt="" coords="211,392,661,421"/>
+<area shape="rect" href="$_test_8cpp.html" title="/home/jan/BRICS_OODL/youbot/applications/Test.cpp" alt="" coords="1484,392,1820,421"/>
+<area shape="rect" href="$_you_bot_base_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotBase.cpp" alt="" coords="685,392,995,421"/>
+<area shape="rect" href="$_you_bot_manipulator_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotManipulator.cpp" alt="" coords="1019,392,1365,421"/>
+<area shape="rect" href="$_you_bot_gripper_parameter_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotGripperParameter.cpp" alt="" coords="1835,237,2213,267"/>
+<area shape="rect" href="$_you_bot_joint_parameter_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJointParameter.cpp" alt="" coords="1039,237,1404,267"/>
+<area shape="rect" href="$_you_bot_joint_parameter_read_only_8cpp.html" title="/home/jan/BRICS_OODL/youbot/YouBotJointParameterReadOnly.cpp" alt="" coords="1219,160,1643,189"/>
+</map>
