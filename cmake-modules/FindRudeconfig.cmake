@@ -12,6 +12,7 @@ FIND_PATH(RUDECONFIG_INCLUDE_DIR NAMES rude/config.h
   PATHS
   ${RUDECONFIG_PATH}/include
   ${CMAKE_HOME_DIRECTORY}/../openrobots/include
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/include
   ${PROJECT_BINARY_DIR}/include
   ${PROJECT_SOURCE_DIR}/include
   ENV CPATH
@@ -27,6 +28,7 @@ FIND_LIBRARY(RUDECONFIG_LIBRARY_TMP NAMES ${RUDECONFIGLIB} "rudeconfigLibraries"
   PATHS
   ${RUDECONFIG_PATH}/lib
   ${CMAKE_HOME_DIRECTORY}/../openrobots/lib
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/lib
   ${PROJECT_BINARY_DIR}/lib
   ${PROJECT_SOURCE_DIR}/lib
   ${PROJECT_SOURCE_DIR}/libraries
