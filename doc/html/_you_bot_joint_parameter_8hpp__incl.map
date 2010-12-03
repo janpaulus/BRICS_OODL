@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" href="$_joint_parameter_8hpp.html" title="generic&#45;joint/JointParameter.hpp" alt="" coords="276,160,484,189"/>
-<area shape="rect" href="$_you_bot_joint_parameter_read_only_8hpp.html" title="youbot/YouBotJointParameterReadOnly.hpp" alt="" coords="417,83,692,112"/>
-<area shape="rect" href="$_protocol_definitions_8hpp.html" title="youbot/ProtocolDefinitions.hpp" alt="" coords="753,160,951,189"/>
-<area shape="rect" href="$_you_bot_slave_msg_8hpp.html" title="youbot/YouBotSlaveMsg.hpp" alt="" coords="1025,160,1215,189"/>
-<area shape="rect" href="$_you_bot_slave_mailbox_msg_8hpp.html" title="youbot/YouBotSlaveMailboxMsg.hpp" alt="" coords="1239,160,1473,189"/>
-<area shape="rect" href="$_joint_data_8hpp.html" title="generic&#45;joint/JointData.hpp" alt="" coords="308,237,484,267"/>
-</map>
