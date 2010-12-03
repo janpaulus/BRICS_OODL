@@ -28,6 +28,7 @@ int main() {
   try {
 
     YouBotManipulator myYouBotManipulator("youbot-manipulator");
+    YouBotBase myYouBotBase("youbot-base");
 
     //  std::cout << myYouBot.getNumberOfJoints() << std::endl;
     JointSensedTemperature temp;
@@ -54,12 +55,12 @@ int main() {
 
     setVel.angularVelocity = 0 * radian_per_second;
 
-   
+
     MaximumPositioningSpeed test;
 
 
     YouBotGripper& gripper = myYouBotManipulator.getArmGripper();
-    
+
 
     SLEEP_MILLISEC(2000);
 
@@ -84,20 +85,21 @@ int main() {
  //   gearRatio.getParameter(gear);
  //   LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
 
-
+/*
     while (running) {
 
-    /*  for (unsigned int i = 1; i <= 4; i++) {
-        myYouBot.getBaseJoint(i).getData(temp);
-        myYouBot.getBaseJoint(i).getData(angle);
-        myYouBot.getBaseJoint(i).getData(vel);
-        myYouBot.getBaseJoint(i).getData(current);
+
+       for (unsigned int i = 1; i <= 4; i++) {
+        myYouBotBase.getBaseJoint(i).getData(temp);
+        myYouBotBase.getBaseJoint(i).getData(angle);
+        myYouBotBase.getBaseJoint(i).getData(vel);
+        myYouBotBase.getBaseJoint(i).getData(current);
         std::cout << "Joint: " << i << " Temp: " << temp.temperature
                 << " Angle: " << angle.angle
                 << " Vel: " << vel.angularVelocity
                 << " Current: " << current.current
                 << std::endl;
-      }*/
+      }
 
        myYouBotManipulator.getArmJoint(jointNo).getData(angle);
 
@@ -106,7 +108,7 @@ int main() {
       SLEEP_MILLISEC(100);
     }
 
-
+*/
 
 
 
