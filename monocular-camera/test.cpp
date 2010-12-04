@@ -19,7 +19,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0;
+    gain = 200;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
 //  std::cout << gain << std::endl;
 //  double rate = 0;
@@ -65,11 +65,13 @@ int main (int argc, char **argv)
 
     overlay = SDL_CreateYUVOverlay (width, height,SDL_YUY2_OVERLAY ,screen);
 
+//should either provide image depth to Image2dData or through passing format from 
+    //enumeration (formats should include this information)
+    width = 2*width;
 
     while(!quitSignal)
     {
         SDL_Event event;
-        width = 2*width;
         Image2dData data(width,height);
         SDL_LockYUVOverlay(overlay);
 
