@@ -17,11 +17,17 @@ Image2dData::Image2dData(unsigned char *bufferStart = NULL, size_t length = 0)
   bufferSize = length;
 }
 
-Image2dData::Image2dData(int& width, int& height)
+Image2dData::Image2dData(int& width, int& height, PixelFormats& pixelformat)
 {
   bufferSize = width * height;
-  buffer = new unsigned char[bufferSize];
-
+  if(pixelformat == RGB16)
+  {
+    buffer = new unsigned char[2*bufferSize];
+  }
+  if(pixelformat == RGB24)
+  {
+    buffer = new unsigned char[3*bufferSize];
+  }
 }
 
 Image2dData& Image2dData::operator=(Image2dData& data)

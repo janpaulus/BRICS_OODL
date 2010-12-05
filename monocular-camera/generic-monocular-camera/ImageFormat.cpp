@@ -203,7 +203,8 @@ bool ImageFormat::getImageFormatSize(int &size)
     }
 }
 
-
+//should this be a color model or space. Basically here we want to set whether the capture
+//should use rgb, yuv, mono... thus setting a color depth and other relevant information
 bool ImageFormat::setImageFormatColorModel(std::string &colorModel)
 {
 

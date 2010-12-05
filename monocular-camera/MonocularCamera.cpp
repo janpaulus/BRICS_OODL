@@ -157,7 +157,8 @@ void MonocularCamera::getImageData(Image2dData& data)
 
     // this is where pixel data sits
     unicap_data_buffer_t tempBuffer;
-    // this pointer to pixel data buffer, it is needed by wait_buffer.
+
+    // this is a pointer to pixel data buffer, it is needed by wait_buffer.
     //The data obtained should be accessed through this pointer. Because it does
     //all the necessary checking for pixel data before returning full/correct data buffer
     unicap_data_buffer_t *returnTempBuffer;

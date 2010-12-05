@@ -1,21 +1,10 @@
+#ifndef _IMAGEFORMAT_
+#define _IMAGEFORMAT_
+
 #include <string>
 #include <iostream>
 #include <unicap.h>
 #include <vector>
-
-
-
-
-
-// TODO (azamat#1#): Add an enumeration for all possible formats and  whenever there is
-//a new camera pluged it will check against this enumeration. The number of possible formats (RGB, YUV )
-//is limited anyways. So it should not as problematic as in case of camera attributes.
-enum IMAGEPIXELFORMATS
-{
-    RGB = 0,
-    YUV,
-    GRGB
-};
 
 //! This class is responsible for setting and getting information for image format.
 
@@ -226,3 +215,5 @@ private:
 
  typedef struct unicap_format_t unicap_format_t;
 */
+
+#endif //~ _IMAGEFORMAT_

@@ -1,5 +1,8 @@
-#include <iostream>
+#ifndef _IMAGE2DDATA_
+#define _IMAGE2DDATA_
 
+#include <iostream>
+#include "MonocularCameraDefinitions.hpp"
 
 //! This class is responsible for holding pixel data received from the camera.
 class Image2dData
@@ -18,7 +21,8 @@ public:
      * \param 'width' is image width in pixels
      * \param 'height' is image height in pixels
      */
-    Image2dData(int& width, int& height);
+//Now we have information about color depth but a user is aware of this and can make mistakes while comparing (or not knowingly) and setting size of the imagedata for the capture because it might be the case that the camera does not support 
+  Image2dData(int& width, int& height, PixelFormats& pixelformat);
     Image2dData& operator=(Image2dData& data);
     //! Returns pointer to image data (buffer)
     unsigned char* getBuffer();
@@ -76,3 +80,6 @@ typedef struct unicap_data_buffer_t unicap_data_buffer_t;
 
 
 */
+
+
+#endif //~ _IMAGE2DDATA_

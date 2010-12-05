@@ -67,12 +67,12 @@ int main (int argc, char **argv)
 
 //should either provide image depth to Image2dData or through passing format from 
     //enumeration (formats should include this information)
-    width = 2*width;
 
+    PixelFormats pf = RGB24;
     while(!quitSignal)
     {
         SDL_Event event;
-        Image2dData data(width,height);
+        Image2dData data(width,height,pf);
         SDL_LockYUVOverlay(overlay);
 
         camera.getImageData(data);
