@@ -12,6 +12,7 @@ FIND_PATH(SOEM_INCLUDE_DIR NAMES ethercatmain.h
   PATHS
   ${SOEM_PATH}/include/soem/src
   ${ROBOTPKG_INSTALL_PATH}/include/soem/src
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/include
   ${PROJECT_BINARY_DIR}/include
   ${PROJECT_SOURCE_DIR}/include
   ENV CPATH
@@ -29,6 +30,7 @@ FIND_PATH(SOEM_INCLUDE_DIR NAMES ethercatmain.h
 FIND_LIBRARY(SOEM_LIBRARY_TMP NAMES ${SOEMLIB} "SoemLibraries"
   PATHS
   ${CMAKE_HOME_DIRECTORY}/../openrobots/lib
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/lib
   ${SOEM_PATH}/lib
   ${PROJECT_BINARY_DIR}/lib
   ${PROJECT_SOURCE_DIR}/lib

@@ -14,6 +14,7 @@ FIND_PATH(BOOSTLOG_INCLUDE_DIR NAMES boost/log/core.hpp
   PATHS
   ${BOOST_LOG_PATH}/include/
   ${CMAKE_HOME_DIRECTORY}/../openrobots/include/
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/include/
   ${PROJECT_BINARY_DIR}/include
   ${PROJECT_SOURCE_DIR}/include
   ENV CPATH
@@ -28,6 +29,7 @@ MARK_AS_ADVANCED("BOOSTLOG_INCLUDE_DIR: "${BOOSTLOG_INCLUDE_DIR})
 FIND_LIBRARY(BOOSTLOG_LIBRARY_TMP NAMES ${BOOSTLOGLIB} "boostlogLibraries"
   PATHS
   ${CMAKE_HOME_DIRECTORY}/../openrobots/lib
+  ${CMAKE_HOME_DIRECTORY}/../brics-software/lib
   ${BOOST_LOG_PATH}/lib
   ${PROJECT_BINARY_DIR}/lib
   ${PROJECT_SOURCE_DIR}/lib
