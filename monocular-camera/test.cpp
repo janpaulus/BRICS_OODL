@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
     MonocularCameraConfiguration config ;
     ImageFormat format;
-    MonocularCamera camera(1);
+    MonocularCamera camera(0);
 
 
 
@@ -65,7 +65,7 @@ int main (int argc, char **argv)
 
     overlay = SDL_CreateYUVOverlay (width, height,SDL_YUY2_OVERLAY ,screen);
 
-//should either provide image depth to Image2dData or through passing format from 
+//should either provide image depth to Image2dData or through passing format from
     //enumeration (formats should include this information)
 
     PixelFormats pf = RGB16;
