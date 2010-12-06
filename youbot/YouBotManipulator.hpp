@@ -22,7 +22,7 @@ class YouBotManipulator {
     virtual ~YouBotManipulator();
 
     ///return a joint form the arm1
-    ///@param jointNumber 1-5 for the arm1 joints
+    ///@param armJointNumber 1-5 for the arm1 joints
     YouBotJoint& getArmJoint(const unsigned int armJointNumber);
 
     YouBotGripper& getArmGripper();

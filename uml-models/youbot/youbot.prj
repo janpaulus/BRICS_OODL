@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 106
+  revision 107
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9408,7 +9408,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///return the quantity of joints"
+	comment "///return the quantity of ethercat slave which have an input/output buffer"
       end
 
       operation 401137 "getEthercatDiagnosticInformation"
@@ -9468,6 +9468,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///stores a ethercat message to the buffer"
       end
 
       operation 267633 "getMsgBuffer"
@@ -9483,6 +9484,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///get a ethercat message form the buffer"
       end
 
       operation 302449 "setMailboxMsgBuffer"
@@ -9499,6 +9501,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///stores a mailbox message in a buffer which will be sent to the motor contollers"
       end
 
       operation 302577 "getMailboxMsgBuffer"
@@ -9515,6 +9518,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///receives a mailbox message form the buffer which came form the motor contollers"
       end
 
       operation 339825 "sendMailboxMessage"
@@ -9530,6 +9534,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///sends the mailbox Messages which have been stored in the buffer"
       end
 
       operation 339953 "receiveMailboxMessage"
@@ -9545,6 +9550,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///receives mailbox messages and stores them in the buffer"
       end
 
       operation 259953 "updateSensorActorValues"
@@ -9559,6 +9565,8 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///sends and receives ethercat messages and meilbox messages to and from the motor contollers
+///this methode is execudes in a seperate thread"
       end
 
       attribute 289265 "ethernetDevice"

@@ -29,7 +29,7 @@ YouBotBase::~YouBotBase() {
 }
 
 ///return a joint form the base
-///@param jointNumber 1-4 for the base joints
+///@param baseJointNumber 1-4 for the base joints
 YouBotJoint& YouBotBase::getBaseJoint(const unsigned int baseJointNumber) {
   // Bouml preserved body begin 0004F771
     if (baseJointNumber <= 0 || baseJointNumber > 4 ) {
@@ -127,9 +127,12 @@ void YouBotBase::initializeJoints() {
     if(noSlaves < 4){
       throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
     }
-
+    
+    //read Joint Topology from config file
     configfile.setSection("JointTopology");
 
+    //check if enough slave exist to create YouBotJoint for the slave numbers from config file
+    //if enough slave exist create YouBotJoint and store it in the joints vector
     unsigned int slaveNumber = configfile.getIntValue("BaseLeftFront");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));

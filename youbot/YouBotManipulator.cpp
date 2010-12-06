@@ -28,7 +28,7 @@ YouBotManipulator::~YouBotManipulator() {
 }
 
 ///return a joint form the arm1
-///@param jointNumber 1-5 for the arm1 joints
+///@param armJointNumber 1-5 for the arm1 joints
 YouBotJoint& YouBotManipulator::getArmJoint(const unsigned int armJointNumber) {
   // Bouml preserved body begin 0004F7F1
 
