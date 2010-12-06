@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
     MonocularCameraConfiguration config ;
     ImageFormat format;
-    MonocularCamera camera(0);
+    MonocularCamera camera(1);
 
 
 
@@ -68,7 +68,8 @@ int main (int argc, char **argv)
 //should either provide image depth to Image2dData or through passing format from 
     //enumeration (formats should include this information)
 
-    PixelFormats pf = RGB24;
+    PixelFormats pf = RGB16;
+
     while(!quitSignal)
     {
         SDL_Event event;
