@@ -6,8 +6,8 @@
 
 
 MonocularCamera::MonocularCamera(int deviceNumber = 0): pixels(NULL),
-                                                        isConnected(STATUS_FAILURE),
-                                                        cameraDeviceCounter(0)
+    isConnected(STATUS_FAILURE),
+    cameraDeviceCounter(0)
 {
     if (getListOfCameras())
     {
@@ -25,8 +25,8 @@ MonocularCamera::MonocularCamera(int deviceNumber = 0): pixels(NULL),
 }
 
 MonocularCamera::MonocularCamera(int deviceNumber, MonocularCameraConfiguration &config, std::string &fm):pixels(NULL),
-                                                                                                          isConnected(STATUS_FAILURE),
-                                                                                                          cameraDeviceCounter(0)
+    isConnected(STATUS_FAILURE),
+    cameraDeviceCounter(0)
 {
     if(getListOfCameras())
     {
@@ -109,8 +109,8 @@ bool MonocularCamera ::close ()
         returnValue = unicap_close(*deviceHandle);
         if(SUCCESS(returnValue))
         {
-          std::cout << "Device closed successfully" << std::endl;
-          return true;
+            std::cout << "Device closed successfully" << std::endl;
+            return true;
         }
     }
     else

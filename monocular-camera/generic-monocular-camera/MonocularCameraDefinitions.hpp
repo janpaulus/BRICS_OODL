@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+
 //For the time being we will set image format and camera configuration 
 //statically and not during runtime. This will limit flexibility and functionality 
 //of the API because different cameras will definetly have very various set and number
@@ -12,43 +13,53 @@
 //camera property names could be entered by a user who would have to use some 
 //diagnostic program to list all the available camera properties and formats.
 //But for this version we stick to enumerations.
-struct CAMERACOLORPROPERTYNAMES
+
+typedef enum COLOREXPOSUREPROPERTYDESCRIPTORS
 {
+    Hue = 0,
+    Chroma,
+    Saturation,
+    Brightness,
+    Contrast,
+    Gain,
+    Exposure
 
-  std::vector<std::string> hue; //= {"hue", "Hue"};
-/*
-  std::vector<std::string> chroma = {"chroma", "Chroma"};
-  std::vector<std::string> contrast = {"contrast", "Constrast"};
-  std::vector<std::string> saturation = {"Saturation", "saturation"};
-  std::vector<std::string> whitebalance = {"White Balance", "white balance", "whitebalance", "white_balance", "White_Balance", "WhiteBalance"};
-*/
-};
+} ColorPropertyDesc;
 
 
-struct CAMERALENSPROPERTYNAMES
+typedef enum LENSPROPERTYDESCRIPTORS
 {
+    FrameRate = 0,
+    Focus,
+    Sharpness,
+    Zoom,
+    Iris
+
+} LensPropDesc;
 
 
 
-};
 
 // TODO (azamat#1#): Add an enumeration for all possible formats and  whenever there is
 //a new camera pluged it will check against this enumeration. The number of possible formats (RGB, YUV )
 //is limited anyways. So it should not as problematic as in case of camera attributes.
-enum IMAGEPIXELFORMATS
+
+typedef enum IMAGEPIXELFORMATS
 {
-    RGB16 = 0,
-    RGB24,
-    RGB32,
-    YUV16,
-    YUV24,
-    YUV32,
-    Mono,
-    GRGB
-};
+
+  RGB8 = 0,
+  RGB16,
+  RGB24,
+  RGB32,
+  YUV422_16,
+  YUV422_24,
+  YUV400_8,
+  YUV400_16,
+  YUV444_32,
+
+} PixelFormats;
 
 
-typedef IMAGEPIXELFORMATS PixelFormats;
 
-#endif //~#define _MONOCULARCAMERADEFINITIONS_
+#endif //~ _MONOCULARCAMERADEFINITIONS_
 

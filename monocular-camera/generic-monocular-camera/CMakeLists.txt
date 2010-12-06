@@ -8,6 +8,7 @@ SET(SOURCES
   ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/CameraDeviceConfiguration.cpp 
   ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/ColorExposureConfiguration.cpp
   ${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/MonocularCameraConfiguration.cpp 
+${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/MonocularCameraDefinitions.cpp 
 )
 
 

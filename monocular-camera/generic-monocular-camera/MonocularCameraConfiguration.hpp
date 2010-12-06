@@ -8,35 +8,35 @@
 
 
 
-class MonocularCameraConfiguration 
+class MonocularCameraConfiguration
 {
 public:
-  MonocularCameraConfiguration();
-  MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
-  MonocularCameraConfiguration( MonocularCameraConfiguration &cameraConfig);
-  MonocularCameraConfiguration& operator= ( MonocularCameraConfiguration &cameraConfig);
-  ~MonocularCameraConfiguration();
+    MonocularCameraConfiguration();
+    MonocularCameraConfiguration(unicap_device_t *device, unicap_handle_t *handle);
+    MonocularCameraConfiguration( MonocularCameraConfiguration &cameraConfig);
+    MonocularCameraConfiguration& operator= ( MonocularCameraConfiguration &cameraConfig);
+    ~MonocularCameraConfiguration();
 
-  bool getDeviceName(std::string &deviceId);
-  bool getDeviceNodeID(std::string &deviceNodeId);
-  bool getDevicePluginType(std::string &pluginName);
-  bool setCameraDeviceConfiguration(CameraDeviceConfiguration &cameradevconf);
-  bool setColorExposureConfiguration(ColorExposureConfiguration &colorexpconf);
-  CameraDeviceConfiguration* getCameraDeviceConfiguration();
-  ColorExposureConfiguration* getColorExposureConfiguration();
+    bool getDeviceName(std::string &deviceId);
+    bool getDeviceNodeID(std::string &deviceNodeId);
+    bool getDevicePluginType(std::string &pluginName);
+    bool setCameraDeviceConfiguration(CameraDeviceConfiguration &cameradevconf);
+    bool setColorExposureConfiguration(ColorExposureConfiguration &colorexpconf);
+    CameraDeviceConfiguration* getCameraDeviceConfiguration();
+    ColorExposureConfiguration* getColorExposureConfiguration();
 
 
 private:
-  unicap_property_t *propertyConfig;
-  unicap_device_t *deviceConfig;
-  unicap_handle_t *handleConfig;
-  unicap_status_t returnStatus;
+    unicap_property_t *propertyConfig;
+    unicap_device_t *deviceConfig;
+    unicap_handle_t *handleConfig;
+    unicap_status_t returnStatus;
 
-  std::string deviceID;
-  std::string deviceNodeID;
-  std::string devicePluginType;
-  ColorExposureConfiguration *colExpConfiguration;
-  CameraDeviceConfiguration *devConfiguration;
+    std::string deviceID;
+    std::string deviceNodeID;
+    std::string devicePluginType;
+    ColorExposureConfiguration *colExpConfiguration;
+    CameraDeviceConfiguration *devConfiguration;
 };
 
 
@@ -61,7 +61,7 @@ private:
   * @vendor_id: ID of the vendor like USB Vendor ID for example
   * @cpi_layer: name of the plugin used to communicate with the device
   * @device: name of the device file, if any
-  * @flags: 
+  * @flags:
 
 
   CAT2:  configuration related to device physical properties, such as of lens and video.
@@ -75,7 +75,7 @@ private:
   gamma value - range
   sharpness - range
   }
- 
+
   LensConfiguration
   {
   focus - range
@@ -101,7 +101,7 @@ private:
   v - range
   }
   }
- 
+
   ExposureConfiguration
   {
   brightness - range
@@ -113,7 +113,7 @@ private:
   }
 
 
-  * Camera Configuration  in unicap 
+  * Camera Configuration  in unicap
 
 
   * identifier:   unique textual identifier of this properties
@@ -130,49 +130,49 @@ private:
   * value_list:      for UNICAP_PROPERTY_TYPE_VALUE_LIST properties: list
   * of valid values
   * menu:            for UNICAP_PROPERTY_TYPE_MENU properties: menu
-  * stepping:        for UNICAP_PROPERTY_TYPE_RANGE properties: stepping 
-  * type: 
-  * flags: when enumerated, this field contains the 
+  * stepping:        for UNICAP_PROPERTY_TYPE_RANGE properties: stepping
+  * type:
+  * flags: when enumerated, this field contains the
   * flags_mask:
   * property_data:
   * property_data_size:
   *  </programlisting>
   * </informalexample>
-  * 
+  *
   *
   struct unicap_property_t
   {
   char identifier[128]; //mandatory
   char category[128];
-  char unit[128]; // 
-      
+  char unit[128]; //
+
 // list of properties identifier which value / behaviour may change if this property changes
 char **relations;
-int relations_count;	
-      
+int relations_count;
+
 union
 {
 double value; // default if enumerated
-char menu_item[128]; 
+char menu_item[128];
 };
-      
-      
-union{	
+
+
+union{
 unicap_property_range_t range; // if UNICAP_USE_RANGE is asserted
 unicap_property_value_list_t value_list; // if UNICAP_USE_VALUE_LIST is asserted
-unicap_property_menu_t menu; 
+unicap_property_menu_t menu;
 };
-	    
-      
+
+
 double stepping;
-      
-unicap_property_type_enum_t type;	
+
+unicap_property_type_enum_t type;
 unicap_property_flags_t flags;        // defaults if enumerated
 unicap_property_flags_t flags_mask;	// defines capabilities if enumerated
-      
+
 // optional data
-void *property_data; 
-size_t property_data_size;	
+void *property_data;
+size_t property_data_size;
 };
 
 
