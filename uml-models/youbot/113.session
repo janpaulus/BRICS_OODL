@@ -1,7 +1,7 @@
-window_sizes 1680 975 482 1192 894 0
+window_sizes 1672 972 306 1360 889 0
 diagrams
   active  classdiagram_ref 141681 // JointParameter
-    1192 894 100 1 0 127
+    1360 889 100 1 216 127
   classdiagram_ref 141553 // JointData
     953 715 100 2 0 157
   classdiagram_ref 141425 // JointInterface
@@ -12,7 +12,7 @@ diagrams
     953 715 100 4 108 0
 end
 show_stereotypes
-selected class_ref 245105 // MaximumPositioningSpeed
+selected class_ref 273009 // JointLimits
 open
   classview_ref 134641 // Joint
   classview_ref 154225 // JointData

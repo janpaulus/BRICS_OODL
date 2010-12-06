@@ -342,24 +342,6 @@ class EthercatMaster
         newDataFlagOne = false;
       }
 
-      /*
-      int timestamp = 0;
-      if (ec_slave[7].activeports & PORTM0){
-      timestamp = ec_slave[7].DCrtA;
-    }
-    if (ec_slave[7].activeports & PORTM3){
-      timestamp = ec_slave[7].DCrtD;
-    }
-    if (ec_slave[7].activeports & PORTM1){
-      timestamp = ec_slave[7].DCrtB;
-    }
-    if (ec_slave[7].activeports & PORTM2){
-      timestamp = ec_slave[7].DCrtC;
-    }
-     //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
-        printf("timestamp Joint 7:%i\n", timestamp);
-       */
-
 
       //send and receive data from ethercat
       if (ec_send_processdata() == 0)

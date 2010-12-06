@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 107
+  revision 109
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9380,6 +9380,9 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///creates a instance of the singleton EthercatMaster if there is none and returns a reference to it
+///@param configFile configuration file name incl. the extension
+///@param configFilePath the path where the configuration is located with a / at the end"
       end
 
       operation 274417 "destroy"
@@ -9394,6 +9397,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "/// destroy the singleton instance by calling the destructor"
       end
 
       operation 281201 "getNumberOfSlaves"
@@ -9424,6 +9428,8 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///provides all ethercat slave informations from the SOEM driver
+///@param ethercatSlaveInfos ethercat slave informations"
       end
 
       operation 266481 "initializeEthercat"
@@ -9438,6 +9444,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///establishes the ethercat connection"
       end
 
       operation 266865 "closeEthercat"
@@ -9452,6 +9459,7 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
+	comment "///closes the ethercat connection"
       end
 
       operation 267505 "setMsgBuffer"
@@ -9468,7 +9476,9 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///stores a ethercat message to the buffer"
+	comment "///stores a ethercat message to the buffer
+///@param msgBuffer ethercat message
+///@param jointNumber joint number of the sender joint"
       end
 
       operation 267633 "getMsgBuffer"
@@ -9484,7 +9494,9 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///get a ethercat message form the buffer"
+	comment "///get a ethercat message form the buffer
+///@param msgBuffer ethercat message
+///@param jointNumber joint number of the receiver joint"
       end
 
       operation 302449 "setMailboxMsgBuffer"
@@ -9501,7 +9513,9 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///stores a mailbox message in a buffer which will be sent to the motor contollers"
+	comment "///stores a mailbox message in a buffer which will be sent to the motor controllers
+///@param msgBuffer ethercat mailbox message
+///@param jointNumber joint number of the sender joint"
       end
 
       operation 302577 "getMailboxMsgBuffer"
@@ -9518,7 +9532,9 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///receives a mailbox message form the buffer which came form the motor contollers"
+	comment "///gets a mailbox message form the buffer which came form the motor controllers
+///@param msgBuffer ethercat mailbox message
+///@param jointNumber joint number of the receiver joint"
       end
 
       operation 339825 "sendMailboxMessage"
@@ -9534,7 +9550,8 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///sends the mailbox Messages which have been stored in the buffer"
+	comment "///sends the mailbox Messages which have been stored in the buffer
+///@param mailboxMsg ethercat mailbox message"
       end
 
       operation 339953 "receiveMailboxMessage"
@@ -9550,7 +9567,8 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///receives mailbox messages and stores them in the buffer"
+	comment "///receives mailbox messages and stores them in the buffer
+///@param mailboxMsg ethercat mailbox message"
       end
 
       operation 259953 "updateSensorActorValues"
@@ -9565,8 +9583,8 @@ ${inlines}
 	preserve_php_body_indent 
 	preserve_python_body_indent 
 	
-	comment "///sends and receives ethercat messages and meilbox messages to and from the motor contollers
-///this methode is execudes in a seperate thread"
+	comment "///sends and receives ethercat messages and mailbox messages to and from the motor controllers
+///this method is executed in a separate thread"
       end
 
       attribute 289265 "ethernetDevice"
@@ -9929,7 +9947,7 @@ ${inlines}
 	preserve_python_body_indent 
 	
 	comment "///return a joint form the arm1
-///@param jointNumber 1-5 for the arm1 joints"
+///@param armJointNumber 1-5 for the arm1 joints"
       end
 
       operation 391665 "getArmGripper"
@@ -10068,7 +10086,7 @@ ${inlines}
 	preserve_python_body_indent 
 	
 	comment "///return a joint form the base
-///@param jointNumber 1-4 for the base joints"
+///@param baseJointNumber 1-4 for the base joints"
       end
 
       operation 333041 "getBasePosition"
