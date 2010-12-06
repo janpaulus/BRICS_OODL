@@ -2,7 +2,7 @@
 # Created:			Jan Paulus on 17 Aug 2010
 #
 
-OODL_YOUBOT_VERSION=	0.1
+OODL_YOUBOT_VERSION=	0.2
 DISTNAME=		oodl-youbot-${OODL_YOUBOT_VERSION}
 PKGNAME=		oodl-youbot-${OODL_YOUBOT_VERSION}
 CATEGORIES=		hardware
