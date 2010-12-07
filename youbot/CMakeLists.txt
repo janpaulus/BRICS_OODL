@@ -1,8 +1,7 @@
 
 SET( OODL_YOUBOT_VERSION 0.01 )
 
-add_subdirectory(applications)
-add_subdirectory(testing)
+
 
 FIND_PACKAGE(Soem REQUIRED)
 IF (SOEM_FOUND)
@@ -90,6 +89,8 @@ ADD_LIBRARY(OODL_YouBot
   ${OODL_YOUBOT_SRC}
 )
 
+add_subdirectory(applications)
+add_subdirectory(testing)
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})
