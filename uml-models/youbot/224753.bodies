@@ -11,8 +11,10 @@ class YouBotGripper
   throw ExceptionOODL("Please use YouBotGripperParameter");
 !!!391793.cpp!!!	setConfigurationParameter(in parameter : GripperParameter) : void
   throw ExceptionOODL("Please use YouBotGripperParameter");
+!!!295665.cpp!!!	getConfigurationParameter(out parameter : YouBotGripperParameter) : void
+  LOG(info) << "Nothing to do";
 !!!399345.cpp!!!	setConfigurationParameter(in parameter : YouBotGripperParameter) : void
-   
+   LOG(info) << "Nothing to do";
 !!!295537.cpp!!!	setConfigurationParameter(in parameter : CalibrateGripper) : void
     
       if (parameter.value) {
@@ -50,15 +52,15 @@ class YouBotGripper
   this->maxEncoderValue = parameter.value;
 !!!392049.cpp!!!	getData(in data : GripperData) : void
     LOG(info) << "Nothing to do";
-!!!295793.cpp!!!	setData(in data : OneDOFGripperData) : void
-    LOG(info) << "Nothing to do";
 !!!391921.cpp!!!	setData(in data : GripperData) : void
     LOG(info) << "Nothing to do";
 !!!295921.cpp!!!	getData(out data : OneDOFGripperData) : void
     LOG(info) << "Nothing to do";
+!!!295793.cpp!!!	setData(in data : OneDOFGripperData) : void
+    LOG(info) << "Nothing to do";
 !!!391409.cpp!!!	setData(in barSpacing : GripperBarSpacingSetPoint) : void
 
-  if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < 0 * meter){
+  if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < barSpacingOffset){
     std::stringstream errorMessageStream;
     errorMessageStream << "The bar spacing is not allowd to be less than 0 m or higher than " << (maxTravelDistance + barSpacingOffset);
     throw ExceptionOODL(errorMessageStream.str());

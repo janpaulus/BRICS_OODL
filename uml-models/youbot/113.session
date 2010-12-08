@@ -1,26 +1,9 @@
-window_sizes 1672 972 306 1360 889 0
-diagrams
-  active  classdiagram_ref 141681 // JointParameter
-    1360 889 100 1 216 127
-  classdiagram_ref 141553 // JointData
-    953 715 100 2 0 157
-  classdiagram_ref 141425 // JointInterface
-    1192 892 100 1 12 0
-  classdiagram_ref 167793 // YouBot
-    1192 894 100 2 96 0
-  classdiagram_ref 154737 // Gripper
-    953 715 100 4 108 0
-end
+window_sizes 1680 975 306 1368 894 0
 show_stereotypes
-selected class_ref 273009 // JointLimits
+selected operation_ref 401009 // setConfigurationParameter
 open
-  classview_ref 134641 // Joint
-  classview_ref 154225 // JointData
-  class_ref 238321 // Parameter
-  class_ref 245105 // MaximumPositioningSpeed
-  class_ref 286193 // YouBotBase
   classview_ref 147697 // BaseKinematic
-  classview_ref 141169 // Gripper
+  operation_ref 391921 // setData
   classview_ref 161009 // GripperParameter
   deploymentview_ref 161137 // Deployment
 end

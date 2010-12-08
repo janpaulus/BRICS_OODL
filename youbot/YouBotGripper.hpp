@@ -28,10 +28,14 @@ class YouBotGripper : public OneDOFGripper {
 
     virtual ~YouBotGripper();
 
+
+  protected:
     virtual void getConfigurationParameter(GripperParameter& parameter);
 
     virtual void setConfigurationParameter(const GripperParameter& parameter);
 
+
+  public:
     void getConfigurationParameter(YouBotGripperParameter& parameter);
 
     void setConfigurationParameter(const YouBotGripperParameter& parameter);
@@ -44,14 +48,18 @@ class YouBotGripper : public OneDOFGripper {
 
     void setConfigurationParameter(const MaxEncoderValue& parameter);
 
-    void getData(const GripperData& data);
 
-    void setData(const OneDOFGripperData& data);
+  protected:
+    void getData(const GripperData& data);
 
     virtual void setData(const GripperData& data);
 
     void getData(OneDOFGripperData& data);
 
+    void setData(const OneDOFGripperData& data);
+
+
+  public:
     void setData(const GripperBarSpacingSetPoint& barSpacing);
 
     void getData(GripperBarSpacingSetPoint& barSpacing);
