@@ -1,9 +1,8 @@
-#ifndef _MONOCULARCAMERADEFINITIONS_
-#define _MONOCULARCAMERADEFINITIONS_
+#ifndef _MONOCULARCAMERACONFIG_
+#define _MONOCULARCAMERACONFIG_
 
 #include <vector>
 #include <string>
-
 
 //For the time being we will set image format and camera configuration 
 //statically and not during runtime. This will limit flexibility and functionality 
@@ -13,53 +12,43 @@
 //camera property names could be entered by a user who would have to use some 
 //diagnostic program to list all the available camera properties and formats.
 //But for this version we stick to enumerations.
-
-typedef enum COLOREXPOSUREPROPERTYDESCRIPTORS
+struct CAMERACOLORPROPERTYNAMES
 {
-    Hue = 0,
-    Chroma,
-    Saturation,
-    Brightness,
-    Contrast,
-    Gain,
-    Exposure
 
-} ColorPropertyDesc;
+  std::vector<std::string> hue; //= {"hue", "Hue"};
+/*
+  std::vector<std::string> chroma = {"chroma", "Chroma"};
+  std::vector<std::string> contrast = {"contrast", "Constrast"};
+  std::vector<std::string> saturation = {"Saturation", "saturation"};
+  std::vector<std::string> whitebalance = {"White Balance", "white balance", "whitebalance", "white_balance", "White_Balance", "WhiteBalance"};
+*/
+};
 
 
-typedef enum LENSPROPERTYDESCRIPTORS
+struct CAMERALENSPROPERTYNAMES
 {
-    FrameRate = 0,
-    Focus,
-    Sharpness,
-    Zoom,
-    Iris
-
-} LensPropDesc;
 
 
 
+};
 
 // TODO (azamat#1#): Add an enumeration for all possible formats and  whenever there is
 //a new camera pluged it will check against this enumeration. The number of possible formats (RGB, YUV )
 //is limited anyways. So it should not as problematic as in case of camera attributes.
-
-typedef enum IMAGEPIXELFORMATS
+enum IMAGEPIXELFORMATS
 {
-
-  RGB8 = 0,
-  RGB16,
-  RGB24,
-  RGB32,
-  YUV422_16,
-  YUV422_24,
-  YUV400_8,
-  YUV400_16,
-  YUV444_32,
-
-} PixelFormats;
+    RGB16 = 0,
+    RGB24,
+    RGB32,
+    YUV16,
+    YUV24,
+    YUV32,
+    Mono,
+    GRGB
+};
 
 
+typedef IMAGEPIXELFORMATS PixelFormats;
 
-#endif //~ _MONOCULARCAMERADEFINITIONS_
+#endif //~_MONOCULARCAMERACONFIG
 
