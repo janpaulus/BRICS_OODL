@@ -21,13 +21,14 @@ public:
      * \param 'width' is image width in pixels
      * \param 'height' is image height in pixels
      */
-//Now we have information about color depth but a user is aware of this and can make mistakes while comparing (or not knowingly) and setting size of the imagedata for the capture because it might be the case that the camera does not support
+//Now we have information about color depth but a user is aware of this and can make mistakes while
+//comparing (or not knowingly) and setting size of the imagedata for the capture because it might be the case that the camera does not support
     Image2dData(int& width, int& height, PixelFormats& pixelformat);
     Image2dData& operator=(Image2dData& data);
     //! Returns pointer to image data (buffer)
-    unsigned char* getBuffer();
+    unsigned char* getBuffer(); // change this as reference for arguments and return value bool
     //! Returns image data (buffer) size
-    size_t getBufferSize();
+    size_t getBufferSize(); // change this as reference for arguments and return value bool
     //! Class destructor
     ~Image2dData();
 

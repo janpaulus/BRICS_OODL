@@ -5,12 +5,12 @@
 #include <string>
 
 
-//For the time being we will set image format and camera configuration 
-//statically and not during runtime. This will limit flexibility and functionality 
+//For the time being we will set image format and camera configuration
+//statically and not during runtime. This will limit flexibility and functionality
 //of the API because different cameras will definetly have very various set and number
-//of properties and formats which should be set dynamically. 
+//of properties and formats which should be set dynamically.
 //One approach could be to set up a small DB (in text file) where all possible
-//camera property names could be entered by a user who would have to use some 
+//camera property names could be entered by a user who would have to use some
 //diagnostic program to list all the available camera properties and formats.
 //But for this version we stick to enumerations.
 
@@ -60,6 +60,9 @@ typedef enum IMAGEPIXELFORMATS
 } PixelFormats;
 
 
-
+const int defaultResolutionWidth = 640;
+const int defaultResolutionHeight = 480;
+const int defaultColorDepth = 16;
+const int defaultByteLength = 8;
 #endif //~ _MONOCULARCAMERADEFINITIONS_
 

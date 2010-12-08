@@ -1,4 +1,5 @@
 #include "ImageFormat.hpp"
+#include "MonocularCameraDefinitions.hpp"
 
 
 ImageFormat::ImageFormat(): deviceHandle(NULL),
@@ -252,20 +253,30 @@ bool ImageFormat::getListOfFormats()
         currentFormat = &listOfDeviceFormats[0];
         //set default resolution to default resolution supported by the chosen format
         //some older cameras do not have default size or it is 0
-        if ((listOfDeviceFormats[0].size).width != 0 || (listOfDeviceFormats[0].size).height != 0)
+        if (((listOfDeviceFormats[0].size).width != 0) || ((listOfDeviceFormats[0].size).height != 0))
         {
             currentResolution = &listOfDeviceFormats[0].size;
         }
         else
         {
-            currentResolution->width = 640; // set default width
-            currentResolution->height = 480; // set default height
+            currentResolution->width = defaultResolutionWidth; // set default width
+            currentResolution->height = defaultResolutionHeight; // set default height
         }
 
-        //calculate buffer size for the given format, here "8" represents 8 bits and bpp (bitsperpixel)
-        currentFormat->buffer_size = (currentResolution->width*currentResolution->height)*(currentFormat->bpp)/8;
+        if (currentFormat->bpp != 0 )
+        {
+            //calculate buffer size for the given format
+            currentFormat->buffer_size = (currentResolution->width*currentResolution->height)*(currentFormat->bpp)/defaultByteLength;
+        }
+        else
+        {
+            currentFormat->bpp = defaultColorDepth; //set color depth to 16
+            currentFormat->buffer_size = (currentResolution->width*currentResolution->height)*(currentFormat->bpp)/defaultByteLength;
+        }
+
         // set buffertype (can be system or user level memory buffer), at construction time it is set to user level
         currentFormat->buffer_type = this->currentBufferType;
+
         int returnValue = unicap_set_format(*deviceHandle, currentFormat);
         std::cout << "Setting default format to " << currentFormat->identifier << std::endl;
         std::cout << "Setting default resolution to " << currentResolution->width << "x" <<currentResolution->height<< std::endl;
