@@ -67,6 +67,7 @@ SET(OODL_YOUBOT_HEADERS
 
 ../generic-gripper/Gripper.hpp
 ../generic-gripper/GripperData.hpp
+../generic-gripper/GripperParameter.hpp
 
 ../generic-joint/Joint.hpp
 ../generic-joint/JointData.hpp
