@@ -10,11 +10,8 @@ SET(RUDECONFIGLIB "rudeconfig")
 
 FIND_PATH(RUDECONFIG_INCLUDE_DIR NAMES rude/config.h
   PATHS
-  ${RUDECONFIG_PATH}/include
-  ${CMAKE_HOME_DIRECTORY}/../openrobots/include
-  ${CMAKE_HOME_DIRECTORY}/../brics-software/include
-  ${PROJECT_BINARY_DIR}/include
-  ${PROJECT_SOURCE_DIR}/include
+  $ENV{ROBOTPKG_BASE}/include 	
+  ${RUDECONFIG_PATH}/lib
   ENV CPATH
   /usr/include/
   /usr/local/include/
@@ -26,12 +23,8 @@ FIND_PATH(RUDECONFIG_INCLUDE_DIR NAMES rude/config.h
 
 FIND_LIBRARY(RUDECONFIG_LIBRARY_TMP NAMES ${RUDECONFIGLIB} "rudeconfigLibraries"
   PATHS
+  $ENV{ROBOTPKG_BASE}/lib
   ${RUDECONFIG_PATH}/lib
-  ${CMAKE_HOME_DIRECTORY}/../openrobots/lib
-  ${CMAKE_HOME_DIRECTORY}/../brics-software/lib
-  ${PROJECT_BINARY_DIR}/lib
-  ${PROJECT_SOURCE_DIR}/lib
-  ${PROJECT_SOURCE_DIR}/libraries
   ENV LD_LIBRARY_PATH
   ENV LIBRARY_PATH
   /usr/lib

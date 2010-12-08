@@ -12,10 +12,10 @@ class EthercatMaster
     newDataFlagOne = false;
     newDataFlagTwo = false;
 
+    //read ethercat parameters form config file
     if (!configfile.load(this->configFileName.c_str())){
       throw ExceptionOODL(this->configFileName + " file no found");
     }
-
     configfile.setSection("EtherCAT");
     ethernetDevice = configfile.getStringValue("EthernetDevice");
     timeTillNextEthercatUpdate = configfile.getIntValue("EtherCATUpdateRate_[msec]");
@@ -128,7 +128,7 @@ class EthercatMaster
     baseJointControllerName = configfile.getStringValue("BaseJointControllerName");
     manipulatorJointControllerName = configfile.getStringValue("ManipulatorJointControllerName");
 
-    //reserve memory for all slave with have a input/output buffer
+    //reserve memory for all slave with a input/output buffer
     for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
       //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
       //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
@@ -341,24 +341,6 @@ class EthercatMaster
         newDataFlagTwo = true;
         newDataFlagOne = false;
       }
-
-      /*
-      int timestamp = 0;
-      if (ec_slave[7].activeports & PORTM0){
-      timestamp = ec_slave[7].DCrtA;
-    }
-    if (ec_slave[7].activeports & PORTM3){
-      timestamp = ec_slave[7].DCrtD;
-    }
-    if (ec_slave[7].activeports & PORTM1){
-      timestamp = ec_slave[7].DCrtB;
-    }
-    if (ec_slave[7].activeports & PORTM2){
-      timestamp = ec_slave[7].DCrtC;
-    }
-     //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
-        printf("timestamp Joint 7:%i\n", timestamp);
-       */
 
 
       //send and receive data from ethercat

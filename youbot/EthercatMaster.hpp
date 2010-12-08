@@ -39,33 +39,59 @@ friend class YouBotGripper;
 
 
   public:
+    ///creates a instance of the singleton EthercatMaster if there is none and returns a reference to it
+    ///@param configFile configuration file name incl. the extension
+    ///@param configFilePath the path where the configuration is located with a / at the end
     static EthercatMaster& getInstance(const std::string configFile = "youbot-ethercat.cfg", const std::string configFilePath = "../config/");
 
+    /// destroy the singleton instance by calling the destructor
     static void destroy();
 
-    ///return the quantity of joints
+    ///return the quantity of ethercat slave which have an input/output buffer
     unsigned int getNumberOfSlaves() const;
 
+    ///provides all ethercat slave informations from the SOEM driver
+    ///@param ethercatSlaveInfos ethercat slave informations
     void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
 
 
   private:
+    ///establishes the ethercat connection
     void initializeEthercat();
 
+    ///closes the ethercat connection
     bool closeEthercat();
 
+    ///stores a ethercat message to the buffer
+    ///@param msgBuffer ethercat message
+    ///@param jointNumber joint number of the sender joint
     void setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber);
 
+    ///get a ethercat message form the buffer
+    ///@param msgBuffer ethercat message
+    ///@param jointNumber joint number of the receiver joint
     YouBotSlaveMsg getMsgBuffer(const unsigned int jointNumber);
 
+    ///stores a mailbox message in a buffer which will be sent to the motor controllers
+    ///@param msgBuffer ethercat mailbox message
+    ///@param jointNumber joint number of the sender joint
     void setMailboxMsgBuffer(const YouBotSlaveMailboxMsg& msgBuffer, const unsigned int jointNumber);
 
+    ///gets a mailbox message form the buffer which came form the motor controllers
+    ///@param msgBuffer ethercat mailbox message
+    ///@param jointNumber joint number of the receiver joint
     void getMailboxMsgBuffer(YouBotSlaveMailboxMsg& mailboxMsg, const unsigned int jointNumber);
 
+    ///sends the mailbox Messages which have been stored in the buffer
+    ///@param mailboxMsg ethercat mailbox message
     bool sendMailboxMessage(const YouBotSlaveMailboxMsg& mailboxMsg);
 
+    ///receives mailbox messages and stores them in the buffer
+    ///@param mailboxMsg ethercat mailbox message
     bool receiveMailboxMessage(YouBotSlaveMailboxMsg& mailboxMsg);
 
+    ///sends and receives ethercat messages and mailbox messages to and from the motor controllers
+    ///this method is executed in a separate thread
     void updateSensorActorValues();
 
     std::string ethernetDevice;

@@ -46,6 +46,8 @@ int main() {
     JointVelocitySetpoint setVel;
     setVel.angularVelocity = 2 *radian_per_second;
     myYouBotBase.getBaseJoint(1).setData(setVel);
+    setVel.angularVelocity = 0 *radian_per_second;
+    myYouBotBase.getBaseJoint(1).setData(setVel);
 
     //receive motor current form joint 1 of the manipulator
     JointSensedCurrent current;

@@ -1,13 +1,15 @@
-window_sizes 1680 975 342 1332 892 0
+window_sizes 1280 725 242 1032 642 0
 diagrams
-  active  classdiagram_ref 141425 // JointInterface
-    1332 894 100 1 720 0
-  classdiagram_ref 141681 // JointParameter
-    1332 894 100 1 0 0
-  classdiagram_ref 154737 // Gripper
-    1051 715 100 4 24 0
+  classdiagram_ref 128124 // LaserScannerInterface
+    620 488 100 3 0 407
+  active  classdiagram_ref 128103 // LaserScannerConfiguration
+    1032 642 100 2 0 0
+  classdiagram_ref 128113 // LaserScannerData
+    620 488 100 1 0 0
 end
 show_stereotypes
+selected classdiagram_ref 128103 // LaserScannerConfiguration
 open
+  classview_ref 128124 // LaserScannerClasses
 end
 end

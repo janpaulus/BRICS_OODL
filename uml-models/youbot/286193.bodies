@@ -84,9 +84,12 @@ class YouBotBase
     if(noSlaves < 4){
       throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
     }
-
+    
+    //read Joint Topology from config file
     configfile.setSection("JointTopology");
 
+    //check if enough slave exist to create YouBotJoint for the slave numbers from config file
+    //if enough slave exist create YouBotJoint and store it in the joints vector
     unsigned int slaveNumber = configfile.getIntValue("BaseLeftFront");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));

@@ -23,7 +23,7 @@ class YouBotBase {
     virtual ~YouBotBase();
 
     ///return a joint form the base
-    ///@param jointNumber 1-4 for the base joints
+    ///@param baseJointNumber 1-4 for the base joints
     YouBotJoint& getBaseJoint(const unsigned int baseJointNumber);
 
     ///gets the cartesien base position which is calculated from the odometry
