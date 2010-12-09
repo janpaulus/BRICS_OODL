@@ -1,5 +1,5 @@
-#ifndef  _CAMERADEVICECONFIGURATION_
-#define _CAMERADEVICECONFIGURATION_
+#ifndef  _CAMERADEVICECONFIGURATION_HPP_
+#define _CAMERADEVICECONFIGURATION_HPP_
 
 
 #include <unicap.h>
@@ -74,4 +74,4 @@ private:
     unicap_property_range_t lensIris;
 };
 
-#endif //~_CAMERADEVICECONFIGURATION_
+#endif //~_CAMERADEVICECONFIGURATION_HPP_

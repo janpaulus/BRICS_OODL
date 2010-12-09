@@ -1,5 +1,5 @@
-#ifndef _IMAGEFORMAT_
-#define _IMAGEFORMAT_
+#ifndef _IMAGEFORMAT_HPP_
+#define _IMAGEFORMAT_HPP_
 
 #include <string>
 #include <iostream>
@@ -216,4 +216,4 @@ private:
  typedef struct unicap_format_t unicap_format_t;
 */
 
-#endif //~ _IMAGEFORMAT_
+#endif //~ _IMAGEFORMAT_HPP_

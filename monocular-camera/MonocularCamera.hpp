@@ -1,5 +1,5 @@
-#ifndef  _MONOCULARCAMERA_H_
-#define  _MONOCULARCAMERA_H_
+#ifndef  _MONOCULARCAMERA_HPP_
+#define  _MONOCULARCAMERA_HPP_
 
 //#include "../generic/Errors.hpp"
 //#include "../generic/Logger.hpp"
@@ -64,4 +64,4 @@ private:
 };
 
 
-#endif //~_MONOCULARCAMERA_H_
+#endif //~_MONOCULARCAMERA_HPP_

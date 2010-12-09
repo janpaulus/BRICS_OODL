@@ -1,5 +1,5 @@
-#ifndef  _COLOREXPOSURECONFIGURATION_
-#define  _COLOREXPOSURECONFIGURATION_
+#ifndef  _COLOREXPOSURECONFIGURATION_HPP_
+#define  _COLOREXPOSURECONFIGURATION_HPP_
 
 #include <unicap.h>
 #include <unicap_status.h>
@@ -94,4 +94,4 @@ private:
 
 };
 
-#endif// ~ _COLOREXPOSURECONFIGURATION_
+#endif// ~ _COLOREXPOSURECONFIGURATION_HPP_

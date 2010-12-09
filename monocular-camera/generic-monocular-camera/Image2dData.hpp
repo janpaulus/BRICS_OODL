@@ -1,5 +1,5 @@
-#ifndef _IMAGE2DDATA_
-#define _IMAGE2DDATA_
+#ifndef _IMAGE2DDATA_HPP_
+#define _IMAGE2DDATA_HPP_
 
 #include <iostream>
 #include "MonocularCameraDefinitions.hpp"
@@ -83,4 +83,4 @@ typedef struct unicap_data_buffer_t unicap_data_buffer_t;
 */
 
 
-#endif //~ _IMAGE2DDATA_
+#endif //~ _IMAGE2DDATA_HPP_

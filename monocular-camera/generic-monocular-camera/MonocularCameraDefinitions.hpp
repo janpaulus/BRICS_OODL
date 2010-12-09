@@ -1,5 +1,5 @@
-#ifndef _MONOCULARCAMERADEFINITIONS_
-#define _MONOCULARCAMERADEFINITIONS_
+#ifndef _MONOCULARCAMERADEFINITIONS_HPP_
+#define _MONOCULARCAMERADEFINITIONS_HPP_
 
 #include <vector>
 #include <string>
@@ -39,6 +39,13 @@ typedef enum LENSPROPERTYDESCRIPTORS
 
 
 
+typedef enum CAPTUREMODE
+{
+    BLOCKINGMODE = 0,
+    NONBLOCKINGMODE
+
+} ImageCaptureMode ;
+
 
 // TODO (azamat#1#): Add an enumeration for all possible formats and  whenever there is
 //a new camera pluged it will check against this enumeration. The number of possible formats (RGB, YUV )
@@ -59,10 +66,11 @@ typedef enum IMAGEPIXELFORMATS
 
 } PixelFormats;
 
-
+//Constants for some default values for image/capture properties
 const int defaultResolutionWidth = 640;
 const int defaultResolutionHeight = 480;
 const int defaultColorDepth = 16;
 const int defaultByteLength = 8;
-#endif //~ _MONOCULARCAMERADEFINITIONS_
+
+#endif //~ _MONOCULARCAMERADEFINITIONS_HPP_
 

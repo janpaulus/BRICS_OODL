@@ -150,6 +150,10 @@ bool MonocularCamera::capture ()
 
 }
 
+// TODO (azamat#2#): This capture method is blocking and sometimes it seems not
+//to work with some cameras (in Alexeys case). Another approach is to use callbacks,
+//which allows non-blocking capture mode. The method signature chould be changed
+//with parameter type. Need to check unicap_callback
 
 void MonocularCamera::getImageData(Image2dData& data)
 {
