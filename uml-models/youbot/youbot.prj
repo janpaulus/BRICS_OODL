@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 109
+  revision 110
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -10879,7 +10879,7 @@ ${inlines}
       end
 
       operation 392177 "getConfigurationParameter"
-	preserve_cpp_body_indent cpp_virtual public explicit_return_type "void"
+	preserve_cpp_body_indent cpp_virtual protected explicit_return_type "void"
 	nparams 1
 	  param out name "parameter" type class_ref 259185 // GripperParameter
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -10894,7 +10894,7 @@ ${inlines}
       end
 
       operation 391793 "setConfigurationParameter"
-	preserve_cpp_body_indent cpp_virtual public explicit_return_type "void"
+	preserve_cpp_body_indent cpp_virtual protected explicit_return_type "void"
 	nparams 1
 	  param in name "parameter" type class_ref 259185 // GripperParameter
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0}& ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -10999,7 +10999,7 @@ ${inlines}
       end
 
       operation 392049 "getData"
-	preserve_cpp_body_indent public explicit_return_type "void"
+	preserve_cpp_body_indent protected explicit_return_type "void"
 	nparams 1
 	  param in name "data" type class_ref 217841 // GripperData
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0}& ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -11013,23 +11013,8 @@ ${inlines}
 	
       end
 
-      operation 295793 "setData"
-	preserve_cpp_body_indent public explicit_return_type "void"
-	nparams 1
-	  param in name "data" type class_ref 218097 // OneDOFGripperData
-	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0}& ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0}& ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	preserve_java_body_indent 
-	preserve_php_body_indent 
-	preserve_python_body_indent 
-	
-      end
-
       operation 391921 "setData"
-	preserve_cpp_body_indent cpp_virtual public explicit_return_type "void"
+	preserve_cpp_body_indent cpp_virtual protected explicit_return_type "void"
 	nparams 1
 	  param in name "data" type class_ref 217841 // GripperData
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0}& ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -11044,12 +11029,27 @@ ${inlines}
       end
 
       operation 295921 "getData"
-	preserve_cpp_body_indent public explicit_return_type "void"
+	preserve_cpp_body_indent protected explicit_return_type "void"
 	nparams 1
 	  param out name "data" type class_ref 218097 // OneDOFGripperData
 	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0}& ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${description}${inline}${type} ${class}::${name}${(}${t0}& ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	preserve_java_body_indent 
+	preserve_php_body_indent 
+	preserve_python_body_indent 
+	
+      end
+
+      operation 295793 "setData"
+	preserve_cpp_body_indent protected explicit_return_type "void"
+	nparams 1
+	  param in name "data" type class_ref 218097 // OneDOFGripperData
+	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0}& ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0}& ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	preserve_java_body_indent 

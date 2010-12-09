@@ -67,6 +67,21 @@ int main() {
   return 0;
 }
 @endcode
+ *
+ * 
+ * \section run_sec Run without sudo
+ *
+ * The OODL youBot API needs access to the raw ethernet device. Under Linux a normal user does not have access to the raw ethernet device. You can grand this capability to a program by the tool setcap. To install setcap use:
+ *
+ * sudo apt-get install libcap2-bin
+ *
+ * To provide a program with raw access to a ethernet device use: (replace the ./YouBot_KeyboardRemoteControl with your program.)
+ *
+ * sudo setcap cap_net_raw+ep ./YouBot_KeyboardRemoteControl
+ *
+ * This have to be done whenever the executable is created or replaces e.g. after building.
+ * 
+ *
 
 */
 
@@ -130,12 +145,6 @@ enum YouBotJointControllerMode {
 enum TMCLModuleAddress {
     DRIVE = 0,
     GRIPPER = 1
-};
-
-enum TMCLGripperValue {
-  OPEN_GRIPPER = -10000,//0xFFFFFFFF, //0xFFFF0101
-  CLOSE_GRIPPER = 10000,//0x0FFFFFFF, //0x0FFF0000
-  STOP_GRIPPER = 0x00000000 //0x0FFF0000
 };
 
 enum YouBotErrorFlags {

@@ -34,12 +34,13 @@ void YouBotGripper::setConfigurationParameter(const GripperParameter& parameter)
 
 void YouBotGripper::getConfigurationParameter(YouBotGripperParameter& parameter) {
   // Bouml preserved body begin 000482F1
+  LOG(info) << "Nothing to do";
   // Bouml preserved body end 000482F1
 }
 
 void YouBotGripper::setConfigurationParameter(const YouBotGripperParameter& parameter) {
   // Bouml preserved body begin 000617F1
-   
+   LOG(info) << "Nothing to do";
   // Bouml preserved body end 000617F1
 }
 
@@ -100,12 +101,6 @@ void YouBotGripper::getData(const GripperData& data) {
   // Bouml preserved body end 0005FB71
 }
 
-void YouBotGripper::setData(const OneDOFGripperData& data) {
-  // Bouml preserved body begin 00048371
-    LOG(info) << "Nothing to do";
-  // Bouml preserved body end 00048371
-}
-
 void YouBotGripper::setData(const GripperData& data) {
   // Bouml preserved body begin 0005FAF1
     LOG(info) << "Nothing to do";
@@ -118,10 +113,16 @@ void YouBotGripper::getData(OneDOFGripperData& data) {
   // Bouml preserved body end 000483F1
 }
 
+void YouBotGripper::setData(const OneDOFGripperData& data) {
+  // Bouml preserved body begin 00048371
+    LOG(info) << "Nothing to do";
+  // Bouml preserved body end 00048371
+}
+
 void YouBotGripper::setData(const GripperBarSpacingSetPoint& barSpacing) {
   // Bouml preserved body begin 0005F8F1
 
-  if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < 0 * meter){
+  if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < barSpacingOffset){
     std::stringstream errorMessageStream;
     errorMessageStream << "The bar spacing is not allowd to be less than 0 m or higher than " << (maxTravelDistance + barSpacingOffset);
     throw ExceptionOODL(errorMessageStream.str());
