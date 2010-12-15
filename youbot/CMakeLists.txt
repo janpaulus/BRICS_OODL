@@ -1,6 +1,22 @@
 
 SET( OODL_YOUBOT_VERSION 0.01 )
 
+#find CPP_Unit
+#FIND_PACKAGE(CppUnit)
+#IF(CppUnit_FOUND)
+#	MESSAGE(STATUS "SUCCESSFUL: CPP_UNIT found")
+#ELSE(CppUnit_FOUND)
+#	MESSAGE(STATUS "WARNING: CPP_UNIT not found")
+#ENDIF (CppUnit_FOUND)
+
+#find boost
+FIND_PACKAGE(Boost REQUIRED COMPONENTS thread date_time filesystem system regex)
+IF (Boost_FOUND)
+  LINK_LIBRARIES(boost_thread boost_date_time boost_filesystem boost_system boost_regex)
+  MESSAGE(STATUS "SUCCESSFUL: Boost found")
+ELSE (Boost_FOUND)
+  MESSAGE(STATUS "ERROR: boost not found")
+ENDIF (Boost_FOUND)
 
 
 FIND_PACKAGE(Soem REQUIRED)
@@ -91,7 +107,7 @@ ADD_LIBRARY(OODL_YouBot
 )
 
 add_subdirectory(applications)
-add_subdirectory(testing)
+#add_subdirectory(testing)
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})

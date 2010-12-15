@@ -16,7 +16,6 @@ INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
 # find required and optional dependencies via Find<name>.cmake modules
 
 
-
 IF(DEFINED UNICAP_PATH)
   link_directories(${UNICAP_PATH}/lib)
   include_directories(${UNICAP_PATH}/include/unicap)
@@ -38,8 +37,8 @@ IF(NOT DEFINED SELECTED_DRIVER)
 # add_subdirectory(sick-lms-2xx)
 # add_subdirectory(sick-ld)
 # add_subdirectory(sick-s300)
-#   add_subdirectory(youbot)
- add_subdirectory(monocular-camera)
+  add_subdirectory(youbot)
+# add_subdirectory(monocular-camera)
 # add_subdirectory(mesa-swissranger)
 # add_subdirectory(pmd-camcube)
 ENDIF(NOT DEFINED SELECTED_DRIVER)
