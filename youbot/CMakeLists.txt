@@ -1,13 +1,12 @@
 
 SET( OODL_YOUBOT_VERSION 0.01 )
 
-#find CPP_Unit
-#FIND_PACKAGE(CppUnit)
-#IF(CppUnit_FOUND)
-#	MESSAGE(STATUS "SUCCESSFUL: CPP_UNIT found")
-#ELSE(CppUnit_FOUND)
-#	MESSAGE(STATUS "WARNING: CPP_UNIT not found")
-#ENDIF (CppUnit_FOUND)
+FIND_PACKAGE(CppUnit)
+IF(CppUnit_FOUND)
+	MESSAGE(STATUS "SUCCESSFUL: CPP_UNIT found")
+ELSE(CppUnit_FOUND)
+	MESSAGE(STATUS "WARNING: CPP_UNIT not found")
+ENDIF (CppUnit_FOUND)
 
 #SET(Boost_USE_STATIC_LIBS ON)
 SET(Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0" "1.42" "1.42.0")
@@ -119,7 +118,7 @@ ADD_LIBRARY(OODL_YouBot
 )
 
 add_subdirectory(applications)
-#add_subdirectory(testing)
+add_subdirectory(testing)
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})
