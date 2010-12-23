@@ -13,7 +13,6 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib) #dynamic librari
 
 INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
 
-# find required and optional dependencies via Find<name>.cmake modules
 
 
 
@@ -34,14 +33,9 @@ include(UseDoxygen)
 
 
 IF(NOT DEFINED SELECTED_DRIVER)
-# add_subdirectory(hokuyo-urg)
-# add_subdirectory(sick-lms-2xx)
-# add_subdirectory(sick-ld)
-# add_subdirectory(sick-s300)
-#   add_subdirectory(youbot)
+
  add_subdirectory(monocular-camera)
-# add_subdirectory(mesa-swissranger)
-# add_subdirectory(pmd-camcube)
+
 ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 
