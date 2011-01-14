@@ -445,10 +445,14 @@ void EthercatMaster::updateSensorActorValues() {
 
 
       //send and receive data from ethercat
-      if (ec_send_processdata() == 0)
-        throw ExceptionOODL("Sending process data failed");
-      if (ec_receive_processdata(this->ethercatTimeout) == 0)
-        throw ExceptionOODL("Receiving data failed");
+      if (ec_send_processdata() == 0){
+        LOG(error) << "Sending process data failed";
+      //  throw ExceptionOODL("Sending process data failed");
+      }
+      if (ec_receive_processdata(this->ethercatTimeout) == 0){
+        LOG(error) << "Receiving data failed";
+     //   throw ExceptionOODL("Receiving data failed");
+      }
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));
     }
