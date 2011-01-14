@@ -106,21 +106,33 @@ void EthercatMaster::initializeEthercat() {
 
         /* wait for all slaves to reach Pre OP state */
         /*ec_statecheck(0, EC_STATE_PRE_OP,  EC_TIMEOUTSTATE);
-        if (ec_slave[0].state != EC_STATE_PRE_OP )
-        {
-        printf("Not all slaves reached prae operational state.\n");
+        if (ec_slave[0].state != EC_STATE_PRE_OP ){
+        printf("Not all slaves reached pre operational state.\n");
         ec_readstate();
         //If not all slaves operational find out which one
-          for(int i = 1; i<=ec_slavecount ; i++)
-          {
-            if(ec_slave[i].state != EC_STATE_PRE_OP)
-            {
+          for(int i = 1; i<=ec_slavecount ; i++){
+            if(ec_slave[i].state != EC_STATE_PRE_OP){
               printf("Slave %d State=%2x StatusCode=%4x : %s\n",
               i, ec_slave[i].state, ec_slave[i].ALstatuscode, ec_ALstatuscode2string(ec_slave[i].ALstatuscode));
             }
           }
-        }*/
+        }
+        */
 
+        /* distributed clock is not working
+        //Configure distributed clock
+        if(!ec_configdc()){
+          LOG(info) << "no distributed clock is available";
+        }else{
+
+          uint32 CyclTime = 4000000;
+          uint32 CyclShift = 0;
+          for (int i = 1; i <= ec_slavecount; i++) {
+            ec_dcsync0(i, true, CyclTime, CyclShift);
+          }
+
+        }
+        */
 
         /* wait for all slaves to reach SAFE_OP state */
         ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE);
@@ -136,8 +148,7 @@ void EthercatMaster::initializeEthercat() {
           }
         }
 
-        //Configure distributed clock
-        //ec_configdc();
+        
         //Read the state of all slaves
         //ec_readstate();
 
@@ -159,6 +170,7 @@ void EthercatMaster::initializeEthercat() {
           throw ExceptionOODL("Not all slaves reached operational state.");
 
         }
+        
       } else {
         throw ExceptionOODL("No slaves found!");
       }
@@ -180,9 +192,9 @@ void EthercatMaster::initializeEthercat() {
 
     //reserve memory for all slave with a input/output buffer
     for (unsigned int cnt = 1; cnt <= ec_slavecount; cnt++) {
-      //   printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
-      //           cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
-      //           ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
+    //     printf("Slave:%d Name:%s Output size:%3dbits Input size:%3dbits State:%2d delay:%d.%d\n",
+    //             cnt, ec_slave[cnt].name, ec_slave[cnt].Obits, ec_slave[cnt].Ibits,
+    //             ec_slave[cnt].state, (int) ec_slave[cnt].pdelay, ec_slave[cnt].hasdc);
 
       ethercatSlaveInfo.push_back(ec_slave[cnt]);
 
@@ -442,6 +454,11 @@ void EthercatMaster::updateSensorActorValues() {
         newDataFlagTwo = true;
         newDataFlagOne = false;
       }
+
+      
+     // int cnt = 7;
+     //  printf("activeports:%i DCrtA:%i DCrtB:%d DCrtC:%d DCrtD:%d\n", (int)ec_slave[cnt].activeports, ec_slave[cnt].DCrtA, ec_slave[cnt].DCrtB, ec_slave[cnt].DCrtC, ec_slave[cnt].DCrtD);
+     //  printf("next DC slave:%i previous DC slave:%i DC cyle time in ns:%d DC shift:%d DC sync activation:%d\n", ec_slave[cnt].DCnext, ec_slave[cnt].DCprevious, ec_slave[cnt].DCcycle, ec_slave[cnt].DCshift, ec_slave[cnt].DCactive);
 
 
       //send and receive data from ethercat

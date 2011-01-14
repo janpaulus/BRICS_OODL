@@ -85,7 +85,7 @@ int main() {
  //   gearRatio.getParameter(gear);
  //   LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
 
-/*
+
     while (running) {
 
 
@@ -108,7 +108,7 @@ int main() {
       SLEEP_MILLISEC(100);
     }
 
-*/
+
 
 
 

@@ -1,10 +1,9 @@
-window_sizes 1680 975 306 1368 894 0
+window_sizes 1680 975 532 1142 772 120
 show_stereotypes
-selected operation_ref 401009 // setConfigurationParameter
+selected operation_ref 367857 // getParameter
 open
-  classview_ref 147697 // BaseKinematic
-  operation_ref 391921 // setData
-  classview_ref 161009 // GripperParameter
-  deploymentview_ref 161137 // Deployment
+  class_ref 245105 // MaximumPositioningSpeed
+  class_ref 293361 // MotorAcceleration
+  class_ref 295921 // PositionControlSwitchingThreshold
 end
 end

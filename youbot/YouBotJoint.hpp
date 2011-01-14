@@ -98,7 +98,9 @@ class YouBotJoint : public Joint {
 
 
   private:
-    void parseYouBotErrorFlags();
+    void parseYouBotErrorFlags(const YouBotSlaveMsg& messageBuffer);
+
+    void parseMailboxStatusFlags(const YouBotSlaveMailboxMsg& mailboxMsg);
 
     bool retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& message);
 

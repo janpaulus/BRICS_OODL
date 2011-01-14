@@ -146,6 +146,43 @@ void YouBotGripper::getData(GripperBarSpacingSetPoint& barSpacing) {
   // Bouml preserved body end 0005F971
 }
 
+void YouBotGripper::parseMailboxStatusFlags(const YouBotSlaveMailboxMsg& mailboxMsg) {
+  // Bouml preserved body begin 00075C71
+    std::stringstream errorMessageStream;
+    errorMessageStream << "Joint " << this->jointNumber << ": ";
+    std::string errorMessage;
+    errorMessage = errorMessageStream.str();
+
+
+    switch(mailboxMsg.stctInput.status){
+      case NO_ERROR:
+        break;
+      case INVALID_COMMAND:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << " is an invalid command!" ;
+      //    throw ExceptionOODL(errorMessage + "invalid command");
+        break;
+      case WRONG_TYPE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " has a wrong type!";
+      //    throw ExceptionOODL(errorMessage + "wrong type");
+        break;
+      case INVALID_VALUE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Value: " << mailboxMsg.stctInput.value << " is a invalid value!";
+      //    throw ExceptionOODL(errorMessage + "invalid value");
+        break;
+      case CONFIGURATION_EEPROM_LOCKED:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Configuration EEPROM locked";
+      //    throw ExceptionOODL(errorMessage + "configuration EEPROM locked");
+        break;
+      case COMMAND_NOT_AVAILABLE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << "Command is not available!";
+      //    throw ExceptionOODL(errorMessage + "command not available");
+        break;
+    }
+   
+
+  // Bouml preserved body end 00075C71
+}
+
 bool YouBotGripper::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg) {
   // Bouml preserved body begin 0005EF71
 
@@ -167,7 +204,7 @@ bool YouBotGripper::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailbo
                   << " value " << mailboxMsgBuffer.stctInput.value;
        */
       if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
-              mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
+              mailboxMsgBuffer.stctInput.status == NO_ERROR) {
         unvalid = false;
       } else {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
@@ -176,6 +213,7 @@ bool YouBotGripper::setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailbo
     } while (retry < mailboxMsgRetries && unvalid);
 
     if (unvalid) {
+      this->parseMailboxStatusFlags(mailboxMsgBuffer);
       return false;
     } else {
       return true;
@@ -203,7 +241,7 @@ bool YouBotGripper::retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& messa
                  << " value " << message.stctInput.value;
        */
       if (message.stctOutput.commandNumber == message.stctInput.commandNumber &&
-              message.stctInput.status == TMCL_STATUS_OK) {
+              message.stctInput.status == NO_ERROR) {
         unvalid = false;
       } else {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
@@ -212,6 +250,7 @@ bool YouBotGripper::retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& messa
     } while (retry < mailboxMsgRetries && unvalid);
 
     if (unvalid) {
+      this->parseMailboxStatusFlags(message);
       return false;
     } else {
       return true;
