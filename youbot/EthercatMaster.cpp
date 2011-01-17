@@ -27,7 +27,12 @@ EthercatMaster::EthercatMaster() {
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
+    this->automaticSendOn = true;
 
+    //initialize to zero
+    for(unsigned int i = 0; i<4096; i++){
+      IOmap_[i] = 0;
+    }
     //read ethercat parameters form config file
     if (!configfile.load(this->configFileName.c_str())){
       throw ExceptionOODL(this->configFileName + " file no found");
@@ -82,6 +87,46 @@ unsigned int EthercatMaster::getNumberOfSlaves() const {
   // Bouml preserved body begin 00044A71
     return this->nrOfSlaves;
   // Bouml preserved body end 00044A71
+}
+
+void EthercatMaster::AutomaticSendOn(const bool enableAutomaticSend) {
+  // Bouml preserved body begin 000775F1
+  this->automaticSendOn = enableAutomaticSend;
+
+ 
+  if(this->automaticSendOn == true){
+    unsigned int slaveNo = 0;
+
+       if (newDataFlagOne == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        for(unsigned int i = 0; i < automaticSendOffBufferVector.size(); i++) {
+          slaveNo = automaticSendOffBufferVector[i].jointNumber - 1;
+          firstBufferVector[slaveNo].stctOutput = automaticSendOffBufferVector[i].stctOutput;
+          newOutputDataFlagOne[slaveNo] = true;
+          newOutputDataFlagTwo[slaveNo] = false;
+        }
+      }
+      automaticSendOffBufferVector.clear();
+    } else if (newDataFlagTwo == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        for(unsigned int i = 0; i < automaticSendOffBufferVector.size(); i++) {
+          slaveNo = automaticSendOffBufferVector[i].jointNumber - 1;
+          secondBufferVector[slaveNo].stctOutput = automaticSendOffBufferVector[i].stctOutput;
+          newOutputDataFlagOne[slaveNo] = false;
+          newOutputDataFlagTwo[slaveNo] = true;
+        }
+      }
+      automaticSendOffBufferVector.clear();
+    } else {
+      return;
+    }
+    
+  }
+  
+  return;
+  // Bouml preserved body end 000775F1
 }
 
 ///provides all ethercat slave informations from the SOEM driver
@@ -255,6 +300,7 @@ bool EthercatMaster::closeEthercat() {
 void EthercatMaster::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigned int jointNumber) {
   // Bouml preserved body begin 000414F1
 
+  if(this->automaticSendOn == true){
     if (newDataFlagOne == true) {
       {
         boost::mutex::scoped_lock dataMutex1(mutexDataOne);
@@ -273,6 +319,12 @@ void EthercatMaster::setMsgBuffer(const YouBotSlaveMsg& msgBuffer, const unsigne
     } else {
       return;
     }
+  }else{
+    YouBotSlaveMsg localMsg;
+    localMsg.stctOutput = msgBuffer.stctOutput;
+    localMsg.jointNumber = jointNumber;
+    automaticSendOffBufferVector.push_back(localMsg);
+  }
 
   // Bouml preserved body end 000414F1
 }

@@ -30,6 +30,8 @@ public:
 
     OutputBuffer stctOutput;
     InputBuffer stctInput;
+    unsigned int jointNumber;
+
     // Constructor
 
     YouBotSlaveMsg() {
@@ -40,6 +42,7 @@ public:
         stctInput.actualVelocity = 0;
         stctInput.driverTemperature = 0;
         stctInput.errorFlags = 0;
+        jointNumber = 0;
     }
 
     // Copy-Constructor
@@ -47,6 +50,7 @@ public:
     YouBotSlaveMsg(const YouBotSlaveMsg &copy) {
         stctOutput = copy.stctOutput;
         stctInput = copy.stctInput;
+        jointNumber = copy.jointNumber;
     }
 
     // Destructor
@@ -59,6 +63,7 @@ public:
     YouBotSlaveMsg & operator=(const YouBotSlaveMsg &copy) {
         stctOutput = copy.stctOutput;
         stctInput = copy.stctInput;
+        jointNumber = copy.jointNumber;
 
         return *this;
     }

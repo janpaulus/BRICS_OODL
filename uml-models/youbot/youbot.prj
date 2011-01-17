@@ -1,6 +1,6 @@
 format 75
 "youbot"
-  revision 111
+  revision 113
   modified_by 113 "jan"
   cpp_root_dir "/home/jan/BRICS_OODL/"
 
@@ -9431,6 +9431,21 @@ ${inlines}
 	comment "///return the quantity of ethercat slave which have an input/output buffer"
       end
 
+      operation 488945 "AutomaticSendOn"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "enableAutomaticSend" explicit_type "bool"
+	cpp_decl "    ${description}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${description}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	preserve_java_body_indent 
+	preserve_php_body_indent 
+	preserve_python_body_indent 
+	
+      end
+
       operation 401137 "getEthercatDiagnosticInformation"
 	preserve_cpp_body_indent public explicit_return_type "void"
 	nparams 1
@@ -9694,6 +9709,16 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 472305 "automaticSendOffBufferVector"
+	private explicit_type "std::vector<YouBotSlaveMsg>"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       attribute 290801 "nrOfSlaves"
 	private explicit_type "unsigned int"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -9897,6 +9922,16 @@ ${inlines}
 
       attribute 458737 "configFileName"
 	class_attribute private explicit_type "string"
+	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 465777 "automaticSendOn"
+	private explicit_type "bool"
 	cpp_decl "    ${description}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""

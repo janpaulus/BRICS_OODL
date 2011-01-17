@@ -11,7 +11,12 @@ class EthercatMaster
     stopThread = false;
     newDataFlagOne = false;
     newDataFlagTwo = false;
+    this->automaticSendOn = true;
 
+    //initialize to zero
+    for(unsigned int i = 0; i<4096; i++){
+      IOmap_[i] = 0;
+    }
     //read ethercat parameters form config file
     if (!configfile.load(this->configFileName.c_str())){
       throw ExceptionOODL(this->configFileName + " file no found");
@@ -42,6 +47,42 @@ class EthercatMaster
 
 !!!281201.cpp!!!	getNumberOfSlaves() : unsigned int
     return this->nrOfSlaves;
+!!!488945.cpp!!!	AutomaticSendOn(in enableAutomaticSend : bool) : void
+  this->automaticSendOn = enableAutomaticSend;
+
+ 
+  if(this->automaticSendOn == true){
+    unsigned int slaveNo = 0;
+
+       if (newDataFlagOne == true) {
+      {
+        boost::mutex::scoped_lock dataMutex1(mutexDataOne);
+        for(unsigned int i = 0; i < automaticSendOffBufferVector.size(); i++) {
+          slaveNo = automaticSendOffBufferVector[i].jointNumber - 1;
+          firstBufferVector[slaveNo].stctOutput = automaticSendOffBufferVector[i].stctOutput;
+          newOutputDataFlagOne[slaveNo] = true;
+          newOutputDataFlagTwo[slaveNo] = false;
+        }
+      }
+      automaticSendOffBufferVector.clear();
+    } else if (newDataFlagTwo == true) {
+      {
+        boost::mutex::scoped_lock dataMutex2(mutexDataTwo);
+        for(unsigned int i = 0; i < automaticSendOffBufferVector.size(); i++) {
+          slaveNo = automaticSendOffBufferVector[i].jointNumber - 1;
+          secondBufferVector[slaveNo].stctOutput = automaticSendOffBufferVector[i].stctOutput;
+          newOutputDataFlagOne[slaveNo] = false;
+          newOutputDataFlagTwo[slaveNo] = true;
+        }
+      }
+      automaticSendOffBufferVector.clear();
+    } else {
+      return;
+    }
+    
+  }
+  
+  return;
 !!!401137.cpp!!!	getEthercatDiagnosticInformation(out ethercatSlaveInfos : std::vector<ec_slavet>) : void
     ethercatSlaveInfos = this->ethercatSlaveInfo;
 !!!266481.cpp!!!	initializeEthercat() : void
@@ -193,6 +234,7 @@ class EthercatMaster
 
 !!!267505.cpp!!!	setMsgBuffer(in msgBuffer : YouBotSlaveMsg, in jointNumber : uint) : void
 
+  if(this->automaticSendOn == true){
     if (newDataFlagOne == true) {
       {
         boost::mutex::scoped_lock dataMutex1(mutexDataOne);
@@ -211,6 +253,12 @@ class EthercatMaster
     } else {
       return;
     }
+  }else{
+    YouBotSlaveMsg localMsg;
+    localMsg.stctOutput = msgBuffer.stctOutput;
+    localMsg.jointNumber = jointNumber;
+    automaticSendOffBufferVector.push_back(localMsg);
+  }
 
 !!!267633.cpp!!!	getMsgBuffer(in jointNumber : uint) : YouBotSlaveMsg
 

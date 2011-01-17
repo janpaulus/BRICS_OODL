@@ -66,6 +66,7 @@ class YouBotBase
     if (wheelVelocities.size() < 4)
       throw ExceptionOODL("To less wheel velocities");
 
+    EthercatMaster::getInstance().AutomaticSendOn(false);
     setVel.angularVelocity = wheelVelocities[0];
     joints[0].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
@@ -74,6 +75,7 @@ class YouBotBase
     joints[2].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[3];
     joints[3].setData(setVel, NON_BLOCKING);
+    EthercatMaster::getInstance().AutomaticSendOn(true);
 !!!287985.cpp!!!	initializeJoints() : void
 
     LOG(info) << "Initializing Joints";
