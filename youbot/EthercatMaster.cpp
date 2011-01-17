@@ -134,6 +134,10 @@ void EthercatMaster::AutomaticSendOn(const bool enableAutomaticSend) {
 void EthercatMaster::getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos) {
   // Bouml preserved body begin 00061EF1
     ethercatSlaveInfos = this->ethercatSlaveInfo;
+    for(unsigned int i = 0; i < ethercatSlaveInfos.size(); i++) {
+      ethercatSlaveInfos[i].inputs = NULL;
+      ethercatSlaveInfos[i].outputs = NULL;
+    }
   // Bouml preserved body end 00061EF1
 }
 
