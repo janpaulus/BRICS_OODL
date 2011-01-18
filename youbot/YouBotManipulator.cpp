@@ -60,7 +60,7 @@ void YouBotManipulator::initializeJoints() {
 
 
     if(noSlaves < 5){
-      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotManipulator!");
     }
 
     configfile.setSection("JointTopology");

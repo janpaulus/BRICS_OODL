@@ -127,8 +127,6 @@ typedef enum TMCLCommandNumber {
 #define RFS_STOP 1
 #define RFS_STATUS 2
 
-#define TMCL_STATUS_OK 100
-
 //Result codes for GetResult
 #define TMCL_RESULT_OK 0
 #define TMCL_RESULT_NOT_READY 1
@@ -159,6 +157,17 @@ enum YouBotErrorFlags {
     CYCLE_TIME_VIOLATION = 256,
     INIT_SIN_COMM = 512
 };
+
+
+enum YouBotMailboxStatusFlags {
+    NO_ERROR = 100,
+    INVALID_COMMAND = 2,
+    WRONG_TYPE = 3,
+    INVALID_VALUE = 4,
+    CONFIGURATION_EEPROM_LOCKED = 5,
+    COMMAND_NOT_AVAILABLE = 6
+};
+
 
 #endif	/* PROTOCOLDEFINITIONS_HPP */
 

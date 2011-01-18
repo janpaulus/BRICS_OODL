@@ -229,7 +229,7 @@ class YouBotJoint
 !!!253169.cpp!!!	getData(out data : JointSensedAngle) : void
     YouBotSlaveMsg messageBuffer;
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
-    this->parseYouBotErrorFlags();
+    this->parseYouBotErrorFlags(messageBuffer);
 
     if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
@@ -261,7 +261,7 @@ class YouBotJoint
 !!!253297.cpp!!!	getData(out data : JointSensedVelocity) : void
     YouBotSlaveMsg messageBuffer;
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
-    this->parseYouBotErrorFlags();
+    this->parseYouBotErrorFlags(messageBuffer);
 
     if (gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
@@ -272,19 +272,19 @@ class YouBotJoint
 !!!246385.cpp!!!	getData(out data : JointSensedTemperature) : void
     YouBotSlaveMsg messageBuffer;
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
-    this->parseYouBotErrorFlags();
+    this->parseYouBotErrorFlags(messageBuffer);
 
     //the formular is taken from the TMCM-174/841: EtherCAT Communication Protocol
     data.temperature = (25.0 + (((messageBuffer.stctInput.driverTemperature - 1.43) / (3.3 * 4095)) / 0.0043)) * boost::units::celsius::degree;
+ //   data.temperature = ((25.0 + ((messageBuffer.stctInput.driverTemperature * (3.3 / 4096)) - 1.43)) / 0.0043) * boost::units::celsius::degree;
 
 !!!253425.cpp!!!	getData(out data : JointSensedCurrent) : void
     YouBotSlaveMsg messageBuffer;
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
-    this->parseYouBotErrorFlags();
+    this->parseYouBotErrorFlags(messageBuffer);
     //convert mili ampere to ampere
     data.current = messageBuffer.stctInput.actualCurrent / 1000.0 * ampere;
-!!!281329.cpp!!!	parseYouBotErrorFlags() : void
-    YouBotSlaveMsg messageBuffer;
+!!!281329.cpp!!!	parseYouBotErrorFlags(in messageBuffer : YouBotSlaveMsg) : void
     std::stringstream errorMessageStream;
     errorMessageStream << "Joint " << this->jointNumber << " ";
     std::string errorMessage;
@@ -341,6 +341,39 @@ class YouBotJoint
       //   throw ExceptionOODL(errorMessage + "need to initialize the sinus commutation");
     }
 
+!!!482289.cpp!!!	parseMailboxStatusFlags(in mailboxMsg : YouBotSlaveMailboxMsg) : void
+    std::stringstream errorMessageStream;
+    errorMessageStream << "Joint " << this->jointNumber << ": ";
+    std::string errorMessage;
+    errorMessage = errorMessageStream.str();
+
+
+    switch(mailboxMsg.stctInput.status){
+      case NO_ERROR:
+        break;
+      case INVALID_COMMAND:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << " is an invalid command!" ;
+      //    throw ExceptionOODL(errorMessage + "invalid command");
+        break;
+      case WRONG_TYPE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " has a wrong type!";
+      //    throw ExceptionOODL(errorMessage + "wrong type");
+        break;
+      case INVALID_VALUE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Value: " << mailboxMsg.stctInput.value << " is a invalid value!";
+      //    throw ExceptionOODL(errorMessage + "invalid value");
+        break;
+      case CONFIGURATION_EEPROM_LOCKED:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Configuration EEPROM locked";
+      //    throw ExceptionOODL(errorMessage + "configuration EEPROM locked");
+        break;
+      case COMMAND_NOT_AVAILABLE:
+        LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << "Command is not available!";
+      //    throw ExceptionOODL(errorMessage + "command not available");
+        break;
+    }
+   
+
 !!!376177.cpp!!!	retrieveValueFromMotorContoller(out message : YouBotSlaveMailboxMsg) : bool
 
     bool unvalid = true;
@@ -359,7 +392,7 @@ class YouBotJoint
                  << " value " << message.stctInput.value;
        */
       if (message.stctOutput.commandNumber == message.stctInput.commandNumber &&
-              message.stctInput.status == TMCL_STATUS_OK) {
+              message.stctInput.status == NO_ERROR) {
         unvalid = false;
       } else {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
@@ -368,6 +401,7 @@ class YouBotJoint
     } while (retry < mailboxMsgRetries && unvalid);
 
     if (unvalid) {
+      this->parseMailboxStatusFlags(message);
       return false;
     } else {
       return true;
@@ -394,7 +428,7 @@ class YouBotJoint
        */
       if (mailboxMsgBuffer.stctOutput.commandNumber == mailboxMsgBuffer.stctInput.commandNumber &&
               mailboxMsgBuffer.stctOutput.value == mailboxMsgBuffer.stctInput.value &&
-              mailboxMsgBuffer.stctInput.status == TMCL_STATUS_OK) {
+              mailboxMsgBuffer.stctInput.status == NO_ERROR) {
         unvalid = false;
       } else {
         SLEEP_MILLISEC(timeTillNextMailboxUpdate);
@@ -403,6 +437,7 @@ class YouBotJoint
     } while (retry < mailboxMsgRetries && unvalid);
 
     if (unvalid) {
+      this->parseMailboxStatusFlags(mailboxMsgBuffer);
       return false;
     } else {
       return true;

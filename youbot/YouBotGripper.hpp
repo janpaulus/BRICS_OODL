@@ -66,6 +66,8 @@ class YouBotGripper : public OneDOFGripper {
 
 
   private:
+    void parseMailboxStatusFlags(const YouBotSlaveMailboxMsg& mailboxMsg);
+
     bool setValueToMotorContoller(const YouBotSlaveMailboxMsg& mailboxMsg);
 
     bool retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& message);
