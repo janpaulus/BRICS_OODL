@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 24
+  revision 25
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -50,6 +50,7 @@ ${description}
 #include \"generic/ExceptionOODL.hpp\"
 #include \"generic-joint/Joint.hpp\"
 #include \"generic-joint/JointData.hpp\"
+#include \"youbot/YouBotJointStorage.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
 #include \"youbot/YouBotJointParameter.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
@@ -217,6 +218,7 @@ ${description}
 #include \"youbot/ProtocolDefinitions.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
+#include \"youbot/YouBotJointStorage.hpp\"
 ${namespace_start}
 ${definition}
 ${namespace_end}
@@ -261,6 +263,7 @@ ${description}
 #include \"youbot/ProtocolDefinitions.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
+#include \"youbot/YouBotJointStorage.hpp\"
 ${namespace_start}
 ${definition}
 ${namespace_end}
@@ -374,6 +377,27 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 286193 // YouBotBase
+      end
+    end
+
+    artifact 228593 "YouBotJointStorage"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${description}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${description}
+#include \"youbot/YouBotJointStorage.hpp\"
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 303857 // YouBotJointStorage
       end
     end
   end
