@@ -2,7 +2,7 @@ class MaximumMotorCurrent
 !!!435697.cpp!!!	MaximumMotorCurrent()
     this->name = "MaximumMotorCurrent";
     this->lowerLimit = 0 * ampere;
-    this->upperLimit = 50000 * ampere;
+    this->upperLimit = INT_MAX * ampere;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
 !!!435953.cpp!!!	getParameter(out parameter : quantity<current>) : void
     parameter = this->value;

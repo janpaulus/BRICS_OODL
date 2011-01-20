@@ -1,4 +1,4 @@
-window_sizes 1680 975 386 1288 892 0
+window_sizes 1672 972 386 1280 889 0
 diagrams
   classdiagram_ref 167793 // YouBot
     1288 892 100 2 0 0
@@ -6,7 +6,7 @@ diagrams
     1288 892 100 1 168 0
 end
 show_stereotypes
-selected class_ref 245105 // MaximumPositioningSpeed
+selected class_ref 245105 // MaximumPositioningVelocity
 open
   classview_ref 134641 // Joint
   class_ref 293233 // MaximumMotorCurrent

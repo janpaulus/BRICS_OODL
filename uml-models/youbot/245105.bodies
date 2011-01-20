@@ -1,8 +1,8 @@
-class MaximumPositioningSpeed
-!!!369009.cpp!!!	MaximumPositioningSpeed()
-    this->name = "MaximumPositioningSpeed";
-    this->lowerLimit = -5000 * radian_per_second;
-    this->upperLimit = 5000 * radian_per_second;
+class MaximumPositioningVelocity
+!!!369009.cpp!!!	MaximumPositioningVelocity()
+    this->name = "MaximumPositioningVelocity";
+    this->lowerLimit = INT_MIN * radian_per_second;
+    this->upperLimit = INT_MAX * radian_per_second;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
 !!!367857.cpp!!!	getParameter(out parameter : quantity<angular_velocity>) : void
     parameter = this->value;

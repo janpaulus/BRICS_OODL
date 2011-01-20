@@ -61,7 +61,7 @@ CommutationMode::~CommutationMode() {
   // Bouml preserved body end 00070571
 }
 
-void CommutationMode::getParameter(unsigned int& parameter) const {
+void CommutationMode::getParameter(int& parameter) const {
   // Bouml preserved body begin 000705F1
     parameter = this->value;
   // Bouml preserved body end 000705F1

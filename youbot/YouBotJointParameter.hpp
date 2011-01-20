@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <sstream>
+#include <boost/limits.hpp>
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
@@ -276,12 +277,14 @@ friend class YouBotJoint;
     ParameterType parameterType;
 
 };
-class MaximumPositioningSpeed : public YouBotJointParameter {
+//The maximum velocity used for move to position command when executing a ramp to a position. In sensorless commutation mode the velocity threshold for hallFXTM.
+
+class MaximumPositioningVelocity : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    MaximumPositioningSpeed();
+    MaximumPositioningVelocity();
 
-    virtual ~MaximumPositioningSpeed();
+    virtual ~MaximumPositioningVelocity();
 
     void getParameter(quantity<angular_velocity>& parameter) const;
 
@@ -302,6 +305,40 @@ friend class YouBotJoint;
     quantity<angular_velocity> lowerLimit;
 
     quantity<angular_velocity> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Set PWM limit (0%... 100%).
+
+class PWMLimit : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PWMLimit();
+
+    virtual ~PWMLimit();
+
+    void getParameter(unsigned int& parameter) const;
+
+    void setParameter(const unsigned int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    unsigned int upperLimit;
+
+    unsigned int lowerLimit;
+
+    unsigned int value;
 
     std::string name;
 
@@ -341,17 +378,18 @@ friend class YouBotJoint;
     ParameterType parameterType;
 
 };
-//Switching threshold for speed control between the first and second set of parameters
-class SpeedControlSwitchingThreshold : public YouBotJointParameter {
+//Maximum velocity at which end position can be set. Prevents issuing of end position when the target is passed at high velocity
+
+class MaximumVelocityToSetPosition : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    SpeedControlSwitchingThreshold();
+    MaximumVelocityToSetPosition();
 
-    virtual ~SpeedControlSwitchingThreshold();
+    virtual ~MaximumVelocityToSetPosition();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(quantity<angular_velocity>& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const quantity<angular_velocity>& parameter);
 
 
   private:
@@ -363,11 +401,109 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    quantity<angular_velocity> upperLimit;
 
-    unsigned int lowerLimit;
+    quantity<angular_velocity> lowerLimit;
 
-    unsigned int value;
+    quantity<angular_velocity> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Adjusts the limit to switch between first velocity PID parameter set and second velocity PID parameter set.
+
+class SpeedControlSwitchingThreshold : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    SpeedControlSwitchingThreshold();
+
+    virtual ~SpeedControlSwitchingThreshold();
+
+    void getParameter(quantity<angular_velocity>& parameter) const;
+
+    void setParameter(const quantity<angular_velocity>& parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<angular_velocity> upperLimit;
+
+    quantity<angular_velocity> lowerLimit;
+
+    quantity<angular_velocity> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class ClearTargetDistance : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    ClearTargetDistance();
+
+    virtual ~ClearTargetDistance();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PositionTargetReachedDistance : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PositionTargetReachedDistance();
+
+    virtual ~PositionTargetReachedDistance();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
 
     std::string name;
 
@@ -382,9 +518,9 @@ friend class YouBotJoint;
 
     virtual ~MotorAcceleration();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(quantity<angular_acceleration>& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const quantity<angular_acceleration>& parameter);
 
 
   private:
@@ -396,11 +532,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    quantity<angular_acceleration> upperLimit;
 
-    unsigned int lowerLimit;
+    quantity<angular_acceleration> lowerLimit;
 
-    unsigned int value;
+    quantity<angular_acceleration> value;
 
     std::string name;
 
@@ -415,9 +551,9 @@ friend class YouBotJoint;
 
     virtual ~PositionControlSwitchingThreshold();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(quantity<angular_velocity>& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const quantity<angular_velocity>& parameter);
 
 
   private:
@@ -429,11 +565,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    quantity<angular_velocity> upperLimit;
 
-    unsigned int lowerLimit;
+    quantity<angular_velocity> lowerLimit;
 
-    unsigned int value;
+    quantity<angular_velocity> value;
 
     std::string name;
 
@@ -447,9 +583,9 @@ friend class YouBotJoint;
 
     virtual ~PParameterFirstParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -461,11 +597,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -479,9 +615,9 @@ friend class YouBotJoint;
 
     virtual ~IParameterFirstParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -493,11 +629,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -511,9 +647,9 @@ friend class YouBotJoint;
 
     virtual ~DParameterFirstParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -525,18 +661,19 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
     ParameterType parameterType;
 
 };
-//Switching threshold for speed control between the first and second set of parameters
+//PID calculation delay: Set operational frequency PID
+
 class PIDControlTime : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
@@ -544,9 +681,9 @@ friend class YouBotJoint;
 
     virtual ~PIDControlTime();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(quantity<si::time>& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const quantity<si::time>& parameter);
 
 
   private:
@@ -558,17 +695,53 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    quantity<si::time> upperLimit;
 
-    unsigned int lowerLimit;
+    quantity<si::time> lowerLimit;
 
-    unsigned int value;
+    quantity<si::time> value;
 
     std::string name;
 
     ParameterType parameterType;
 
 };
+//PID calculation delay: Set operational frequency PID
+
+class CurrentControlLoopDelay : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    CurrentControlLoopDelay();
+
+    virtual ~CurrentControlLoopDelay();
+
+    void getParameter(quantity<si::time>& parameter) const;
+
+    void setParameter(const quantity<si::time>& parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<si::time> upperLimit;
+
+    quantity<si::time> lowerLimit;
+
+    quantity<si::time> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Adjust in standstill to lowest possible value at which the motor keeps its position. A too high value causes overshooting at positioning mode. (first position parameter set)
+
 class IClippingParameterFirstParametersPositionControl : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
@@ -576,9 +749,9 @@ friend class YouBotJoint;
 
     virtual ~IClippingParameterFirstParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -590,11 +763,105 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Compensates dead time of PWM and motor friction.
+
+class PWMHysteresis : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PWMHysteresis();
+
+    virtual ~PWMHysteresis();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Compensates dead time of PWM and motor friction.
+
+class ClearISumIfPWMReachesMaximum : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    ClearISumIfPWMReachesMaximum();
+
+    virtual ~ClearISumIfPWMReachesMaximum();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Compensates dead time of PWM and motor friction.
+
+class ClearISumIfOvershootsTarget : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    ClearISumIfOvershootsTarget();
+
+    virtual ~ClearISumIfOvershootsTarget();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
 
     std::string name;
 
@@ -608,9 +875,9 @@ friend class YouBotJoint;
 
     virtual ~PParameterFirstParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -622,11 +889,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -640,9 +907,9 @@ friend class YouBotJoint;
 
     virtual ~IParameterFirstParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -654,11 +921,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -672,9 +939,9 @@ friend class YouBotJoint;
 
     virtual ~DParameterFirstParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -686,11 +953,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -704,9 +971,9 @@ friend class YouBotJoint;
 
     virtual ~IClippingParameterFirstParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -718,11 +985,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -730,12 +997,12 @@ friend class YouBotJoint;
 
 };
 //Switches the ramp generator for speed and position control on and off
-class RampGeneratorSpeedAndPositionControl : public YouBotJointParameter {
+class ActivateRampGeneratorSpeedAndPositionControl : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    RampGeneratorSpeedAndPositionControl();
+    ActivateRampGeneratorSpeedAndPositionControl();
 
-    virtual ~RampGeneratorSpeedAndPositionControl();
+    virtual ~ActivateRampGeneratorSpeedAndPositionControl();
 
     void getParameter(bool& parameter) const;
 

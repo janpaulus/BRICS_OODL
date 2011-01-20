@@ -78,7 +78,7 @@ friend class YouBotJoint;
 
     virtual ~CommutationMode();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
 
   private:
@@ -90,7 +90,7 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
