@@ -23,7 +23,7 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
     wheelVelocities.assign(4, RadPerSec_FromX);
 
     if (config.wheelRadius.value() == 0 || config.rotationRatio == 0 || config.slideRatio == 0) {
-      throw ExceptionOODL("The wheelRadius, RotationRatio and the SlideRatio are not allowed to be zero");
+      throw ExceptionOODL("The wheelRadius, RotationRatio or the SlideRatio are not allowed to be zero");
     }
 
     // RadPerSec_FromX = longitudinalVelocity / config.wheelRadius;
@@ -53,7 +53,7 @@ void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const
       throw ExceptionOODL("To less wheel velocities");
 
     if (config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0) {
-      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels and the lengthBetweenFrontWheels are not allowed to be zero");
+      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
     }
 
     quantity<si::length> wheel_radius_per4 = config.wheelRadius / 4.0;
@@ -61,8 +61,8 @@ void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const
     quantity<si::length> geom_factor = (config.lengthBetweenFrontAndRearWheels / 2.0) + (config.lengthBetweenFrontWheels / 2.0);
     //now convert this to a vx,vy,vtheta
     longitudinalVelocity = (-wheelVelocities[0] + wheelVelocities[1] - wheelVelocities[2] + wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
-    transversalVelocity = (wheelVelocities[0] + wheelVelocities[1] + wheelVelocities[2] + wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
-    angularVelocity = -(wheelVelocities[0] - wheelVelocities[1] - wheelVelocities[2] + wheelVelocities[3]) * (wheel_radius_per4 / geom_factor).value();
+    transversalVelocity = (wheelVelocities[0] + wheelVelocities[1] - wheelVelocities[2] - wheelVelocities[3]).value() * wheel_radius_per4.value() * meter_per_second;
+    angularVelocity = (wheelVelocities[0] + wheelVelocities[1] + wheelVelocities[2] + wheelVelocities[3]) * (wheel_radius_per4 / geom_factor).value();
 
   // Bouml preserved body end 0004C0F1
 }
@@ -74,7 +74,7 @@ void FourSwedishWheelOmniBaseKinematic::wheelPositionsToCartesianPosition(const 
       throw ExceptionOODL("To less wheel positions");
 
      if (config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0) {
-      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels and the lengthBetweenFrontWheels are not allowed to be zero");
+      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
     }
 
     if (this->lastWheelPositionInitialized == false) {
