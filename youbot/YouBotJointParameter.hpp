@@ -939,9 +939,9 @@ friend class YouBotJoint;
 
     virtual ~DParameterFirstParametersSpeedControl();
 
-    void getParameter(int& parameter) const;
+    void getParameter(unsigned int& parameter) const;
 
-    void setParameter(const int parameter);
+    void setParameter(const unsigned int parameter);
 
 
   private:
@@ -953,11 +953,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    int upperLimit;
+    unsigned int upperLimit;
 
-    int lowerLimit;
+    unsigned int lowerLimit;
 
-    int value;
+    unsigned int value;
 
     std::string name;
 
@@ -997,12 +997,12 @@ friend class YouBotJoint;
 
 };
 //Switches the ramp generator for speed and position control on and off
-class ActivateRampGeneratorSpeedAndPositionControl : public YouBotJointParameter {
+class RampGeneratorSpeedAndPositionControl : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    ActivateRampGeneratorSpeedAndPositionControl();
+    RampGeneratorSpeedAndPositionControl();
 
-    virtual ~ActivateRampGeneratorSpeedAndPositionControl();
+    virtual ~RampGeneratorSpeedAndPositionControl();
 
     void getParameter(bool& parameter) const;
 
@@ -1054,12 +1054,102 @@ friend class YouBotJoint;
     ParameterType parameterType;
 
 };
-class PParameterSecondParametersPositionControl : public YouBotJointParameter {
+// 1: Set Encoder counter to zero at next N channel event.
+
+class SetEncoderCounterZeroAtNextNChannel : public YouBotJointParameter {
 friend class YouBotJoint;
   public:
-    PParameterSecondParametersPositionControl();
+    SetEncoderCounterZeroAtNextNChannel();
 
-    virtual ~PParameterSecondParametersPositionControl();
+    virtual ~SetEncoderCounterZeroAtNextNChannel();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// 1: Set encoder counter to zero at next switch event.
+
+class SetEncoderCounterZeroAtNextSwitch : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    SetEncoderCounterZeroAtNextSwitch();
+
+    virtual ~SetEncoderCounterZeroAtNextSwitch();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// 1: Set encoder counter zero only once NULL
+// 0: always at an N channel event, respectively switch event.
+class SetEncoderCounterZeroOnlyOnce : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    SetEncoderCounterZeroOnlyOnce();
+
+    virtual ~SetEncoderCounterZeroOnlyOnce();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class EncoderStopSwitch : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    EncoderStopSwitch();
+
+    virtual ~EncoderStopSwitch();
 
     void getParameter(unsigned int& parameter) const;
 
@@ -1080,6 +1170,391 @@ friend class YouBotJoint;
     unsigned int lowerLimit;
 
     unsigned int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class ActualCommutationOffset : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    ActualCommutationOffset();
+
+    virtual ~ActualCommutationOffset();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class StopSwitchPolarity : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    StopSwitchPolarity();
+
+    virtual ~StopSwitchPolarity();
+
+    void getParameter(unsigned int& parameter) const;
+
+    void setParameter(const unsigned int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    unsigned int upperLimit;
+
+    unsigned int lowerLimit;
+
+    unsigned int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PParameterFirstParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PParameterFirstParametersCurrentControl();
+
+    virtual ~PParameterFirstParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class IParameterFirstParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    IParameterFirstParametersCurrentControl();
+
+    virtual ~IParameterFirstParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class DParameterFirstParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    DParameterFirstParametersCurrentControl();
+
+    virtual ~DParameterFirstParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class IClippingParameterFirstParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    IClippingParameterFirstParametersCurrentControl();
+
+    virtual ~IClippingParameterFirstParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PParameterSecondParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PParameterSecondParametersCurrentControl();
+
+    virtual ~PParameterSecondParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class IParameterSecondParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    IParameterSecondParametersCurrentControl();
+
+    virtual ~IParameterSecondParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class DParameterSecondParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    DParameterSecondParametersCurrentControl();
+
+    virtual ~DParameterSecondParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class IClippingParameterSecondParametersCurrentControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    IClippingParameterSecondParametersCurrentControl();
+
+    virtual ~IClippingParameterSecondParametersCurrentControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Switching threshold for position control between the first and second set of parameters
+class CurrentControlSwitchingThreshold : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    CurrentControlSwitchingThreshold();
+
+    virtual ~CurrentControlSwitchingThreshold();
+
+    void getParameter(quantity<angular_velocity>& parameter) const;
+
+    void setParameter(const quantity<angular_velocity>& parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<angular_velocity> upperLimit;
+
+    quantity<angular_velocity> lowerLimit;
+
+    quantity<angular_velocity> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PParameterSecondParametersPositionControl : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    PParameterSecondParametersPositionControl();
+
+    virtual ~PParameterSecondParametersPositionControl();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
 
     std::string name;
 
@@ -1093,9 +1568,9 @@ friend class YouBotJoint;
 
     virtual ~IParameterSecondParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1107,11 +1582,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1125,9 +1600,9 @@ friend class YouBotJoint;
 
     virtual ~DParameterSecondParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1139,11 +1614,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1157,9 +1632,9 @@ friend class YouBotJoint;
 
     virtual ~IClippingParameterSecondParametersPositionControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1171,11 +1646,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1189,9 +1664,9 @@ friend class YouBotJoint;
 
     virtual ~PParameterSecondParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1203,11 +1678,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1221,9 +1696,9 @@ friend class YouBotJoint;
 
     virtual ~IParameterSecondParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1235,11 +1710,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1253,9 +1728,9 @@ friend class YouBotJoint;
 
     virtual ~DParameterSecondParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1267,11 +1742,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1285,9 +1760,9 @@ friend class YouBotJoint;
 
     virtual ~IClippingParameterSecondParametersSpeedControl();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1299,11 +1774,75 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class MassInertiaConstant : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    MassInertiaConstant();
+
+    virtual ~MassInertiaConstant();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class BEMFConstant : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    BEMFConstant();
+
+    virtual ~BEMFConstant();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
 
     std::string name;
 
@@ -1351,9 +1890,9 @@ friend class YouBotJoint;
 
     virtual ~CommutationCompensationClockwise();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1365,11 +1904,11 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -1384,9 +1923,9 @@ friend class YouBotJoint;
 
     virtual ~CommutationCompensationCounterClockwise();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
-    void setParameter(const unsigned int parameter);
+    void setParameter(const int parameter);
 
 
   private:
@@ -1398,11 +1937,171 @@ friend class YouBotJoint;
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int upperLimit;
+    int upperLimit;
 
-    unsigned int lowerLimit;
+    int lowerLimit;
 
-    unsigned int value;
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//PID calculation delay: Set operational frequency PID
+
+class InitSineDelay : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    InitSineDelay();
+
+    virtual ~InitSineDelay();
+
+    void getParameter(quantity<si::time>& parameter) const;
+
+    void setParameter(const quantity<si::time>& parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<si::time> upperLimit;
+
+    quantity<si::time> lowerLimit;
+
+    quantity<si::time> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// 1: Set encoder counter zero only once NULL
+// 0: always at an N channel event, respectively switch event.
+class ActivateOvervoltageProtection : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    ActivateOvervoltageProtection();
+
+    virtual ~ActivateOvervoltageProtection();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Commutation (CCW) to compensate for the Hall sensor deviations. The aim is that the motor rotates in either direction with equal speed.
+class MaximumPWMChangePerPIDInterval : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    MaximumPWMChangePerPIDInterval();
+
+    virtual ~MaximumPWMChangePerPIDInterval();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Commutation (CCW) to compensate for the Hall sensor deviations. The aim is that the motor rotates in either direction with equal speed.
+class SineCompensationFactor : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    SineCompensationFactor();
+
+    virtual ~SineCompensationFactor();
+
+    void getParameter(int& parameter) const;
+
+    void setParameter(const int parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int upperLimit;
+
+    int lowerLimit;
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// 1: Set encoder counter zero only once NULL
+// 0: always at an N channel event, respectively switch event.
+class EncoderNullPolarity : public YouBotJointParameter {
+friend class YouBotJoint;
+  public:
+    EncoderNullPolarity();
+
+    virtual ~EncoderNullPolarity();
+
+    void getParameter(bool& parameter) const;
+
+    void setParameter(const bool parameter);
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    bool value;
 
     std::string name;
 

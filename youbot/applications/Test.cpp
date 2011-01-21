@@ -100,9 +100,18 @@ int main() {
     quantity<si::plane_angle> actAngle = 0 * radian;
 
 
+    ReinitializationSinusoidalCommutation initSinus;
+
+    initSinus.setParameter(true);
+
+    myYouBotBase.getBaseJoint(1).setConfigurationParameter(initSinus);
+    myYouBotBase.getBaseJoint(2).setConfigurationParameter(initSinus);
+    myYouBotBase.getBaseJoint(3).setConfigurationParameter(initSinus);
+    myYouBotBase.getBaseJoint(4).setConfigurationParameter(initSinus);
+
     while (running) {
 
-      myYouBotBase.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+   //   myYouBotBase.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
       myYouBotBase.getBasePosition(actLongitudinalPose, actTransversalPose, actAngle);
    //   myYouBotBase.getBaseVelocity(actLongitudinalVelocity, actTransversalVelocity, actAngularVelocity);
       LOG(info) << "actual Pose Longitudinal: " << actLongitudinalPose << " Transversal: " << actTransversalPose << " Angle: " << actAngle;

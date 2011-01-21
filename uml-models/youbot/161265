@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 26
+  revision 27
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -233,6 +233,14 @@ ${namespace_end}"
 	class_ref 210929 // ParameterType
 	class_ref 296049 // YouBotJointParameterReadOnly
 	class_ref 296177 // ArePIDcontrollersActive
+	class_ref 318577 // ActualMotorVoltage
+	class_ref 318705 // ActualPWMDutyCycle
+	class_ref 318833 // ErrorAndStatus
+	class_ref 319089 // BlockPWMScheme
+	class_ref 320369 // PositionError
+	class_ref 320497 // PositionErrorSum
+	class_ref 320625 // VelocityError
+	class_ref 320753 // VelocityErrorSum
 	class_ref 296305 // CommutationMode
 	class_ref 296433 // PWMSchemeBlockCommutation
 	class_ref 296561 // MotorContollerGearRatio
@@ -310,6 +318,21 @@ ${namespace_end}"
 	class_ref 294129 // IClippingParameterFirstParametersSpeedControl
 	class_ref 294257 // RampGeneratorSpeedAndPositionControl
 	class_ref 294385 // ReinitializationSinusoidalCommutation
+	class_ref 317809 // SetEncoderCounterZeroAtNextNChannel
+	class_ref 317937 // SetEncoderCounterZeroAtNextSwitch
+	class_ref 318065 // SetEncoderCounterZeroOnlyOnce
+	class_ref 318193 // EncoderStopSwitch
+	class_ref 318321 // ActualCommutationOffset
+	class_ref 318449 // StopSwitchPolarity
+	class_ref 319217 // PParameterFirstParametersCurrentControl
+	class_ref 319345 // IParameterFirstParametersCurrentControl
+	class_ref 319473 // DParameterFirstParametersCurrentControl
+	class_ref 319601 // IClippingParameterFirstParametersCurrentControl
+	class_ref 319729 // PParameterSecondParametersCurrentControl
+	class_ref 319857 // IParameterSecondParametersCurrentControl
+	class_ref 319985 // DParameterSecondParametersCurrentControl
+	class_ref 320113 // IClippingParameterSecondParametersCurrentControl
+	class_ref 320241 // CurrentControlSwitchingThreshold
 	class_ref 294513 // PParameterSecondParametersPositionControl
 	class_ref 294641 // IParameterSecondParametersPositionControl
 	class_ref 294769 // DParameterSecondParametersPositionControl
@@ -318,9 +341,16 @@ ${namespace_end}"
 	class_ref 295153 // IParameterSecondParametersSpeedControl
 	class_ref 295281 // DParameterSecondParametersSpeedControl
 	class_ref 295409 // IClippingParameterSecondParametersSpeedControl
+	class_ref 320881 // MassInertiaConstant
+	class_ref 321009 // BEMFConstant
 	class_ref 295537 // BlockCommutationMaximumSpeed
 	class_ref 295665 // CommutationCompensationClockwise
 	class_ref 295793 // CommutationCompensationCounterClockwise
+	class_ref 321137 // InitSineDelay
+	class_ref 321265 // ActivateOvervoltageProtection
+	class_ref 321393 // MaximumPWMChangePerPIDInterval
+	class_ref 321521 // SineCompensationFactor
+	class_ref 321649 // EncoderNullPolarity
       end
     end
 

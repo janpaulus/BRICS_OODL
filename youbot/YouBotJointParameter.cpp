@@ -1218,13 +1218,13 @@ DParameterFirstParametersSpeedControl::~DParameterFirstParametersSpeedControl() 
   // Bouml preserved body end 0006BE71
 }
 
-void DParameterFirstParametersSpeedControl::getParameter(int& parameter) const {
+void DParameterFirstParametersSpeedControl::getParameter(unsigned int& parameter) const {
   // Bouml preserved body begin 0006BEF1
     parameter = this->value;
   // Bouml preserved body end 0006BEF1
 }
 
-void DParameterFirstParametersSpeedControl::setParameter(const int parameter) {
+void DParameterFirstParametersSpeedControl::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 0006BF71
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1304,31 +1304,31 @@ void IClippingParameterFirstParametersSpeedControl::setYouBotMailboxMsg(const Yo
   // Bouml preserved body end 0006C471
 }
 
-ActivateRampGeneratorSpeedAndPositionControl::ActivateRampGeneratorSpeedAndPositionControl() {
+RampGeneratorSpeedAndPositionControl::RampGeneratorSpeedAndPositionControl() {
   // Bouml preserved body begin 0006C5F1
     this->name = "ActivateRampGeneratorSpeedAndPositionControl";
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006C5F1
 }
 
-ActivateRampGeneratorSpeedAndPositionControl::~ActivateRampGeneratorSpeedAndPositionControl() {
+RampGeneratorSpeedAndPositionControl::~RampGeneratorSpeedAndPositionControl() {
   // Bouml preserved body begin 0006C671
   // Bouml preserved body end 0006C671
 }
 
-void ActivateRampGeneratorSpeedAndPositionControl::getParameter(bool& parameter) const {
+void RampGeneratorSpeedAndPositionControl::getParameter(bool& parameter) const {
   // Bouml preserved body begin 0006C6F1
     parameter = this->value;
   // Bouml preserved body end 0006C6F1
 }
 
-void ActivateRampGeneratorSpeedAndPositionControl::setParameter(const bool parameter) {
+void RampGeneratorSpeedAndPositionControl::setParameter(const bool parameter) {
   // Bouml preserved body begin 0006C771
     this->value = parameter;
   // Bouml preserved body end 0006C771
 }
 
-void ActivateRampGeneratorSpeedAndPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+void RampGeneratorSpeedAndPositionControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
   // Bouml preserved body begin 0006C7F1
 
     message.stctOutput.commandNumber = msgType;
@@ -1339,7 +1339,7 @@ void ActivateRampGeneratorSpeedAndPositionControl::getYouBotMailboxMsg(YouBotSla
   // Bouml preserved body end 0006C7F1
 }
 
-void ActivateRampGeneratorSpeedAndPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+void RampGeneratorSpeedAndPositionControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
   // Bouml preserved body begin 0006C871
     this->value = message.stctInput.value;
   // Bouml preserved body end 0006C871
@@ -1386,11 +1386,735 @@ void ReinitializationSinusoidalCommutation::setYouBotMailboxMsg(const YouBotSlav
   // Bouml preserved body end 0006CC71
 }
 
+SetEncoderCounterZeroAtNextNChannel::SetEncoderCounterZeroAtNextNChannel() {
+  // Bouml preserved body begin 0007C871
+    this->name = "SetEncoderCounterZeroAtNextNChannel";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007C871
+}
+
+SetEncoderCounterZeroAtNextNChannel::~SetEncoderCounterZeroAtNextNChannel() {
+  // Bouml preserved body begin 0007C8F1
+  // Bouml preserved body end 0007C8F1
+}
+
+void SetEncoderCounterZeroAtNextNChannel::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 0007C971
+    parameter = this->value;
+  // Bouml preserved body end 0007C971
+}
+
+void SetEncoderCounterZeroAtNextNChannel::setParameter(const bool parameter) {
+  // Bouml preserved body begin 0007C9F1
+    this->value = parameter;
+  // Bouml preserved body end 0007C9F1
+}
+
+void SetEncoderCounterZeroAtNextNChannel::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007CA71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 161; //SetEncoderCounterZeroAtNextNChannel
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007CA71
+}
+
+void SetEncoderCounterZeroAtNextNChannel::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007CAF1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007CAF1
+}
+
+SetEncoderCounterZeroAtNextSwitch::SetEncoderCounterZeroAtNextSwitch() {
+  // Bouml preserved body begin 0007CC71
+    this->name = "SetEncoderCounterZeroAtNextSwitch";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007CC71
+}
+
+SetEncoderCounterZeroAtNextSwitch::~SetEncoderCounterZeroAtNextSwitch() {
+  // Bouml preserved body begin 0007CCF1
+  // Bouml preserved body end 0007CCF1
+}
+
+void SetEncoderCounterZeroAtNextSwitch::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 0007CD71
+    parameter = this->value;
+  // Bouml preserved body end 0007CD71
+}
+
+void SetEncoderCounterZeroAtNextSwitch::setParameter(const bool parameter) {
+  // Bouml preserved body begin 0007CDF1
+    this->value = parameter;
+  // Bouml preserved body end 0007CDF1
+}
+
+void SetEncoderCounterZeroAtNextSwitch::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007CE71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 162; //SetEncoderCounterZeroAtNextSwitch
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007CE71
+}
+
+void SetEncoderCounterZeroAtNextSwitch::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007CEF1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007CEF1
+}
+
+SetEncoderCounterZeroOnlyOnce::SetEncoderCounterZeroOnlyOnce() {
+  // Bouml preserved body begin 0007D071
+    this->name = "SetEncoderCounterZeroOnlyOnce";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007D071
+}
+
+SetEncoderCounterZeroOnlyOnce::~SetEncoderCounterZeroOnlyOnce() {
+  // Bouml preserved body begin 0007D0F1
+  // Bouml preserved body end 0007D0F1
+}
+
+void SetEncoderCounterZeroOnlyOnce::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 0007D171
+    parameter = this->value;
+  // Bouml preserved body end 0007D171
+}
+
+void SetEncoderCounterZeroOnlyOnce::setParameter(const bool parameter) {
+  // Bouml preserved body begin 0007D1F1
+    this->value = parameter;
+  // Bouml preserved body end 0007D1F1
+}
+
+void SetEncoderCounterZeroOnlyOnce::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007D271
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 163; //ReinitializationSinusoidalCommutation
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007D271
+}
+
+void SetEncoderCounterZeroOnlyOnce::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007D2F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007D2F1
+}
+
+EncoderStopSwitch::EncoderStopSwitch() {
+  // Bouml preserved body begin 0007D471
+    this->name = "EncoderStopSwitch";
+    this->lowerLimit = 0;
+    this->upperLimit = 3;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007D471
+}
+
+EncoderStopSwitch::~EncoderStopSwitch() {
+  // Bouml preserved body begin 0007D4F1
+  // Bouml preserved body end 0007D4F1
+}
+
+void EncoderStopSwitch::getParameter(unsigned int& parameter) const {
+  // Bouml preserved body begin 0007D571
+    parameter = this->value;
+  // Bouml preserved body end 0007D571
+}
+
+void EncoderStopSwitch::setParameter(const unsigned int parameter) {
+  // Bouml preserved body begin 0007D5F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007D5F1
+}
+
+void EncoderStopSwitch::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007D671
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 164; //EncoderStopSwitch
+    message.stctOutput.value = value;
+
+  // Bouml preserved body end 0007D671
+}
+
+void EncoderStopSwitch::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007D6F1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 0007D6F1
+}
+
+ActualCommutationOffset::ActualCommutationOffset() {
+  // Bouml preserved body begin 0007D871
+    this->name = "ActualCommutationOffset";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007D871
+}
+
+ActualCommutationOffset::~ActualCommutationOffset() {
+  // Bouml preserved body begin 0007D8F1
+  // Bouml preserved body end 0007D8F1
+}
+
+void ActualCommutationOffset::getParameter(int& parameter) const {
+  // Bouml preserved body begin 0007D971
+    parameter = this->value;
+  // Bouml preserved body end 0007D971
+}
+
+void ActualCommutationOffset::setParameter(const int parameter) {
+  // Bouml preserved body begin 0007D9F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007D9F1
+}
+
+void ActualCommutationOffset::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007DA71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 165; //ActualCommutationOffset
+    message.stctOutput.value = value;
+
+  // Bouml preserved body end 0007DA71
+}
+
+void ActualCommutationOffset::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007DAF1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 0007DAF1
+}
+
+StopSwitchPolarity::StopSwitchPolarity() {
+  // Bouml preserved body begin 0007DC71
+    this->name = "StopSwitchPolarity";
+    this->lowerLimit = 0;
+    this->upperLimit = 3;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007DC71
+}
+
+StopSwitchPolarity::~StopSwitchPolarity() {
+  // Bouml preserved body begin 0007DCF1
+  // Bouml preserved body end 0007DCF1
+}
+
+void StopSwitchPolarity::getParameter(unsigned int& parameter) const {
+  // Bouml preserved body begin 0007DD71
+    parameter = this->value;
+  // Bouml preserved body end 0007DD71
+}
+
+void StopSwitchPolarity::setParameter(const unsigned int parameter) {
+  // Bouml preserved body begin 0007DDF1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007DDF1
+}
+
+void StopSwitchPolarity::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007DE71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 166; //StopSwitchPolarity
+    message.stctOutput.value = value; 
+
+  // Bouml preserved body end 0007DE71
+}
+
+void StopSwitchPolarity::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007DEF1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 0007DEF1
+}
+
+PParameterFirstParametersCurrentControl::PParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007F371
+    this->name = "PParameterFirstParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007F371
+}
+
+PParameterFirstParametersCurrentControl::~PParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007F3F1
+  // Bouml preserved body end 0007F3F1
+}
+
+void PParameterFirstParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 0007F471
+    parameter = this->value;
+  // Bouml preserved body end 0007F471
+}
+
+void PParameterFirstParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 0007F4F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007F4F1
+}
+
+void PParameterFirstParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007F571
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 168; //PParameterFirstParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007F571
+}
+
+void PParameterFirstParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007F5F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007F5F1
+}
+
+IParameterFirstParametersCurrentControl::IParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007F771
+    this->name = "IParameterFirstParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007F771
+}
+
+IParameterFirstParametersCurrentControl::~IParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007F7F1
+  // Bouml preserved body end 0007F7F1
+}
+
+void IParameterFirstParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 0007F871
+    parameter = this->value;
+  // Bouml preserved body end 0007F871
+}
+
+void IParameterFirstParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 0007F8F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007F8F1
+}
+
+void IParameterFirstParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007F971
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 169; //IParameterFirstParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007F971
+}
+
+void IParameterFirstParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007F9F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007F9F1
+}
+
+DParameterFirstParametersCurrentControl::DParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007FB71
+    this->name = "DParameterFirstParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007FB71
+}
+
+DParameterFirstParametersCurrentControl::~DParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007FBF1
+  // Bouml preserved body end 0007FBF1
+}
+
+void DParameterFirstParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 0007FC71
+    parameter = this->value;
+  // Bouml preserved body end 0007FC71
+}
+
+void DParameterFirstParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 0007FCF1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 0007FCF1
+}
+
+void DParameterFirstParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 0007FD71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 170; //DParameterFirstParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 0007FD71
+}
+
+void DParameterFirstParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 0007FDF1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 0007FDF1
+}
+
+IClippingParameterFirstParametersCurrentControl::IClippingParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007FF71
+    this->name = "IClippingParameterFirstParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 0007FF71
+}
+
+IClippingParameterFirstParametersCurrentControl::~IClippingParameterFirstParametersCurrentControl() {
+  // Bouml preserved body begin 0007FFF1
+  // Bouml preserved body end 0007FFF1
+}
+
+void IClippingParameterFirstParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00080071
+    parameter = this->value;
+  // Bouml preserved body end 00080071
+}
+
+void IClippingParameterFirstParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 000800F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000800F1
+}
+
+void IClippingParameterFirstParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00080171
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 171; //IClippingParameterFirstParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00080171
+}
+
+void IClippingParameterFirstParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000801F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 000801F1
+}
+
+PParameterSecondParametersCurrentControl::PParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080371
+    this->name = "PParameterSecondParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00080371
+}
+
+PParameterSecondParametersCurrentControl::~PParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 000803F1
+  // Bouml preserved body end 000803F1
+}
+
+void PParameterSecondParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00080471
+    parameter = this->value;
+  // Bouml preserved body end 00080471
+}
+
+void PParameterSecondParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 000804F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000804F1
+}
+
+void PParameterSecondParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00080571
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 172; //PParameterSecondParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00080571
+}
+
+void PParameterSecondParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000805F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 000805F1
+}
+
+IParameterSecondParametersCurrentControl::IParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080771
+    this->name = "IParameterSecondParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00080771
+}
+
+IParameterSecondParametersCurrentControl::~IParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 000807F1
+  // Bouml preserved body end 000807F1
+}
+
+void IParameterSecondParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00080871
+    parameter = this->value;
+  // Bouml preserved body end 00080871
+}
+
+void IParameterSecondParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 000808F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000808F1
+}
+
+void IParameterSecondParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00080971
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 173; //IParameterSecondParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00080971
+}
+
+void IParameterSecondParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000809F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 000809F1
+}
+
+DParameterSecondParametersCurrentControl::DParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080B71
+    this->name = "DParameterSecondParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00080B71
+}
+
+DParameterSecondParametersCurrentControl::~DParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080BF1
+  // Bouml preserved body end 00080BF1
+}
+
+void DParameterSecondParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00080C71
+    parameter = this->value;
+  // Bouml preserved body end 00080C71
+}
+
+void DParameterSecondParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 00080CF1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 00080CF1
+}
+
+void DParameterSecondParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00080D71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 174; //DParameterSecondParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00080D71
+}
+
+void DParameterSecondParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 00080DF1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 00080DF1
+}
+
+IClippingParameterSecondParametersCurrentControl::IClippingParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080F71
+    this->name = "IClippingParameterSecondParametersCurrentControl";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00080F71
+}
+
+IClippingParameterSecondParametersCurrentControl::~IClippingParameterSecondParametersCurrentControl() {
+  // Bouml preserved body begin 00080FF1
+  // Bouml preserved body end 00080FF1
+}
+
+void IClippingParameterSecondParametersCurrentControl::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00081071
+    parameter = this->value;
+  // Bouml preserved body end 00081071
+}
+
+void IClippingParameterSecondParametersCurrentControl::setParameter(const int parameter) {
+  // Bouml preserved body begin 000810F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000810F1
+}
+
+void IClippingParameterSecondParametersCurrentControl::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00081171
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 175; //IClippingParameterSecondParametersCurrentControl
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00081171
+}
+
+void IClippingParameterSecondParametersCurrentControl::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000811F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 000811F1
+}
+
+CurrentControlSwitchingThreshold::CurrentControlSwitchingThreshold() {
+  // Bouml preserved body begin 00081371
+    this->name = "CurrentControlSwitchingThreshold";
+    this->lowerLimit = INT_MIN * radian_per_second;
+    this->upperLimit = INT_MAX * radian_per_second;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00081371
+}
+
+CurrentControlSwitchingThreshold::~CurrentControlSwitchingThreshold() {
+  // Bouml preserved body begin 000813F1
+  // Bouml preserved body end 000813F1
+}
+
+void CurrentControlSwitchingThreshold::getParameter(quantity<angular_velocity>& parameter) const {
+  // Bouml preserved body begin 00081471
+    parameter = this->value;
+  // Bouml preserved body end 00081471
+}
+
+void CurrentControlSwitchingThreshold::setParameter(const quantity<angular_velocity>& parameter) {
+  // Bouml preserved body begin 000814F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000814F1
+}
+
+void CurrentControlSwitchingThreshold::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00081571
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 176; //CurrentControlSwitchingThreshold
+    message.stctOutput.value = (int32) round((value.value() / (storage.gearRatio * 2.0 * M_PI)) * 60.0);
+
+  // Bouml preserved body end 00081571
+}
+
+void CurrentControlSwitchingThreshold::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000815F1
+    double motorRPM = message.stctInput.value;
+    this->value =  ((motorRPM / 60.0) * storage.gearRatio * 2.0 * M_PI) * radian_per_second;
+  // Bouml preserved body end 000815F1
+}
+
 PParameterSecondParametersPositionControl::PParameterSecondParametersPositionControl() {
   // Bouml preserved body begin 0006CDF1
     this->name = "PParameterSecondParametersPositionControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006CDF1
 }
@@ -1400,13 +2124,13 @@ PParameterSecondParametersPositionControl::~PParameterSecondParametersPositionCo
   // Bouml preserved body end 0006CE71
 }
 
-void PParameterSecondParametersPositionControl::getParameter(unsigned int& parameter) const {
+void PParameterSecondParametersPositionControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006CEF1
     parameter = this->value;
   // Bouml preserved body end 0006CEF1
 }
 
-void PParameterSecondParametersPositionControl::setParameter(const unsigned int parameter) {
+void PParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006CF71
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1439,8 +2163,8 @@ void PParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBot
 IParameterSecondParametersPositionControl::IParameterSecondParametersPositionControl() {
   // Bouml preserved body begin 0006D1F1
     this->name = "IParameterSecondParametersPositionControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006D1F1
 }
@@ -1450,13 +2174,13 @@ IParameterSecondParametersPositionControl::~IParameterSecondParametersPositionCo
   // Bouml preserved body end 0006D271
 }
 
-void IParameterSecondParametersPositionControl::getParameter(unsigned int& parameter) const {
+void IParameterSecondParametersPositionControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006D2F1
     parameter = this->value;
   // Bouml preserved body end 0006D2F1
 }
 
-void IParameterSecondParametersPositionControl::setParameter(const unsigned int parameter) {
+void IParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006D371
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1489,8 +2213,8 @@ void IParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBot
 DParameterSecondParametersPositionControl::DParameterSecondParametersPositionControl() {
   // Bouml preserved body begin 0006D5F1
     this->name = "DParameterSecondParametersPositionControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006D5F1
 }
@@ -1500,13 +2224,13 @@ DParameterSecondParametersPositionControl::~DParameterSecondParametersPositionCo
   // Bouml preserved body end 0006D671
 }
 
-void DParameterSecondParametersPositionControl::getParameter(unsigned int& parameter) const {
+void DParameterSecondParametersPositionControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006D6F1
     parameter = this->value;
   // Bouml preserved body end 0006D6F1
 }
 
-void DParameterSecondParametersPositionControl::setParameter(const unsigned int parameter) {
+void DParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006D771
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1539,8 +2263,8 @@ void DParameterSecondParametersPositionControl::setYouBotMailboxMsg(const YouBot
 IClippingParameterSecondParametersPositionControl::IClippingParameterSecondParametersPositionControl() {
   // Bouml preserved body begin 0006D9F1
     this->name = "IClippingParameterSecondParametersPositionControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006D9F1
 }
@@ -1550,13 +2274,13 @@ IClippingParameterSecondParametersPositionControl::~IClippingParameterSecondPara
   // Bouml preserved body end 0006DA71
 }
 
-void IClippingParameterSecondParametersPositionControl::getParameter(unsigned int& parameter) const {
+void IClippingParameterSecondParametersPositionControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006DAF1
     parameter = this->value;
   // Bouml preserved body end 0006DAF1
 }
 
-void IClippingParameterSecondParametersPositionControl::setParameter(const unsigned int parameter) {
+void IClippingParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006DB71
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1589,8 +2313,8 @@ void IClippingParameterSecondParametersPositionControl::setYouBotMailboxMsg(cons
 PParameterSecondParametersSpeedControl::PParameterSecondParametersSpeedControl() {
   // Bouml preserved body begin 0006DDF1
     this->name = "PParameterSecondParametersSpeedControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006DDF1
 }
@@ -1600,13 +2324,13 @@ PParameterSecondParametersSpeedControl::~PParameterSecondParametersSpeedControl(
   // Bouml preserved body end 0006DE71
 }
 
-void PParameterSecondParametersSpeedControl::getParameter(unsigned int& parameter) const {
+void PParameterSecondParametersSpeedControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006DEF1
     parameter = this->value;
   // Bouml preserved body end 0006DEF1
 }
 
-void PParameterSecondParametersSpeedControl::setParameter(const unsigned int parameter) {
+void PParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006DF71
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1639,8 +2363,8 @@ void PParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSla
 IParameterSecondParametersSpeedControl::IParameterSecondParametersSpeedControl() {
   // Bouml preserved body begin 0006E1F1
     this->name = "IParameterSecondParametersSpeedControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006E1F1
 }
@@ -1650,13 +2374,13 @@ IParameterSecondParametersSpeedControl::~IParameterSecondParametersSpeedControl(
   // Bouml preserved body end 0006E271
 }
 
-void IParameterSecondParametersSpeedControl::getParameter(unsigned int& parameter) const {
+void IParameterSecondParametersSpeedControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006E2F1
     parameter = this->value;
   // Bouml preserved body end 0006E2F1
 }
 
-void IParameterSecondParametersSpeedControl::setParameter(const unsigned int parameter) {
+void IParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006E371
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1689,8 +2413,8 @@ void IParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSla
 DParameterSecondParametersSpeedControl::DParameterSecondParametersSpeedControl() {
   // Bouml preserved body begin 0006E5F1
     this->name = "DParameterSecondParametersSpeedControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006E5F1
 }
@@ -1700,13 +2424,13 @@ DParameterSecondParametersSpeedControl::~DParameterSecondParametersSpeedControl(
   // Bouml preserved body end 0006E671
 }
 
-void DParameterSecondParametersSpeedControl::getParameter(unsigned int& parameter) const {
+void DParameterSecondParametersSpeedControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006E6F1
     parameter = this->value;
   // Bouml preserved body end 0006E6F1
 }
 
-void DParameterSecondParametersSpeedControl::setParameter(const unsigned int parameter) {
+void DParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006E771
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1739,8 +2463,8 @@ void DParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const YouBotSla
 IClippingParameterSecondParametersSpeedControl::IClippingParameterSecondParametersSpeedControl() {
   // Bouml preserved body begin 0006E9F1
     this->name = "IClippingParameterSecondParametersSpeedControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006E9F1
 }
@@ -1750,13 +2474,13 @@ IClippingParameterSecondParametersSpeedControl::~IClippingParameterSecondParamet
   // Bouml preserved body end 0006EA71
 }
 
-void IClippingParameterSecondParametersSpeedControl::getParameter(unsigned int& parameter) const {
+void IClippingParameterSecondParametersSpeedControl::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006EAF1
     parameter = this->value;
   // Bouml preserved body end 0006EAF1
 }
 
-void IClippingParameterSecondParametersSpeedControl::setParameter(const unsigned int parameter) {
+void IClippingParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006EB71
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1786,11 +2510,111 @@ void IClippingParameterSecondParametersSpeedControl::setYouBotMailboxMsg(const Y
   // Bouml preserved body end 0006EC71
 }
 
+MassInertiaConstant::MassInertiaConstant() {
+  // Bouml preserved body begin 00082771
+    this->name = "MassInertiaConstant";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00082771
+}
+
+MassInertiaConstant::~MassInertiaConstant() {
+  // Bouml preserved body begin 000827F1
+  // Bouml preserved body end 000827F1
+}
+
+void MassInertiaConstant::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00082871
+    parameter = this->value;
+  // Bouml preserved body end 00082871
+}
+
+void MassInertiaConstant::setParameter(const int parameter) {
+  // Bouml preserved body begin 000828F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000828F1
+}
+
+void MassInertiaConstant::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00082971
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 238; //MassInertiaConstant
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00082971
+}
+
+void MassInertiaConstant::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000829F1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 000829F1
+}
+
+BEMFConstant::BEMFConstant() {
+  // Bouml preserved body begin 00082B71
+    this->name = "BEMFConstant";
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00082B71
+}
+
+BEMFConstant::~BEMFConstant() {
+  // Bouml preserved body begin 00082BF1
+  // Bouml preserved body end 00082BF1
+}
+
+void BEMFConstant::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00082C71
+    parameter = this->value;
+  // Bouml preserved body end 00082C71
+}
+
+void BEMFConstant::setParameter(const int parameter) {
+  // Bouml preserved body begin 00082CF1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 00082CF1
+}
+
+void BEMFConstant::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00082D71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 239; //BEMFConstant
+    message.stctOutput.value = value; //TODO do convertion
+
+  // Bouml preserved body end 00082D71
+}
+
+void BEMFConstant::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 00082DF1
+    this->value = message.stctInput.value; //TODO do convertion
+  // Bouml preserved body end 00082DF1
+}
+
 BlockCommutationMaximumSpeed::BlockCommutationMaximumSpeed() {
   // Bouml preserved body begin 0006EDF1
     this->name = "BlockCommutationMaximumSpeed";
-    this->lowerLimit = 0 * radian_per_second;
-    this->upperLimit = 500 * radian_per_second;
+    this->lowerLimit = INT_MIN * radian_per_second;
+    this->upperLimit = INT_MAX * radian_per_second;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006EDF1
 }
@@ -1839,8 +2663,8 @@ void BlockCommutationMaximumSpeed::setYouBotMailboxMsg(const YouBotSlaveMailboxM
 CommutationCompensationClockwise::CommutationCompensationClockwise() {
   // Bouml preserved body begin 0006F1F1
     this->name = "CommutationCompensationClockwise";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006F1F1
 }
@@ -1850,13 +2674,13 @@ CommutationCompensationClockwise::~CommutationCompensationClockwise() {
   // Bouml preserved body end 0006F271
 }
 
-void CommutationCompensationClockwise::getParameter(unsigned int& parameter) const {
+void CommutationCompensationClockwise::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006F2F1
     parameter = this->value;
   // Bouml preserved body end 0006F2F1
 }
 
-void CommutationCompensationClockwise::setParameter(const unsigned int parameter) {
+void CommutationCompensationClockwise::setParameter(const int parameter) {
   // Bouml preserved body begin 0006F371
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1889,8 +2713,8 @@ void CommutationCompensationClockwise::setYouBotMailboxMsg(const YouBotSlaveMail
 CommutationCompensationCounterClockwise::CommutationCompensationCounterClockwise() {
   // Bouml preserved body begin 0006F5F1
     this->name = "CommutationCompensationCounterClockwise";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
   // Bouml preserved body end 0006F5F1
 }
@@ -1900,13 +2724,13 @@ CommutationCompensationCounterClockwise::~CommutationCompensationCounterClockwis
   // Bouml preserved body end 0006F671
 }
 
-void CommutationCompensationCounterClockwise::getParameter(unsigned int& parameter) const {
+void CommutationCompensationCounterClockwise::getParameter(int& parameter) const {
   // Bouml preserved body begin 0006F6F1
     parameter = this->value;
   // Bouml preserved body end 0006F6F1
 }
 
-void CommutationCompensationCounterClockwise::setParameter(const unsigned int parameter) {
+void CommutationCompensationCounterClockwise::setParameter(const int parameter) {
   // Bouml preserved body begin 0006F771
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
@@ -1934,6 +2758,238 @@ void CommutationCompensationCounterClockwise::setYouBotMailboxMsg(const YouBotSl
   // Bouml preserved body begin 0006F871
     this->value = message.stctInput.value; //TODO do convertion
   // Bouml preserved body end 0006F871
+}
+
+InitSineDelay::InitSineDelay() {
+  // Bouml preserved body begin 00082F71
+    this->name = "InitSineDelay";
+    this->lowerLimit = -32.768 * seconds;
+    this->upperLimit = +32.767 * seconds;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00082F71
+}
+
+InitSineDelay::~InitSineDelay() {
+  // Bouml preserved body begin 00082FF1
+  // Bouml preserved body end 00082FF1
+}
+
+void InitSineDelay::getParameter(quantity<si::time>& parameter) const {
+  // Bouml preserved body begin 00083071
+    parameter = this->value;
+  // Bouml preserved body end 00083071
+}
+
+void InitSineDelay::setParameter(const quantity<si::time>& parameter) {
+  // Bouml preserved body begin 000830F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000830F1
+}
+
+void InitSineDelay::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00083171
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 244; //InitSineDelay
+    message.stctOutput.value = value.value() * 1000; //sec to µsec
+
+  // Bouml preserved body end 00083171
+}
+
+void InitSineDelay::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000831F1
+    this->value = (((double)message.stctInput.value)/1000)  * seconds; //µsec to sec
+  // Bouml preserved body end 000831F1
+}
+
+ActivateOvervoltageProtection::ActivateOvervoltageProtection() {
+  // Bouml preserved body begin 00083371
+    this->name = "ActivateOvervoltageProtection";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00083371
+}
+
+ActivateOvervoltageProtection::~ActivateOvervoltageProtection() {
+  // Bouml preserved body begin 000833F1
+  // Bouml preserved body end 000833F1
+}
+
+void ActivateOvervoltageProtection::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00083471
+    parameter = this->value;
+  // Bouml preserved body end 00083471
+}
+
+void ActivateOvervoltageProtection::setParameter(const bool parameter) {
+  // Bouml preserved body begin 000834F1
+    this->value = parameter;
+  // Bouml preserved body end 000834F1
+}
+
+void ActivateOvervoltageProtection::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00083571
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 245; //ActivateOvervoltageProtection
+    message.stctOutput.value = value;
+
+  // Bouml preserved body end 00083571
+}
+
+void ActivateOvervoltageProtection::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000835F1
+    this->value = message.stctInput.value; 
+  // Bouml preserved body end 000835F1
+}
+
+MaximumPWMChangePerPIDInterval::MaximumPWMChangePerPIDInterval() {
+  // Bouml preserved body begin 00083771
+    this->name = "MaximumPWMChangePerPIDInterval";
+    this->lowerLimit = 0;
+    this->upperLimit = 3599;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00083771
+}
+
+MaximumPWMChangePerPIDInterval::~MaximumPWMChangePerPIDInterval() {
+  // Bouml preserved body begin 000837F1
+  // Bouml preserved body end 000837F1
+}
+
+void MaximumPWMChangePerPIDInterval::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00083871
+    parameter = this->value;
+  // Bouml preserved body end 00083871
+}
+
+void MaximumPWMChangePerPIDInterval::setParameter(const int parameter) {
+  // Bouml preserved body begin 000838F1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 000838F1
+}
+
+void MaximumPWMChangePerPIDInterval::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00083971
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 246; //MaximumPWMChangePerPIDInterval
+    message.stctOutput.value = value;
+
+  // Bouml preserved body end 00083971
+}
+
+void MaximumPWMChangePerPIDInterval::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000839F1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 000839F1
+}
+
+SineCompensationFactor::SineCompensationFactor() {
+  // Bouml preserved body begin 00083B71
+    this->name = "SineCompensationFactor";
+    this->lowerLimit = 0;
+    this->upperLimit = 255;
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00083B71
+}
+
+SineCompensationFactor::~SineCompensationFactor() {
+  // Bouml preserved body begin 00083BF1
+  // Bouml preserved body end 00083BF1
+}
+
+void SineCompensationFactor::getParameter(int& parameter) const {
+  // Bouml preserved body begin 00083C71
+    parameter = this->value;
+  // Bouml preserved body end 00083C71
+}
+
+void SineCompensationFactor::setParameter(const int parameter) {
+  // Bouml preserved body begin 00083CF1
+    if (this->lowerLimit > parameter) {
+      throw ExceptionOODL("The parameter exceeds the lower limit");
+    }
+    if (this->upperLimit < parameter) {
+      throw ExceptionOODL("The parameter exceeds the upper limit");
+    }
+
+    this->value = parameter;
+  // Bouml preserved body end 00083CF1
+}
+
+void SineCompensationFactor::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00083D71
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 247; //SineCompensationFactor
+    message.stctOutput.value = value;
+
+  // Bouml preserved body end 00083D71
+}
+
+void SineCompensationFactor::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 00083DF1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 00083DF1
+}
+
+EncoderNullPolarity::EncoderNullPolarity() {
+  // Bouml preserved body begin 00083F71
+    this->name = "EncoderNullPolarity";
+    this->parameterType = MOTOR_CONTOLLER_PARAMETER;
+  // Bouml preserved body end 00083F71
+}
+
+EncoderNullPolarity::~EncoderNullPolarity() {
+  // Bouml preserved body begin 00083FF1
+  // Bouml preserved body end 00083FF1
+}
+
+void EncoderNullPolarity::getParameter(bool& parameter) const {
+  // Bouml preserved body begin 00084071
+    parameter = this->value;
+  // Bouml preserved body end 00084071
+}
+
+void EncoderNullPolarity::setParameter(const bool parameter) {
+  // Bouml preserved body begin 000840F1
+    this->value = parameter;
+  // Bouml preserved body end 000840F1
+}
+
+void EncoderNullPolarity::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const {
+  // Bouml preserved body begin 00084171
+
+    message.stctOutput.commandNumber = msgType;
+    message.stctOutput.moduleAddress = DRIVE;
+    message.stctOutput.typeNumber = 252; //EncoderNullPolarity
+    message.stctOutput.value = value; 
+
+  // Bouml preserved body end 00084171
+}
+
+void EncoderNullPolarity::setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) {
+  // Bouml preserved body begin 000841F1
+    this->value = message.stctInput.value;
+  // Bouml preserved body end 000841F1
 }
 
 
