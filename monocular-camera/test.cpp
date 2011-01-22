@@ -19,7 +19,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 200;
+    gain = 0;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
 //  std::cout << gain << std::endl;
 //  double rate = 0;
