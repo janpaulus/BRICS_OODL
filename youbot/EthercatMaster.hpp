@@ -50,6 +50,8 @@ friend class YouBotGripper;
     ///return the quantity of ethercat slave which have an input/output buffer
     unsigned int getNumberOfSlaves() const;
 
+    void AutomaticSendOn(const bool enableAutomaticSend);
+
     ///provides all ethercat slave informations from the SOEM driver
     ///@param ethercatSlaveInfos ethercat slave informations
     void getEthercatDiagnosticInformation(std::vector<ec_slavet>& ethercatSlaveInfos);
@@ -113,6 +115,8 @@ friend class YouBotGripper;
 
     std::vector<YouBotSlaveMsg> secondBufferVector;
 
+    std::vector<YouBotSlaveMsg> automaticSendOffBufferVector;
+
     unsigned int nrOfSlaves;
 
     volatile bool newDataFlagOne;
@@ -154,6 +158,8 @@ friend class YouBotGripper;
     unsigned int ethercatTimeout;
 
     static std::string configFileName;
+
+    bool automaticSendOn;
 
 };
 

@@ -105,6 +105,7 @@ void YouBotBase::setBaseVelocity(const quantity<si::velocity>& longitudinalVeloc
     if (wheelVelocities.size() < 4)
       throw ExceptionOODL("To less wheel velocities");
 
+    EthercatMaster::getInstance().AutomaticSendOn(false);
     setVel.angularVelocity = wheelVelocities[0];
     joints[0].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[1];
@@ -113,6 +114,7 @@ void YouBotBase::setBaseVelocity(const quantity<si::velocity>& longitudinalVeloc
     joints[2].setData(setVel, NON_BLOCKING);
     setVel.angularVelocity = wheelVelocities[3];
     joints[3].setData(setVel, NON_BLOCKING);
+    EthercatMaster::getInstance().AutomaticSendOn(true);
   // Bouml preserved body end 0004DD71
 }
 

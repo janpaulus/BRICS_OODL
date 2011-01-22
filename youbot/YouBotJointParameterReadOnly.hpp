@@ -12,6 +12,7 @@
 #include "youbot/ProtocolDefinitions.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
+#include "youbot/YouBotJointStorage.hpp"
 namespace brics_oodl {
 
 enum ParameterType {
@@ -30,9 +31,9 @@ friend class YouBotJoint;
 
 
   protected:
-    virtual void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const = 0;
+    virtual void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const = 0;
 
-    virtual void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message) = 0;
+    virtual void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage) = 0;
 
     virtual std::string getName() const = 0;
 
@@ -55,15 +56,234 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
     ParameterType getType() const {return this->parameterType;};
 
     bool value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Actual supply voltage.
+
+class ActualMotorVoltage : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    ActualMotorVoltage();
+
+    virtual ~ActualMotorVoltage();
+
+    void getParameter(unsigned int& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    unsigned int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// Actual PWM duty cycle (0%... 100%).
+
+
+class ActualPWMDutyCycle : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    ActualPWMDutyCycle();
+
+    virtual ~ActualPWMDutyCycle();
+
+    void getParameter(unsigned int& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    unsigned int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+//Switches the ramp generator for speed and position control on and off
+class ErrorAndStatus : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    ErrorAndStatus();
+
+    virtual ~ErrorAndStatus();
+
+    void getParameter(unsigned int& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    void parseYouBotErrorFlags() const;
+
+    unsigned int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+// Actual PWM duty cycle (0%... 100%).
+
+
+class BlockPWMScheme : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    BlockPWMScheme();
+
+    virtual ~BlockPWMScheme();
+
+    void getParameter(int& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    int value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PositionError : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    PositionError();
+
+    virtual ~PositionError();
+
+    void getParameter(quantity<plane_angle>& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<plane_angle> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class PositionErrorSum : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    PositionErrorSum();
+
+    virtual ~PositionErrorSum();
+
+    void getParameter(quantity<plane_angle>& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<plane_angle> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class VelocityError : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    VelocityError();
+
+    virtual ~VelocityError();
+
+    void getParameter(quantity<si::angular_velocity>& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<si::angular_velocity> value;
+
+    std::string name;
+
+    ParameterType parameterType;
+
+};
+class VelocityErrorSum : public YouBotJointParameterReadOnly {
+friend class YouBotJoint;
+  public:
+    VelocityErrorSum();
+
+    virtual ~VelocityErrorSum();
+
+    void getParameter(quantity<si::angular_velocity>& parameter) const;
+
+
+  private:
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
+
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
+
+    std::string getName() const {return this->name;};
+
+    ParameterType getType() const {return this->parameterType;};
+
+    quantity<si::angular_velocity> value;
 
     std::string name;
 
@@ -81,9 +301,9 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
@@ -108,9 +328,9 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
@@ -135,9 +355,9 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
@@ -158,19 +378,19 @@ friend class YouBotJoint;
 
     virtual ~MotorCoilResistance();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(quantity<resistance>& parameter) const;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int value;
+    quantity<resistance> value;
 
     std::string name;
 
@@ -185,19 +405,19 @@ friend class YouBotJoint;
 
     virtual ~InitializationMode();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(int& parameter) const;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int value;
+    int value;
 
     std::string name;
 
@@ -216,9 +436,9 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
@@ -239,19 +459,19 @@ friend class YouBotJoint;
 
     virtual ~ReversingEncoderDirection();
 
-    void getParameter(unsigned int& parameter) const;
+    bool getParameter(unsigned int& parameter) const;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int value;
+    bool value;
 
     std::string name;
 
@@ -266,19 +486,19 @@ friend class YouBotJoint;
 
     virtual ~MotorPoles();
 
-    void getParameter(unsigned int& parameter) const;
+    void getParameter(bool& parameter) const;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 
     ParameterType getType() const {return this->parameterType;};
 
-    unsigned int value;
+    bool value;
 
     std::string name;
 
@@ -297,9 +517,9 @@ friend class YouBotJoint;
 
 
   private:
-    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType) const;
+    void getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TMCLCommandNumber msgType, const YouBotJointStorage& storage) const;
 
-    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message);
+    void setYouBotMailboxMsg(const YouBotSlaveMailboxMsg& message, const YouBotJointStorage& storage);
 
     std::string getName() const {return this->name;};
 

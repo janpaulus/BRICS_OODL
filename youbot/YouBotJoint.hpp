@@ -13,6 +13,7 @@
 #include "generic/ExceptionOODL.hpp"
 #include "generic-joint/Joint.hpp"
 #include "generic-joint/JointData.hpp"
+#include "youbot/YouBotJointStorage.hpp"
 #include "youbot/ProtocolDefinitions.hpp"
 #include "youbot/YouBotJointParameter.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
@@ -98,7 +99,9 @@ class YouBotJoint : public Joint {
 
 
   private:
-    void parseYouBotErrorFlags();
+    void parseYouBotErrorFlags(const YouBotSlaveMsg& messageBuffer);
+
+    void parseMailboxStatusFlags(const YouBotSlaveMailboxMsg& mailboxMsg);
 
     bool retrieveValueFromMotorContoller(YouBotSlaveMailboxMsg& message);
 
@@ -110,19 +113,11 @@ class YouBotJoint : public Joint {
 
     bool positionReferenceToZero;
 
-    unsigned int encoderTicksPerRound;
-
-    double gearRatio;
-
     unsigned int timeTillNextMailboxUpdate;
 
     unsigned int mailboxMsgRetries;
 
-    bool inverseMovementDirection;
-
-    int upperLimit;
-
-    int lowerLimit;
+    YouBotJointStorage storage;
 
 };
 

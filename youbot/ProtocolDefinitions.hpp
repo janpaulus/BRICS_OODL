@@ -91,18 +91,18 @@ int main() {
 
 //Opcodes of all TMCL commands that can be used in direct mode
 typedef enum TMCLCommandNumber {
-  ROR = 1,
-  ROL = 2,
-  MST = 3,
-  MVP = 4,
-  SAP = 5,
-  GAP = 6,
-  STAP = 7,
-  RSAP = 8,
-  SGP = 9,
-  GGP = 10,
-  STGP = 11,
-  RSGP = 12,
+  ROR = 1,  //Rotate right
+  ROL = 2,  //Rotate left
+  MST = 3,  //Motor stop
+  MVP = 4,  //Move to position
+  SAP = 5,  //Set axis parameter
+  GAP = 6,  //Get axis parameter
+  STAP = 7, //Store axis parameter into EEPROM
+  RSAP = 8, //Restore axis parameter from EEPROM
+  SGP = 9,  //Set global parameter
+  GGP = 10, //Get global parameter
+  STGP = 11, //Store global parameter into EEPROM
+  RSGP = 12, //Restore global parameter from EEPROM
   RFS = 13,
   SIO = 14,
   GIO = 15,
@@ -126,8 +126,6 @@ typedef enum TMCLCommandNumber {
 #define RFS_START 0
 #define RFS_STOP 1
 #define RFS_STATUS 2
-
-#define TMCL_STATUS_OK 100
 
 //Result codes for GetResult
 #define TMCL_RESULT_OK 0
@@ -157,8 +155,21 @@ enum YouBotErrorFlags {
     ENCODER = 64,
     MOTOR_WINDING = 128,
     CYCLE_TIME_VIOLATION = 256,
-    INIT_SIN_COMM = 512
+    INIT_SIN_COMM = 512,
+    POSITION_MODE = 1024,
+    POSITION_REACHED = 2048
 };
+
+
+enum YouBotMailboxStatusFlags {
+    NO_ERROR = 100,
+    INVALID_COMMAND = 2,
+    WRONG_TYPE = 3,
+    INVALID_VALUE = 4,
+    CONFIGURATION_EEPROM_LOCKED = 5,
+    COMMAND_NOT_AVAILABLE = 6
+};
+
 
 #endif	/* PROTOCOLDEFINITIONS_HPP */
 
