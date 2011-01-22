@@ -1,0 +1,3 @@
+ 	
+
+RGen is a framework supporting Model Driven Software Development (MDSD). This means that it helps you build Metamodels, instantiate Models, modify and transform Models and finally generate arbitrary textual content from it.

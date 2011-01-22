@@ -21,11 +21,11 @@ USE_LANGUAGES=		c c++
 #CMAKE_ARGS+=		-DBOOST_LOG_PATH=${PREFIX.boost-log}
 
 
-include ../../brics/xerces-c/depend.mk
+include ../../mk/sysdep/xerces-c.mk
 #include ../../brics/collada-dom/depend.mk
-include ../../brics/qt/depend.mk
+include ../../mk/sysdep/qt4-libs.mk
 include ../../brics/coin3d/depend.mk
-include ../../brics/soqt/depend.mk
+include ../../mk/sysdep/libsoqt.mk
 include ../../devel/boost-headers/depend.mk
 include ../../devel/boost-libs/depend.mk
 include ../../mk/sysdep/cmake.mk

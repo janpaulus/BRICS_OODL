@@ -18,8 +18,7 @@ USE_LANGUAGES=		c c++
 
 GNU_CONFIGURE=		yes
 
-
-include ../SDL.mk
-include ../SDL_net.mk
+include ../sysdep/SDL.mk
+include ../sysdep/SDL_net.mk
 include ../../mk/robotpkg.mk
 
