@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 distfiles
 packages
 wip
@@ -9,3 +10,15 @@ index-all.html
 work
 
 *~
+=======
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+Makefile-BRICS_OODL.mk
+.dep.inc
+nbproject
+CMakeFiles
+bin
+lib
+Doxyfile
+>>>>>>> d60294053168ab58e1664fcfe169f093a0e9c03e

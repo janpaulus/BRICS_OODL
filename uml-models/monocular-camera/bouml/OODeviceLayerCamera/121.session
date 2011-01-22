@@ -1,0 +1,11 @@
+window_sizes 1918 1047 413 1495 777 176
+diagrams
+  active  classdiagram_ref 128249 // MonocularCameraInterface
+    1495 777 100 3 0 0
+end
+show_stereotypes
+selected classdiagram_ref 128249 // MonocularCameraInterface
+open
+  classview_ref 128121 // MonocularCamera
+end
+end

@@ -1,0 +1,16 @@
+window_sizes 1280 725 339 935 570 72
+diagrams
+  classdiagram_ref 128103 // LaserScannerConfiguration
+    1281 822 100 2 0 0
+  active  classdiagram_ref 141425 // JointInterface
+    935 570 100 3 120 0
+end
+show_stereotypes
+selected classview_ref 128124 // LaserScannerClasses
+open
+  class_ref 169841 // JointSensorCurrent
+  
+  package_ref 148209 // mesa-swissranger
+  deploymentview_ref 154609 // Deployment
+end
+end

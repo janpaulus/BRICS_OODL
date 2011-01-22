@@ -1,0 +1,15 @@
+window_sizes 1280 725 242 1032 642 0
+diagrams
+  classdiagram_ref 128124 // LaserScannerInterface
+    620 488 100 3 0 407
+  active  classdiagram_ref 128103 // LaserScannerConfiguration
+    1032 642 100 2 0 0
+  classdiagram_ref 128113 // LaserScannerData
+    620 488 100 1 0 0
+end
+show_stereotypes
+selected classdiagram_ref 128103 // LaserScannerConfiguration
+open
+  classview_ref 128124 // LaserScannerClasses
+end
+end
