@@ -1,6 +1,0 @@
-unicap provides a uniform interface to video capture devices. It allows applications to use 
-any supported video capture device via a single API. 
-unicap offers a high level of hardware abstraction while maintaining maximum performance. 
-Zero copy capture of video buffers is possible for devices supporting it allowing fast video 
-capture with low CPU usage even on low-speed architectures.
-unicap is dual licensed under the terms and conditions of the General Public License (GPL).

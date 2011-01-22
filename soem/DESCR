@@ -1,3 +1,0 @@
-SOEM is an EtherCAT (Ethernet for Control Automation Technology) master library written in c. Its purpose is to learn and to use. All users are invited to study the source to get an understanding how an EtherCAT master functions and how it interacts with EtherCAT slaves.
-
-It's primary target system is Linux, all examples are written for it. But as all applications are different, SOEM tries to not impose any design architecture. It can be used in generic user mode, PREEMPT_RT or Xenomai. Also converting it to other targets is relativly simple. For detailed information about EtherCAT vistit the ETG (EtherCAT technology group) site, see the links section below. 
