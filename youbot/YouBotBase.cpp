@@ -14,7 +14,7 @@ YouBotBase::YouBotBase(const std::string name, const std::string configFilePath)
   this->ethercatConfigFileName = "youbot-ethercat.cfg";
 
   if(!configfile.load(filename.c_str()))
-      throw ExceptionOODL(filename + " file no found");
+      throw FileNotFoundException(filename + " file no found");
 
   this->initializeJoints();
 
@@ -33,7 +33,7 @@ YouBotBase::~YouBotBase() {
 YouBotJoint& YouBotBase::getBaseJoint(const unsigned int baseJointNumber) {
   // Bouml preserved body begin 0004F771
     if (baseJointNumber <= 0 || baseJointNumber > 4 ) {
-      throw ExceptionOODL("Invalid Joint Number");
+      throw std::out_of_range("Invalid Joint Number");
     }
     return joints[baseJointNumber - 1];
   // Bouml preserved body end 0004F771
@@ -103,7 +103,7 @@ void YouBotBase::setBaseVelocity(const quantity<si::velocity>& longitudinalVeloc
     youBotBaseKinematic.cartesianVelocityToWheelVelocities(longitudinalVelocity, transversalVelocity, angularVelocity, wheelVelocities);
 
     if (wheelVelocities.size() < 4)
-      throw ExceptionOODL("To less wheel velocities");
+      throw std::out_of_range("To less wheel velocities");
 
     EthercatMaster::getInstance().AutomaticSendOn(false);
     setVel.angularVelocity = wheelVelocities[0];
@@ -127,7 +127,7 @@ void YouBotBase::initializeJoints() {
     unsigned int noSlaves = EthercatMaster::getInstance(this->ethercatConfigFileName, this->configFilePath).getNumberOfSlaves();
 
     if(noSlaves < 4){
-      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotBase!");
+      throw std::out_of_range("Not enough ethercat slaves were found to create a YouBotBase!");
     }
     
     //read Joint Topology from config file
@@ -139,28 +139,28 @@ void YouBotBase::initializeJoints() {
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("BaseRightFront");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("BaseLeftBack");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("BaseRightBack");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
 

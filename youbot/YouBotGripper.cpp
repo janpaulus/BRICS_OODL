@@ -125,7 +125,7 @@ void YouBotGripper::setData(const GripperBarSpacingSetPoint& barSpacing) {
   if(barSpacing.barSpacing > (maxTravelDistance + barSpacingOffset) || barSpacing.barSpacing < barSpacingOffset){
     std::stringstream errorMessageStream;
     errorMessageStream << "The bar spacing is not allowd to be less than 0 m or higher than " << (maxTravelDistance + barSpacingOffset);
-    throw ExceptionOODL(errorMessageStream.str());
+    throw std::out_of_range(errorMessageStream.str());
   }
     YouBotSlaveMailboxMsg message;
     message.stctOutput.moduleAddress = GRIPPER;

@@ -9,7 +9,7 @@ class JointLimits
     upperLimit = this->upperLimit;
 !!!409713.cpp!!!	setParameter(in lowerLimit : int, in upperLimit : int) : void
     if (lowerLimit > upperLimit) {
-      throw ExceptionOODL("The lower joint limit it not allowed to be bigger than the upper limit");
+      throw std::out_of_range("The lower joint limit it not allowed to be bigger than the upper limit");
     }
     this->lowerLimit = lowerLimit;
     this->upperLimit = upperLimit;

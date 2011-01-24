@@ -23,7 +23,7 @@ void FourSwedishWheelOmniBaseKinematic::cartesianVelocityToWheelVelocities(const
     wheelVelocities.assign(4, RadPerSec_FromX);
 
     if (config.wheelRadius.value() == 0 || config.rotationRatio == 0 || config.slideRatio == 0) {
-      throw ExceptionOODL("The wheelRadius, RotationRatio or the SlideRatio are not allowed to be zero");
+      throw std::out_of_range("The wheelRadius, RotationRatio or the SlideRatio are not allowed to be zero");
     }
 
     // RadPerSec_FromX = longitudinalVelocity / config.wheelRadius;
@@ -50,10 +50,10 @@ void FourSwedishWheelOmniBaseKinematic::wheelVelocitiesToCartesianVelocity(const
   // Bouml preserved body begin 0004C0F1
 
     if (wheelVelocities.size() < 4)
-      throw ExceptionOODL("To less wheel velocities");
+      throw std::out_of_range("To less wheel velocities");
 
     if (config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0) {
-      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
+      throw std::out_of_range("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
     }
 
     quantity<si::length> wheel_radius_per4 = config.wheelRadius / 4.0;
@@ -71,10 +71,10 @@ void FourSwedishWheelOmniBaseKinematic::wheelPositionsToCartesianPosition(const 
   // Bouml preserved body begin 00051371
 
     if (wheelPositions.size() < 4)
-      throw ExceptionOODL("To less wheel positions");
+      throw std::out_of_range("To less wheel positions");
 
      if (config.lengthBetweenFrontAndRearWheels.value() == 0 || config.lengthBetweenFrontWheels.value() == 0) {
-      throw ExceptionOODL("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
+      throw std::out_of_range("The lengthBetweenFrontAndRearWheels or the lengthBetweenFrontWheels are not allowed to be zero");
     }
 
     if (this->lastWheelPositionInitialized == false) {

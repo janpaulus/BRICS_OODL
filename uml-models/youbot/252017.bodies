@@ -6,6 +6,6 @@ class EncoderTicksPerRound
     parameter = this->value;
 !!!378225.cpp!!!	setParameter(in parameter : uint) : void
     if (parameter == 0) {
-      throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
+      throw std::out_of_range("Zero Encoder Ticks per Round are not allowed");
     }
     this->value = parameter;

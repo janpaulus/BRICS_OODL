@@ -4,14 +4,14 @@ class PWMHysteresis
     this->lowerLimit = 0;
     this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
-!!!500849.cpp!!!	getParameter(out parameter : long) : void
+!!!500849.cpp!!!	getParameter(out parameter : int) : void
     parameter = this->value;
-!!!500977.cpp!!!	setParameter(in parameter : long) : void
+!!!500977.cpp!!!	setParameter(in parameter : int) : void
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;

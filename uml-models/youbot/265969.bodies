@@ -5,6 +5,6 @@ class MaxTravelDistance
     parameter = this->value;
 !!!399985.cpp!!!	setParameter(in parameter : quantity<si::length>) : void
   if(parameter > 1 *meter || parameter < 0 *meter){
-    throw ExceptionOODL("Wrong MaxTravelDistance parameter");
+    throw std::out_of_range("The Max Travel Distance is only allowed to be less than 1m and bigger than zero");
   }
     this->value = parameter;

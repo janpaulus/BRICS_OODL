@@ -4,14 +4,14 @@ class CommutationCompensationClockwise
     this->lowerLimit = INT_MIN;
     this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
-!!!455409.cpp!!!	getParameter(out parameter : uint) : void
+!!!455409.cpp!!!	getParameter(out parameter : int) : void
     parameter = this->value;
-!!!455537.cpp!!!	setParameter(in parameter : uint) : void
+!!!455537.cpp!!!	setParameter(in parameter : int) : void
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;

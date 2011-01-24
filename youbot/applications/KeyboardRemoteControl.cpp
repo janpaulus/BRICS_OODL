@@ -25,7 +25,7 @@ int main() {
     rude::Config configfile;
 
     if (!configfile.load("../config/applications.cfg"))
-      throw ExceptionOODL("../config/applications.cfg file no found");
+      throw FileNotFoundException("../config/applications.cfg file no found");
 
     int ch = 0;
     double linearVel = 0.05; //meter_per_second

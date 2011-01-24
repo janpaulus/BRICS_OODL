@@ -10,7 +10,7 @@ class YouBotManipulator
   this->ethercatConfigFileName = "youbot-ethercat.cfg";
 
   if(!configfile.load(filename.c_str()))
-      throw ExceptionOODL(filename + " file no found");
+      throw FileNotFoundException(filename + " file no found");
 
 
   this->initializeJoints();
@@ -18,14 +18,14 @@ class YouBotManipulator
 !!!325617.cpp!!!	getArmJoint(in armJointNumber : uint) : YouBotJoint&
 
     if (armJointNumber <= 0 || armJointNumber > 5) {
-      throw ExceptionOODL("Invalid Joint Number");
+      throw std::out_of_range("Invalid Joint Number");
     }
     return joints[armJointNumber - 1];
 !!!391665.cpp!!!	getArmGripper() : YouBotGripper&
     if (this->gripperVector.size() >= 1) {
       return this->gripperVector[0];
     } else {
-      throw ExceptionOODL("There is no Gripper");
+      throw std::out_of_range("There is no Gripper");
     }
 !!!426097.cpp!!!	initializeJoints() : void
 
@@ -46,35 +46,35 @@ class YouBotManipulator
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("ManipulatorJoint2");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("ManipulatorJoint3");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("ManipulatorJoint4");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
     slaveNumber = configfile.getIntValue("ManipulatorJoint5");
     if(slaveNumber  <= noSlaves){
       joints.push_back(YouBotJoint(slaveNumber));
     }else{
-      throw ExceptionOODL("The ethercat slave number is not available!");
+      throw std::out_of_range("The ethercat slave number is not available!");
     }
 
 

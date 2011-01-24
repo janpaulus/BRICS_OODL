@@ -8,10 +8,10 @@ class IClippingParameterSecondParametersPositionControl
     parameter = this->value;
 !!!449393.cpp!!!	setParameter(in parameter : int) : void
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;

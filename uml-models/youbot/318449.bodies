@@ -8,10 +8,10 @@ class StopSwitchPolarity
     parameter = this->value;
 !!!515569.cpp!!!	setParameter(in parameter : uint) : void
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;

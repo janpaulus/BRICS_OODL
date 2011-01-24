@@ -19,7 +19,7 @@ class EthercatMaster
     }
     //read ethercat parameters form config file
     if (!configfile.load(this->configFileName.c_str())){
-      throw ExceptionOODL(this->configFileName + " file no found");
+      throw FileNotFoundException(this->configFileName + " file no found");
     }
     configfile.setSection("EtherCAT");
     ethernetDevice = configfile.getStringValue("EthernetDevice");

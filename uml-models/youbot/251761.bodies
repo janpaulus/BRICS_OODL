@@ -6,6 +6,6 @@ class GearRatio
     parameter = this->value;
 !!!376689.cpp!!!	setParameter(in parameter : double) : void
     if (parameter == 0) {
-      throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
+      throw std::out_of_range("A Gear Ratio of 0 is not allowed");
     }
     this->value = parameter;

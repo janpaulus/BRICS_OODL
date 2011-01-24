@@ -57,7 +57,7 @@ void GearRatio::getParameter(double& parameter) const {
 void GearRatio::setParameter(const double parameter) {
   // Bouml preserved body begin 0005BF71
     if (parameter == 0) {
-      throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
+      throw std::out_of_range("A Gear Ratio of 0 is not allowed");
     }
     this->value = parameter;
   // Bouml preserved body end 0005BF71
@@ -84,7 +84,7 @@ void EncoderTicksPerRound::getParameter(unsigned int& parameter) const {
 void EncoderTicksPerRound::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 0005C571
     if (parameter == 0) {
-      throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
+      throw std::out_of_range("Zero Encoder Ticks per Round are not allowed");
     }
     this->value = parameter;
   // Bouml preserved body end 0005C571
@@ -166,7 +166,7 @@ void JointLimits::getParameter(int& lowerLimit, int& upperLimit) const {
 void JointLimits::setParameter(const int lowerLimit, const int upperLimit) {
   // Bouml preserved body begin 00064071
     if (lowerLimit > upperLimit) {
-      throw ExceptionOODL("The lower joint limit it not allowed to be bigger than the upper limit");
+      throw std::out_of_range("The lower joint limit it not allowed to be bigger than the upper limit");
     }
     this->lowerLimit = lowerLimit;
     this->upperLimit = upperLimit;
@@ -244,10 +244,10 @@ void MaximumPositioningVelocity::getParameter(quantity<angular_velocity>& parame
 void MaximumPositioningVelocity::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 00059C71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -295,10 +295,10 @@ void PWMLimit::getParameter(unsigned int& parameter) const {
 void PWMLimit::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 000794F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -345,10 +345,10 @@ void MaximumMotorCurrent::getParameter(quantity<current>& parameter) const {
 void MaximumMotorCurrent::setParameter(const quantity<current>& parameter) {
   // Bouml preserved body begin 0006A771
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -395,10 +395,10 @@ void MaximumVelocityToSetPosition::getParameter(quantity<angular_velocity>& para
 void MaximumVelocityToSetPosition::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 000790F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -446,10 +446,10 @@ void SpeedControlSwitchingThreshold::getParameter(quantity<angular_velocity>& pa
 void SpeedControlSwitchingThreshold::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 0006A371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -497,10 +497,10 @@ void ClearTargetDistance::getParameter(int& parameter) const {
 void ClearTargetDistance::setParameter(const int parameter) {
   // Bouml preserved body begin 000798F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -547,10 +547,10 @@ void PositionTargetReachedDistance::getParameter(int& parameter) const {
 void PositionTargetReachedDistance::setParameter(const int parameter) {
   // Bouml preserved body begin 00079CF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -597,10 +597,10 @@ void MotorAcceleration::getParameter(quantity<angular_acceleration>& parameter) 
 void MotorAcceleration::setParameter(const quantity<angular_acceleration>& parameter) {
   // Bouml preserved body begin 0006AB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -648,10 +648,10 @@ void PositionControlSwitchingThreshold::getParameter(quantity<angular_velocity>&
 void PositionControlSwitchingThreshold::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 0006FB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -699,10 +699,10 @@ void PParameterFirstParametersPositionControl::getParameter(int& parameter) cons
 void PParameterFirstParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0005CB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -749,10 +749,10 @@ void IParameterFirstParametersPositionControl::getParameter(int& parameter) cons
 void IParameterFirstParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 00069B71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -799,10 +799,10 @@ void DParameterFirstParametersPositionControl::getParameter(int& parameter) cons
 void DParameterFirstParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 00069F71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -849,10 +849,10 @@ void PIDControlTime::getParameter(quantity<si::time>& parameter) const {
 void PIDControlTime::setParameter(const quantity<si::time>& parameter) {
   // Bouml preserved body begin 0006AF71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -899,10 +899,10 @@ void CurrentControlLoopDelay::getParameter(quantity<si::time>& parameter) const 
 void CurrentControlLoopDelay::setParameter(const quantity<si::time>& parameter) {
   // Bouml preserved body begin 0007A0F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -949,10 +949,10 @@ void IClippingParameterFirstParametersPositionControl::getParameter(int& paramet
 void IClippingParameterFirstParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006B371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -999,10 +999,10 @@ void PWMHysteresis::getParameter(int& parameter) const {
 void PWMHysteresis::setParameter(const int parameter) {
   // Bouml preserved body begin 0007A4F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1127,10 +1127,10 @@ void PParameterFirstParametersSpeedControl::getParameter(int& parameter) const {
 void PParameterFirstParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006B771
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1177,10 +1177,10 @@ void IParameterFirstParametersSpeedControl::getParameter(int& parameter) const {
 void IParameterFirstParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006BB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1227,10 +1227,10 @@ void DParameterFirstParametersSpeedControl::getParameter(unsigned int& parameter
 void DParameterFirstParametersSpeedControl::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 0006BF71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1277,10 +1277,10 @@ void IClippingParameterFirstParametersSpeedControl::getParameter(int& parameter)
 void IClippingParameterFirstParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006C371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1532,10 +1532,10 @@ void EncoderStopSwitch::getParameter(unsigned int& parameter) const {
 void EncoderStopSwitch::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 0007D5F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1582,10 +1582,10 @@ void ActualCommutationOffset::getParameter(int& parameter) const {
 void ActualCommutationOffset::setParameter(const int parameter) {
   // Bouml preserved body begin 0007D9F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1632,10 +1632,10 @@ void StopSwitchPolarity::getParameter(unsigned int& parameter) const {
 void StopSwitchPolarity::setParameter(const unsigned int parameter) {
   // Bouml preserved body begin 0007DDF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1682,10 +1682,10 @@ void PParameterFirstParametersCurrentControl::getParameter(int& parameter) const
 void PParameterFirstParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0007F4F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1732,10 +1732,10 @@ void IParameterFirstParametersCurrentControl::getParameter(int& parameter) const
 void IParameterFirstParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0007F8F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1782,10 +1782,10 @@ void DParameterFirstParametersCurrentControl::getParameter(int& parameter) const
 void DParameterFirstParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0007FCF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1832,10 +1832,10 @@ void IClippingParameterFirstParametersCurrentControl::getParameter(int& paramete
 void IClippingParameterFirstParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 000800F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1882,10 +1882,10 @@ void PParameterSecondParametersCurrentControl::getParameter(int& parameter) cons
 void PParameterSecondParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 000804F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1932,10 +1932,10 @@ void IParameterSecondParametersCurrentControl::getParameter(int& parameter) cons
 void IParameterSecondParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 000808F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -1982,10 +1982,10 @@ void DParameterSecondParametersCurrentControl::getParameter(int& parameter) cons
 void DParameterSecondParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 00080CF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2032,10 +2032,10 @@ void IClippingParameterSecondParametersCurrentControl::getParameter(int& paramet
 void IClippingParameterSecondParametersCurrentControl::setParameter(const int parameter) {
   // Bouml preserved body begin 000810F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2082,10 +2082,10 @@ void CurrentControlSwitchingThreshold::getParameter(quantity<angular_velocity>& 
 void CurrentControlSwitchingThreshold::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 000814F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2133,10 +2133,10 @@ void PParameterSecondParametersPositionControl::getParameter(int& parameter) con
 void PParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006CF71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2183,10 +2183,10 @@ void IParameterSecondParametersPositionControl::getParameter(int& parameter) con
 void IParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006D371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2233,10 +2233,10 @@ void DParameterSecondParametersPositionControl::getParameter(int& parameter) con
 void DParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006D771
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2283,10 +2283,10 @@ void IClippingParameterSecondParametersPositionControl::getParameter(int& parame
 void IClippingParameterSecondParametersPositionControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006DB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2333,10 +2333,10 @@ void PParameterSecondParametersSpeedControl::getParameter(int& parameter) const 
 void PParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006DF71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2383,10 +2383,10 @@ void IParameterSecondParametersSpeedControl::getParameter(int& parameter) const 
 void IParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006E371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2433,10 +2433,10 @@ void DParameterSecondParametersSpeedControl::getParameter(int& parameter) const 
 void DParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006E771
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2483,10 +2483,10 @@ void IClippingParameterSecondParametersSpeedControl::getParameter(int& parameter
 void IClippingParameterSecondParametersSpeedControl::setParameter(const int parameter) {
   // Bouml preserved body begin 0006EB71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2533,10 +2533,10 @@ void MassInertiaConstant::getParameter(int& parameter) const {
 void MassInertiaConstant::setParameter(const int parameter) {
   // Bouml preserved body begin 000828F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2583,10 +2583,10 @@ void BEMFConstant::getParameter(int& parameter) const {
 void BEMFConstant::setParameter(const int parameter) {
   // Bouml preserved body begin 00082CF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2633,10 +2633,10 @@ void BlockCommutationMaximumSpeed::getParameter(quantity<angular_velocity>& para
 void BlockCommutationMaximumSpeed::setParameter(const quantity<angular_velocity>& parameter) {
   // Bouml preserved body begin 0006EF71
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2683,10 +2683,10 @@ void CommutationCompensationClockwise::getParameter(int& parameter) const {
 void CommutationCompensationClockwise::setParameter(const int parameter) {
   // Bouml preserved body begin 0006F371
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2733,10 +2733,10 @@ void CommutationCompensationCounterClockwise::getParameter(int& parameter) const
 void CommutationCompensationCounterClockwise::setParameter(const int parameter) {
   // Bouml preserved body begin 0006F771
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2783,10 +2783,10 @@ void InitSineDelay::getParameter(quantity<si::time>& parameter) const {
 void InitSineDelay::setParameter(const quantity<si::time>& parameter) {
   // Bouml preserved body begin 000830F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2874,10 +2874,10 @@ void MaximumPWMChangePerPIDInterval::getParameter(int& parameter) const {
 void MaximumPWMChangePerPIDInterval::setParameter(const int parameter) {
   // Bouml preserved body begin 000838F1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;
@@ -2924,10 +2924,10 @@ void SineCompensationFactor::getParameter(int& parameter) const {
 void SineCompensationFactor::setParameter(const int parameter) {
   // Bouml preserved body begin 00083CF1
     if (this->lowerLimit > parameter) {
-      throw ExceptionOODL("The parameter exceeds the lower limit");
+      throw std::out_of_range("The parameter exceeds the lower limit");
     }
     if (this->upperLimit < parameter) {
-      throw ExceptionOODL("The parameter exceeds the upper limit");
+      throw std::out_of_range("The parameter exceeds the upper limit");
     }
 
     this->value = parameter;

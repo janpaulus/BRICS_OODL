@@ -55,7 +55,7 @@ void BarSpacingOffset::getParameter(quantity<si::length>& parameter) const {
 void BarSpacingOffset::setParameter(const quantity<si::length>& parameter) {
   // Bouml preserved body begin 0005FDF1
   if(parameter > 1 *meter || parameter < 0 *meter){
-    throw ExceptionOODL("Wrong BarSpacingOffset parameter");
+    throw std::out_of_range("The Bar Spacing Offset is only allowed to be less than 1m and bigger than zero");
   }
     this->value = parameter;
   // Bouml preserved body end 0005FDF1
@@ -104,7 +104,7 @@ void MaxTravelDistance::getParameter(quantity<si::length>& parameter) const {
 void MaxTravelDistance::setParameter(const quantity<si::length>& parameter) {
   // Bouml preserved body begin 00061A71
   if(parameter > 1 *meter || parameter < 0 *meter){
-    throw ExceptionOODL("Wrong MaxTravelDistance parameter");
+    throw std::out_of_range("The Max Travel Distance is only allowed to be less than 1m and bigger than zero");
   }
     this->value = parameter;
   // Bouml preserved body end 00061A71

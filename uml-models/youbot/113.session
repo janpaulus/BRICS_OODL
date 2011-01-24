@@ -1,19 +1,6 @@
-window_sizes 1672 972 659 1007 889 0
+window_sizes 1680 975 375 1299 892 0
 show_stereotypes
-selected class_ref 238449 // JointParameter
+selected classview_ref 154353 // JointParameter
 open
-  class_ref 238449 // JointParameter
-  class_ref 238577 // YouBotJointParameter
-  class_ref 310897 // CurrentControlLoopDelay
-  class_ref 311153 // ClearISumIfPWMReachesMaximum
-  class_ref 318065 // SetEncoderCounterZeroOnlyOnce
-  class_ref 321009 // BEMFConstant
-  class_ref 321137 // InitSineDelay
-  class_ref 321521 // SineCompensationFactor
-  class_ref 296049 // YouBotJointParameterReadOnly
-  classrelation_ref 262897 // <generalisation>
-  attribute_ref 444657 // parameterType
-  attribute_ref 445041 // parameterType
-  deploymentview_ref 161137 // Deployment
 end
 end
