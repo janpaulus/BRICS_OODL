@@ -361,7 +361,7 @@ void MaximumMotorCurrent::getYouBotMailboxMsg(YouBotSlaveMailboxMsg& message, TM
     message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 6; //MaximumMotorCurrent
-    message.stctOutput.value = value.value() * 1000; // ampere to milli ampere
+    message.stctOutput.value = value.value() * 1000.0; // ampere to milli ampere
 
   // Bouml preserved body end 0006A7F1
 }

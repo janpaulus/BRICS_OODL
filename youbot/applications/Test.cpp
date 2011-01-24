@@ -87,8 +87,8 @@ int main() {
  //   LOG(trace) << "gearRatio " << gear << "encoderResolution " << enc;
 */
 
-    quantity<si::velocity> longitudinalVelocity = 0.0 * meter_per_second;
-    quantity<si::velocity> transversalVelocity = -0.1 * meter_per_second;
+    quantity<si::velocity> longitudinalVelocity = 0.2 * meter_per_second;
+    quantity<si::velocity> transversalVelocity = 0.0 * meter_per_second;
     quantity<si::angular_velocity> angularVelocity = 0 * radian_per_second;
 
     quantity<si::velocity> actLongitudinalVelocity = 0 * meter_per_second;
@@ -100,27 +100,34 @@ int main() {
     quantity<si::plane_angle> actAngle = 0 * radian;
 
 
-    ReinitializationSinusoidalCommutation initSinus;
+    MaximumMotorCurrent maxCurrent;
 
-    initSinus.setParameter(true);
+    myYouBotBase.getBaseJoint(1).getConfigurationParameter(maxCurrent);
 
-    myYouBotBase.getBaseJoint(1).setConfigurationParameter(initSinus);
-    myYouBotBase.getBaseJoint(2).setConfigurationParameter(initSinus);
-    myYouBotBase.getBaseJoint(3).setConfigurationParameter(initSinus);
-    myYouBotBase.getBaseJoint(4).setConfigurationParameter(initSinus);
+    quantity<si::current> maxc;
+    maxCurrent.getParameter(maxc);
+
+    LOG(info) << "max Current J1: " << maxc;
+
+    maxCurrent.setParameter(1 * ampere);
+
+    myYouBotBase.getBaseJoint(1).setConfigurationParameter(maxCurrent);
+  //  myYouBotBase.getBaseJoint(2).setConfigurationParameter(initSinus);
+  //  myYouBotBase.getBaseJoint(3).setConfigurationParameter(initSinus);
+  //  myYouBotBase.getBaseJoint(4).setConfigurationParameter(initSinus);
 
     while (running) {
 
-   //   myYouBotBase.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+      myYouBotBase.setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
       myYouBotBase.getBasePosition(actLongitudinalPose, actTransversalPose, actAngle);
    //   myYouBotBase.getBaseVelocity(actLongitudinalVelocity, actTransversalVelocity, actAngularVelocity);
-      LOG(info) << "actual Pose Longitudinal: " << actLongitudinalPose << " Transversal: " << actTransversalPose << " Angle: " << actAngle;
+  //    LOG(info) << "actual Pose Longitudinal: " << actLongitudinalPose << " Transversal: " << actTransversalPose << " Angle: " << actAngle;
 
    //   LOG(info) << "actual Velocity Longitudinal: " << actLongitudinalVelocity << " Transversal: " << actTransversalVelocity << " Angular: " << actAngularVelocity;
 
 
   //    myYouBotBase.getBaseJoint(4).setData(setVel);
-
+/*
        for (unsigned int i = 1; i <= 4; i++) {
         myYouBotBase.getBaseJoint(i).getData(temp);
         myYouBotBase.getBaseJoint(i).getData(angle);
@@ -132,7 +139,7 @@ int main() {
               //  << " Current: " << current.current
                 << std::endl;
       }
-
+*/
    //    myYouBotManipulator.getArmJoint(jointNo).getData(angle);
 
    //    std::cout << " Angle: " << angle.angle << std::endl;
