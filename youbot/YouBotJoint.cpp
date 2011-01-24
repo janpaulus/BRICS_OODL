@@ -8,9 +8,9 @@ YouBotJoint::YouBotJoint(unsigned int jointNo) {
     this->jointNumber = jointNo;
     timeTillNextMailboxUpdate = EthercatMaster::getInstance().timeTillNextEthercatUpdate * 2;
     mailboxMsgRetries = 30;
-    this->inverseMovementDirection = false;
-    this->lowerLimit = 0;
-    this->upperLimit = 0;
+    this->storage.inverseMovementDirection = false;
+    this->storage.lowerLimit = 0;
+    this->storage.upperLimit = 0;
   // Bouml preserved body end 000412F1
 }
 
@@ -37,10 +37,10 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameterReadOnly& parame
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GAP);
+      parameter.getYouBotMailboxMsg(message, GAP, storage);
 
       if (retrieveValueFromMotorContoller(message)) {
-        parameter.setYouBotMailboxMsg(message);
+        parameter.setYouBotMailboxMsg(message, storage);
       } else {
         throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
@@ -53,10 +53,10 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, GAP);
+      parameter.getYouBotMailboxMsg(message, GAP, storage);
 
       if (retrieveValueFromMotorContoller(message)) {
-        parameter.setYouBotMailboxMsg(message);
+        parameter.setYouBotMailboxMsg(message, storage);
       } else {
         throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
@@ -69,7 +69,7 @@ void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& paramete
     if (parameter.getType() == MOTOR_CONTOLLER_PARAMETER) {
 
       YouBotSlaveMailboxMsg message;
-      parameter.getYouBotMailboxMsg(message, SAP);
+      parameter.getYouBotMailboxMsg(message, SAP, storage);
 
       if (!setValueToMotorContoller(message)) {
         throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
@@ -92,7 +92,7 @@ void YouBotJoint::setConfigurationParameter(const JointName& parameter) {
 
 void YouBotJoint::getConfigurationParameter(GearRatio& parameter) {
   // Bouml preserved body begin 00074171
-    parameter.value = this->gearRatio;
+    parameter.value = this->storage.gearRatio;
   // Bouml preserved body end 00074171
 }
 
@@ -101,13 +101,13 @@ void YouBotJoint::setConfigurationParameter(const GearRatio& parameter) {
     if (parameter.value == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
-    this->gearRatio = parameter.value;
+    this->storage.gearRatio = parameter.value;
   // Bouml preserved body end 00073FF1
 }
 
 void YouBotJoint::getConfigurationParameter(EncoderTicksPerRound& parameter) {
   // Bouml preserved body begin 000741F1
-    parameter.value = this->encoderTicksPerRound;
+    parameter.value = this->storage.encoderTicksPerRound;
   // Bouml preserved body end 000741F1
 }
 
@@ -116,7 +116,7 @@ void YouBotJoint::setConfigurationParameter(const EncoderTicksPerRound& paramete
     if (parameter.value == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
-    this->encoderTicksPerRound = parameter.value;
+    this->storage.encoderTicksPerRound = parameter.value;
   // Bouml preserved body end 00074071
 }
 
@@ -136,7 +136,7 @@ void YouBotJoint::setConfigurationParameter(const CalibrateJoint& parameter) {
         throw ExceptionOODL("No calibration direction for joint: " + this->jointName);
       }
 
-      if (this->inverseMovementDirection == true) {
+      if (this->storage.inverseMovementDirection == true) {
         calibrationVel *= -1;
       }
 
@@ -234,7 +234,7 @@ void YouBotJoint::setConfigurationParameter(const CalibrateJoint& parameter) {
 void YouBotJoint::setConfigurationParameter(const InverseMovementDirection& parameter) {
   // Bouml preserved body begin 000624F1
 
-    this->inverseMovementDirection = parameter.value;
+    this->storage.inverseMovementDirection = parameter.value;
 
   // Bouml preserved body end 000624F1
 }
@@ -242,8 +242,8 @@ void YouBotJoint::setConfigurationParameter(const InverseMovementDirection& para
 void YouBotJoint::setConfigurationParameter(const JointLimits& parameter) {
   // Bouml preserved body begin 000642F1
 
-    this->lowerLimit = parameter.lowerLimit;
-    this->upperLimit = parameter.upperLimit;
+    this->storage.lowerLimit = parameter.lowerLimit;
+    this->storage.upperLimit = parameter.upperLimit;
 
   // Bouml preserved body end 000642F1
 }
@@ -290,13 +290,13 @@ void YouBotJoint::getData(JointData& data) {
 void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communicationMode) {
   // Bouml preserved body begin 0003C1F1
 
-    if (gearRatio == 0) {
+    if (storage.gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
 
 
-    quantity<plane_angle> lowLimit = ((double) this->lowerLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
-    quantity<plane_angle> upLimit = ((double) this->upperLimit / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
+    quantity<plane_angle> lowLimit = ((double) this->storage.lowerLimit / storage.encoderTicksPerRound) * storage.gearRatio * (2.0 * M_PI) * radian;
+    quantity<plane_angle> upLimit = ((double) this->storage.upperLimit / storage.encoderTicksPerRound) * storage.gearRatio * (2.0 * M_PI) * radian;
 
     if (!((data.angle < upLimit) && (data.angle > lowLimit))) {
       std::stringstream errorMessageStream;
@@ -307,10 +307,10 @@ void YouBotJoint::setData(const JointAngleSetpoint& data, SyncMode communication
 
     YouBotSlaveMsg messageBuffer;
     messageBuffer.stctOutput.controllerMode = POSITION_CONTROL;
-    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angle.value() * ((double) encoderTicksPerRound / (2.0 * M_PI))) / gearRatio);
+    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angle.value() * ((double) storage.encoderTicksPerRound / (2.0 * M_PI))) / storage.gearRatio);
 
 
-    if (this->inverseMovementDirection) {
+    if (storage.inverseMovementDirection) {
       messageBuffer.stctOutput.positionOrSpeed *= -1;
     }
     //   LOG(trace) << "value: " << data.angle << " gear " << gearRatio << " encoderperRound " << encoderTicksPerRound << " encPos " << messageBuffer.stctOutput.positionOrSpeed << " joint " << this->jointNumber;
@@ -326,16 +326,16 @@ void YouBotJoint::getData(JointSensedAngle& data) {
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags(messageBuffer);
 
-    if (gearRatio == 0) {
+    if (storage.gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of zero is not allowed");
     }
-    if (encoderTicksPerRound == 0) {
+    if (storage.encoderTicksPerRound == 0) {
       throw ExceptionOODL("Zero Encoder Ticks per Round are not allowed");
     }
     //  LOG(trace) << "enc: " << messageBuffer.stctInput.actualPosition;
-    data.angle = ((double) messageBuffer.stctInput.actualPosition / encoderTicksPerRound) * gearRatio * (2.0 * M_PI) * radian;
+    data.angle = ((double) messageBuffer.stctInput.actualPosition / storage.encoderTicksPerRound) * storage.gearRatio * (2.0 * M_PI) * radian;
 
-    if (this->inverseMovementDirection) {
+    if (storage.inverseMovementDirection) {
       data.angle = -data.angle;
     }
   // Bouml preserved body end 0003DCF1
@@ -349,12 +349,12 @@ void YouBotJoint::setData(const JointVelocitySetpoint& data, SyncMode communicat
     YouBotSlaveMsg messageBuffer;
     messageBuffer.stctOutput.controllerMode = VELOCITY_CONTROL;
 
-    if (gearRatio == 0) {
+    if (storage.gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
 
-    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angularVelocity.value() / (gearRatio * 2.0 * M_PI)) * 60.0);
-    if (this->inverseMovementDirection) {
+    messageBuffer.stctOutput.positionOrSpeed = (int32) round((data.angularVelocity.value() / (storage.gearRatio * 2.0 * M_PI)) * 60.0);
+    if (storage.inverseMovementDirection) {
       messageBuffer.stctOutput.positionOrSpeed *= -1;
     }
 
@@ -371,12 +371,12 @@ void YouBotJoint::getData(JointSensedVelocity& data) {
     messageBuffer = EthercatMaster::getInstance().getMsgBuffer(this->jointNumber);
     this->parseYouBotErrorFlags(messageBuffer);
 
-    if (gearRatio == 0) {
+    if (storage.gearRatio == 0) {
       throw ExceptionOODL("A Gear Ratio of 0 is not allowed");
     }
     double motorRPM = messageBuffer.stctInput.actualVelocity;
     //convert RPM of the motor to radian per second of the wheel/joint
-    data.angularVelocity = ((motorRPM / 60.0) * gearRatio * 2.0 * M_PI) * radian_per_second;
+    data.angularVelocity = ((motorRPM / 60.0) * storage.gearRatio * 2.0 * M_PI) * radian_per_second;
   // Bouml preserved body end 0003DD71
 }
 

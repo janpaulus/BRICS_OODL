@@ -1,8 +1,8 @@
 class CommutationCompensationCounterClockwise
 !!!456177.cpp!!!	CommutationCompensationCounterClockwise()
     this->name = "CommutationCompensationCounterClockwise";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
 !!!456433.cpp!!!	getParameter(out parameter : uint) : void
     parameter = this->value;
@@ -15,12 +15,12 @@ class CommutationCompensationCounterClockwise
     }
 
     this->value = parameter;
-!!!456689.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+!!!456689.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : TMCLCommandNumber, in storage : YouBotJointStorage) : void
 
     message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 243; //CommutationCompensationCounterClockwise
     message.stctOutput.value = value; //TODO do convertion
 
-!!!456817.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+!!!456817.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg, in storage : YouBotJointStorage) : void
     this->value = message.stctInput.value; //TODO do convertion

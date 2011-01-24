@@ -1,12 +1,12 @@
 class DParameterSecondParametersPositionControl
 !!!447985.cpp!!!	DParameterSecondParametersPositionControl()
     this->name = "DParameterSecondParametersPositionControl";
-    this->lowerLimit = 0;
-    this->upperLimit = 5000;
+    this->lowerLimit = INT_MIN;
+    this->upperLimit = INT_MAX;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
-!!!448241.cpp!!!	getParameter(out parameter : uint) : void
+!!!448241.cpp!!!	getParameter(out parameter : int) : void
     parameter = this->value;
-!!!448369.cpp!!!	setParameter(in parameter : uint) : void
+!!!448369.cpp!!!	setParameter(in parameter : int) : void
     if (this->lowerLimit > parameter) {
       throw ExceptionOODL("The parameter exceeds the lower limit");
     }
@@ -15,12 +15,12 @@ class DParameterSecondParametersPositionControl
     }
 
     this->value = parameter;
-!!!448497.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+!!!448497.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : TMCLCommandNumber, in storage : YouBotJointStorage) : void
 
     message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 232; //DParameterSecondParametersPositionControl
     message.stctOutput.value = value; //TODO do convertion
 
-!!!448625.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+!!!448625.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg, in storage : YouBotJointStorage) : void
     this->value = message.stctInput.value; //TODO do convertion

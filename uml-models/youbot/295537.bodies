@@ -1,8 +1,8 @@
 class BlockCommutationMaximumSpeed
 !!!454129.cpp!!!	BlockCommutationMaximumSpeed()
     this->name = "BlockCommutationMaximumSpeed";
-    this->lowerLimit = 0 * radian_per_second;
-    this->upperLimit = 500 * radian_per_second;
+    this->lowerLimit = INT_MIN * radian_per_second;
+    this->upperLimit = INT_MAX * radian_per_second;
     this->parameterType = MOTOR_CONTOLLER_PARAMETER;
 !!!454385.cpp!!!	getParameter(out parameter : quantity<angular_velocity>) : void
     parameter = this->value;
@@ -15,12 +15,12 @@ class BlockCommutationMaximumSpeed
     }
 
     this->value = parameter;
-!!!454641.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : MailboxMsgType) : void
+!!!454641.cpp!!!	getYouBotMailboxMsg(out message : YouBotSlaveMailboxMsg, in msgType : TMCLCommandNumber, in storage : YouBotJointStorage) : void
 
     message.stctOutput.commandNumber = msgType;
     message.stctOutput.moduleAddress = DRIVE;
     message.stctOutput.typeNumber = 241; //BlockCommutationMaximumSpeed
     message.stctOutput.value = (int) value.value(); //TODO do convertion in to radian_per_second
 
-!!!454769.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg) : void
+!!!454769.cpp!!!	setYouBotMailboxMsg(in message : YouBotSlaveMailboxMsg, in storage : YouBotJointStorage) : void
     this->value = message.stctInput.value * radian_per_second; //TODO do convertion in to radian_per_second

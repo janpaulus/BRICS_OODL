@@ -91,18 +91,18 @@ int main() {
 
 //Opcodes of all TMCL commands that can be used in direct mode
 typedef enum TMCLCommandNumber {
-  ROR = 1,
-  ROL = 2,
-  MST = 3,
-  MVP = 4,
-  SAP = 5,
-  GAP = 6,
-  STAP = 7,
-  RSAP = 8,
-  SGP = 9,
-  GGP = 10,
-  STGP = 11,
-  RSGP = 12,
+  ROR = 1,  //Rotate right
+  ROL = 2,  //Rotate left
+  MST = 3,  //Motor stop
+  MVP = 4,  //Move to position
+  SAP = 5,  //Set axis parameter
+  GAP = 6,  //Get axis parameter
+  STAP = 7, //Store axis parameter into EEPROM
+  RSAP = 8, //Restore axis parameter from EEPROM
+  SGP = 9,  //Set global parameter
+  GGP = 10, //Get global parameter
+  STGP = 11, //Store global parameter into EEPROM
+  RSGP = 12, //Restore global parameter from EEPROM
   RFS = 13,
   SIO = 14,
   GIO = 15,
@@ -155,7 +155,9 @@ enum YouBotErrorFlags {
     ENCODER = 64,
     MOTOR_WINDING = 128,
     CYCLE_TIME_VIOLATION = 256,
-    INIT_SIN_COMM = 512
+    INIT_SIN_COMM = 512,
+    POSITION_MODE = 1024,
+    POSITION_REACHED = 2048
 };
 
 

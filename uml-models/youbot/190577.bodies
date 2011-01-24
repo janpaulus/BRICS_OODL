@@ -85,6 +85,10 @@ class EthercatMaster
   return;
 !!!401137.cpp!!!	getEthercatDiagnosticInformation(out ethercatSlaveInfos : std::vector<ec_slavet>) : void
     ethercatSlaveInfos = this->ethercatSlaveInfo;
+    for(unsigned int i = 0; i < ethercatSlaveInfos.size(); i++) {
+      ethercatSlaveInfos[i].inputs = NULL;
+      ethercatSlaveInfos[i].outputs = NULL;
+    }
 !!!266481.cpp!!!	initializeEthercat() : void
 
     /* initialise SOEM, bind socket to ifname */
