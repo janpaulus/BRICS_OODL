@@ -3,11 +3,7 @@
 
 
 #include <vector>
-#include "generic/Units.hpp"
 #include "generic-joint/JointData.hpp"
-#include "generic/Logger.hpp"
-#include "generic/Units.hpp"
-#include "generic/ExceptionOODL.hpp"
 
 namespace brics_oodl {
 

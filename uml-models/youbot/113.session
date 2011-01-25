@@ -1,6 +1,9 @@
-window_sizes 1680 975 375 1299 892 0
+window_sizes 1672 972 375 1291 889 0
 show_stereotypes
-selected classview_ref 154353 // JointParameter
+selected artifact_ref 195697 // WheeledBaseKinematic
 open
+  deploymentview_ref 154609 // Deployment
+  deploymentview_ref 167665 // Deployment
+  deploymentview_ref 180721 // Deployment
 end
 end

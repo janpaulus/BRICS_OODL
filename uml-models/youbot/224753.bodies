@@ -8,9 +8,9 @@ class YouBotGripper
     this->barSpacingOffset = 0 * meter;
     this->lastGripperPosition = 0 * meter;
 !!!392177.cpp!!!	getConfigurationParameter(out parameter : GripperParameter) : void
-  throw ExceptionOODL("Please use YouBotGripperParameter");
+  throw std::runtime_error("Please use YouBotGripperParameter");
 !!!391793.cpp!!!	setConfigurationParameter(in parameter : GripperParameter) : void
-  throw ExceptionOODL("Please use YouBotGripperParameter");
+  throw std::runtime_error("Please use YouBotGripperParameter");
 !!!295665.cpp!!!	getConfigurationParameter(out parameter : YouBotGripperParameter) : void
   LOG(info) << "Nothing to do";
 !!!399345.cpp!!!	setConfigurationParameter(in parameter : YouBotGripperParameter) : void
@@ -89,23 +89,23 @@ class YouBotGripper
         break;
       case INVALID_COMMAND:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << " is an invalid command!" ;
-      //    throw ExceptionOODL(errorMessage + "invalid command");
+      //    throw JointParameterException(errorMessage + "invalid command");
         break;
       case WRONG_TYPE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " has a wrong type!";
-      //    throw ExceptionOODL(errorMessage + "wrong type");
+      //    throw JointParameterException(errorMessage + "wrong type");
         break;
       case INVALID_VALUE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Value: " << mailboxMsg.stctInput.value << " is a invalid value!";
-      //    throw ExceptionOODL(errorMessage + "invalid value");
+      //    throw JointParameterException(errorMessage + "invalid value");
         break;
       case CONFIGURATION_EEPROM_LOCKED:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Configuration EEPROM locked";
-      //    throw ExceptionOODL(errorMessage + "configuration EEPROM locked");
+      //    throw JointParameterException(errorMessage + "configuration EEPROM locked");
         break;
       case COMMAND_NOT_AVAILABLE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << "Command is not available!";
-      //    throw ExceptionOODL(errorMessage + "command not available");
+      //    throw JointParameterException(errorMessage + "command not available");
         break;
     }
    

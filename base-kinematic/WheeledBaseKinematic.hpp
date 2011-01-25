@@ -4,9 +4,6 @@
 
 #include <vector>
 #include <string>
-#include "generic/Logger.hpp"
-#include "generic/Units.hpp"
-#include "generic/ExceptionOODL.hpp"
 namespace brics_oodl {
 
 class BaseKinematic {

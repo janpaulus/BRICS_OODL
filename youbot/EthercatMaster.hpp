@@ -13,7 +13,7 @@
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
-#include "generic/ExceptionOODL.hpp"
+#include "generic/Exceptions.hpp"
 #include "youbot/YouBotSlaveMsg.hpp"
 #include "youbot/YouBotSlaveMailboxMsg.hpp"
 

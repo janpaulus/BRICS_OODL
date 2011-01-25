@@ -9,7 +9,7 @@
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
 #include "generic/Time.hpp"
-#include "generic/ExceptionOODL.hpp"
+#include "generic/Exceptions.hpp"
 #include "youbot/YouBotJoint.hpp"
 #include "youbot/EthercatMaster.hpp"
 #include "base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp"

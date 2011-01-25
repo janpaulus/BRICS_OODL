@@ -1,6 +1,6 @@
 format 75
 "generic-gripper" // generic-gripper
-  revision 4
+  revision 5
   modified_by 113 "jan"
   // class settings
   //class diagram settings

@@ -60,7 +60,7 @@ void YouBotManipulator::initializeJoints() {
 
 
     if(noSlaves < 5){
-      throw ExceptionOODL("Not enough ethercat slaves were found to create a YouBotManipulator!");
+      throw std::runtime_error("Not enough ethercat slaves were found to create a YouBotManipulator!");
     }
 
     configfile.setSection("JointTopology");
@@ -161,7 +161,7 @@ void YouBotManipulator::initializeJoints() {
       } else if (direction == "NEGATIV") {
         calibrateJointVec[i].setParameter(doCalibration, NEGATIV, current);
       } else {
-        throw ExceptionOODL("Wrong calibration direction for " + jointName);
+        throw std::runtime_error("Wrong calibration direction for " + jointName);
       }
       joints[i].setConfigurationParameter(calibrateJointVec[i]);
     }

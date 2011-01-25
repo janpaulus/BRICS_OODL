@@ -55,7 +55,6 @@ ENDIF (RUDECONFIG_FOUND)
 
 SET(OODL_YOUBOT_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/ExceptionOODL.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/EthercatMaster.cpp
   ${CMAKE_HOME_DIRECTORY}/youbot/YouBotJoint.cpp
@@ -87,7 +86,7 @@ SET(OODL_YOUBOT_HEADERS
 ../base-kinematic/WheeledBaseKinematic.hpp
 
 ../generic/Errors.hpp
-../generic/ExceptionOODL.hpp
+../generic/Exceptions.hpp
 ../generic/Logger.hpp
 ../generic/Time.hpp
 ../generic/Units.hpp

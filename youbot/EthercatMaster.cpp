@@ -216,16 +216,16 @@ void EthercatMaster::initializeEthercat() {
         if (ec_slave[0].state == EC_STATE_OPERATIONAL) {
           LOG(trace) << "Operational state reached for all slaves.";
         } else {
-          throw ExceptionOODL("Not all slaves reached operational state.");
+          throw std::runtime_error("Not all slaves reached operational state.");
 
         }
         
       } else {
-        throw ExceptionOODL("No slaves found!");
+        throw std::runtime_error("No slaves found!");
       }
 
     } else {
-      throw ExceptionOODL("No socket connection on " + ethernetDevice + "\nExcecute as root");
+      throw std::runtime_error("No socket connection on " + ethernetDevice + "\nExcecute as root");
     }
 
 
@@ -272,7 +272,7 @@ void EthercatMaster::initializeEthercat() {
     if (nrOfSlaves > 0) {
       LOG(info) << "Number of slaves with IO found: " << nrOfSlaves;
     } else {
-      throw ExceptionOODL("No Ethercat slave could be found");
+      throw std::runtime_error("No Ethercat slave could be found");
       return;
     }
 
@@ -520,11 +520,11 @@ void EthercatMaster::updateSensorActorValues() {
       //send and receive data from ethercat
       if (ec_send_processdata() == 0){
         LOG(error) << "Sending process data failed";
-      //  throw ExceptionOODL("Sending process data failed");
+      //  throw std::runtime_error("Sending process data failed");
       }
       if (ec_receive_processdata(this->ethercatTimeout) == 0){
         LOG(error) << "Receiving data failed";
-     //   throw ExceptionOODL("Receiving data failed");
+     //   throw std::runtime_error("Receiving data failed");
       }
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(timeTillNextEthercatUpdate));

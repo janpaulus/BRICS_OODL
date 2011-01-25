@@ -6,7 +6,7 @@
 #include <string>
 #include "generic/Logger.hpp"
 #include "generic/Units.hpp"
-#include "generic/ExceptionOODL.hpp"
+#include "generic/Exceptions.hpp"
 namespace brics_oodl {
 
 class FourSwedishWheelOmniBaseKinematicConfiguration {

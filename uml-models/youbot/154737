@@ -1,6 +1,6 @@
 format 75
 "generic-joint" // generic-joint
-  revision 9
+  revision 10
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -91,11 +91,7 @@ ${namespace_end}
 
 ${description}
 #include <vector>
-#include \"generic/Units.hpp\"
 #include \"generic-joint/JointData.hpp\"
-#include \"generic/Logger.hpp\"
-#include \"generic/Units.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
 
 ${namespace_start}
 ${definition}

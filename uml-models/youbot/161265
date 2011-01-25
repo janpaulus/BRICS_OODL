@@ -1,6 +1,6 @@
 format 75
 "youbot" // youbot
-  revision 27
+  revision 28
   modified_by 113 "jan"
   // class settings
   //class diagram settings
@@ -47,7 +47,7 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"rude/config.h\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"generic-joint/Joint.hpp\"
 #include \"generic-joint/JointData.hpp\"
 #include \"youbot/YouBotJointStorage.hpp\"
@@ -89,7 +89,7 @@ ${description}
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
 #include \"youbot/YouBotSlaveMailboxMsg.hpp\"
 
@@ -136,7 +136,7 @@ ${description}
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
 
 #include \"youbot/YouBotSlaveMsg.hpp\"
@@ -177,7 +177,7 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"rude/config.h\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"generic-joint/JointParameter.hpp\"
 #include \"generic-gripper/GripperParameter.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
@@ -213,7 +213,7 @@ ${description}
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"generic-joint/JointParameter.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
 #include \"youbot/YouBotSlaveMsg.hpp\"
@@ -266,7 +266,7 @@ ${description}
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
 #include \"rude/config.h\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"generic-joint/JointParameter.hpp\"
 #include \"youbot/YouBotJointParameterReadOnly.hpp\"
 #include \"youbot/ProtocolDefinitions.hpp\"
@@ -367,7 +367,7 @@ ${description}
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"youbot/EthercatMaster.hpp\"
 #include \"youbot/YouBotGripper.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
@@ -399,7 +399,7 @@ ${description}
 #include \"generic/Logger.hpp\"
 #include \"generic/Units.hpp\"
 #include \"generic/Time.hpp\"
-#include \"generic/ExceptionOODL.hpp\"
+#include \"generic/Exceptions.hpp\"
 #include \"youbot/YouBotJoint.hpp\"
 #include \"youbot/EthercatMaster.hpp\"
 #include \"base-kinematic/FourSwedishWheelOmniBaseKinematic.hpp\"

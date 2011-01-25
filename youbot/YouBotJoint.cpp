@@ -21,13 +21,13 @@ YouBotJoint::~YouBotJoint() {
 
 void YouBotJoint::setConfigurationParameter(const JointParameter& parameter) {
   // Bouml preserved body begin 00074271
-  throw ExceptionOODL("Please use YouBotJointParameters");
+  throw std::runtime_error("Please use YouBotJointParameters");
   // Bouml preserved body end 00074271
 }
 
 void YouBotJoint::getConfigurationParameter(JointParameter& parameter) {
   // Bouml preserved body begin 0005CE71
-  throw ExceptionOODL("Please use YouBotJointParameters");
+  throw std::runtime_error("Please use YouBotJointParameters");
   // Bouml preserved body end 0005CE71
 }
 
@@ -42,7 +42,7 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameterReadOnly& parame
       if (retrieveValueFromMotorContoller(message)) {
         parameter.setYouBotMailboxMsg(message, storage);
       } else {
-        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
+        throw JointParameterException("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
     }
   // Bouml preserved body end 00071FF1
@@ -58,7 +58,7 @@ void YouBotJoint::getConfigurationParameter(YouBotJointParameter& parameter) {
       if (retrieveValueFromMotorContoller(message)) {
         parameter.setYouBotMailboxMsg(message, storage);
       } else {
-        throw ExceptionOODL("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
+        throw JointParameterException("Unable to get parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
     }
   // Bouml preserved body end 0005BCF1
@@ -72,7 +72,7 @@ void YouBotJoint::setConfigurationParameter(const YouBotJointParameter& paramete
       parameter.getYouBotMailboxMsg(message, SAP, storage);
 
       if (!setValueToMotorContoller(message)) {
-        throw ExceptionOODL("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
+        throw JointParameterException("Unable to set parameter: " + parameter.getName() + " to joint: " + this->jointName);
       }
     }
   // Bouml preserved body end 0005BC71
@@ -133,7 +133,7 @@ void YouBotJoint::setConfigurationParameter(const CalibrateJoint& parameter) {
       } else if (parameter.calibrationDirection == NEGATIV) {
         calibrationVel = -1;
       } else {
-        throw ExceptionOODL("No calibration direction for joint: " + this->jointName);
+        throw std::runtime_error("No calibration direction for joint: " + this->jointName);
       }
 
       if (this->storage.inverseMovementDirection == true) {
@@ -189,7 +189,7 @@ void YouBotJoint::setConfigurationParameter(const CalibrateJoint& parameter) {
         SLEEP_MILLISEC(500);
       }
       if (abs(sensedAngle.angle - startAngle.angle) < abs(maxAngle)) {
-        throw ExceptionOODL("Unable to do sinus commutation for joint: " + this->jointName);
+        throw std::runtime_error("Unable to do sinus commutation for joint: " + this->jointName);
       }
 
 
@@ -417,52 +417,52 @@ void YouBotJoint::parseYouBotErrorFlags(const YouBotSlaveMsg& messageBuffer) {
 
     if (messageBuffer.stctInput.errorFlags & OVER_CURRENT) {
       LOG(error) << errorMessage << "got over current";
-      //    throw ExceptionOODL(errorMessage + "got over current");
+      //    throw JointErrorException(errorMessage + "got over current");
     }
 
     if (messageBuffer.stctInput.errorFlags & UNDER_VOLTAGE) {
       LOG(error) << errorMessage << "got under voltage";
-      //    throw ExceptionOODL(errorMessage + "got under voltage");
+      //    throw JointErrorException(errorMessage + "got under voltage");
     }
 
     if (messageBuffer.stctInput.errorFlags & OVER_VOLTAGE) {
       LOG(error) << errorMessage << "got over voltage";
-      //   throw ExceptionOODL(errorMessage + "got over voltage");
+      //   throw JointErrorException(errorMessage + "got over voltage");
     }
 
     if (messageBuffer.stctInput.errorFlags & OVER_TEMPERATURE) {
       LOG(error) << errorMessage << "got over temperature";
-      //   throw ExceptionOODL(errorMessage + "got over temperature");
+      //   throw JointErrorException(errorMessage + "got over temperature");
     }
 
     if (messageBuffer.stctInput.errorFlags & HALTED) {
       //   LOG(error) << errorMessage << "is halted";
-      //   throw ExceptionOODL(errorMessage + "is halted");
+      //   throw JointErrorException(errorMessage + "is halted");
     }
 
     if (messageBuffer.stctInput.errorFlags & HALL_SENSOR) {
       LOG(error) << errorMessage << "got hall sensor problem";
-      //   throw ExceptionOODL(errorMessage + "got hall sensor problem");
+      //   throw JointErrorException(errorMessage + "got hall sensor problem");
     }
 
     if (messageBuffer.stctInput.errorFlags & ENCODER) {
       LOG(error) << errorMessage << "got encoder problem";
-      //   throw ExceptionOODL(errorMessage + "got encoder problem");
+      //   throw JointErrorException(errorMessage + "got encoder problem");
     }
 
     if (messageBuffer.stctInput.errorFlags & MOTOR_WINDING) {
       LOG(error) << errorMessage << "got motor winding problem";
-      //   throw ExceptionOODL(errorMessage + "got motor winding problem");
+      //   throw JointErrorException(errorMessage + "got motor winding problem");
     }
 
     if (messageBuffer.stctInput.errorFlags & CYCLE_TIME_VIOLATION) {
       LOG(error) << errorMessage << "the cycle time is violated";
-      //   throw ExceptionOODL(errorMessage + "the cycle time is violated");
+      //   throw JointErrorException(errorMessage + "the cycle time is violated");
     }
 
     if (messageBuffer.stctInput.errorFlags & INIT_SIN_COMM) {
       LOG(error) << errorMessage << "need to initialize the sinus commutation";
-      //   throw ExceptionOODL(errorMessage + "need to initialize the sinus commutation");
+      //   throw JointErrorException(errorMessage + "need to initialize the sinus commutation");
     }
 
   // Bouml preserved body end 00044AF1
@@ -481,23 +481,23 @@ void YouBotJoint::parseMailboxStatusFlags(const YouBotSlaveMailboxMsg& mailboxMs
         break;
       case INVALID_COMMAND:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << " is an invalid command!" ;
-      //    throw ExceptionOODL(errorMessage + "invalid command");
+      //    throw JointParameterException(errorMessage + "invalid command");
         break;
       case WRONG_TYPE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " has a wrong type!";
-      //    throw ExceptionOODL(errorMessage + "wrong type");
+      //    throw JointParameterException(errorMessage + "wrong type");
         break;
       case INVALID_VALUE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Value: " << mailboxMsg.stctInput.value << " is a invalid value!";
-      //    throw ExceptionOODL(errorMessage + "invalid value");
+      //    throw JointParameterException(errorMessage + "invalid value");
         break;
       case CONFIGURATION_EEPROM_LOCKED:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << " Configuration EEPROM locked";
-      //    throw ExceptionOODL(errorMessage + "configuration EEPROM locked");
+      //    throw JointParameterException(errorMessage + "configuration EEPROM locked");
         break;
       case COMMAND_NOT_AVAILABLE:
         LOG(error) << errorMessage << "Parameter name: " << mailboxMsg.parameterName << "; Command no: " << mailboxMsg.stctInput.commandNumber << "Command is not available!";
-      //    throw ExceptionOODL(errorMessage + "command not available");
+      //    throw JointParameterException(errorMessage + "command not available");
         break;
     }
    
