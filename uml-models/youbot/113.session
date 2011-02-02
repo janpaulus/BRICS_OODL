@@ -1,9 +1,0 @@
-window_sizes 1672 972 375 1291 889 0
-show_stereotypes
-selected artifact_ref 195697 // WheeledBaseKinematic
-open
-  deploymentview_ref 154609 // Deployment
-  deploymentview_ref 167665 // Deployment
-  deploymentview_ref 180721 // Deployment
-end
-end
