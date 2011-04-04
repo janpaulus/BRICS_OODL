@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-distfiles
-packages
-wip
-
-INDEX
-index.html
-index-all.html
-
-work
-
-*~
-=======
 CMakeCache.txt
 cmake_install.cmake
 Makefile
@@ -21,4 +8,4 @@ CMakeFiles
 bin
 lib
 Doxyfile
->>>>>>> d60294053168ab58e1664fcfe169f093a0e9c03e
+
