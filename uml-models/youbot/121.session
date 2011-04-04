@@ -1,11 +1,27 @@
-window_sizes 1918 1047 431 1477 777 176
+window_sizes 1910 1042 290 1614 848 116
+windows_style
 diagrams
-  active  classdiagram_ref 141681 // JointParameter
-    1477 777 80 1 228 0
+  classdiagram_ref 141681 // JointParameter
+    1531 677 150 1 72 262
+  classdiagram_ref 167793 // YouBot
+    1175 622 150 2 0 397
+  classdiagram_ref 161265 // BaseKinematic
+    1614 848 150 2 0 426
+  classdiagram_ref 154737 // Gripper
+    1288 670 90 4 96 0
+  active  classdiagram_ref 141425 // JointInterface
+    1614 848 150 1 12 0
+  classdiagram_ref 141553 // JointData
+    1288 670 130 2 0 224
 end
-show_stereotypes
-selected class_ref 266353 // CalibrateJoint
+selected classdiagram_ref 141553 // JointData
 open
-  classview_ref 154353 // JointParameter
+  classview_ref 134641 // Joint
+  classview_ref 154225 // JointData
+  classview_ref 160881 // YouBot
+  classview_ref 147697 // BaseKinematic
+  classview_ref 141169 // Gripper
+  classview_ref 161009 // GripperParameter
 end
+nocompletion
 end

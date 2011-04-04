@@ -22,8 +22,8 @@ tool "HTML doc. (flat, svg)" "ghtml -flat -svg" Project Package UseCaseView Clas
 tool "Generate .pro" "gpro" Artifact
 tool "Import Rose" "irose" Project Package
 tool "Generate XMI 1.2" "gxmi" Project
-tool "Generate XMI 2.1" "gxmi2" Project
-tool "Import XMI 2.1" "ixmi2" Project Package
+tool "Generate XMI 2.x" "gxmi2" Project
+tool "Import XMI 2.x" "ixmi2" Project Package
 tool "Use case wizard" "usecasewizard" UseCase
 tool "Check-in" "file_control ci" Project Package
 tool "Check-out" "file_control co" Project Package
