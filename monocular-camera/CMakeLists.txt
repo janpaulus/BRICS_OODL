@@ -1,42 +1,36 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 
-#SET(UNICAP_LIB /usr/local/lib)
-SET(UNICAP_LIB /home/azamat/euprojects/brics/bricsToolchain/workspace/brics/BRICSWP2/BRICS_OODL/monocular-camera/unicap-0.9.5/libunicap/libs)
+#Build Type
+SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_VERBOSE_MAKEFILE on)
 
-SET(SDL_LIB /usr/lib)
 SET(COMPILE_C_FLAGS_DEBUG "-Wall -g")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-Wall -g")
-SET(SOURCES 
-    ${CMAKE_HOME_DIRECTORY}/monocular-camera/test.cpp 
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/MonocularCamera.cpp
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/CameraDeviceConfiguration.cpp 
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/ColorExposureConfiguration.cpp
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/MonocularCameraConfiguration.cpp
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/ImageFormat.cpp
-	${CMAKE_HOME_DIRECTORY}/monocular-camera/generic-monocular-camera/Image2dData.cpp
-)
 
+FIND_PACKAGE(unicap REQUIRED)
+FIND_PACKAGE(zmq REQUIRED)
+FIND_PACKAGE(SDL REQUIRED)
 
-INCLUDE_DIRECTORIES(
-  /usr/local/include/unicap
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
-  /usr/include/
-  )
+#SET(UNICAP_LIB_DIRS ${unicap_LIBRARY_DIRS})
+SET(ZMQ_LIB_DIRS ${zmq_LIBRARY_DIRS})
+SET(SDL_LIB_DIRS ${SDL_LIBRARY_DIRS})
 
-LINK_DIRECTORIES(
-  ${UNICAP_LIB}
-  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
-)
+SET(SOURCES_1 test/test.cpp)
+SET(SOURCES_2 test/testCameraZMQ.c)
 
-LINK_LIBRARIES(	
-  unicap
-  SDL
-#  MonocularCameraConfiguration
-)
-
-ADD_EXECUTABLE(Test ${SOURCES}
-)
 
 ADD_SUBDIRECTORY(generic-monocular-camera)
 
-INSTALL(TARGETS Test RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+#this is for debugging
+SET(UNICAP_LIB_PATH_ALTERNATE_DEBUG /home/azamat/euprojects/brics/bricsToolchain/workspace/brics/BRICSWP2/BRICS_OODL/monocular-camera/unicap-0.9.5/libunicap/libs)
+LINK_DIRECTORIES( ${unicap_LIB_PATH_ALTERNATE_DEBUG} )
+
+
+INCLUDE_DIRECTORIES( ${unicap_INCLUDES} ${zmq_INCLUDES} ${SDL_INCLUDES} generic-monocular-camera/)
+LINK_DIRECTORIES( ${SDL_LIB_DIRS} ${ZMQ_LIB_DIRS} generic-monocular-camera/ )
+
+ADD_EXECUTABLE(testCamera ${SOURCES_1} )
+ADD_EXECUTABLE(testCameraZMQ ${SOURCES_2} )
+TARGET_LINK_LIBRARIES( testCamera ${SDL_LIBRARY} MonocularCameraCommon unicap )
+TARGET_LINK_LIBRARIES( testCameraZMQ ${SDL_LIBRARY} MonocularCameraCommon ${zmq_LIBRARIES})
+INSTALL(TARGETS testCamera RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)

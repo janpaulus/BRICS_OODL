@@ -833,8 +833,8 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                 {
                     listOfProperties[propertyCounter].value = brightness;
                     //check if the call succeeds
-                    unicap_set_property_manual(*handleColorExposureDev,propertyName1);
-                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName2);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                     if( SUCCESS(returnValue) )
                     {
 

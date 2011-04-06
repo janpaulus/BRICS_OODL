@@ -2,6 +2,7 @@ PROJECT(BRICS_OODL)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_VERBOSE_MAKEFILE on)
 SET(CMAKE_C_FLAGS_DEBUG "-Wall -g")
 SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 
@@ -17,14 +18,14 @@ INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
 
 
 IF(DEFINED UNICAP_PATH)
-  link_directories(${UNICAP_PATH}/lib)
-  include_directories(${UNICAP_PATH}/include/unicap)
-  MESSAGE(STATUS "UNICAP_PATH= ${UNICAP_PATH}")
+link_directories(${UNICAP_PATH}/lib)
+include_directories(${UNICAP_PATH}/include/unicap)
+MESSAGE(STATUS "UNICAP_PATH= ${UNICAP_PATH}")
 ENDIF(DEFINED UNICAP_PATH)
 
 IF(NOT DEFINED UNICAP_PATH)
-  link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-  include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
+link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
+include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
 ENDIF(NOT DEFINED UNICAP_PATH)
 
 SET(DOXYFILE_LATEX "NO")
@@ -36,19 +37,16 @@ IF(NOT DEFINED SELECTED_DRIVER)
 # add_subdirectory(hokuyo-urg)
 # add_subdirectory(sick-lms-2xx)
 # add_subdirectory(sick-ld)
-<<<<<<< HEAD
 # add_subdirectory(sick-s300)
-#  add_subdirectory(youbot)
- add_subdirectory(monocular-camera)
-=======
- add_subdirectory(sick-s300)
+# add_subdirectory(youbot)
+add_subdirectory(monocular-camera)
+# add_subdirectory(sick-s300)
 # add_subdirectory(monocular-camera)
->>>>>>> e08295d39dc08461b4c42df658d588c488aefff6
 # add_subdirectory(mesa-swissranger)
 # add_subdirectory(pmd-camcube)
 ENDIF(NOT DEFINED SELECTED_DRIVER)
 
 
 IF(DEFINED SELECTED_DRIVER)
-  add_subdirectory(${SELECTED_DRIVER})
+add_subdirectory(${SELECTED_DRIVER})
 ENDIF(DEFINED SELECTED_DRIVER)
