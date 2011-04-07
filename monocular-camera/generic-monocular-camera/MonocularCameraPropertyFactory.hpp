@@ -5,10 +5,17 @@ class MonocularCameraPropertyFactory
 {
 public:
     MonocularCameraPropertyFactory();
-    createProperty(ColorPropertyDesc &propertySpecifier, MonocularCameraProperty &deviceProperty);
-    ~MonocularCameraPropertyFactory();
+    virtual bool createProperty(PropertyDescriptor &propertySpecifier, MonocularCameraProperty &deviceProperty) = 0;
+    virtual ~MonocularCameraPropertyFactory();
 };
 
+class MonocularCameraRangePropertyFactory : public MonocularCameraPropertyFactory
+{
+    public:
+    MonocularCameraRangePropertyFactory();
+    bool createProperty(PropertyDescriptor &propertySpecifier, MonocularCameraProperty &deviceProperty);
+    virtual ~MonocularCameraRangePropertyFactory();
 
+};
 
 #endif //~_MONOCULARCAMERAPROPERTYFACTORY_HPP_
