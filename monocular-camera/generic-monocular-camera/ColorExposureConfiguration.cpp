@@ -392,7 +392,7 @@ bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName) || (charID == propertyName1) || (charID == propertyName2) || (charID == propertyName3))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
@@ -418,7 +418,7 @@ bool ColorExposureConfiguration::getWhiteBalanceUValue(double &uValue)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName) || (charID == propertyName1) || (charID == propertyName2) || (charID == propertyName3))
                     {
                         int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -444,6 +444,9 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
 {
     std::cout << "Inside ColorExposureConfiguration getWhiteBalanceVValue" << std::endl;
     const std::string propertyName ="white_balance_v";
+    const std::string propertyName1 ="White Balance Temperature";
+    const std::string propertyName2 ="white balance temperature";
+    const std::string propertyName3 ="white_balance_temperature";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -460,7 +463,7 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName) || (charID == propertyName1) || (charID == propertyName2) || (charID == propertyName3))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
@@ -486,7 +489,7 @@ bool ColorExposureConfiguration::getWhiteBalanceVValue(double &vValue)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName) || (charID == propertyName1) || (charID == propertyName2) || (charID == propertyName3))
                     {
                         int returnValue = unicap_get_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -1042,14 +1045,390 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
 
 bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
 {
+ std::cout << "Inside ColorExposureConfiguration setWhiteBalanceVValue" << std::endl;
+    char propertyName[] ="white_balance_u";
+    char propertyName1[] ="White Balance Temperature";
+    char propertyName2[] ="white balance temperature";
+    char propertyName3[] ="white_balance_temperature";
+    std::string charID;
 
-    return true;
+    //check whether listOfProperties was filled in successfully and not empty
+    if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
+    {
+        //here member variable deviceConfProperty is a total number of
+        //camera properties returned by getListOfDeviceProperties
+        for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+        {
+            //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+            //there are also menu, list, flag property types
+            if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+            {
+                //if range then check it for correct ID
+                charID = listOfProperties[propertyCounter].identifier;
+                //if ID == frame rate (as defined in unicap API) then return its current value
+                if (charID == propertyName)
+                {
+                    listOfProperties[propertyCounter].value = uValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, uValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName1)
+                {
+                   listOfProperties[propertyCounter].value = uValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName1);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, uValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName2)
+                {
+                   listOfProperties[propertyCounter].value = uValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName2);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2, uValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName3)
+                {
+                   listOfProperties[propertyCounter].value = uValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName3);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName3, uValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+            }
+            //if property is not of type "range" go to the beginning of the loop
+        }
+    }
+    // if property list was not obtained successfully or was not filled in before through
+    //the call to getListOfDeviceProperties, call the method
+    else if (getListOfColorProperties() == true)
+    {
+        if (listOfProperties.size() != 0)
+        {
+            for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+            {
+                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+                {
+                    charID = listOfProperties[propertyCounter].identifier;
+                    if (charID == propertyName)
+                    {
+                        listOfProperties[propertyCounter].value = uValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, uValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                    else if (charID == propertyName1)
+                    {
+                        listOfProperties[propertyCounter].value = uValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, uValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                     else if (charID == propertyName2)
+                    {
+                        listOfProperties[propertyCounter].value = uValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2, uValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                     else if (charID == propertyName3)
+                    {
+                        listOfProperties[propertyCounter].value = uValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName3, uValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                }
+                //if property is not of type "range" go to the beginning of the loop
+            }
+        }
+        else
+        {
+            std::cout << "Property list is empty"<< std::endl;
+            return false;
+        }
+    }
 }
 
 bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
 {
+    std::cout << "Inside ColorExposureConfiguration setWhiteBalanceVValue" << std::endl;
+    char propertyName[] ="white_balance_v";
+    char propertyName1[] ="White Balance Temperature";
+    char propertyName2[] ="white balance temperature";
+    char propertyName3[] ="white_balance_temperature";
+    std::string charID;
 
-    return true;
+    //check whether listOfProperties was filled in successfully and not empty
+    if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
+    {
+        //here member variable deviceConfProperty is a total number of
+        //camera properties returned by getListOfDeviceProperties
+        for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+        {
+            //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+            //there are also menu, list, flag property types
+            if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+            {
+                //if range then check it for correct ID
+                charID = listOfProperties[propertyCounter].identifier;
+                //if ID == frame rate (as defined in unicap API) then return its current value
+                if (charID == propertyName)
+                {
+                    listOfProperties[propertyCounter].value = vValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, vValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName1)
+                {
+                   listOfProperties[propertyCounter].value = vValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName1);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, vValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName2)
+                {
+                   listOfProperties[propertyCounter].value = vValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName2);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2, vValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName3)
+                {
+                   listOfProperties[propertyCounter].value = vValue;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName3);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName3, vValue);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+            }
+            //if property is not of type "range" go to the beginning of the loop
+        }
+    }
+    // if property list was not obtained successfully or was not filled in before through
+    //the call to getListOfDeviceProperties, call the method
+    else if (getListOfColorProperties() == true)
+    {
+        if (listOfProperties.size() != 0)
+        {
+            for (int propertyCounter = 0; propertyCounter < colorConfPropertyCounter; propertyCounter++)
+            {
+                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+                {
+                    charID = listOfProperties[propertyCounter].identifier;
+                    if (charID == propertyName)
+                    {
+                        listOfProperties[propertyCounter].value = vValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName, vValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                    else if (charID == propertyName1)
+                    {
+                        listOfProperties[propertyCounter].value = vValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, vValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                     else if (charID == propertyName2)
+                    {
+                        listOfProperties[propertyCounter].value = vValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2, vValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                     else if (charID == propertyName3)
+                    {
+                        listOfProperties[propertyCounter].value = vValue;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName3, vValue);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                }
+                //if property is not of type "range" go to the beginning of the loop
+            }
+        }
+        else
+        {
+            std::cout << "Property list is empty"<< std::endl;
+            return false;
+        }
+    }
 }
 
 
@@ -1077,7 +1456,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if ((charID == propertyName1) || (charID == propertyName2))
+                if (charID == propertyName1)
                 {
                     listOfProperties[propertyCounter].value = brightness;
                     //check if the call succeeds
@@ -1095,6 +1474,26 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                         if(SUCCESS(returnValue))
                             return true;
                     }
+                }
+                else if (charID == propertyName2)
+                {
+                     listOfProperties[propertyCounter].value = brightness;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName1);
+                    int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, brightness);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+
                 }
             }
             //if property is not of type "range" go to the beginning of the loop
@@ -1394,7 +1793,7 @@ bool ColorExposureConfiguration::setShutterTime(double &sTime)
 
 bool ColorExposureConfiguration::setExposureTime(double &eTime)
 {
-std::cout << "Inside ColorExposureConfiguration setExposureTime" << std::endl;
+    std::cout << "Inside ColorExposureConfiguration setExposureTime" << std::endl;
     char propertyName1[] ="Exposure";
     char propertyName2[] ="exposure";
     std::string charID;

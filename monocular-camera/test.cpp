@@ -31,6 +31,14 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->setGainControlValue(gain);
     std::cout << gain << std::endl;
 
+
+    gain = 10;
+    config.getColorExposureConfiguration()->getWhiteBalanceVValue(gain);
+    std::cout << gain << std::endl;
+
+    gain = gain + 400;
+    config.getColorExposureConfiguration()->setWhiteBalanceVValue(gain);
+    std::cout << gain << std::endl;
     // set image format and start capturing
     camera.getImageFormat(format) ;
 
