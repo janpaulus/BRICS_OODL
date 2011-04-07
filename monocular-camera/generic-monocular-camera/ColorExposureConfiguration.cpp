@@ -1042,7 +1042,8 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
     }
 }
 
-
+// The problem with this property is that it has AUTO mode which is often given as a separate property
+//rather than mode. This complicates setting it to manual mode. Need to correct this.
 bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
 {
  std::cout << "Inside ColorExposureConfiguration setWhiteBalanceVValue" << std::endl;
