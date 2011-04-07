@@ -40,12 +40,8 @@ public:
     bool getShutterTime(double &sTime);
     //! Returns exposure time value setting for the camera
     bool getExposureTime(double &eTime);
-    //! Returns color temperature value setting for the camera
-    bool getColorTemperatureValue(double &temp);
     //!Sets hue value for the capture
     bool setHueValue(double &hue);
-    //!Sets chroma value for the capture
-    bool setChromaValue(double &chroma);
     //!Sets saturation value for the capture
     bool setSaturationValue(double &saturation);
     //!Sets whitebalance U value for the capture
@@ -60,8 +56,6 @@ public:
     bool setShutterTime(double &sTime);
     //!Sets exposure time
     bool setExposureTime(double &eTime);
-    //!Sets color temperature value for the capture
-    bool setColorTemperatureValue(double &temp);
 
 private:
     //!Returns list of color and exposure related properties of the sensor
@@ -70,7 +64,7 @@ private:
     //! to the camera, rather then invoking it for each property, which would be expensive.
     bool getListOfColorProperties();
     bool unifyPropertyNames();
-
+    bool normalizePropertyValues(const std::string& propertyName);
     unicap_device_t *deviceColorExposureDev;
     unicap_handle_t *handleColorExposureDev;
     unicap_status_t returnStatus;
@@ -79,12 +73,11 @@ private:
     //should be equal to vector index of listOfProperties
     int colorConfPropertyCounter;
     std::vector<unicap_property_t> listOfProperties;
+    std::vector<std::string> listOfPropertytNames ;
 
     //current/actual property values
     unicap_property_range_t hueValue;
-    unicap_property_range_t chromaValue;
     unicap_property_range_t saturationValue;
-    unicap_property_range_t colorTemperatureValue;
     unicap_property_range_t whiteBalanceUValue;
     unicap_property_range_t whiteBalanceVValue;
     unicap_property_range_t brightnessValue;

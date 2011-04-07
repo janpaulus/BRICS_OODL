@@ -16,15 +16,20 @@ int main (int argc, char **argv)
     camera.open(); //always open first
     camera.getConfiguration(config);
     double gain = 0.0;
-    config.getColorExposureConfiguration()->getBrightnessValue(gain);
+    config.getColorExposureConfiguration()->getHueValue(gain);
+    std::cout << gain << std::endl;
+
+    gain = 100;
+    config.getColorExposureConfiguration()->setHueValue(gain);
     std::cout << gain << std::endl;
 
     gain = 0;
-    config.getColorExposureConfiguration()->setBrightnessValue(gain);
-//  std::cout << gain << std::endl;
-//  double rate = 0;
-//  config.getCameraDeviceConfiguration()->getVideoFrameRate(rate);
-//  std::cout << rate << std::endl;
+    config.getColorExposureConfiguration()->getGainControlValue(gain);
+    std::cout << gain << std::endl;
+
+    gain = 1;
+    config.getColorExposureConfiguration()->setGainControlValue(gain);
+    std::cout << gain << std::endl;
 
     // set image format and start capturing
     camera.getImageFormat(format) ;
