@@ -23,7 +23,6 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->setHueValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0;
     config.getColorExposureConfiguration()->getGainControlValue(gain);
     std::cout << gain << std::endl;
 
@@ -31,14 +30,34 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->setGainControlValue(gain);
     std::cout << gain << std::endl;
 
-
-    gain = 10;
-    config.getColorExposureConfiguration()->getWhiteBalanceVValue(gain);
+    config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
+
+    gain = 255;
+    config.getColorExposureConfiguration()->setBrightnessValue(gain);
+    std::cout << gain << std::endl;
+
+
+    config.getColorExposureConfiguration()->getSaturationValue(gain);
+    std::cout << gain << std::endl;
+
+    gain = 200;
+    config.getColorExposureConfiguration()->setSaturationValue(gain);
+    std::cout << gain << std::endl;
+
 
     gain = gain + 400;
     config.getColorExposureConfiguration()->setWhiteBalanceVValue(gain);
     std::cout << gain << std::endl;
+
+    double rate = 0;
+    config.getCameraDeviceConfiguration()->getVideoGammaValue(rate);
+    std::cout << "Gamma  "<<rate << std::endl;
+
+    config.getCameraDeviceConfiguration()->getVideoSharpnessValue(rate);
+    std::cout << "Sharpness  "<<rate << std::endl;
+
+
     // set image format and start capturing
     camera.getImageFormat(format) ;
 

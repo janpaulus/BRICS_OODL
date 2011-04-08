@@ -107,6 +107,8 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
 {
     std::cout << "Inside CameraDeviceConfiguration getVideoFrameRate" << std::endl;
     const std::string propertyName ="frame rate";
+    const std::string propertyName1 ="Frame Rate";
+    const std::string propertyName2 ="Frame rate";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -123,7 +125,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName)||(charID == propertyName1)||(charID == propertyName2))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -149,7 +151,7 @@ bool CameraDeviceConfiguration::getVideoFrameRate(double &rate)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName)||(charID == propertyName1)||(charID == propertyName2))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -185,6 +187,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
 
     std::cout << "Inside CameraDeviceConfiguration getVideoGammaValue" << std::endl;
     const std::string propertyName ="gamma";
+    const std::string propertyName1 ="Gamma";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -201,7 +204,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName)||(charID == propertyName1))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -227,7 +230,7 @@ bool CameraDeviceConfiguration::getVideoGammaValue(double &gamma)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName)||(charID == propertyName1))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -260,6 +263,7 @@ bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness)
 
     std::cout << "Inside CameraDeviceConfiguration getVideoSharpnessValue" << std::endl;
     const std::string propertyName ="sharpness";
+    const std::string propertyName1 ="Sharpness";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -276,7 +280,7 @@ bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName)||(charID == propertyName1))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -301,7 +305,7 @@ bool CameraDeviceConfiguration::getVideoSharpnessValue(double &sharpness)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName)||(charID == propertyName1))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -334,6 +338,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus)
 
     std::cout << "Inside CameraDeviceConfiguration getLensFocus" << std::endl;
     const std::string propertyName ="focus";
+    const std::string propertyName1 ="Focus";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -350,7 +355,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName) || (charID == propertyName1))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -375,7 +380,7 @@ bool CameraDeviceConfiguration::getLensFocus(double &focus)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName) || (charID == propertyName1))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -408,6 +413,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom)
 
     std::cout << "Inside CameraDeviceConfiguration getLensZoom" << std::endl;
     const std::string propertyName ="zoom";
+    const std::string propertyName1 ="Zoom";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -424,7 +430,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName) || (charID == propertyName1))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -449,7 +455,7 @@ bool CameraDeviceConfiguration::getLensZoom(double &zoom)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName) || (charID == propertyName1))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -482,6 +488,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris)
 
     std::cout << "Inside CameraDeviceConfiguration getLensIris" << std::endl;
     const std::string propertyName ="iris";
+    const std::string propertyName1 ="Iris";
     std::string charID;
 
     //check whether listOfProperties was filled in successfully and not empty
@@ -498,7 +505,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris)
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
-                if (charID == propertyName)
+                if ((charID == propertyName) || (charID == propertyName1))
                 {
                     //check if the call succeeds
                     int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -523,7 +530,7 @@ bool CameraDeviceConfiguration::getLensIris(double &iris)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if (charID == propertyName)
+                    if ((charID == propertyName) || (charID == propertyName1))
                     {
                         int returnValue = unicap_get_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
                         if( SUCCESS(returnValue) )
@@ -553,10 +560,128 @@ bool CameraDeviceConfiguration::getLensIris(double &iris)
 
 bool CameraDeviceConfiguration::setVideoFrameRate(double &rate)
 {
-
     std::cout << "Inside CameraDeviceConfiguration setVideoFrameRate" << std::endl;
+    char propertyName[] = "frame rate";
+    char propertyName1[] = "Frame Rate";
+    char propertyName2[] = "Frame rate";
+    std::string charID;
 
-    return true;
+    //check whether listOfProperties was filled in successfully and not empty
+    if (SUCCESS(returnStatus) && (listOfProperties.size() != 0))
+    {
+        //here member variable deviceConfProperty is a total number of
+        //camera properties returned by getListOfDeviceProperties
+        for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+        {
+            //check whether property of "range" type (defined in unicap API). Frame rate is of range type.
+            //there are also menu, list, flag property types
+            if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+            {
+                //if range then check it for correct ID
+                charID = listOfProperties[propertyCounter].identifier;
+                //if ID == frame rate (as defined in unicap API) then return its current value
+                if (charID == propertyName)
+                {
+                    listOfProperties[propertyCounter].value = rate;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleCameraDevConf,propertyName);
+                    int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleCameraDevConf,propertyName, rate);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+                }
+                else if (charID == propertyName1)
+                {
+                     listOfProperties[propertyCounter].value = rate;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleCameraDevConf,propertyName1);
+                    int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleCameraDevConf,propertyName1, rate);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+
+                }
+                 else if (charID == propertyName2)
+                {
+                     listOfProperties[propertyCounter].value = rate;
+                    //check if the call succeeds
+                    unicap_set_property_manual(*handleCameraDevConf,propertyName2);
+                    int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
+                    if( SUCCESS(returnValue) )
+                    {
+
+                        std::cout << "Setting value is successful" << std::endl;
+                        return true;
+                    }
+                    else
+                    {
+                        int returnValue = unicap_set_property_value(*handleCameraDevConf,propertyName2, rate);
+                        if(SUCCESS(returnValue))
+                            return true;
+                    }
+
+                }
+            }
+            //if property is not of type "range" go to the beginning of the loop
+        }
+    }
+    // if property list was not obtained successfully or was not filled in before through
+    //the call to getListOfDeviceProperties, call the method
+    else if (getListOfDeviceProperties() == true)
+    {
+        if (listOfProperties.size() != 0)
+        {
+            for (int propertyCounter = 0; propertyCounter < deviceConfPropertyCounter; propertyCounter++)
+            {
+                if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
+                {
+                    charID = listOfProperties[propertyCounter].identifier;
+                    if ((charID == propertyName1) || (charID == propertyName2))
+                    {
+                        listOfProperties[propertyCounter].value = rate;
+                        int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleCameraDevConf,propertyName1, rate);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                }
+                //if property is not of type "range" go to the beginning of the loop
+            }
+        }
+        else
+        {
+            std::cout << "Property list is empty"<< std::endl;
+            return false;
+        }
+    }
+
 }
 
 bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)

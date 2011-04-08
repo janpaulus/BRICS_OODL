@@ -1480,7 +1480,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                 {
                      listOfProperties[propertyCounter].value = brightness;
                     //check if the call succeeds
-                    unicap_set_property_manual(*handleColorExposureDev,propertyName1);
+                    unicap_set_property_manual(*handleColorExposureDev,propertyName2);
                     int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]); // (3)
                     if( SUCCESS(returnValue) )
                     {
@@ -1490,7 +1490,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                     }
                     else
                     {
-                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, brightness);
+                        int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2, brightness);
                         if(SUCCESS(returnValue))
                             return true;
                     }
@@ -1511,7 +1511,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    if ((charID == propertyName1) || (charID == propertyName2))
+                    if (charID == propertyName1)
                     {
                         listOfProperties[propertyCounter].value = brightness;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
@@ -1522,7 +1522,24 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                         }
                         else
                         {
-                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1, brightness);
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName1,brightness);
+                            if(SUCCESS(returnValue))
+                                return true;
+                        }
+
+                    }
+                    else  if (charID == propertyName2)
+                    {
+                        listOfProperties[propertyCounter].value = brightness;
+                        int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
+                        if( SUCCESS(returnValue) )
+                        {
+                            std::cout << "Setting value is successful" << std::endl;
+                            return true;
+                        }
+                        else
+                        {
+                            int returnValue = unicap_set_property_value(*handleColorExposureDev,propertyName2,brightness);
                             if(SUCCESS(returnValue))
                                 return true;
                         }
