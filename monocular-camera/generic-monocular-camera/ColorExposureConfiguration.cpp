@@ -157,9 +157,18 @@ bool ColorExposureConfiguration::unifyPropertyNames()
 bool ColorExposureConfiguration::normalizePropertyValues(double &userValue, unicap_property_t propertyToNormalize)
 {
     //userValue range (0,1)
-    double difference = propertyToNormalize.range.max - propertyToNormalize.range.min;
-    userValue = propertyToNormalize.range.min+difference*userValue;
-    return true;
+    if ((userValue < 0) || (userValue > 1))
+    {
+        std::cout << "Please enter values in the range [0,1]" << std::endl;
+        return false;
+    }
+    else
+    {
+        double difference = propertyToNormalize.range.max - propertyToNormalize.range.min;
+        userValue = propertyToNormalize.range.min+difference*userValue;
+        return true;
+    }
+
 }
 
 
@@ -946,7 +955,13 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 if ((charID == propertyName1))
                 {
                     //normalize user values to that of the camera
-                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(saturation, listOfProperties[propertyCounter]) == false)
+                    {
+                        saturation = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << saturation << std::endl;
+                    }
+
                     //set normalized value
                     listOfProperties[propertyCounter].value = saturation;
                     //check if the call succeeds
@@ -967,7 +982,11 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 }
                 else if (charID == propertyName2)
                 {
-                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
+                    if (normalizePropertyValues(saturation, listOfProperties[propertyCounter]) == false)
+                    {
+                        saturation = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << saturation << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = saturation;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName1);
@@ -1000,9 +1019,13 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
-                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
                     if (charID == propertyName1)
                     {
+                       if (normalizePropertyValues(saturation, listOfProperties[propertyCounter]) == false)
+                        {
+                            saturation = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << saturation << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = saturation;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1023,6 +1046,11 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                         charID = listOfProperties[propertyCounter].identifier;
                         if (charID == propertyName1)
                         {
+                            if (normalizePropertyValues(saturation, listOfProperties[propertyCounter]) == false)
+                            {
+                                saturation = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                                std::cout << "Setting default value to " << saturation << std::endl;
+                            }
                             listOfProperties[propertyCounter].value = saturation;
                             int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                             if( SUCCESS(returnValue) )
