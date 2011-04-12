@@ -80,7 +80,6 @@ ColorExposureConfiguration::ColorExposureConfiguration(unicap_device_t *device, 
 ColorExposureConfiguration::ColorExposureConfiguration(ColorExposureConfiguration &colorconfig)
 {
 
-
 }
 
 ColorExposureConfiguration& ColorExposureConfiguration::operator=(ColorExposureConfiguration &colorconfig)
@@ -155,8 +154,11 @@ bool ColorExposureConfiguration::unifyPropertyNames()
 }
 
 
-bool ColorExposureConfiguration::normalizePropertyValues(const std::string& propertyName)
+bool ColorExposureConfiguration::normalizePropertyValues(double &userValue, unicap_property_t propertyToNormalize)
 {
+    //userValue range (0,1)
+    double difference = propertyToNormalize.range.max - propertyToNormalize.range.min;
+    userValue = propertyToNormalize.range.min+difference*userValue;
     return true;
 }
 
@@ -917,7 +919,8 @@ bool ColorExposureConfiguration::setHueValue(double &hue)
     }
 }
 
-
+//Normalizer is introduced
+//setting values through string matching
 bool ColorExposureConfiguration::setSaturationValue(double &saturation)
 {
 
@@ -942,6 +945,9 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if ((charID == propertyName1))
                 {
+                    //normalize user values to that of the camera
+                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
+                    //set normalized value
                     listOfProperties[propertyCounter].value = saturation;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName1);
@@ -961,6 +967,7 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 }
                 else if (charID == propertyName2)
                 {
+                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
                     listOfProperties[propertyCounter].value = saturation;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName1);
@@ -993,6 +1000,7 @@ bool ColorExposureConfiguration::setSaturationValue(double &saturation)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
+                    normalizePropertyValues(saturation, listOfProperties[propertyCounter]);
                     if (charID == propertyName1)
                     {
                         listOfProperties[propertyCounter].value = saturation;
@@ -1435,6 +1443,7 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
 
 //Temporary solution for capital and lowercase letters
 //Need to solve this cleverly
+//Normalizer is also introduced
 bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
 {
 
@@ -1454,6 +1463,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
             //there are also menu, list, flag property types
             if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
             {
+                normalizePropertyValues(brightness, listOfProperties[propertyCounter]);
                 //if range then check it for correct ID
                 charID = listOfProperties[propertyCounter].identifier;
                 //if ID == frame rate (as defined in unicap API) then return its current value
@@ -1511,6 +1521,7 @@ bool ColorExposureConfiguration::setBrightnessValue(double &brightness)
                 if( listOfProperties[propertyCounter].type == UNICAP_PROPERTY_TYPE_RANGE ) // (2)
                 {
                     charID = listOfProperties[propertyCounter].identifier;
+                    normalizePropertyValues(brightness, listOfProperties[propertyCounter]);
                     if (charID == propertyName1)
                     {
                         listOfProperties[propertyCounter].value = brightness;

@@ -64,7 +64,7 @@ private:
     //! to the camera, rather then invoking it for each property, which would be expensive.
     bool getListOfColorProperties();
     bool unifyPropertyNames();
-    bool normalizePropertyValues(const std::string& propertyName);
+    bool normalizePropertyValues(double &userValue, unicap_property_t propertyToNormalize);
     unicap_device_t *deviceColorExposureDev;
     unicap_handle_t *handleColorExposureDev;
     unicap_status_t returnStatus;
