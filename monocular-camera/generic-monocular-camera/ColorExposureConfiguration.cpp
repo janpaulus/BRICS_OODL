@@ -1724,9 +1724,10 @@ bool ColorExposureConfiguration::setExposureTime(double &eTime)
     }
 }
 
-
 // The problem with this property is that it has AUTO mode which is often given as a separate property
 //rather than mode. This complicates setting it to manual mode. Need to correct this.
+//Normalizer is introduced
+//setting values through string matching
 bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
 {
     std::cout << "Inside ColorExposureConfiguration setWhiteBalanceVValue" << std::endl;
@@ -1752,6 +1753,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << uValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = uValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName);
@@ -1771,6 +1779,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                 }
                 else if (charID == propertyName1)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << uValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = uValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName1);
@@ -1790,6 +1805,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                 }
                 else if (charID == propertyName2)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << uValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = uValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName2);
@@ -1809,6 +1831,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                 }
                 else if (charID == propertyName3)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << uValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = uValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName3);
@@ -1843,6 +1872,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << uValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = uValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1860,6 +1896,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << uValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = uValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1877,6 +1920,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                     }
                     else if (charID == propertyName2)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << uValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = uValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1894,6 +1944,13 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
                     }
                     else if (charID == propertyName3)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(uValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            uValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << uValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = uValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1921,6 +1978,10 @@ bool ColorExposureConfiguration::setWhiteBalanceUValue(double &uValue)
     }
 }
 
+// The problem with this property is that it has AUTO mode which is often given as a separate property
+//rather than mode. This complicates setting it to manual mode. Need to correct this.
+//Normalizer is introduced
+//setting values through string matching
 bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
 {
     std::cout << "Inside ColorExposureConfiguration setWhiteBalanceVValue" << std::endl;
@@ -1946,6 +2007,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << vValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = vValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName);
@@ -1965,6 +2033,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                 }
                 else if (charID == propertyName1)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << vValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = vValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName1);
@@ -1984,6 +2059,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                 }
                 else if (charID == propertyName2)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << vValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = vValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName2);
@@ -2003,6 +2085,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                 }
                 else if (charID == propertyName3)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                    {
+                        vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << vValue << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = vValue;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleColorExposureDev,propertyName3);
@@ -2037,6 +2126,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << vValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = vValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -2054,6 +2150,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << vValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = vValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -2071,6 +2174,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                     }
                     else if (charID == propertyName2)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << vValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = vValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -2088,6 +2198,13 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
                     }
                     else if (charID == propertyName3)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(vValue, listOfProperties[propertyCounter]) == false)
+                        {
+                            vValue = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << vValue << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = vValue;
                         int returnValue = unicap_set_property( *handleColorExposureDev, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )

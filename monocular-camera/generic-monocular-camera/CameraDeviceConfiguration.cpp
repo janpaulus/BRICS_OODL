@@ -101,11 +101,23 @@ bool CameraDeviceConfiguration::getListOfDeviceProperties()
 }
 
 
-bool CameraDeviceConfiguration::normalizePropertyValues(const double &userValue)
+bool CameraDeviceConfiguration::normalizePropertyValues(double &userValue, unicap_property_t propertyToNormalize)
 {
+    //userValue range (0,1)
+    if ((userValue < 0) || (userValue > 1))
+    {
+        std::cout << "Please enter values in the range [0,1]" << std::endl;
+        return false;
+    }
+    else
+    {
+        double difference = propertyToNormalize.range.max - propertyToNormalize.range.min;
+        userValue = propertyToNormalize.range.min+difference*userValue;
+        return true;
+    }
 
-    return true;
 }
+
 
 // Make more efficient, so that I don't need to call enumerate_properties for each of the properties
 // as it is done in if condition

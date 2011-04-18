@@ -55,7 +55,7 @@ public:
 private:
     bool getListOfDeviceProperties();
     bool unifyPropertyNames();
-    bool normalizePropertyValues(const double &userValue);
+    bool normalizePropertyValues(double &userValue, unicap_property_t propertyToNormalize);
 
     //counter for the total number of device-lens properties provided by a camera
     //should be equal to array index of listOfProperties, which is currently staticly set

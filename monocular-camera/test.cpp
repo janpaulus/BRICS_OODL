@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
     MonocularCameraConfiguration config ;
     ImageFormat format;
-    MonocularCamera camera(1);
+    MonocularCamera camera(0);
 
 
 
@@ -20,7 +20,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getHueValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.5;
+    gain = 1;
     config.getColorExposureConfiguration()->setHueValue(gain);
     std::cout << gain << std::endl;
 
@@ -34,7 +34,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.5;
+    gain = 0;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
     std::cout << gain << std::endl;
 
