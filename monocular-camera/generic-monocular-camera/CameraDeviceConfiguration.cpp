@@ -617,7 +617,7 @@ bool CameraDeviceConfiguration::setVideoFrameRate(double &rate)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = rate;
+                    listOfProperties[propertyCounter].value = rate;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -635,9 +635,9 @@ bool CameraDeviceConfiguration::setVideoFrameRate(double &rate)
                     }
 
                 }
-                 else if (charID == propertyName2)
+                else if (charID == propertyName2)
                 {
-                     listOfProperties[propertyCounter].value = rate;
+                    listOfProperties[propertyCounter].value = rate;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName2);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -757,6 +757,13 @@ bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(gamma, listOfProperties[propertyCounter]) == false)
+                    {
+                        gamma = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << gamma << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = gamma;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName);
@@ -776,7 +783,14 @@ bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = gamma;
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(gamma, listOfProperties[propertyCounter]) == false)
+                    {
+                        gamma = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << gamma << std::endl;
+                    }
+                    listOfProperties[propertyCounter].value = gamma;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -811,6 +825,13 @@ bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(gamma, listOfProperties[propertyCounter]) == false)
+                        {
+                            gamma = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << gamma << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = gamma;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -828,6 +849,13 @@ bool CameraDeviceConfiguration::setVideoGammaValue(double &gamma)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(gamma, listOfProperties[propertyCounter]) == false)
+                        {
+                            gamma = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << gamma << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = gamma;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -878,6 +906,13 @@ bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(sharpness, listOfProperties[propertyCounter]) == false)
+                    {
+                        sharpness = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << sharpness << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = sharpness;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName);
@@ -897,7 +932,14 @@ bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = sharpness;
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(sharpness, listOfProperties[propertyCounter]) == false)
+                    {
+                        sharpness = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << sharpness << std::endl;
+                    }
+                    listOfProperties[propertyCounter].value = sharpness;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -932,6 +974,13 @@ bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(sharpness, listOfProperties[propertyCounter]) == false)
+                        {
+                            sharpness = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << sharpness << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = sharpness;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -949,6 +998,13 @@ bool CameraDeviceConfiguration::setVideoSharpnessValue(double &sharpness)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(sharpness, listOfProperties[propertyCounter]) == false)
+                        {
+                            sharpness = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << sharpness << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = sharpness;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -999,6 +1055,13 @@ bool CameraDeviceConfiguration::setLensFocus(double &focus)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(focus, listOfProperties[propertyCounter]) == false)
+                    {
+                        focus = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << focus << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = focus;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName);
@@ -1018,7 +1081,14 @@ bool CameraDeviceConfiguration::setLensFocus(double &focus)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = focus;
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(focus, listOfProperties[propertyCounter]) == false)
+                    {
+                        focus = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << focus << std::endl;
+                    }
+                    listOfProperties[propertyCounter].value = focus;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -1053,6 +1123,13 @@ bool CameraDeviceConfiguration::setLensFocus(double &focus)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(focus, listOfProperties[propertyCounter]) == false)
+                        {
+                            focus = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << focus << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = focus;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1070,6 +1147,13 @@ bool CameraDeviceConfiguration::setLensFocus(double &focus)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(focus, listOfProperties[propertyCounter]) == false)
+                        {
+                            focus = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << focus << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = focus;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1119,6 +1203,13 @@ bool CameraDeviceConfiguration::setLensZoom(double &zoom)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(zoom, listOfProperties[propertyCounter]) == false)
+                    {
+                        zoom = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << zoom << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = zoom;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName);
@@ -1138,7 +1229,14 @@ bool CameraDeviceConfiguration::setLensZoom(double &zoom)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = zoom;
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(zoom, listOfProperties[propertyCounter]) == false)
+                    {
+                        zoom = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << zoom << std::endl;
+                    }
+                    listOfProperties[propertyCounter].value = zoom;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -1173,6 +1271,13 @@ bool CameraDeviceConfiguration::setLensZoom(double &zoom)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(zoom, listOfProperties[propertyCounter]) == false)
+                        {
+                            zoom = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << zoom << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = zoom;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1190,6 +1295,13 @@ bool CameraDeviceConfiguration::setLensZoom(double &zoom)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(zoom, listOfProperties[propertyCounter]) == false)
+                        {
+                            zoom = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << zoom << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = zoom;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1240,6 +1352,13 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
                 //if ID == frame rate (as defined in unicap API) then return its current value
                 if (charID == propertyName)
                 {
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(iris, listOfProperties[propertyCounter]) == false)
+                    {
+                        iris = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << iris << std::endl;
+                    }
                     listOfProperties[propertyCounter].value = iris;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName);
@@ -1259,7 +1378,14 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
                 }
                 else if (charID == propertyName1)
                 {
-                     listOfProperties[propertyCounter].value = iris;
+                    //normalize user values to that of the camera
+                    //Need to check the return value for the correctness
+                    if (normalizePropertyValues(iris, listOfProperties[propertyCounter]) == false)
+                    {
+                        iris = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                        std::cout << "Setting default value to " << iris << std::endl;
+                    }
+                    listOfProperties[propertyCounter].value = iris;
                     //check if the call succeeds
                     unicap_set_property_manual(*handleCameraDevConf,propertyName1);
                     int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]); // (3)
@@ -1294,6 +1420,13 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
                     charID = listOfProperties[propertyCounter].identifier;
                     if (charID == propertyName)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(iris, listOfProperties[propertyCounter]) == false)
+                        {
+                            iris = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << iris << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = iris;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )
@@ -1311,6 +1444,13 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
                     }
                     else if (charID == propertyName1)
                     {
+                        //normalize user values to that of the camera
+                        //Need to check the return value for the correctness
+                        if (normalizePropertyValues(iris, listOfProperties[propertyCounter]) == false)
+                        {
+                            iris = listOfProperties[propertyCounter].range.max/2.0 ;//set as default half of the maximum
+                            std::cout << "Setting default value to " << iris << std::endl;
+                        }
                         listOfProperties[propertyCounter].value = iris;
                         int returnValue = unicap_set_property( *handleCameraDevConf, &listOfProperties[propertyCounter]);
                         if( SUCCESS(returnValue) )

@@ -9,7 +9,7 @@ int main (int argc, char **argv)
 
     MonocularCameraConfiguration config ;
     ImageFormat format;
-    MonocularCamera camera(0);
+    MonocularCamera camera(1);
 
 
 
@@ -20,7 +20,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getHueValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 1;
+    gain = 0.5;
     config.getColorExposureConfiguration()->setHueValue(gain);
     std::cout << gain << std::endl;
 
@@ -34,7 +34,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0;
+    gain = 0.5;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
     std::cout << gain << std::endl;
 
@@ -42,22 +42,24 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getSaturationValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.5;
+    gain = 0.1;
     config.getColorExposureConfiguration()->setSaturationValue(gain);
     std::cout << gain << std::endl;
 
-/*
-    gain = gain + 400;
-    config.getColorExposureConfiguration()->setWhiteBalanceVValue(gain);
+    config.getCameraDeviceConfiguration()->getVideoSharpnessValue(gain);
     std::cout << gain << std::endl;
 
-    double rate = 0;
-    config.getCameraDeviceConfiguration()->getVideoGammaValue(rate);
-    std::cout << "Gamma  "<<rate << std::endl;
+    gain = 1;
+    config.getCameraDeviceConfiguration()->setVideoSharpnessValue(gain);
+    std::cout << gain << std::endl;
 
-    config.getCameraDeviceConfiguration()->getVideoSharpnessValue(rate);
-    std::cout << "Sharpness  "<<rate << std::endl;
-*/
+    config.getCameraDeviceConfiguration()->getVideoGammaValue(gain);
+    std::cout << gain << std::endl;
+
+    gain = 0.6;
+    config.getCameraDeviceConfiguration()->setVideoGammaValue(gain);
+    std::cout << gain << std::endl;
+
 
     // set image format and start capturing
     camera.getImageFormat(format) ;
@@ -67,13 +69,6 @@ int main (int argc, char **argv)
     format.getImageFormatResolution(width, height);
     camera.setImageFormat(format) ;
     camera.capture();
-    /*
-       while(1)
-       {
-       Image2dData data(width,height);
-        camera.getImageData(data);
-       }
-    */
 
     SDL_Surface *screen = NULL;
     SDL_Overlay *overlay = NULL;
