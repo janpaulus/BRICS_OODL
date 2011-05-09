@@ -9,14 +9,14 @@ int main (int argc, char **argv)
 
     MonocularCameraConfiguration config ;
     ImageFormat format;
-    MonocularCamera camera(1);
+    MonocularCamera camera(0);
 
 
 
     camera.open(); //always open first
     camera.getConfiguration(config);
 
-    double gain = 0.0;
+    double gain = 0.5;
     config.getColorExposureConfiguration()->getHueValue(gain);
     std::cout << gain << std::endl;
 
@@ -34,7 +34,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.5;
+    gain = 0.1;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
     std::cout << gain << std::endl;
 
@@ -42,21 +42,21 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getSaturationValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.1;
+    gain = 0.5;
     config.getColorExposureConfiguration()->setSaturationValue(gain);
     std::cout << gain << std::endl;
 
     config.getCameraDeviceConfiguration()->getVideoSharpnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 1;
+    gain = 0.5;
     config.getCameraDeviceConfiguration()->setVideoSharpnessValue(gain);
     std::cout << gain << std::endl;
 
     config.getCameraDeviceConfiguration()->getVideoGammaValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.6;
+    gain = 0.2;
     config.getCameraDeviceConfiguration()->setVideoGammaValue(gain);
     std::cout << gain << std::endl;
 
@@ -64,7 +64,7 @@ int main (int argc, char **argv)
     // set image format and start capturing
     camera.getImageFormat(format) ;
 
-    int width(0);
+    int width = 0;
     int height(0);
     format.getImageFormatResolution(width, height);
     camera.setImageFormat(format) ;
