@@ -34,7 +34,7 @@ int main (int argc, char **argv)
     config.getColorExposureConfiguration()->getBrightnessValue(gain);
     std::cout << gain << std::endl;
 
-    gain = 0.1;
+    gain = 0.5;
     config.getColorExposureConfiguration()->setBrightnessValue(gain);
     std::cout << gain << std::endl;
 
