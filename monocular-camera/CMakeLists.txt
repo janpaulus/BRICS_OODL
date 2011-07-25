@@ -35,8 +35,6 @@ ADD_SUBDIRECTORY(generic)
 ADD_SUBDIRECTORY(application)
 
 
-
-
 #this is for debugging
 #SET(UNICAP_LIB_PATH_ALTERNATE_DEBUG /home/azamat/euprojects/brics/bricsToolchain/workspace/brics/BRICSWP2/BRICS_OODL/monocular-camera/unicap-0.9.5/libunicap/libs)
 #LINK_DIRECTORIES( ${unicap_LIB_PATH_ALTERNATE_DEBUG} )
