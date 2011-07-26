@@ -8,12 +8,12 @@
  * \date
  */
 #include <string>
-#include "generic/Errors.hpp"
-#include "generic/Logger.hpp"
-#include "generic/Units.hpp"
-#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
-#include "generic-laser-scanner/LaserScannerData.hpp"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
+#include "Errors.hpp"
+#include "Logger.hpp"
+#include "Units.hpp"
+#include "LaserScannerConfiguration.hpp"
+#include "LaserScannerData.hpp"
+#include "LaserScannerDataWithIntensities.hpp"
 namespace brics_oodl { class Errors; } 
 namespace brics_oodl { class LaserScannerConfiguration; } 
 namespace brics_oodl { class LaserScannerData; } 
