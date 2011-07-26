@@ -24,27 +24,27 @@ link_directories(
   ${HOKUYO_URG_PATH}/lib
 )
 
-link_libraries(	
-  liburg.a
-  liburg_common.a
-  liburg_connection.a
-  liburg_connection_sdl.a
-  liburg_coordinate.a
-  liburg_geometry.a
-  liburg_monitor.a
-  liburg_system.a
+#link_libraries(	
+ # urg
+ # urg_common
+ # urg_connection
+ # urg_connection_sdl
+ # urg_coordinate
+#  urg_geometry
+#  urg_monitor
+#  urg_system
  #  libc_urg.a
  #  libc_urg_connection.a
  #  libc_urg_system.a
-  SDL
-  boost_thread
-  boost_date_time
-  boost_system
-  boost_filesystem
-  boost_regex
+#  SDL
+#  boost_thread
+#  boost_date_time
+#  boost_system
+#  boost_filesystem
+#  boost_regex
   #boost_log_setup
-  boost_log-mt
-)
+#  boost_log-mt
+#)
 
 set(HOKUYO_URG_SRC
   ../generic/Errors.cpp
@@ -74,14 +74,58 @@ SET(HOKUYO_URG_HEADERS
 )
 
 
-ADD_LIBRARY(OODL_HokuyoURG
-  ${HOKUYO_URG_SRC}
+ADD_LIBRARY(OODL_HokuyoURG SHARED  ${HOKUYO_URG_SRC}
 )
+
+TARGET_LINK_LIBRARIES(OODL_HokuyoURG 
+  urg
+  urg_common
+  urg_connection
+  urg_connection_sdl
+  urg_coordinate
+  urg_geometry
+  urg_monitor
+  urg_system
+ #  libc_urg.a
+ #  libc_urg_connection.a
+ #  libc_urg_system.a
+  SDL
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  #boost_log_setup
+  boost_log-mt)
 
 ADD_EXECUTABLE(OODL_HokuyoURG_test
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/Test.cpp
   ${HOKUYO_URG_SRC}
 )
+
+
+TARGET_LINK_LIBRARIES(OODL_HokuyoURG_test 
+  urg
+  urg_common
+  urg_connection
+  urg_connection_sdl
+  urg_coordinate
+  urg_geometry
+  urg_monitor
+  urg_system
+ #  libc_urg.a
+ #  libc_urg_connection.a
+ #  libc_urg_system.a
+  SDL
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  #boost_log_setup
+  boost_log-mt)
+
+
 
 ADD_EXECUTABLE(OODL_HokuyoURG_plot
 
@@ -90,6 +134,29 @@ ADD_EXECUTABLE(OODL_HokuyoURG_plot
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/gnuplot_i.cpp
   ${HOKUYO_URG_SRC}
 )
+
+TARGET_LINK_LIBRARIES(OODL_HokuyoURG_plot 
+  urg
+  urg_common
+  urg_connection
+  urg_connection_sdl
+  urg_coordinate
+  urg_geometry
+  urg_monitor
+  urg_system
+ #  libc_urg.a
+ #  libc_urg_connection.a
+ #  libc_urg_system.a
+  SDL
+  boost_thread
+  boost_date_time
+  boost_system
+  boost_filesystem
+  boost_regex
+  #boost_log_setup
+  boost_log-mt)
+
+
 
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
   FOREACH(HEADER ${${HEADER_LIST}})
