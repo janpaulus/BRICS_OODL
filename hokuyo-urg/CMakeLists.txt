@@ -45,14 +45,14 @@ link_libraries(
 )
 
 set(HOKUYO_URG_SRC
-  ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.cpp
-  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.cpp
-  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURG.cpp
-  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURGConfiguration.cpp
+  ../generic/Errors.cpp
+  ../generic/Logger.cpp
+  ../generic-laser-scanner/LaserScanner.cpp
+  ../generic-laser-scanner/LaserScannerData.cpp
+  ../generic-laser-scanner/LaserScannerConfiguration.cpp
+  ../generic-laser-scanner/LaserScannerDataWithIntensities.cpp
+  HokuyoURG.cpp
+  HokuyoURGConfiguration.cpp
 )
 
 SET(HOKUYO_URG_HEADERS
