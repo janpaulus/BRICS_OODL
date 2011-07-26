@@ -33,10 +33,10 @@ include(UseDoxygen)
 
 
 IF(NOT DEFINED SELECTED_DRIVER)
-# add_subdirectory(hokuyo-urg)
+ add_subdirectory(hokuyo-urg)
 # add_subdirectory(sick-lms-2xx)
 # add_subdirectory(sick-ld)
- add_subdirectory(sick-s300)
+# add_subdirectory(sick-s300)
 # add_subdirectory(monocular-camera)
 # add_subdirectory(mesa-swissranger)
 # add_subdirectory(pmd-camcube)
