@@ -5,7 +5,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
-#include "generic/Logger.hpp"
+#include "Logger.hpp"
 
 using namespace std;
 namespace brics_oodl {

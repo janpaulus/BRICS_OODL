@@ -7,7 +7,7 @@ using namespace std;
 
 #include <string>
 #include <iostream>
-#include "generic/Logger.hpp"
+#include "Logger.hpp"
 namespace brics_oodl {
 
 /**
