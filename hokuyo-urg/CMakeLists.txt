@@ -44,7 +44,7 @@ link_libraries(
   boost_log-mt
 )
 
-set(MESA_SWISSRANGER_SRC
+set(HOKUYO_URG_SRC
   ${CMAKE_HOME_DIRECTORY}/generic/Errors.cpp
   ${CMAKE_HOME_DIRECTORY}/generic/Logger.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.cpp
@@ -55,15 +55,30 @@ set(MESA_SWISSRANGER_SRC
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURGConfiguration.cpp
 )
 
-ADD_LIBRARY(OODL_HokuyoURG
-  ${MESA_SWISSRANGER_SRC}
+SET(HOKUYO_URG_HEADERS
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURG.hpp
+  ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/HokuyoURGConfiguration.hpp
+
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScanner.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerConfiguration.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerData.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/LaserScannerDataWithIntensities.hpp
+
+  ${CMAKE_HOME_DIRECTORY}/generic/Errors.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Exceptions.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Logger.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Time.hpp
+  ${CMAKE_HOME_DIRECTORY}/generic/Units.hpp
 )
 
 
+ADD_LIBRARY(OODL_HokuyoURG
+  ${HOKUYO_URG_SRC}
+)
 
 ADD_EXECUTABLE(OODL_HokuyoURG_test
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/Test.cpp
-  ${MESA_SWISSRANGER_SRC}
+  ${HOKUYO_URG_SRC}
 )
 
 ADD_EXECUTABLE(OODL_HokuyoURG_plot
@@ -71,7 +86,15 @@ ADD_EXECUTABLE(OODL_HokuyoURG_plot
   ${CMAKE_HOME_DIRECTORY}/hokuyo-urg/applications/plot_laserscanner_values.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/LaserScannerTools.cpp
   ${CMAKE_HOME_DIRECTORY}/generic-laser-scanner/applications/gnuplot_i.cpp
-  ${MESA_SWISSRANGER_SRC}
+  ${HOKUYO_URG_SRC}
 )
 
+MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
+  FOREACH(HEADER ${${HEADER_LIST}})
+    STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
+    INSTALL(FILES ${HEADER} DESTINATION include/hokuyoURG/hokuyoURG/${DIR})
+  ENDFOREACH(HEADER)
+ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
+
+INSTALL_HEADERS_WITH_DIRECTORY(HOKUYO_URG_HEADERS)
 INSTALL(TARGETS OODL_HokuyoURG OODL_HokuyoURG_test OODL_HokuyoURG_plot RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
