@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 #Build Type
 SET(CMAKE_BUILD_TYPE Debug)
@@ -20,18 +20,19 @@ SET(CMAKE_CXX_FLAGS_DEBUG  "-Wall -g")
 
 
 INCLUDE_DIRECTORIES(
+  ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
+  $ENV(ROBOTPKG_BASE)/include
   /usr/local/include/unicap
-#  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
   /usr/include/
   )
 
 LINK_DIRECTORIES(
+  ${CMAKE_HOME_DIRECTORY}/lib
+  $ENV(ROBOTPKG_BASE)/lib
   ${UNICAP_LIB}
-#  ${CMAKE_HOME_DIRECTORY}/generic-monocular-camera/
 )
 
-ADD_SUBDIRECTORY(core)
-ADD_SUBDIRECTORY(generic)
+ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(application)
 
 
