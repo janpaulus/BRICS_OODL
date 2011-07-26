@@ -1,4 +1,4 @@
-#include "generic/Logger.hpp"
+#include "Logger.hpp"
 
 namespace brics_oodl {
 

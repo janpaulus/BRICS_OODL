@@ -4,7 +4,7 @@
  * \author
  * \date
  */
-#include "generic-laser-scanner/LaserScanner.hpp"
+#include "LaserScanner.hpp"
 namespace brics_oodl {
 
 
