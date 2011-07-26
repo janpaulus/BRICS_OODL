@@ -65,11 +65,11 @@ MonocularCamera::~MonocularCamera()
     //Maybe we need to call close on device implicitly without user being aware of it.
     //But then open should also be implicit to make things consistent.
 
-//  delete cameraConfig;
-//  delete format;
-    delete currentDevice;
+  delete cameraConfig;
+  delete format;
+//    delete currentDevice;
     delete deviceHandle;
-//  delete pixels;
+  delete pixels;
 
 }
 
