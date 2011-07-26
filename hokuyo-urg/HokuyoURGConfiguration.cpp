@@ -1,5 +1,5 @@
 
-#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
+#include "HokuyoURGConfiguration.hpp"
 namespace brics_oodl {
 
 HokuyoURGConfiguration::HokuyoURGConfiguration() {

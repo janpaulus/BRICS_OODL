@@ -2,14 +2,14 @@
 #define BRICS_OODL_HOKUYOURG_H
 
 
-#include "generic/Logger.hpp"
-#include "generic/Units.hpp"
-#include "generic-laser-scanner/LaserScanner.hpp"
-#include "generic/Errors.hpp"
-#include "generic-laser-scanner/LaserScannerData.hpp"
-#include "generic-laser-scanner/LaserScannerDataWithIntensities.hpp"
-#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
-#include "hokuyo-urg/HokuyoURGConfiguration.hpp"
+#include <Logger.hpp>
+#include "Units.hpp"
+#include "LaserScanner.hpp"
+#include "Errors.hpp"
+#include "LaserScannerData.hpp"
+#include "LaserScannerDataWithIntensities.hpp"
+#include "LaserScannerConfiguration.hpp"
+#include "HokuyoURGConfiguration.hpp"
 
 #include "UrgCtrl.h"
 #include "RangeSensorParameter.h"

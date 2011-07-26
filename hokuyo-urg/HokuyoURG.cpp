@@ -1,5 +1,5 @@
 
-#include "hokuyo-urg/HokuyoURG.hpp"
+#include "HokuyoURG.hpp"
 namespace brics_oodl {
 
 HokuyoURG::HokuyoURG() {

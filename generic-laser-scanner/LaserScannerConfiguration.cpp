@@ -4,7 +4,7 @@
  * \author
  * \date
  */
-#include "generic-laser-scanner/LaserScannerConfiguration.hpp"
+#include "LaserScannerConfiguration.hpp"
 namespace brics_oodl {
 
 LaserScannerConfiguration::LaserScannerConfiguration(){

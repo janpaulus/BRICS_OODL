@@ -1,5 +1,5 @@
 
-#include "generic-laser-scanner/LaserScannerData.hpp"
+#include "LaserScannerData.hpp"
 namespace brics_oodl {
 
 LaserScannerData::LaserScannerData() {

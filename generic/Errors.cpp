@@ -1,5 +1,5 @@
 
-#include "generic/Errors.hpp"
+#include "Errors.hpp"
 namespace brics_oodl {
 
 Errors::Errors() {
