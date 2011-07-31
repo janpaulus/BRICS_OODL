@@ -8,8 +8,8 @@ MonocularCameraConfiguration::MonocularCameraConfiguration(): returnStatus(STATU
     deviceNodeID (""), devicePluginType("")
 {
     std::cout << "Creating MonocularCameraConfiguration without arguments" << std::endl;
-    colExpConfiguration = new ColorExposureConfiguration;
-    devConfiguration = new CameraDeviceConfiguration;
+    colExpConfiguration = new ColorExposureConfiguration();
+    devConfiguration = new CameraDeviceConfiguration();
     propertyConfig = new unicap_property_t;
 }
 

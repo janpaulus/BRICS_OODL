@@ -69,7 +69,7 @@ MonocularCamera::~MonocularCamera()
   delete format;
 //    delete currentDevice;
     delete deviceHandle;
-  delete pixels;
+ // delete pixels;
 
 }
 
