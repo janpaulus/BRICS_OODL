@@ -1,6 +1,7 @@
 #include "CameraDeviceConfiguration.hpp"
 
 
+namespace brics_oodl {
 
 CameraDeviceConfiguration::CameraDeviceConfiguration(): deviceCameraDevConf(NULL),
     handleCameraDevConf(NULL),
@@ -1477,3 +1478,6 @@ bool CameraDeviceConfiguration::setLensIris(double &iris)
     }
 }
 
+
+
+}  //~namespace brics_oodl

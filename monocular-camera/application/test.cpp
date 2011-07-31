@@ -6,7 +6,7 @@
 
 int main (int argc, char **argv)
 {
-
+  using namespace brics_oodl;
     MonocularCameraConfiguration config ;
     ImageFormat format;
     MonocularCamera camera(0);

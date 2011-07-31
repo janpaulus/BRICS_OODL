@@ -4,6 +4,9 @@
 #include <iostream>
 #include "MonocularCameraDefinitions.hpp"
 
+
+namespace brics_oodl {
+
 //! This class is responsible for holding pixel data received from the camera.
 class Image2dData
 {
@@ -82,5 +85,5 @@ typedef struct unicap_data_buffer_t unicap_data_buffer_t;
 
 */
 
-
+} //~namespace brics_oodl
 #endif //~ _IMAGE2DDATA_HPP_

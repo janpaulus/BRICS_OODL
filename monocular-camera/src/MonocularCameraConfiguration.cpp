@@ -3,6 +3,8 @@
 #include <iostream>
 
 
+namespace brics_oodl {
+
 
 MonocularCameraConfiguration::MonocularCameraConfiguration(): returnStatus(STATUS_FAILURE), deviceID (""),
     deviceNodeID (""), devicePluginType("")
@@ -175,3 +177,4 @@ bool MonocularCameraConfiguration::setColorExposureConfiguration(ColorExposureCo
 }
 
 
+}  //~namespace brics_oodl

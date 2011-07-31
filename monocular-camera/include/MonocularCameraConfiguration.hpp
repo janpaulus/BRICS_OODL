@@ -6,7 +6,7 @@
 #include "ColorExposureConfiguration.hpp"
 #include "CameraDeviceConfiguration.hpp"
 
-
+namespace brics_oodl {
 
 class MonocularCameraConfiguration
 {
@@ -41,6 +41,7 @@ private:
 
 
 
+}//~namespace brics_oodl
 
 #endif //~_MONOCULARCAMERACONFIGURATION_HPP_
 

@@ -1,9 +1,6 @@
 #ifndef  _MONOCULARCAMERA_HPP_
 #define  _MONOCULARCAMERA_HPP_
 
-//#include "../generic/Errors.hpp"
-//#include "../generic/Logger.hpp"
-//#include "../generic/Units.hpp"
 #include "MonocularCameraConfiguration.hpp"
 #include "Image2dData.hpp"
 #include "ImageFormat.hpp"
@@ -12,6 +9,9 @@
 #include <vector>
 #include <cstdlib>
 #include <cstring>
+
+
+namespace brics_oodl {
 
 //! This class represents a physical camera attached.
 //! It can be instantiated to create camera objects.
@@ -63,5 +63,6 @@ private:
     std::vector<unicap_device_t> listOfCameraDevices;
 };
 
+}//~ namespace brics_oodl
 
 #endif //~_MONOCULARCAMERA_HPP_

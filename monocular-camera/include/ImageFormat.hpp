@@ -6,6 +6,9 @@
 #include <unicap.h>
 #include <vector>
 
+
+
+namespace brics_oodl {
 //! This class is responsible for setting and getting information for image format.
 
 //! Format contains information on image resolution, color model (RGB, BGR, YUVCr),
@@ -215,5 +218,8 @@ private:
 
  typedef struct unicap_format_t unicap_format_t;
 */
+
+
+} //~namespace brics_oodl
 
 #endif //~ _IMAGEFORMAT_HPP_

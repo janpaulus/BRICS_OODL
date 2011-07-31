@@ -14,6 +14,8 @@
 //diagnostic program to list all the available camera properties and formats.
 //But for this version we stick to enumerations.
 
+namespace brics_oodl {
+
 typedef enum COLOREXPOSUREPROPERTYDESCRIPTORS
 {
     Hue = 0,
@@ -71,6 +73,9 @@ const int defaultResolutionWidth = 640;
 const int defaultResolutionHeight = 480;
 const int defaultColorDepth = 16;
 const int defaultByteLength = 8;
+
+
+} //~namespace brics_oodl
 
 #endif //~ _MONOCULARCAMERADEFINITIONS_HPP_
 

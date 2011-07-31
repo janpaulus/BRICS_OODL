@@ -5,6 +5,9 @@
 // Or create a device manager class which observers what devices are there connected to the system
 
 
+
+namespace brics_oodl {
+
 MonocularCamera::MonocularCamera(int deviceNumber = 0): pixels(NULL),
     isConnected(STATUS_FAILURE),
     cameraDeviceCounter(0)
@@ -231,3 +234,6 @@ bool MonocularCamera::getListOfCameras()
     }
 
 }
+
+
+}  //~namespace brics_oodl

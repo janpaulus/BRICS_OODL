@@ -2,6 +2,8 @@
 #include "MonocularCameraDefinitions.hpp"
 
 
+namespace brics_oodl {
+
 ImageFormat::ImageFormat(): deviceHandle(NULL),
     currentResolution(NULL),
     currentFormat(NULL),
@@ -296,3 +298,4 @@ bool ImageFormat::getListOfFormats()
     }
 }
 
+}  //~namespace brics_oodl

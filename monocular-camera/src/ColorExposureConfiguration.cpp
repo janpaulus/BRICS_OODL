@@ -1,6 +1,7 @@
 #include "ColorExposureConfiguration.hpp"
 
 
+namespace brics_oodl {
 //Issue1:
 //harmonizes possible property name combinations
 //Like if white_u_balance, WhiteUBalance, White U Balance
@@ -2232,3 +2233,5 @@ bool ColorExposureConfiguration::setWhiteBalanceVValue(double &vValue)
     }
 }
 
+
+}  //~namespace brics_oodl

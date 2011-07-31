@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 
+namespace brics_oodl {
 
 //! This class represents a set of camera properties related to color and exposure
 class ColorExposureConfiguration
@@ -86,5 +87,7 @@ private:
     unicap_property_range_t exposureTime;
 
 };
+
+}  //~namespace brics_oodl
 
 #endif// ~ _COLOREXPOSURECONFIGURATION_HPP_

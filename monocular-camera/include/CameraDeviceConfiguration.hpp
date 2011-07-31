@@ -8,7 +8,7 @@
 #include <vector>
 #include <iostream>
 
-
+namespace brics_oodl {
 //! This class represents a set of camera configuration related to camera lens and iris.
 class CameraDeviceConfiguration
 {
@@ -75,4 +75,6 @@ private:
     unicap_property_range_t lensIris;
 };
 
+
+}  //~namespace brics_oodl
 #endif //~_CAMERADEVICECONFIGURATION_HPP_

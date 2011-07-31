@@ -1,6 +1,9 @@
 #include "Image2dData.hpp"
 
 
+
+namespace brics_oodl {
+
 //buffer size is not only dependent on image resolution but also color depths (bpp)
 // so need to think over how this should be done
 
@@ -70,3 +73,5 @@ Image2dData::  ~Image2dData()
 {
     delete []buffer;
 }
+
+}  //~namespace brics_oodl
