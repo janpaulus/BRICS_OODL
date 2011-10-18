@@ -22,7 +22,7 @@ MonocularCamera::MonocularCamera(int deviceNumber = 0): pixels(NULL),
     }
     else
     {
-        std::cout << "Make sure that there is a camera connected" << std::cout;
+        std::cout << "Make sure that there is a camera connected!" << std::endl;
     }
 
 }
