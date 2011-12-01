@@ -1,6 +1,5 @@
 CMakeCache.txt
 cmake_install.cmake
-Makefile
 Makefile-BRICS_OODL.mk
 .dep.inc
 nbproject
