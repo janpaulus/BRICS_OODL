@@ -1,54 +1,17 @@
-PROJECT(BRICS_OODL)
+cmake_minimum_required(VERSION 2.4.6)
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-SET(CMAKE_BUILD_TYPE Debug)
-SET(CMAKE_VERBOSE_MAKEFILE on)
-SET(CMAKE_C_FLAGS_DEBUG "-Wall -g")
-SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
+# Append to CPACK_SOURCE_IGNORE_FILES a semicolon-separated list of
+# directories (or patterns, but directories should suffice) that should
+# be excluded from the distro.  This is not the place to put things that
+# should be ignored everywhere, like "build" directories; that happens in
+# rosbuild/rosbuild.cmake.  Here should be listed packages that aren't
+# ready for inclusion in a distro.
+#
+# This list is combined with the list in rosbuild/rosbuild.cmake.  Note
+# that CMake 2.6 may be required to ensure that the two lists are combined
+# properly.  CMake 2.4 seems to have unpredictable scoping rules for such
+# variables.
+#list(APPEND CPACK_SOURCE_IGNORE_FILES /core/experimental)
 
-SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules")
-
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/lib) #static libraries
-SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin) #executables
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib) #dynamic libraries (plugins)
-
-INCLUDE_DIRECTORIES(${CMAKE_HOME_DIRECTORY})
-
-
-
-IF(DEFINED UNICAP_PATH)
-link_directories(${UNICAP_PATH}/lib)
-include_directories(${UNICAP_PATH}/include/unicap)
-MESSAGE(STATUS "UNICAP_PATH= ${UNICAP_PATH}")
-ENDIF(DEFINED UNICAP_PATH)
-
-IF(NOT DEFINED UNICAP_PATH)
-link_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/lib)
-include_directories(${CMAKE_HOME_DIRECTORY}/../openrobots/include/unicap)
-ENDIF(NOT DEFINED UNICAP_PATH)
-
-SET(DOXYFILE_LATEX "NO")
-SET(DOXYFILE_OUTPUT_DIR ${CMAKE_HOME_DIRECTORY}/doc)
-include(UseDoxygen)
-
-
-IF(NOT DEFINED SELECTED_DRIVER)
-
-# add_subdirectory(hokuyo-urg)
-# add_subdirectory(sick-lms-2xx)
-# add_subdirectory(sick-ld)
-# add_subdirectory(sick-s300)
- add_subdirectory(monocular-camera)
-# add_subdirectory(sick-lms-2xx)
-# add_subdirectory(sick-ld)
-# add_subdirectory(sick-s300)
-# add_subdirectory(monocular-camera)
-# add_subdirectory(mesa-swissranger)
-# add_subdirectory(pmd-camcube)
-
-ENDIF(NOT DEFINED SELECTED_DRIVER)
-
-
-IF(DEFINED SELECTED_DRIVER)
-add_subdirectory(${SELECTED_DRIVER})
-ENDIF(DEFINED SELECTED_DRIVER)
+rosbuild_make_distribution(0.1.0)

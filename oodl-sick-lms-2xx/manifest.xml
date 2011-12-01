@@ -1,0 +1,16 @@
+<package>
+  <description brief="oodl-sick-lms-2xx">
+
+     oodl-sick-lms-2xx
+
+  </description>
+  <author>BRSU</author>
+  <license>BSD / LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/janpaulus/BRICS_OODL</url>
+	<rosdep name="boost" />
+  <rosdep name="sicktoolbox"/>
+  <depend package="sicktoolbox"/>
+</package>
+
+

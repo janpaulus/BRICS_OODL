@@ -1,0 +1,15 @@
+<package>
+  <description brief="oodl-hokuyo-urg">
+
+     oodl-hokuyo-urg
+
+  </description>
+  <author>BRSU</author>
+  <license>BSD / LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/janpaulus/BRICS_OODL</url>
+	<rosdep name="boost-all" />
+  <depend package="hokuyo-urg"/>
+</package>
+
+

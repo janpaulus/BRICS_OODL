@@ -1,0 +1,14 @@
+<package>
+  <description brief="oodl-sick-s300">
+
+     oodl-sick-s300
+
+  </description>
+  <author>BRSU</author>
+  <license>BSD / LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/janpaulus/BRICS_OODL</url>
+	<rosdep name="boost" />
+</package>
+
+
