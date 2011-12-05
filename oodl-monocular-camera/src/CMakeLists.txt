@@ -11,18 +11,18 @@ SET(GENERICSOURCES
   MonocularCameraConfiguration.cpp 
   )
 
+#
+#INCLUDE_DIRECTORIES(
+#  ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
+#  $ENV(ROBOTPKG_BASE)/include
+#  /usr/local/include/unicap
+#  /usr/include/
+#  )
 
-INCLUDE_DIRECTORIES(
-  ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
-  $ENV(ROBOTPKG_BASE)/include
-  /usr/local/include/unicap
-  /usr/include/
-  )
-
-LINK_DIRECTORIES(
-  $ENV(ROBOTPKG_BASE)/lib
-  ${UNICAP_LIB}
-)
+#LINK_DIRECTORIES(
+#  $ENV(ROBOTPKG_BASE)/lib
+#  ${UNICAP_LIB}
+#)
 
 
 ADD_LIBRARY(${CORELIBNAME} SHARED

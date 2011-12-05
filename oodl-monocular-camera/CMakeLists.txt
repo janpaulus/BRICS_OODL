@@ -1,4 +1,10 @@
+
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+rosbuild_init()
+rosbuild_find_ros_package(unicap)
+SET(UNICAP_PATH ${unicap_PACKAGE_PATH}/install CACHE PATH "Unicap path")
 
 #Build Type
 SET(CMAKE_BUILD_TYPE Debug)
@@ -32,6 +38,7 @@ ${CMAKE_HOME_DIRECTORY}/monocular-camera/include/ColorExposureConfiguration.hpp
 
 INCLUDE_DIRECTORIES(
   ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
+  ${UNICAP_PATH}/include/unicap
   $ENV(ROBOTPKG_BASE)/include
   /usr/local/include/unicap
   /usr/include/
@@ -39,6 +46,7 @@ INCLUDE_DIRECTORIES(
 
 LINK_DIRECTORIES(
   ${CMAKE_HOME_DIRECTORY}/lib
+  ${UNICAP_PATH}/lib
   ${UNICAP_LIB}
 )
 

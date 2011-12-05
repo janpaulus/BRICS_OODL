@@ -2,14 +2,14 @@
 SET(EXECUTABLE1 test-monocamera-viewer)
 SET(EXECUTABLE2 test-monocamera-console)
 
-INCLUDE_DIRECTORIES(
-  ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
-)
+#INCLUDE_DIRECTORIES(
+#  ${CMAKE_HOME_DIRECTORY}/monocular-camera/include
+#)
 
-LINK_DIRECTORIES(
-  ${SDL_LIB}
-  ${CMAKE_HOME_DIRECTORY}/lib
-)
+#LINK_DIRECTORIES(
+#  ${SDL_LIB}
+#  ${CMAKE_HOME_DIRECTORY}/lib
+#)
 
 ADD_EXECUTABLE(${EXECUTABLE1} test-viewer.cpp)
 TARGET_LINK_LIBRARIES(${EXECUTABLE1}	

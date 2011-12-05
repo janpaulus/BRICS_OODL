@@ -1,0 +1,13 @@
+<package>
+  <description brief="unicap">
+
+     Hokuyo URG library
+
+  </description>
+  <author>Arne Caspari</author>
+  <license>GPL-v2</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://unicap-imaging.org/</url>
+</package>
+
+
