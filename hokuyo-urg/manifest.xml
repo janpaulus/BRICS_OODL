@@ -1,0 +1,15 @@
+<package>
+  <description brief="hokuyo-urg">
+
+     Hokuyo URG library
+
+  </description>
+  <author>Satofumi KAMIMURA</author>
+  <license>LGPL-v3</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://www.hokuyo-aut.jp/02sensor/07scanner/download/urg_programs_en/</url>
+  <rosdep name="sdl" />
+  <rosdep name="sdl-net" />
+</package>
+
+

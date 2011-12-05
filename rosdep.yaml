@@ -1,9 +1,12 @@
 boost-all:
-  ubuntu:
-    10.04: libboost-all-dev
-    10.10: libboost-all-dev
-    11.04: libboost-all-dev
-    11.10: libboost-all-dev
+  ubuntu: libboost-all-dev
 
 sicktoolbox:
   ubuntu: ros-electric-laser-drivers
+
+sdl:
+  ubuntu: libsdl1.2-dev
+
+sdl-net:
+  ubuntu: libsdl-net1.2-dev
+
