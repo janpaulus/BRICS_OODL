@@ -1,7 +1,7 @@
 <stack>
-  <description brief="BRICS_OODL">brics oodl</description>
+  <description brief="brics-oodl">brics oodl</description>
   <author>BRSU</author>
-  <license>BSD / LGPL</license>  
+  <license>gnu-lgpl-v2.1 modified-bsd</license>  
   <review status="unreviewed" notes=""/>
   <url>https://github.com/janpaulus/BRICS_OODL</url>
   <version>0.1</version>
